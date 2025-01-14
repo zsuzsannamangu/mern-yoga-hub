@@ -1,0 +1,230 @@
+@use './styles/variables' as *; // Importing SCSS variables for consistent theming
+
+/* General styling adjustments */
+@media (max-width: 768px) {
+  * {
+    box-sizing: border-box; // Ensures consistent box model across all elements
+  }
+}
+
+body,
+html,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; // Prevent horizontal scrolling
+  font-family: $font-main; // Apply global font style
+}
+
+a {
+  text-decoration: none; // Remove underline from links
+  color: blue; // Default link color
+}
+
+.App {
+  display: flex;
+  flex-direction: column; // Ensure vertical stacking
+  min-height: 100vh; // Full viewport height for flex-based layout
+}
+
+/* Main content styling */
+.content {
+  flex: 1; // Fills available space between navbar and footer
+}
+
+.main-content-wrapper {
+  margin: 0 auto;
+  max-width: 1200px; // Restrict maximum content width
+  padding: 0 20px; // Add horizontal padding
+
+  @media (max-width: 1024px) {
+    max-width: 90%; // Adjust for smaller screens
+    padding: 0 15px;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%; // Full width on mobile
+    padding: 0 10px;
+  }
+}
+
+/* Navbar styling */
+.navbar {
+  display: flex;
+  align-items: center; // Center items vertically
+  justify-content: space-between; // Space between logo and links
+  padding: 16px 32px;
+  background-color: $background-color;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+  position: sticky; // Sticks to the top during scrolling
+  top: 0;
+  z-index: 1000; // Ensure navbar appears above other elements
+  font-family: $font-main;
+  width: 100%; // Full width
+  box-sizing: border-box; // Include padding in width calculation
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    padding: 40px 22px;
+  }
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 500;
+  color: $tertiary-text-color; // Styled logo text
+  flex-shrink: 0; // Prevent shrinking
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px; // Spacing between links
+
+  @media (max-width: 768px) {
+    gap: 16px; // Reduce spacing on mobile
+  }
+}
+
+.nav-item {
+  font-size: 16px;
+  color: $text-color; // Default link color
+  text-decoration: none;
+  transition: color 0.3s; // Smooth color transition on hover
+
+  &.active {
+    color: $content-background-color; // Highlight active link
+  }
+
+  &:hover {
+    color: $tertiary-text-color; // Change color on hover
+  }
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 12px; // Space between buttons
+
+  button {
+    font-family: $font-title;
+    padding: 8px 12px;
+    background-color: $primary-button-color;
+    border-radius: 4px; // Rounded corners
+    color: $button-text-color; // Text color
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease; // Smooth hover effect
+
+    &:hover {
+      background-color: $primary-button-hover-color;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    display: flex;
+    flex-direction: column; // Stack elements vertically
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+
+  .logo {
+    font-size: 18px; // Smaller logo size for mobile
+    text-align: center;
+
+    &::after {
+      content: ''; // Decorative line
+      display: block;
+      width: 90%;
+      height: 1px;
+      background-color: $line-color;
+      margin: 5px auto 0;
+    }
+  }
+
+  .nav-links {
+    justify-content: center; // Center links
+    gap: 2px; // Reduce spacing
+  }
+
+  .nav-item {
+    font-size: 14px; // Smaller font for links
+    padding: 5px 8px; // Increase touch target size
+  }
+
+  .nav-buttons {
+    justify-content: center; // Center buttons
+  }
+}
+
+/* Button styling */
+button {
+  font-family: $font-title;
+  padding: 10px 16px;
+  background-color: $primary-button-color;
+  border-radius: 4px;
+  color: $button-text-color;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $primary-button-hover-color;
+  }
+
+  @media (max-width: 768px) {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+
+/* Section titles */
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  font-family: $font-title;
+  color: $main-title-color;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem; // Adjust title size for tablets
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.25rem; // Adjust title size for small screens
+  }
+}
+
+.title-line {
+  width: 50px;
+  height: 3px;
+  background-color: $line-color;
+  margin: 10px 0;
+  margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 20px; // Adjust spacing on mobile
+  }
+}
+
+/* Responsive SweetAlert2 styling */
+.swal2-styled.swal2-cancel {
+  background-color: $primary-button-color;
+  color: $button-text-color;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $primary-button-hover-color;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 8px 10px; // Adjust for smaller screens
+  }
+}

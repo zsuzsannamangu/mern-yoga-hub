@@ -1,27 +1,103 @@
-const express = require('express'); //Web framework for Node.js
-const mongoose = require('mongoose'); //MongoDB object modeling tool for Node.js
-const cors = require('cors'); //Middleware to handle cross-origin requests
-const dotenv = require('dotenv'); //Loads environment variables from a .env file
+const dotenv = require('dotenv');
+dotenv.config(); //to load environment variables
+const helmet = require('helmet'); //to secure your Express app headers
+const express = require('express');
+const http = require('http'); // Required for Socket.IO
+const { Server } = require('socket.io'); // Import Socket.IO
+const mongoose = require('mongoose');
+const cors = require('cors');
+const bookingsRoutes = require('./routes/bookings'); // Import routes
+const eventRoutes = require('./routes/events'); // Import the routes
+const adminRoutes = require('./routes/admin');
+const chocolatesRoutes = require('./routes/chocolates');
+const contactRoutes = require('./routes/contact');
+const userRoutes = require('./routes/user');
+const signupRoutes = require("./routes/signup");
+const publicBookingsRoutes = require('./routes/publicBookings');
 
-dotenv.config();
+const cookieParser = require('cookie-parser');
 
 const app = express();
+const server = http.createServer(app); // Wrap the Express app with HTTP server
+// Apply Helmet middleware
+app.use(helmet());
+// Apply cookie-parser middleware to parse cookies from requests
+app.use(cookieParser());
 
-app.use(cors());
-app.use(express.json());
+const corsOptions = {
+    origin: 'http://localhost:3000', // Allow frontend origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true, // Allow cookies/credentials
+};
+app.use(cors(corsOptions));
 
-const PORT = process.env.PORT || 5000;
+app.get('/config/paypal', (req, res) => {
+    res.json({ clientId: process.env.PAYPAL_CLIENT_ID });
+  });
 
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => console.log("MongoDB connected"))
-  .catch(err => console.log(err));
-
-app.get('/', (req, res) => {
-  res.send("Welcome to the MERN app backend!");
+// Add headers manually for extra safety
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // Allow frontend origin
+    res.header('Access-Control-Allow-Credentials', 'true'); // Allow credentials
+    res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE'); // Allowed methods
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    ); // Allowed headers
+    next();
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+const io = new Server(server, {
+    cors: {
+        origin: '*', // Allow all origins for simplicity; restrict in production
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    },
 });
+
+app.use(express.json()); // Parse incoming JSON requests
+
+const PORT = process.env.PORT || 5001;
+
+// MongoDB connection
+mongoose
+    .connect(process.env.MONGODB_URI)
+    .then(() => console.log('MongoDB connected'))
+    .catch((err) => console.log('Error connecting to MongoDB:', err));
+
+// Register routes and pass `io` to specific routes
+app.use('/api/bookings', bookingsRoutes(io));
+app.use('/api/admin', adminRoutes); // Admin routes
+app.use('/api/events', eventRoutes); // Public event routes
+app.use('/api/chocolates', chocolatesRoutes);
+app.use('/api/contact', contactRoutes);
+app.use('/api/user', userRoutes);
+app.use("/api", signupRoutes);
+app.use('/api/publicBookings', publicBookingsRoutes);
+
+io.on('connection', (socket) => {
+    console.log('New client connected:', socket.id);
+
+    socket.on('disconnect', () => {
+        console.log('Client disconnected:', socket.id);
+    });
+});
+
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// Graceful shutdown handlers
+process.on('SIGINT', () => {
+    server.close(() => {
+        console.log('Process terminated with SIGINT');
+        process.exit(0);
+    });
+});
+
+process.on('SIGTERM', () => {
+    server.close(() => {
+        console.log('Process terminated with SIGTERM');
+        process.exit(0);
+    });
+});
+
+
+

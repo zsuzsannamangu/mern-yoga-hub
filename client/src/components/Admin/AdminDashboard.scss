@@ -1,0 +1,162 @@
+@use '../../styles/variables' as *;
+
+.admin-dashboard {
+    max-width: 1200px; // Make the page wider
+    margin: 0 auto; // Center the entire dashboard
+    padding: 20px;
+
+    h3 {
+        color: $secondary-text-color;
+        margin-bottom: 20px;
+    }
+
+    .event-form {
+        padding: 24px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 100%; // Ensure it spans the page width
+        margin: 20px 0; // Add spacing between sections
+        display: flex;
+        flex-direction: column; // Align the form vertically
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+
+            label {
+                font-size: 1rem;
+                margin-bottom: 8px;
+                color: $secondary-text-color;
+            }
+
+            input,
+            textarea,
+            select {
+                padding: 12px;
+                border: 1px solid $border-color;
+                border-radius: 4px;
+                font-size: 1rem;
+                color: $secondary-text-color;
+                font-family: $font-main;
+            }
+        }
+
+        button {
+            padding: 12px;
+            background-color: $primary-button-color;
+            color: $button-text-color;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 30%;
+            max-width: 200px;
+            align-self: left;
+
+            &:hover {
+                background-color: $primary-button-hover-color;
+            }
+        }
+    }
+
+    .upcoming-events-container {
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+        margin-top: 50px;
+        position: relative;
+
+        h3 {
+            margin-bottom: 30px;
+        }
+
+        .bulk-delete-button {
+            position: absolute;
+            top: 20px; // Adjust spacing from top
+            right: 20px; // Move to the top-right corner
+            background-color: $delete-button;
+            padding: 10px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+                background-color: $delete-button-hover;
+            }
+        }
+    }
+
+    .event-card {
+        background-color: $secondary-background-color;
+        border: 1px solid $background-color;
+        border-radius: 8px;
+        padding: 20px; // Increase padding
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column; // Arrange items in a column
+        gap: 20px;
+
+        input[type='checkbox'] {
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+        }
+
+        .event-details {
+            display: flex;
+            flex-direction: row; // Arrange text and buttons in a row
+            justify-content: space-between;
+            align-items: flex-start;
+            background-color: $secondary-background-color;
+            padding: 0;
+
+            p {
+                flex: 1; // Take up remaining space
+                font-size: 16px; // Increase font size
+                color: $secondary-text-color;
+                margin: 0;
+                margin-left: 10px;
+            }
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            input[type='text'],
+            input[type='date'],
+            input[type='time'] {
+                flex: 1;
+                padding: 8px;
+                border: 1px solid $background-color;
+                border-radius: 5px;
+                font-size: 14px;
+                color: $secondary-text-color;
+                font-family: $font-main;
+            }
+
+            .update-event-button {
+                align-self: flex-end;
+                background-color: $primary-button-color;
+                color: $button-text-color;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 5px;
+                font-size: 14px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $primary-button-hover-color;
+                }
+            }
+        }
+    }
+}

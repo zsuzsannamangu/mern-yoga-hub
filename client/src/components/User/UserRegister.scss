@@ -1,0 +1,157 @@
+@use '../../styles/variables' as *;
+
+.register-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 85vh;
+
+    .register-container {
+        max-width: 400px;
+        width: 100%;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+        .section-title {
+            text-align: left;
+        }
+
+        .login-link {
+            margin-bottom: 20px;
+            font-family: $font-title;
+
+            a {
+                color: $line-color;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        .oauth-buttons {
+            display: flex;
+            flex-direction: row; /* Changed from column to row */
+            gap: 10px; /* Adjusts spacing between the buttons */
+            justify-content: center; /* Aligns buttons horizontally */
+            margin-bottom: 20px;
+        }
+
+        button {
+            flex: 1; /* Ensures buttons take up equal space */
+        }    
+
+        .divider {
+            margin: 20px 0;
+            font-size: 14px;
+            color: $secondary-text-color;
+        }
+
+        .register-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            input {
+                padding: 10px;
+                border: 1px solid $border-color;
+                border-radius: 5px;
+                font-size: 14px;
+                color: $text-color;
+
+                &:focus {
+                    border-color: $line-color;
+                    outline: none;
+                }
+            }
+
+            .register-btn {
+                padding: 12px;
+                background: $primary-button-color;
+                color: $button-text-color;
+                font-size: 16px;
+                font-weight: bold;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+
+                &:hover {
+                    background: $primary-button-hover-color;
+                }
+            }
+        }
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .register-page {
+        margin-top: -50px;
+        padding: 20px; /* Add padding for smaller screens */
+        margin-left: 20px;
+        margin-right: 20px;
+
+        .register-container {
+            max-width: 90%; /* Make the container wider for smaller screens */
+            padding: 15px; /* Adjust padding for compact layout */
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Slightly reduce shadow intensity */
+
+            .section-title {
+                font-size: 1.5rem; /* Reduce font size for smaller screens */
+            }
+
+            .oauth-buttons {
+                flex-direction: column; /* Stack buttons vertically */
+                gap: 15px; /* Increase spacing for better touch targets */
+            }
+
+            .register-form {
+                gap: 10px; /* Reduce gap between form elements */
+                input {
+                    font-size: 13px; /* Slightly reduce input font size */
+                    padding: 8px; /* Adjust padding for smaller screens */
+                }
+
+                .register-btn {
+                    font-size: 14px; /* Smaller button font */
+                    padding: 10px; /* Adjust padding for buttons */
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .register-page {
+        margin-top: -80px;
+        padding: 10px; /* Further reduce padding for very small screens */
+
+        .register-container {
+            max-width: 100%; /* Allow full width for the container */
+            padding: 10px; /* Compact padding for tight spaces */
+
+            .section-title {
+                font-size: 1.25rem; /* Smaller font size for very small screens */
+            }
+
+            .oauth-buttons {
+                gap: 10px; /* Tighten spacing further */
+            }
+
+            .register-form {
+                input {
+                    font-size: 12px; /* Further reduce font size */
+                }
+
+                .register-btn {
+                    font-size: 12px; /* Compact button font size */
+                    padding: 8px; /* Compact button padding */
+                }
+            }
+        }
+    }
+}
+

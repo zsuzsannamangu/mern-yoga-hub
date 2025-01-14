@@ -1,0 +1,103 @@
+@use '../../styles/variables' as *; // Import global variables for consistent theming
+
+/* Footer container */
+.footer {
+    background-color: $background-color; // Background color from variables
+    padding: 20px 0; // Vertical padding
+    text-align: center; // Center-align all text
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+    font-family: $font-main; // Use main font
+    margin-top: 50px; // Space above the footer
+    padding-bottom: 20px; // Extra padding for spacing
+}
+
+/* Footer content wrapper */
+.footer-content {
+    max-width: 800px; // Limit the width for better alignment
+    margin: 0 auto; // Center the content horizontally
+    display: flex; // Use flexbox for layout
+    flex-direction: column; // Stack elements vertically
+    align-items: center; // Center-align all elements
+}
+
+/* Footer text styling */
+.footer-content p {
+    margin: 0; // Remove default margin
+    font-size: 1rem; // Standard text size
+    color: $text-color; // Text color from variables
+    font-weight: 500; // Slightly bold text
+}
+
+/* GitHub link styling */
+.footer-content a.github-link {
+    color: inherit; // Inherit text color
+    text-decoration: none; // Remove underline
+    transition: color 0.3s ease; // Smooth hover effect
+}
+
+.footer-content a.github-link:hover {
+    color: $primary-button-hover-color; // Change color on hover
+}
+
+/* Footer navigation links */
+.footer-links {
+    margin-top: 10px; // Space above the links
+    display: flex; // Use flexbox for layout
+    gap: 15px; // Space between links
+}
+
+.footer-links a {
+    text-decoration: none; // Remove underline
+    color: $text-color; // Link color from variables
+    font-size: 0.875rem; // Slightly smaller font size
+    transition: color 0.3s; // Smooth hover effect
+}
+
+.footer-links a:hover {
+    color: $primary-button-color; // Change color on hover
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .footer {
+        padding: 15px 0; // Reduce vertical padding for smaller screens
+    }
+
+    .footer-content {
+        max-width: 600px; // Adjust content width
+        padding: 0 15px; // Add horizontal padding
+    }
+
+    .footer-content p {
+        font-size: 0.9rem; // Slightly smaller text size for better fit
+    }
+
+    .footer-links {
+        align-items: center; // Center-align links
+        gap: 10px; // Reduce space between links
+
+        .instagram-link, .github-link {
+            display: inline-flex; // Align icons and text inline
+            align-items: center; // Center-align icon and text
+            color: inherit; // Inherit text color
+        }
+
+        .instagram-link:hover, .github-link:hover {
+            color: #e1306c; // Instagram pink hover color
+        }
+    }
+
+    .footer-links a {
+        font-size: 0.8rem; // Smaller font size for links
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-content p {
+        font-size: 0.8rem; // Further reduce text size for very small screens
+    }
+
+    .footer-links {
+        gap: 8px; // Tighten space between links
+    }
+}

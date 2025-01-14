@@ -1,0 +1,129 @@
+@use '../../styles/variables' as *;
+
+.login-page {
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 100px;
+}
+
+.login-page .login-instructions {
+    font-size: 14px;
+    color: $secondary-text-color;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.login-page form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.login-page input {
+    padding: 12px; /* Slightly larger padding for better UX */
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.login-page input:focus {
+    border-color: $primary-button-color;
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Add a subtle focus shadow */
+}
+
+button {
+    gap: 12px;
+    font-family: $font-title;
+    padding: 10px 16px;
+    background-color: $primary-button-color;
+    border-radius: 4px;
+    color: $button-text-color;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: $font-title;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: $primary-button-hover-color;
+}
+
+.login-page .register-link {
+    margin-top: 15px;
+    font-size: 14px;
+    color: $secondary-text-color;
+}
+
+.login-page .register-link a {
+    color: $text-color;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-page .register-link a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .login-page {
+        max-width: 100%; /* Allow the container to stretch to full width */
+        padding: 20px; /* Add padding for smaller screens */
+        margin-top: 50px; /* Reduce the top margin */
+        margin-left: 20px;
+        margin-right: 20px;
+
+        .login-instructions {
+            font-size: 13px; /* Slightly reduce font size for smaller screens */
+        }
+
+        form {
+            gap: 15px; /* Increase spacing between form elements */
+        }
+
+        input {
+            font-size: 14px; /* Keep the font size consistent */
+            padding: 10px; /* Adjust padding for smaller screens */
+        }
+
+        button {
+            font-size: 14px; /* Reduce font size */
+            padding: 10px 12px; /* Compact padding */
+        }
+
+        .register-link {
+            font-size: 12px; /* Slightly smaller font for the link */
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .login-page {
+        padding: 10px; /* Further reduce padding for very small screens */
+
+        .login-instructions {
+            font-size: 12px; /* Further reduce font size */
+        }
+
+        form {
+            gap: 10px; /* Tighten spacing for very small screens */
+        }
+
+        input {
+            font-size: 12px; /* Smaller font size for inputs */
+            padding: 8px; /* Compact padding for inputs */
+        }
+
+        button {
+            font-size: 12px; /* Smaller font size for the button */
+            padding: 8px 10px; /* Adjust padding for compact layout */
+        }
+
+        .register-link {
+            font-size: 11px; /* Adjust font size for the link */
+        }
+    }
+}
+

@@ -4,7 +4,14 @@
   "description": "My yoga teacher website.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server/server.js",
+    "client": "npm start --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "nodemon": "^3.1.7"
   },
   "repository": {
     "type": "git",
@@ -18,5 +25,44 @@
   "bugs": {
     "url": "https://github.com/zsuzsannamangu/YogaSavor/issues"
   },
-  "homepage": "https://github.com/zsuzsannamangu/YogaSavor#readme"
+  "homepage": "https://github.com/zsuzsannamangu/YogaSavor#readme",
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@fontsource/barlow-condensed": "^5.1.0",
+    "@formspree/react": "^2.5.1",
+    "@mui/lab": "^6.0.0-beta.14",
+    "@mui/material": "^6.1.6",
+    "@mui/x-date-pickers": "^7.22.2",
+    "@sendgrid/mail": "^8.1.4",
+    "@sweetalert2/theme-material-ui": "^5.0.18",
+    "calendar": "^0.1.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-session": "^1.18.1",
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.8.1",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.16",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-microsoft": "^2.1.0",
+    "react": "^18.3.1",
+    "react-calendar": "^5.1.0",
+    "react-date-picker": "^11.0.0",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.4.0",
+    "react-router-dom": "^6.28.0",
+    "react-router-hash-link": "^2.4.3",
+    "react-signature-canvas": "^1.0.6",
+    "react-slick": "^0.30.2",
+    "react-toastify": "^10.0.6",
+    "sass": "^1.80.6",
+    "sass-loader": "^16.0.3",
+    "slick-carousel": "^1.8.1",
+    "socket.io-client": "^4.8.1",
+    "sweetalert2": "^11.14.5"
+  }
 }

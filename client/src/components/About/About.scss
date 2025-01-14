@@ -1,0 +1,176 @@
+@use '../../styles/variables' as *;
+
+.about-page {
+  width: 100%;
+  max-width: 100%; // Remove any restrictions
+  margin: 0 auto; // Ensure it's centered
+
+  .about-top {
+    margin: 0; // Ensure no margin
+    padding: 0; // Ensure no padding
+    position: relative;
+    background-image: url('/../public/images/yoga/Zsuzsi_yoga_25.jpg');
+    background-size: cover; // Adjust to fill the container
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh; // Ensure it spans the full viewport height
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: 768px) {
+      background-image: url('/../public/images/yoga/Zsuzsi_yoga_21.jpg');
+      height: 120vh;
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      width: 100vh;
+    }
+
+    @media (width: 1024px) and (height: 600px) {
+      width: 200vh;
+      height: 80vh;
+    }
+  }
+
+  .about-overlay {
+    background-color: rgba(255, 255, 255, 0.826);
+    padding: 20px;
+    border-radius: 6px;
+    width: 90%; // Default for smaller screens
+    max-width: 500px;
+    text-align: left;
+    color: $text-color;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transform: translateY(-10%);
+    border: rgb(208, 91, 111, 0.2) solid 2px;
+    width: 30%;
+    left: -28%; // Larger screens, offset
+    top: -20%;
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      width: 30%;
+      left: -28%; // Larger screens, offset
+      top: -20%;
+    }
+
+    @media (max-width: 480px) {
+      width: 90%;
+      padding: 10px;
+      font-size: 0.8rem;
+      top: 0%;
+      /* Further adjust for very small screens */
+    }
+
+    @media (max-width: 768px) {
+      top: 85%; // Adjust overlay positioning for smaller screens
+    }
+
+  }
+
+  .about-overlay-text p {
+    margin: 0 0 1rem;
+    font-size: 1rem; // Smaller font by default
+    font-family: $font-secondary;
+    line-height: 1.5;
+
+    @media (min-width: 768px) {
+      font-size: 1.2rem; // Adjust for medium screens
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-overlay {
+      top: 85%;
+      /* Move the overlay closer to the bottom of the image */
+      left: 50%;
+      /* Center the overlay horizontally */
+      transform: translate(-50%, -50%);
+      /* Center the overlay vertically */
+      position: absolute;
+      /* Ensure positioning is relative to the parent */
+      width: 80%;
+      /* Adjust width to fit smaller screens */
+    }
+  }
+
+  .about-info-section {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px; // Default padding for smaller screens
+    font-family: $font-main;
+    color: $text-color;
+    max-width: 1200px;
+    
+    @media (min-width: 344px) and (max-width: 768px) {
+      max-width: 800px;
+      padding: 40px;
+      width: 100%;
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      max-width: 1200px;
+      padding: 20px;
+      margin-left: 50px;
+      margin-right: 50px;
+    }
+
+    h3 {
+      font-size: 1.25rem; // Adjust for smaller screens
+      text-transform: uppercase;
+      color: $main-title-color;
+      margin-bottom: 25px;
+
+      @media (min-width: 768px) {
+        font-size: 1.5rem;
+      }
+    }
+
+    .info-category {
+      margin-bottom: 20px;
+
+      .info-item {
+        margin-bottom: 35px;
+
+        h4 {
+          font-size: 1.1rem; // Adjust for small screens
+          font-weight: bold;
+          margin: 5px 0;
+          color: $tertiary-text-color;
+
+          @media (min-width: 768px) {
+            font-size: 1.25rem;
+          }
+        }
+
+        p {
+          font-size: 0.9rem; // Default for small screens
+          line-height: 1.5;
+          margin: 5px 0;
+
+          @media (min-width: 768px) {
+            font-size: 1rem;
+          }
+
+          em {
+            font-style: italic;
+            color: $secondary-text-color;
+          }
+
+          strong {
+            font-weight: bold;
+          }
+
+          a {
+            text-decoration: none;
+            color: $secondary-text-color;
+          }
+        }
+      }
+    }
+  }
+}

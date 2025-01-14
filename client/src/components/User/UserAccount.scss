@@ -1,0 +1,121 @@
+@use '../../styles/variables' as *;
+
+.user-account {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 1200px; // Match the width with the bookings page
+    margin: 0 auto; // Center the content horizontally  
+    margin-top: 75px;
+
+    @media (max-width: 1024px) {
+        margin: 40px;
+    }
+
+    .section-title {
+        @media (max-width: 768px) {
+            margin-left: 10px;
+        }
+    }
+
+    .title-line {
+        @media (max-width: 768px) {
+            margin-left: 10px;
+        }
+    }
+
+    .account-form {
+        width: 100%;
+        max-width: 1100px;
+        padding: 50px;
+        background-color: $background-color;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            max-width: 600px;
+        }
+
+        @media (min-width: 344px) and (max-width: 768px) {
+            padding: 10px;
+            box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+        }
+
+        .form-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /* Two equal columns */
+            column-gap: 40px;
+            /* Space between columns */
+            row-gap: 15px;
+            /* Space between rows */
+            margin-bottom: 20px;
+
+            @media (min-width: 344px) and (max-width: 768px) {
+                column-gap: 8px;
+            }
+
+            label {
+                font-size: 1rem;
+                font-weight: 600;
+                color: $text-color;
+                margin-bottom: 5px;
+                display: block;
+            }
+
+            input,
+            select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid $border-color;
+                border-radius: 4px;
+                font-size: 1rem;
+                background-color: $secondary-background-color;
+                font-family: $font-main;
+
+                &[disabled] {
+                    background-color: $background-color;
+                    color: $secondary-text-color;
+                }
+            }
+
+            .full-width {
+                grid-column: span 2;
+                /* Spans across both columns */
+            }
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+
+            button {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                font-size: 1rem;
+                font-weight: bold;
+                cursor: pointer;
+
+                &.save-btn {
+                    background-color: $primary-button-color;
+                    color: $button-text-color;
+
+                    &:hover {
+                        background-color: $primary-button-hover-color;
+                    }
+                }
+
+                &.cancel-btn {
+                    background-color: $delete-button;
+                    color: $button-text-color;
+
+                    &:hover {
+                        background-color: $delete-button-hover;
+                    }
+                }
+            }
+        }
+    }
+}

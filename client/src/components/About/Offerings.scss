@@ -1,0 +1,170 @@
+@use '../../styles/variables' as *;
+
+.offerings-section {
+    padding-top: 100px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: left;
+
+    @media (max-width: 768px) {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+}
+
+.offerings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    text-align: center;
+    margin-top: 60px;
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+}
+
+.offering-card {
+    background-color: $background-color;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 15px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.offering-card:hover {
+    transform: scale(1.05);
+}
+
+.offering-image {
+    width: 100%;
+    height: auto;
+}
+
+.offering-name {
+    font-size: 1.2rem;
+    color: $text-color;
+    margin: 10px 0;
+}
+
+.view-more-button {
+    padding: 10px 20px;
+    background-color: $primary-button-color;
+    color: $button-text-color;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.view-more-button:hover {
+    background-color: $primary-button-hover-color;
+}
+
+/* Modal Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: $background-color;
+    padding: 40px;
+    border-radius: 8px;
+    max-width: 800px;
+    width: 95%;
+    max-height: 90vh; // Limit max height for very tall screens
+    overflow-y: auto; // Enable scrolling if content exceeds max height
+    text-align: center;
+    position: relative;
+}
+
+.modal-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    color: $text-color;
+    margin: 0;
+    margin-bottom: 40px;
+}
+
+.modal-description {
+    font-size: 1rem;
+    color: $secondary-text-color;
+    margin: 10px 0;
+    line-height: 1.6;
+
+    strong {
+        font-weight: bold;
+        color: $text-color;
+    }
+
+    br {
+        margin-bottom: 8px; // Spacing between lines
+    }
+}
+
+.close-button {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: $text-color;
+    padding: 10px;
+
+    &:hover {
+        background-color: $primary-button-hover-color;
+    }
+}
+
+.book-session-button {
+    padding: 10px 20px;
+    background-color: $primary-button-color;
+    border: none;
+    border-radius: 4px;
+    color: $button-text-color;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: $primary-button-hover-color;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .offerings-section {
+        .title-line {
+            margin-left: 50px;
+        }
+
+        .section-title {
+            margin-left: 50px;
+        }
+    }
+}

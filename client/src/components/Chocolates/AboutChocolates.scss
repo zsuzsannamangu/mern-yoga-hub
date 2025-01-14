@@ -1,0 +1,107 @@
+@use '../../styles/variables' as *;
+
+.about-chocolates-section {
+    background-color: $secondary-background-color;
+    padding: 40px 0;
+    width: 100%;
+    margin-top: 80px;
+}
+
+.about-chocolates-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+}
+
+.about-chocolates-text {
+    background-color: $secondary-background-color;
+    border-radius: 2px;
+    color: $text-color;
+    font-family: $font-main;
+    line-height: 1.8rem;
+}
+
+.about-chocolates-text h2 {
+    font-size: 2rem;
+    color: $main-title-color;
+    font-family: $font-title;
+    margin-bottom: 18px;
+}
+
+.about-chocolates-image img{
+    max-width: 100%;
+    height: auto;
+    border-radius: 2px;
+    margin-top: 100px;
+}
+
+.photo-credit {
+    font-size: 0.7rem;
+    color: $text-color;
+    margin-top: 5px;
+    text-align: center;
+    font-style: italic;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .about-chocolates-content {
+        grid-template-columns: 1fr;
+        /* Stack the columns vertically */
+        gap: 30px !important;
+        /* Force the gap */
+        padding-right: 30px !important;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+    .photo-credit {
+        text-align: left;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-chocolates-content {
+        padding: 0 20px !important;
+        /* Force padding for smaller screens */
+        display: block;
+    }
+
+    .about-chocolates-text h2 {
+        font-size: 1.8rem !important;
+        /* Override conflicting font size */
+        margin-bottom: 20px !important;
+        /* Adjust spacing */
+    }
+
+    .about-chocolates-text {
+        line-height: 1.7rem !important;
+        /* Ensure line height is applied */
+    }
+
+    .about-chocolates-image img{
+        margin-top: 40px !important;
+    }
+
+    .photo-credit {
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-chocolates-text h2 {
+        font-size: 1.6rem !important;
+        /* Override font size for very small screens */
+    }
+
+    .about-chocolates-content {
+        gap: 15px !important;
+        /* Force gap for readability */
+    }
+
+    .photo-credit {
+        font-size: 0.65rem !important;
+        /* Adjust text size */
+    }
+}

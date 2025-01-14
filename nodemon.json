@@ -1,0 +1,10 @@
+{
+    "ignore": [
+        "src/socket/*",
+        "node_modules"
+    ],
+    "watch": [
+        "src"
+    ],
+    "ext": "js,json"
+}

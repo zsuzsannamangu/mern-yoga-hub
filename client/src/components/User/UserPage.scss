@@ -1,0 +1,50 @@
+@use '../../styles/variables' as *;
+
+.user-page {
+    display: flex;
+    flex-direction: column; /* Stack items vertically by default */
+    align-items: flex-start;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 30px auto 0; /* Add space above */
+    gap: 20px; /* Ensure spacing between children */
+}
+
+.user-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid gray /* Optional for visual separation */
+}
+
+.user-options {
+    display: flex;
+    gap: 10px; /* Add spacing between options */
+}
+
+.user-content {
+    width: 100%;
+    max-width: 1200px;
+    padding-left: 20px; /* Space for potential sidebar */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .user-page {
+        padding: 10px;
+    }
+
+    .user-header {
+        flex-direction: column; /* Stack header items vertically on smaller screens */
+        align-items: flex-start;
+        padding-bottom: 10px;
+        font-size: 13px;
+    }
+
+    .user-content {
+        padding-left: 0; /* Remove unnecessary padding on smaller screens */
+    }
+}

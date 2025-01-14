@@ -1,0 +1,163 @@
+@use '../../styles/variables' as *;
+
+.userbooknew-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 20px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        padding: 10px;
+    }
+}
+
+.userbooknew {
+    flex: 2;
+    padding: 20px;
+    background-color: $background-color;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.userbooknew-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+        font-size: 1.6rem;
+        color: $text-color;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    button {
+        background-color: $primary-button-color;
+        color: $button-text-color;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 16px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: $primary-button-hover-color;
+        }
+    }
+}
+
+.table-content {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.calendar-day {
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: $secondary-background-color;
+    border: 1px solid $border-color;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    @media (max-width: 768px) {
+        padding: 5px;
+    }
+
+        &.selected {
+            background-color: $primary-button-color;
+            color: $button-text-color;
+            font-weight: bold;
+        }
+
+        &:hover {
+            background-color: lighten($secondary-background-color, 10%);
+        }
+
+        .slot-indicator {
+            width: 5px;
+            height: 5px;
+            background-color: $tertiary-text-color;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+        }
+    }
+
+    .availability-section {
+        flex: 1;
+        padding: 20px;
+        background-color: $background-color;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        h4 {
+            font-size: 1.4rem;
+            color: $text-color;
+            margin-bottom: 15px;
+        }
+
+        .availability-time {
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &.selected {
+                background-color: $text-color;
+                color: $button-text-color;
+                font-weight: bold;
+            }
+        }
+
+        label {
+            font-size: 1rem;
+            color: $secondary-text-color;
+            margin-top: 20px;
+            display: block;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 90%;
+            padding: 8px;
+            margin-bottom: 25px;
+            border: 1px solid $border-color;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: $font-main;
+            margin-top: 3px;
+        }
+
+        textarea {
+            height: 90px;
+        }
+
+        button {
+            width: 40%;
+            padding: 12px;
+            background-color: $primary-button-color;
+            color: $button-text-color;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: $primary-button-hover-color;
+            }
+        }
+    }

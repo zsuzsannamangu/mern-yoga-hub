@@ -1,0 +1,52 @@
+@use '../../styles/variables' as *;
+
+.admin-navbar {
+    display: flex;
+    align-items: center; /* Vertically align items */
+    justify-content: space-between; /* Spread out items */
+    padding: 16px 32px; /* Adjust padding */
+    background-color: $tertiary-background-color;
+    font-family: $font-main;
+    z-index: 1000;
+
+    .admin-title {
+        font-size: 1.5em;
+        color: $button-text-color;
+        font-family: $font-main;
+    }
+
+    nav {
+        ul {
+            display: flex;
+            align-items: center; /* Vertically align menu items */
+            gap: 24px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            @media (max-width: 768px) {
+                display: block;
+            }
+
+            li {
+                a {
+                    color: $button-text-color;
+                    font-family: $font-main;
+                    font-size: 1rem;
+                    padding: 8px 16px; /* Add some padding for spacing */
+                    transition: color 0.3s;
+
+                    &:hover {
+                        color: $secondary-content-background-color;
+                    }
+
+                    &.active-link {
+                        color: $primary-button-color;
+                        font-weight: bold;
+                        border-bottom: 2px solid $line-color;
+                    }
+                }
+            }
+        }
+    }
+}

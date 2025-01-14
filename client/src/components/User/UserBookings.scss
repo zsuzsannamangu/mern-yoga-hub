@@ -1,0 +1,107 @@
+@use '../../styles/variables' as *;
+
+.user-bookings {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    @media (max-width: 768px) {
+        margin: 5%;
+    }
+
+    .booking-card {
+        background: $background-color;
+        border: 1px solid $border-color;
+        border-radius: 10px;
+        padding: 16px;
+        margin: 10px 0;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.2s;
+
+        &.past-booking {
+            opacity: 0.5; // Make it look greyed out
+            pointer-events: none; // Disable interactions
+        }
+
+        &:hover {
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+
+            h4 {
+                margin: 0;
+                font-size: 1.2rem;
+                color: $main-title-color;
+                font-weight: bold;
+            }
+
+            .link-icon {
+                font-size: 1rem;
+                color: $primary-button-color;
+                cursor: pointer;
+            }
+        }
+
+        .booking-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            .booking-info {
+                display: flex;
+                align-items: center;
+                font-size: 0.9rem;
+                color: $text-color;
+
+                .icon {
+                    margin-right: 8px;
+                    font-size: 1rem;
+                    color: $primary-button-color;
+                }
+
+                span {
+                    font-size: 14px;
+                    color: #555;
+                }
+            }
+        }
+
+        .booking-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            border-top: 1px solid $border-color;
+            padding-top: 10px;
+
+            a {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                font-size: 0.9rem;
+                color: $text-color;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+
+                .icon {
+                    margin-right: 5px;
+                    color: $primary-button-color;
+                }
+
+                &.disabled-link {
+                    color: grey;
+                    pointer-events: none;
+                }
+            }
+        }
+    }
+}
