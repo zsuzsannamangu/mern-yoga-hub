@@ -15,9 +15,9 @@ const offeringsData = [
         <br><br>--------
         <br><br><strong>Individual Sessions:</strong> Personalized one-on-one sessions designed to deepen your connection to yoga through tailored physical postures, breathwork, mindfulness practices, and philosophical insights.
         <br><br><strong>Partner Yoga Sessions:</strong> Partner Yoga offers a unique opportunity to connect with a loved one through shared yoga practice. Integrating yoga therapy techniques, it cultivates presence, open communication, appreciation, empathy, and honesty for deeper connection and understanding.
-        <br><br>**Individual and partner yoga sessions are $110-$35/hr sliding scale. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked.**
+        <br><br>**Individual and partner yoga sessions are $35-$110/hr sliding scale. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked.**
         `,
-        image: '/images/yoga/Zsuzsi_yoga_36.jpg',
+        image: '/images/yoga/Zsuzsi_Yoga_StandingSplit.jpg',
     },
     {
         id: 2,
@@ -29,7 +29,7 @@ const offeringsData = [
         and breathing techniques to enrich daily life. Engage in activities like sensing light, eye gazing, tuning into touch, taste, and smell, and meditations on sound and space. 
         Experience gentle movement, chanting, and breathwork, all while cultivating compassion and loving-kindness to deepen your connection to the present moment. <br><br><strong>Yoga Hikes:</strong> Experience the harmony of yoga practices and the exploration of
         local plants. Immerse yourself in movement, breath, and the natural world as we hike, learn about the flora, and find balance outdoors. `,
-        image: '/images/yoga/Zsuzsi_yoga_4.jpg',
+        image: '/images/yoga/Zsuzsi_yoga_21.jpg',
     },
     {
         id: 3,
@@ -38,7 +38,7 @@ const offeringsData = [
         This therapeutic process can help navigate a range of concerns—from managing anxiety, depression, and trauma to supporting physical conditions like muscle pain, osteoporosis and spinal cord injury. Each session weaves together mindful movement, guided breathwork, and meditative practices to encourage a grounded presence, inviting release and renewal.<br><br>
         As a collaborative journey, yoga therapy provides space to explore tools such as mindful yoga postures, restorative breath exercises, and grounding visualizations. These elements are carefully tailored to support you in nurturing your body’s innate wisdom and ease.<br><br>
         Every session is crafted with consideration of age, health conditions, and personal goals, integrating practices that can be gently woven into the rhythm of daily life. This is not a replacement for traditional medical treatment but a complement—an invitation to cultivate inner balance, self-compassion, and a sustainable path toward wellness.
-        <br><br>$130-$40/hr sliding scale. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked. The first 30-minute session is free.`,
+        <br><br>$40-$130/hr sliding scale. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked. The first 30-minute session is free.`,
         image: '/images/yoga/childs-pose.jpg'
     },
 ];

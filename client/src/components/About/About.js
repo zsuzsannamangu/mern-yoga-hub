@@ -36,9 +36,9 @@ function About() {
                     <h3>Core Yoga Teacher Trainings</h3>
                     <div className="info-item">
                         <h4>300hr Advanced Yoga Teacher Training</h4>
-                        <h4>(RYT-500) --in progress--</h4>
+                        <h4>(RYT-500)</h4>
                         <p><em>Sarahjoy Yoga, Portland OR</em><br />
-                            May 2024 - exp. February 2025</p>
+                            May 2024 - February 2025</p>
                         <p>Trauma-informed, neurobiologically grounded teacher training with <strong><a href="https://www.sarahjoyyoga.com/300-hour-advanced-yoga-teacher-training.html" target='_blank'>Sarahjoy Marsh</a></strong><br />
                             Restorative Yoga, Slow Flow, Chair Yoga, Adaptive Yoga, Pranayama<br />
                             Focus on neuroscience, mindfulness, psychology, physiology, and ayurvedic practices</p>

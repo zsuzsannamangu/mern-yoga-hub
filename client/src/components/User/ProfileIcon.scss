@@ -2,7 +2,7 @@
 
 .profile-menu {
     position: absolute; // Remove it from the document flow
-    top: 60px; // Adjust based on your navbar height
+    top: 60px; //Spacing from top
     right: 10px; // Align to the right of the profile icon
     background-color: $background-color; // Background color of the dropdown
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Add shadow for better visibility
@@ -27,7 +27,7 @@
 .profile-menu li button {
     text-decoration: none; // Remove underline
     color: $main-title-color; // Text color
-    font-size: 14px; // Adjust font size
+    font-size: 14px;
     display: block; // Ensure full clickable area
 }
 

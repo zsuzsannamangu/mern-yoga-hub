@@ -2,8 +2,7 @@
 
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const Chocolate = require('../models/Chocolate'); // Adjust the path to the Chocolate model
-
+const Chocolate = require('../models/Chocolate');
 dotenv.config(); // Load environment variables
 
 // Connect to MongoDB

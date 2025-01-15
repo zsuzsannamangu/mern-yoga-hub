@@ -34,7 +34,7 @@
   position: relative;
   left: -32%;
   bottom: -10%;
-  /* Offset to the left (adjustable for centering over image) */
+  /* Offset to the left */
   transform: translateY(-10%);
   /* Vertically adjust to keep centered with the image */
   border: rgb(208, 91, 111, 0.2) solid 2px;
@@ -300,7 +300,7 @@
 
   .month-button {
     font-size: 0.8rem; /* Smaller button font */
-    padding: 5px 10px; /* Further adjust padding */
+    padding: 5px 10px;
   }
 
   .calendar-day {

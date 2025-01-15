@@ -46,8 +46,9 @@ function Home({ showAlert }) {
         </button>
       </div>
       <div className="images-row">
-        <img src="./images/yoga/Zsuzsi_yoga_33.jpg" alt="Yoga Vertical" className="left-image" />
-        <img src="./images/yoga/Zsuzsi_yoga_36.jpg" alt="Yoga Horizontal" className="right-image" />
+        <img src="./images/yoga/Zsuzsi_Home_1.jpg" alt="Yoga Vertical" className="left-image" id="homeimage-1" />
+        <img src="./images/yoga/Zsuzsi_Home_2.jpg" alt="Yoga Horizontal" className="left-image" id="homeimage-2"/>
+        <img src="./images/yoga/Zsuzsi_Home_4.jpg" alt="Yoga Horizontal" className="left-image"id="homeimage-3"/>
       </div>
       <div className="main-row" id="about-section">
         <div className="main-left">

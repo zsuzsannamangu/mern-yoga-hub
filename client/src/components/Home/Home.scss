@@ -48,24 +48,18 @@
     justify-content: space-between;
     width: 100%;
     max-width: 1200px;
-    margin: 100px auto 40px auto;
-    gap: 20px;
+    margin: 40px auto 40px auto;
+    gap: 10px;
 }
 
 .left-image {
     width: 100%;
-    max-width: 430px;
-    height: auto;
+    max-width: 400px;
+    height: 800px;
     border-radius: 2px;
-    object-fit: contain;
-}
+    object-fit: cover;
 
-.right-image {
-    width: 100%;
-    max-width: 730px;
-    height: auto;
-    border-radius: 2px;
-    object-fit: contain;
+    
 }
 
 .main-row {
@@ -170,14 +164,25 @@
     }
 
     .images-row {
-        flex-direction: column; /* Stack images vertically on smaller screens */
+        flex-direction: flex; /* Stack images vertically on smaller screens */
         gap: 10px; /* Reduce gap */
-        margin: 40px auto; /* Adjust margins */
+        margin: 40px auto;
     }
 
-    .left-image,
-    .right-image {
+    .left-image {
         max-width: 100%; /* Ensure images take full width on smaller screens */
+    }
+
+    #homeimage-1 {
+        max-width: 0%;
+    }
+
+    #homeimage-2 {
+        max-width: 95%;
+    }
+
+    #homeimage-3 {
+        max-width: 0%;
     }
 
     .main-row {
@@ -195,7 +200,7 @@
 
     .booking-form {
         gap: 15px; /* Reduce gap for smaller screens */
-        margin-bottom: 40px; /* Adjust bottom margin */
+        margin-bottom: 40px;
     }
 
     .booking-form label {
@@ -210,8 +215,8 @@
     }
 
     .booking-form button {
-        font-size: 1rem; /* Adjust font size */
-        padding: 8px 16px; /* Adjust padding */
+        font-size: 1rem;
+        padding: 8px 16px;
         width: 100%; /* Full-width button */
     }
 }
@@ -224,11 +229,23 @@
         margin-right: 3%;
     }
 
-    .left-image {
-        max-width: 40%; /* Ensure images take full width on smaller screens */
+    .images-row {
+        gap: 8px;
     }
 
-    .right-image {
-        max-width: 60%; /* Ensure images take full width on smaller screens */
+    .left-image {
+        max-width: 50%; /* Ensure images take full width on smaller screens */
+    }
+
+    #homeimage-1 {
+        max-width: 0%;
+    }
+
+    #homeimage-2 {
+        max-width: 50%;
+    }
+
+    #homeimage-3 {
+        max-width: 50%;
     }
 }

@@ -14,26 +14,26 @@ function UserLogin() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         try {
             // Send email to request a login link
             await userAxiosInstance.post('/api/user/login', { email: form.email });
-    
+
             Swal.fire({
                 title: 'Login Email Sent!',
                 text: `A login link has been sent to ${form.email}. Please check your inbox.`,
                 icon: 'success',
                 confirmButtonText: 'OK',
             });
-    
+
             // Clear the email field
             setForm({ email: '' });
         } catch (error) {
             console.error('Login Error:', error.response?.data);
-    
+
             const errorMessage =
                 error.response?.data?.message || 'Could not send login email. Please try again.';
-            
+
             Swal.fire({
                 title: 'Login Failed',
                 text: errorMessage,
@@ -66,3 +66,4 @@ function UserLogin() {
 }
 
 export default UserLogin;
+
