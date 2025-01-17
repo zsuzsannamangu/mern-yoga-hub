@@ -5,10 +5,10 @@ function CalendarDays({
   day,
   changeCurrentDay,
   events = {},
-  highlightedDate,
-  disablePastDates,
-  disabledDates = [], // Prop to pass explicitly disabled dates
-  highlightedSlots = [], // Prop for days with available slots
+  highlightedDate = new Date(), // Default to today
+  disablePastDates = true, // Disable past dates by default
+  disabledDates = [],
+  highlightedSlots = [],
 }) {
   let firstDayOfMonth = new Date(day.getFullYear(), day.getMonth(), 1);
   let weekdayOfFirstDay = firstDayOfMonth.getDay();
@@ -34,9 +34,9 @@ function CalendarDays({
       number: firstDayOfMonth.getDate(),
       selected: firstDayOfMonth.toDateString() === day.toDateString(),
       year: firstDayOfMonth.getFullYear(),
-      isToday: highlightedDate && firstDayOfMonth.toDateString() === highlightedDate.toDateString(),
-      isPast: disablePastDates && firstDayOfMonth < new Date(),
-      isDisabled: disabledDates.includes(formattedDate), // Check if explicitly disabled
+      isToday: firstDayOfMonth.toDateString() === highlightedDate.toDateString(),
+      isPast: disablePastDates && firstDayOfMonth < new Date().setHours(0, 0, 0, 0),
+      isDisabled: disabledDates.includes(formattedDate),
     };
 
     currentDays.push(calendarDay);

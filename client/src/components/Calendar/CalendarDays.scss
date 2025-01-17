@@ -14,9 +14,22 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 
   &.highlighted {
-    background-color: $secondary-content-background-color; // Highlight for today's date
-    font-weight: bold;
-    color: $main-title-color;
+    background-color: $secondary-content-background-color; /* Background for today's date */
+    font-weight: bold; /* Make the text bold */
+    width: 15px; /* Set the width of the circle */
+    height: 15px; /* Set the height of the circle */
+    line-height: 15px; /* Center the text vertically */
+    text-align: center; /* Center the text horizontally */
+    border-radius: 50%; /* Make the background circular */
+    margin: 0 auto; /* Center the circle within the day cell */
+    display: inline-block; /* Treat the <p> as an inline-block element */
+
+    @media (max-width: 768px) {
+      width: 100%; /* Set the width of the circle */
+      height: 100%; /* Set the height of the circle */
+      line-height: 100%; /* Center the text vertically */
+      border-radius: 4px;
+    }
   }
 
   &.disabled {
@@ -42,8 +55,8 @@
   }
 
   .slot-indicator {
-    width: 8px;
-    height: 8px;
+    width: 4px;
+    height: 4px;
     background-color: $tertiary-text-color; // Dot color for available slots
     border-radius: 50%;
     position: absolute;
@@ -66,6 +79,11 @@
       position: absolute;
       bottom: 5px;
       right: 5px;
+
+      @media (max-width: 768px) {
+        width: 3px;
+        height: 3px;
+      }
     }
   }
 

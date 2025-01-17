@@ -18,7 +18,7 @@ module.exports = (io) => {
                     isBooked: true,
                     ...(email && { email }),
                     ...(userId && { userId }),
-                }).select('date time firstName lastName email message');
+                }).select('date time firstName lastName email message sessionType');
 
                 return res.status(200).json({
                     success: true,
@@ -30,7 +30,7 @@ module.exports = (io) => {
             // Fetch all slots (available and booked) if no query params are provided
             const availableSlots = await Booking.find({ isBooked: false });
             const bookedSlots = await Booking.find({ isBooked: true })
-                .select('date time firstName lastName email message');
+                .select('date time firstName lastName email message sessionType');
 
             return res.status(200).json({
                 success: true,

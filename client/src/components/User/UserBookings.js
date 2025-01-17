@@ -18,6 +18,7 @@ function UserBookings() {
                 const now = new Date();
 
                 // Add the isPast flag to each booking
+                console.log('API Response:', response.data);
                 const sortedBookings = (response.data.bookedSlots || [])
                     .map((slot) => {
                         const slotDateTime = new Date(`${slot.date}T${slot.time}`);
@@ -58,7 +59,7 @@ function UserBookings() {
 
     return (
         <div className="user-bookings">
-            <h3 className="section-title">Your Bookings</h3>
+            <h3 className="section-title">Booked Sessions</h3>
             <div className="title-line"></div>
             {bookings.length > 0 ? (
                 bookings.map((booking) => (
@@ -67,13 +68,16 @@ function UserBookings() {
                         className={`booking-card ${booking.isPast ? 'past-booking' : ''}`}
                     >
                         <div className="booking-details">
-                            <div className="booking-info">
-                                <FaClock className="icon" />
-                                <span>{booking.duration || '60 mins'}</span>
+                            <div className="session-type">
+                                <strong>{booking.sessionType || 'General Session'}</strong>
                             </div>
                             <div className="booking-info">
                                 <FaCalendarAlt className="icon" />
                                 <span>{`${booking.date} at ${formatTime(booking.time)}`}</span>
+                            </div>
+                            <div className="booking-info">
+                                <FaClock className="icon" />
+                                <span>{booking.duration || '60 mins'}</span>
                             </div>
                         </div>
                         <div className="booking-footer">

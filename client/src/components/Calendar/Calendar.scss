@@ -200,6 +200,18 @@
   }
 }
 
+.past-event {
+  opacity: 0.6;
+  pointer-events: none; /* Prevent interaction */
+  color: #999; /* Grey color for text */
+}
+
+.disabled-link {
+  color: #bbb; /* Grey color for disabled links */
+  text-decoration: none;
+  cursor: not-allowed; /* Show a "not allowed" cursor */
+}
+
 @media (max-width: 768px) {
   .calendar-top {
     background-repeat: no-repeat; /* Prevents repeating */
