@@ -121,7 +121,7 @@
   grid-template-columns: repeat(7, 1fr); // 7 columns for the days of the week
   gap: 5px;
   padding: 10px;
-  background-color: $secondary-background-color; // Optional container background
+  background-color: $secondary-background-color;
   border-radius: 8px;
 
   @media (max-width: $breakpoint-md) {

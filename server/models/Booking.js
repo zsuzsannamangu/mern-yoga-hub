@@ -9,7 +9,7 @@ const bookingSchema = new mongoose.Schema({
     lastName: { type: String},
     email: { type: String }, // Add user email for booked slots
     sessionType: { type: String }, // Add session type
-    message: { type: String }, // Optional message from the user
+    message: { type: String }, // Message from the user
 });
 
 module.exports = mongoose.model('Booking', bookingSchema);

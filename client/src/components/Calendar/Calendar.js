@@ -89,8 +89,6 @@ export default class Calendar extends Component {
       currentDay: today,
       selectedDate: today,
     });
-
-    // Optionally log whether today has events
     if (events[formattedToday]) {
     } else {
     }

@@ -21,7 +21,7 @@ const Slideshow = () => {
                 dots: false,
                 slidesToShow: 2, // Show one slide at a time
                 slidesToScroll: 1,
-                arrows: false, // Optional: Hide arrows for small screens
+                arrows: false, // Hide arrows for small screens
               },
             },
           ],
