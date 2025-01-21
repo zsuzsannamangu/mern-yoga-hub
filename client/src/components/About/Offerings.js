@@ -38,7 +38,7 @@ const offeringsData = [
         This therapeutic process can help navigate a range of concerns—from managing anxiety, depression, and trauma to supporting physical conditions like muscle pain, osteoporosis and spinal cord injury. Each session weaves together mindful movement, guided breathwork, and meditative practices to encourage a grounded presence, inviting release and renewal.<br><br>
         As a collaborative journey, yoga therapy provides space to explore tools such as mindful yoga postures, restorative breath exercises, and grounding visualizations. These elements are carefully tailored to support you in nurturing your body’s innate wisdom and ease.<br><br>
         Every session is crafted with consideration of age, health conditions, and personal goals, integrating practices that can be gently woven into the rhythm of daily life. This is not a replacement for traditional medical treatment but a complement—an invitation to cultivate inner balance, self-compassion, and a sustainable path toward wellness.
-        <br><br>$40-$130/hr sliding scale. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked. The first 30-minute session is free.`,
+        <br><br>$35-$130/hr sliding scale. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked. The first 30-minute session is free.`,
         image: '/images/yoga/childs-pose.jpg'
     },
 ];

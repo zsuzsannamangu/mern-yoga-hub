@@ -71,93 +71,110 @@
         padding: 5px;
     }
 
+    &.selected {
+        background-color: $primary-button-color;
+        color: $button-text-color;
+        font-weight: bold;
+    }
+
+    &:hover {
+        background-color: lighten($secondary-background-color, 10%);
+    }
+
+    .slot-indicator {
+        width: 5px;
+        height: 5px;
+        background-color: $tertiary-text-color;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+    }
+}
+
+.availability-section {
+    flex: 1;
+    padding: 20px;
+    background-color: $background-color;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    h4 {
+        font-size: 1.4rem;
+        color: $text-color;
+        margin-bottom: 15px;
+    }
+
+    .no-slots-message {
+        color: $secondary-text-color;
+    }
+
+    .availability-time {
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
         &.selected {
-            background-color: $primary-button-color;
+            background-color: $text-color;
             color: $button-text-color;
             font-weight: bold;
         }
+    }
+
+    label {
+        font-size: 1rem;
+        color: $secondary-text-color;
+        margin-top: 20px;
+        display: block;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 90%;
+        padding: 8px;
+        margin-bottom: 25px;
+        border: 1px solid $border-color;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-family: $font-main;
+        margin-top: 3px;
+    }
+
+    textarea {
+        height: 90px;
+    }
+
+    button {
+        width: 40%;
+        padding: 12px;
+        background-color: $primary-button-color;
+        color: $button-text-color;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
 
         &:hover {
-            background-color: lighten($secondary-background-color, 10%);
-        }
-
-        .slot-indicator {
-            width: 5px;
-            height: 5px;
-            background-color: $tertiary-text-color;
-            border-radius: 50%;
-            position: absolute;
-            bottom: 5px;
-            left: 5px;
+            background-color: $primary-button-hover-color;
         }
     }
 
-    .availability-section {
-        flex: 1;
-        padding: 20px;
-        background-color: $background-color;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-        h4 {
-            font-size: 1.4rem;
-            color: $text-color;
-            margin-bottom: 15px;
-        }
-
-        .availability-time {
-            padding: 10px;
-            text-align: center;
-            border-radius: 5px;
-            margin-bottom: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-
-            &.selected {
-                background-color: $text-color;
-                color: $button-text-color;
-                font-weight: bold;
-            }
-        }
-
-        label {
-            font-size: 1rem;
-            color: $secondary-text-color;
-            margin-top: 20px;
-            display: block;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 90%;
-            padding: 8px;
-            margin-bottom: 25px;
-            border: 1px solid $border-color;
-            border-radius: 5px;
-            font-size: 1rem;
-            font-family: $font-main;
-            margin-top: 3px;
-        }
-
-        textarea {
-            height: 90px;
-        }
-
-        button {
-            width: 40%;
-            padding: 12px;
-            background-color: $primary-button-color;
-            color: $button-text-color;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-
-            &:hover {
-                background-color: $primary-button-hover-color;
-            }
-        }
+    .continue-button {
+        width: 60%;
     }
+
+    .continue-button:disabled {
+        background-color: #cccccc;
+        /* Gray color for disabled state */
+        cursor: not-allowed;
+        /* Show not-allowed cursor */
+        opacity: 0.6;
+        /* Reduce opacity */
+    }
+}

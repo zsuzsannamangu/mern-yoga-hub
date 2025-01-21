@@ -1,14 +1,16 @@
 
-import React, { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react'; 
+//useEffect() is a React Hook that lets you perform side effects in function components, instead of class components. useRef is a React Hook that allows you to create a mutable reference to a DOM element.
+import { useLocation } from 'react-router-dom'; //useLocation is a hook provided by React Router that gives access to the current URL's location object.
 import './About.scss';
 import Offerings from './Offerings';
 import '../../App.scss';
 
 function About() {
-    const location = useLocation();
-    const classDescriptionsRef = useRef(null);
+    const location = useLocation(); // React Router hook to access current location (current URL, such as the path or query parameters)
+    const classDescriptionsRef = useRef(null); // Reference for the "Class Descriptions" section to enable scrolling.
 
+    // Scroll to the "Class Descriptions" section if the URL contains the appropriate query parameter.
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const section = params.get('section');
@@ -16,10 +18,12 @@ function About() {
         if (section === 'classDescriptions' && classDescriptionsRef.current) {
             classDescriptionsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-    }, [location]);
+    }, [location]); //'location' is a dependency, the dependencies array is an array of variables that the effect depends on. [location] ensures the effect runs only when the location object changes.
 
     return (
         <div className='about-page'>
+
+            {/* Top section with an introductory overlay about the instructor */}
             <div className='about-top'>
                 <div className="about-overlay">
                     <div className="about-overlay-text">
@@ -28,7 +32,11 @@ function About() {
                     </div>
                 </div>
             </div>
+
+            {/* Component to display offerings */}
             <Offerings />
+
+             {/* Trainings Section */}
             <div className="about-info-section">
                 <h2 className="section-title">Trainings</h2>
                 <div className="title-line"></div>
@@ -52,7 +60,6 @@ function About() {
                             Focus on somatic practices such as Body-Mind Centering and the Alexander Technique</p>
                     </div>
                 </div>
-
                 <div className="info-category">
                     <h3>Other Trainings & Courses</h3>
                     <div className="info-item">
@@ -76,6 +83,8 @@ function About() {
                     </div>
                 </div>
             </div>
+
+             {/* Class Descriptions Section */}
             <div className="about-info-section" ref={classDescriptionsRef}>
                 <h2 className="section-title">Class Descriptions</h2>
                 <div className="title-line"></div>
