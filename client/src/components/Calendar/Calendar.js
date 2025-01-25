@@ -178,9 +178,13 @@ export default class Calendar extends Component {
               <div className="availability-times">
                 {eventsForDate.length > 0 ? (
                   eventsForDate.map((event, index) => {
+
                     // Calculate if the event is in the past
                     const eventDateTime = new Date(`${formattedDate}T${event.rawTime}`);
                     const isPast = eventDateTime < new Date();
+
+                    // Add a check for the signup count (assuming you can fetch it from the backend)
+                    //const isFull = event.currentSignups >= 25; // Replace with the actual property or a backend API call if needed
 
                     return (
                       <div

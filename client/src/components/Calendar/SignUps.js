@@ -16,7 +16,7 @@ const Signup = () => {
     name: "",
     email: "",
     phone: "",
-    class: queryParams.get('title') || "",
+    classTitle: queryParams.get('title') || "",
     date: queryParams.get('date') || "", // Extract from query params
     waiver: false,
   });
@@ -67,7 +67,7 @@ const Signup = () => {
           navigate('/calendar'); // Navigate to the calendar page
         }
       });
-      setFormData({ name: "", email: "", phone: "", class: "", waiver: false });
+      setFormData({ name: "", email: "", phone: "", classTitle: "", waiver: false });
       setSignatureData(null);
       sigPad.current.clear(); // Clear the signature pad after successful submission
     } catch (error) {
@@ -118,8 +118,8 @@ const Signup = () => {
         <label>
           Class:
           <input
-            name="class"
-            value={formData.class}
+            name="classTitle"
+            value={formData.classTitle}
             onChange={handleInputChange}
             required
           >

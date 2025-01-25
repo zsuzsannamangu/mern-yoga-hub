@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
 
-const waiverSchema = new mongoose.Schema({
+const signupSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
     classTitle: { type: String, required: true },
-    date: { type: Date, required: true },
-    signature: { type: String, required: true }, // Store base64 image
+    date: { type: String, required: true }, // Keep as string for simplicity
+    signature: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
-  });  
+});
 
-module.exports = mongoose.model("Waiver", waiverSchema);
+module.exports = mongoose.model("Signup", signupSchema); // Use "Signup" as the model name
+

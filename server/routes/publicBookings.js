@@ -62,7 +62,7 @@ router.post('/request', async (req, res) => {
                 <h2>Thank You for Your Booking Request</h2>
                 <p>Hi ${name},</p>
                 <p>Thank you for reaching out! I’ve received your request for a ${sessionType} session. I’ll review your message and get back to you within 24 hours.</p>
-                <p>Best regards,</p>
+                <p>Warmly,</p>
                 <p>Zsuzsanna Mangu</p>
             `,
         };
