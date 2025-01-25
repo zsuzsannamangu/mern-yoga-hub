@@ -1,39 +1,79 @@
-import React from 'react';
+/* global grecaptcha */
+import React, { useEffect } from 'react';
 import './Home.scss';
 import '../../App.scss';
 
 function Home({ showAlert }) {
+  useEffect(() => {
+    // Dynamically add reCAPTCHA script
+    const siteKey = process.env.REACT_APP_CAPTCHA_SITE_KEY;
+    if (!siteKey) {
+      console.error('reCAPTCHA site key is missing.');
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      if (window.grecaptcha) {
+        window.grecaptcha.ready(() => {
+          console.log('Executing reCAPTCHA');
+          window.grecaptcha.execute(siteKey, { action: 'submit' })
+            .then((token) => {
+              console.log('Generated reCAPTCHA Token:', token);
+              localStorage.setItem('captchaToken', token);
+            })
+            .catch((error) => console.error('Error generating token:', error));
+        });
+      } else {
+        console.error('reCAPTCHA library not loaded.');
+      }
+    };
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const formData = {
-        name: e.target.name.value,
-        email: e.target.email.value,
-        phone: e.target.phone.value,
-        sessionType: e.target['session-type'].value,
-        message: e.target.message.value,
-      };
+    const form = e.target; // Reference to the form element
 
-      // Send form data to backend
+    const captchaToken = localStorage.getItem('captchaToken');
+    if (!captchaToken) {
+      alert('CAPTCHA verification failed. Please try again.');
+      return;
+    }
+
+    const formData = {
+      name: e.target.name.value.trim(),
+      email: e.target.email.value.trim(),
+      phone: e.target.phone.value.trim(),
+      sessionType: e.target['session-type'].value,
+      message: e.target.message.value.trim(),
+      captchaToken, // Include the token in your request
+    };
+
+    try {
       const response = await fetch('http://localhost:5001/api/publicBookings/request', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-
 
       if (!response.ok) {
         throw new Error('Failed to submit the form');
       }
 
-      showAlert('Success!', 'Your request has been submitted successfully.', 'success');
-      e.target.reset(); // Reset form after submission
+      alert('Form submitted successfully!');
+      form.reset(); // Clear the form fields after successful submission
     } catch (error) {
       console.error('Error submitting form:', error.message);
-      showAlert('Error!', 'Failed to submit the form. Please try again.', 'error');
+      alert('Failed to submit the form. Please try again.');
     }
   };
 
@@ -47,8 +87,8 @@ function Home({ showAlert }) {
       </div>
       <div className="images-row">
         <img src="./images/yoga/Zsuzsi_Home_1.jpg" alt="Yoga Vertical" className="left-image" id="homeimage-1" />
-        <img src="./images/yoga/Zsuzsi_Home_2.jpg" alt="Yoga Horizontal" className="left-image" id="homeimage-2"/>
-        <img src="./images/yoga/Zsuzsi_Home_4.jpg" alt="Yoga Horizontal" className="left-image"id="homeimage-3"/>
+        <img src="./images/yoga/Zsuzsi_Home_2.jpg" alt="Yoga Horizontal" className="left-image" id="homeimage-2" />
+        <img src="./images/yoga/Zsuzsi_Home_4.jpg" alt="Yoga Horizontal" className="left-image" id="homeimage-3" />
       </div>
       <div className="main-row" id="about-section">
         <div className="main-left">
@@ -57,7 +97,7 @@ function Home({ showAlert }) {
         </div>
         <div className="right-section">
           <p>In my work, I create a space for gentle exploration and grounded presence. Together, we’ll journey through practices of movement and stillness, attuning to the wisdom within the body and nurturing a path to balance.</p>
-          <p>I weave together somatic practices, breathwork, Ayurvedic wisdom, meditation, sensory experiences, and movement to support holistic well-being. My approach includes mindful vinyasa flow, restorative and adaptive yoga, and mindfulness practices, creating space for self-compassion, 
+          <p>I weave together somatic practices, breathwork, Ayurvedic wisdom, meditation, sensory experiences, and movement to support holistic well-being. My approach includes mindful vinyasa flow, restorative and adaptive yoga, and mindfulness practices, creating space for self-compassion,
             balance, and a deeper connection to the present moment.</p>
         </div>
       </div>
@@ -67,9 +107,8 @@ function Home({ showAlert }) {
           <div className="title-line"></div>
         </div>
         <div className="right-section">
-          <p>Book a free 30-minute online session to discuss your unique goals and needs. During this session, we’ll take time to connect, discuss your aspirations, and uncover what resonates with you most. Whether you’re seeking a personalized practice, 
-            support for well-being, or guidance in cultivating mindfulness, this half hour is dedicated to you.</p>
-          <p>To book your first (free) session, simply fill out this form, and I will get back to you within 24 hours. Alternatively, create an account to manage your bookings and select time slots directly. <a href="/register">Create an account</a></p>
+          <p>Book a free 30-minute online session where we’ll take time to connect and talk about you and your aspirations. Together, we’ll create a plan for your journey, focusing on what matters most
+            to you—whether it’s building a personalized practice, finding support on your path to healing, or cultivating mindfulness with gentle guidance.</p>
           <form className="booking-form" onSubmit={handleSubmit}>
             <label>
               <input type="text" name="name" placeholder="Name" required />
@@ -83,16 +122,17 @@ function Home({ showAlert }) {
             <label>
               What are you interested in?
               <select name="session-type" required>
-                <option value="private">Individual Yoga Class</option>
-                <option value="couples">Partner Yoga Class</option>
-                <option value="group">Group Yoga Class</option>
-                <option value="therapy">Yoga Therapy Session</option>
+                <option value="private yoga">Individual Yoga Class</option>
+                <option value="couples yoga">Partner Yoga Class</option>
+                <option value="group yoga">Group Yoga Class</option>
+                <option value="yoga therapy">Yoga Therapy Session</option>
               </select>
             </label>
             <label>
               Message
               <textarea name="message" rows="10" placeholder="Anything you want me to know? (No sensitive information here please!)" />
             </label>
+            <div id="recaptcha-container" className="g-recaptcha"></div>
             <button type="submit">Submit</button>
           </form>
         </div>
