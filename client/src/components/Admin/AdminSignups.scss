@@ -1,0 +1,180 @@
+@use '../../styles/variables' as *;
+
+.admin-signups {
+    padding: 20px;
+    font-family: $font-main;
+    background-color: $background-color;
+    max-width: 1200px; // Make the page wider
+    margin: 0 auto; // Center the entire dashboard
+    padding: 20px;
+
+    h3 {
+        color: $secondary-text-color;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: $secondary-background-color;
+        font-family: $font-main;
+
+        th,
+        td {
+            text-align: left;
+            padding: 10px;
+            border: 1px solid $border-color;
+        }
+
+        th {
+            background-color: $background-color;
+            color: $text-color;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: $content-background-color;
+        }
+
+        tr:hover {
+            background-color: $content-background-color-hover;
+        }
+
+        td {
+            text-align: center;
+
+            a {
+                color: $tertiary-text-color;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            .delete-button {
+                background-color: $delete-button;
+                color: $button-text-color;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $delete-button-hover;
+                }
+            }
+
+            .view-link {
+                color: $primary-button-color;
+                cursor: pointer;
+
+                &:hover {
+                    color: $primary-button-hover-color;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .no-signups {
+        text-align: center;
+        font-size: 16px;
+        margin-top: 20px;
+        color: $secondary-text-color;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+
+        .page-item {
+            margin: 0 5px;
+            cursor: pointer;
+            color: $primary-button-color;
+            font-weight: bold;
+
+            &.active {
+                color: $button-text-color;
+                background-color: $primary-button-color;
+                border-radius: 50%;
+                padding: 5px 10px;
+            }
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .actions {
+        display: flex;
+        justify-content: space-evenly;
+
+        .icon {
+            cursor: pointer;
+            font-size: 18px;
+
+            &:hover {
+                color: $delete-button-hover;
+            }
+        }
+    }
+}
+
+// Responsive Design
+@media (max-width: $breakpoint-lg) {
+    .admin-signups {
+        h2 {
+            font-size: 22px;
+        }
+
+        table {
+
+            th,
+            td {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-md) {
+    .admin-signups {
+        padding: 10px;
+
+        table {
+
+            th,
+            td {
+                font-size: 12px;
+                padding: 6px;
+            }
+        }
+
+        .pagination .page-item {
+            font-size: 12px;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-sm) {
+    .admin-signups {
+        table {
+            font-size: 10px;
+
+            th,
+            td {
+                padding: 4px;
+            }
+        }
+
+        .pagination .page-item {
+            font-size: 10px;
+        }
+    }
+}

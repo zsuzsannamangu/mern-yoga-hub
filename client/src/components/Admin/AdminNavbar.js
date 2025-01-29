@@ -29,6 +29,11 @@ const AdminNavbar = () => {
                             Chocolates
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink to="/admin/signups" activeClassName="active-link">
+                            Signups
+                        </NavLink>
+                    </li>
                     <button onClick={logout}>Logout</button>
                 </ul>
             </nav>

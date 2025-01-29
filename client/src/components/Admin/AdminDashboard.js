@@ -12,6 +12,7 @@ const AdminDashboard = () => {
     const [selectedEvents, setSelectedEvents] = useState([]); // State for selected events for bulk delete
     const [newEvent, setNewEvent] = useState({ title: '', date: '', time: '', location: '', signUpLink: '' });
     const [loading, setLoading] = useState(false);
+    const [signups, setSignups] = useState([]);
 
     const fetchEvents = async () => {
         setLoading(true);
@@ -132,6 +133,19 @@ const AdminDashboard = () => {
         }
     };
 
+    const fetchSignups = async () => {
+        setLoading(true);
+        try {
+            const res = await adminAxiosInstance.get('/api/admin/signups');
+            setSignups(res.data);
+        } catch (error) {
+            alert('Failed to fetch signups. Please try again later.');
+            console.error(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         const checkAuth = async () => {
             try {
@@ -149,6 +163,7 @@ const AdminDashboard = () => {
 
         checkAuth();
         fetchEvents();
+        fetchSignups();
     }, [navigate]);
 
     return (

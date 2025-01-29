@@ -35,6 +35,7 @@ import { UserProtectedRoute, AdminProtectedRoute } from './routes/ProtectedRoute
 // SweetAlert2 for alerts
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
+import AdminSignups from './components/Admin/AdminSignups';
 
 // Reusable SweetAlert2 function to display alerts
 const showAlert = (title, text, icon) => {
@@ -119,6 +120,14 @@ function App() {
                   element={
                     <AdminProtectedRoute>
                       <AdminChocolates showAlert={showAlert} />
+                    </AdminProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/signups"
+                  element={
+                    <AdminProtectedRoute>
+                      <AdminSignups showAlert={showAlert} />
                     </AdminProtectedRoute>
                   }
                 />
