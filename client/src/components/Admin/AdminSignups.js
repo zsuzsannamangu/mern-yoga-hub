@@ -50,7 +50,7 @@ const AdminSignups = () => {
     return (
         <div className="admin-signups">
             <AdminNavbar />
-            <h3 className="section-title">Manage Signups</h3>
+            <h3 className="section-title">Manage Class Registrations</h3>
             {loading ? (
                 <p>Loading signups...</p>
             ) : signups.length > 0 ? (

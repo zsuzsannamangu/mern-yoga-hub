@@ -31,7 +31,7 @@ const AdminNavbar = () => {
                     </li>
                     <li>
                         <NavLink to="/admin/signups" activeClassName="active-link">
-                            Signups
+                            Classes
                         </NavLink>
                     </li>
                     <button onClick={logout}>Logout</button>

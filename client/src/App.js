@@ -28,6 +28,8 @@ import AdminLogin from './components/Admin/AdminLogin';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import AdminBookings from './components/Admin/AdminBooking';
 import AdminChocolates from './components/Admin/AdminChocolates';
+import SignUpSelection from './components/Calendar/SignUpSelection';
+import AdminSignups from './components/Admin/AdminSignups';
 
 // Protected routes for guarding user and admin routes
 import { UserProtectedRoute, AdminProtectedRoute } from './routes/ProtectedRoutes';
@@ -35,7 +37,6 @@ import { UserProtectedRoute, AdminProtectedRoute } from './routes/ProtectedRoute
 // SweetAlert2 for alerts
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
-import AdminSignups from './components/Admin/AdminSignups';
 
 // Reusable SweetAlert2 function to display alerts
 const showAlert = (title, text, icon) => {
@@ -70,6 +71,7 @@ function App() {
                 <Route path="/verify-login" element={<VerifyLogin />} />
                 <Route path="/login" element={<Login showAlert={showAlert} />} />
                 <Route path="/signup" element={<Signups />} />
+                <Route path="/signup-selection" element={<SignUpSelection />} />
 
                 {/* User Protected Routes */}
                 <Route

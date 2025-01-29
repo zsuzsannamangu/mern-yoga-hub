@@ -28,7 +28,6 @@ export default class Calendar extends Component {
     );
   }
 
-
   fetchEvents = async () => {
     try {
       const response = await fetch('http://localhost:5001/api/events');
@@ -211,9 +210,7 @@ export default class Calendar extends Component {
                               </a>
                             ) : (
                               <Link
-                                to={`/signup?date=${formattedDate}&title=${encodeURIComponent(
-                                  event.title
-                                )}&location=${encodeURIComponent(event.location)}`}
+                                to={`/signup-selection?date=${formattedDate}&title=${encodeURIComponent(event.title)}&location=${encodeURIComponent(event.location)}`}
                               >
                                 Sign Up
                               </Link>

@@ -163,5 +163,73 @@ router.delete("/signup/:id", async (req, res) => {
     }
 });
 
+router.post('/check-student', async (req, res) => {
+    const { email, classTitle, date } = req.body;
+
+    try {
+        // Check if the user has signed up for any previous class
+        const pastSignup = await Signup.findOne({ email });
+
+        if (!pastSignup) {
+            return res.status(404).json({ message: "Email doesn't exist. Please sign up as a new student!" });
+        }
+
+        // Check if the event exists
+        const event = await Event.findOne({ title: classTitle, date });
+        if (!event) {
+            console.error("Event not found:", { classTitle, date });
+            return res.status(404).json({ error: "Event not found for the given class and date." });
+        }
+
+        // Format event time and location
+        const time = event.time ? formatTimeTo12Hour(event.time) : "Time Not Specified";
+        const location = event.location || "Location Not Specified";
+
+        // Email to user
+        const userEmail = {
+            to: email,
+            from: process.env.EMAIL_USER,
+            subject: `You're in! Confirmation for ${classTitle} on ${date}`,
+            html: `
+                <p>Dear Student,</p>
+                <p>Thank you for signing up for the <strong>${classTitle}</strong> class on <strong>${date}</strong>.</p>
+                <p>Here are the details of the class:</p>
+                <ul>
+                    <li><strong>Date:</strong> ${date}</li>
+                    <li><strong>Time:</strong> ${time}</li>
+                    <li><strong>Location:</strong> ${location}</li>
+                </ul>
+                <p>Please arrive on time. If you're running late, text Zsuzsanna at <a href="tel:+15037346656">503-734-6656</a>.</p>
+                <p>Looking forward to seeing you!</p>
+                <p>With gratitude,<br>Zsuzsanna</p>
+            `,
+        };
+
+        // Email to admin
+        const adminEmail = {
+            to: process.env.EMAIL_RECEIVER,
+            from: process.env.EMAIL_USER,
+            subject: "Returning Student Signed Up",
+            html: `
+                <h2>Returning Student Signup</h2>
+                <p><b>Email:</b> ${email}</p>
+                <p><b>Class:</b> ${classTitle}</p>
+                <p><b>Date:</b> ${date}</p>
+                <p><b>Time:</b> ${time}</p>
+                <p><b>Location:</b> ${location}</p>
+            `,
+        };
+
+        await sgMail.send(userEmail);
+        await sgMail.send(adminEmail);
+
+        res.json({ message: 'Sign-up confirmation sent successfully' });
+
+    } catch (error) {
+        console.error('Error checking student:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 
 module.exports = router;
