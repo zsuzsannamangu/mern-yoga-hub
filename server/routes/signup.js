@@ -3,6 +3,7 @@ const router = express.Router();
 const sgMail = require("@sendgrid/mail");
 const Event = require("../models/Event");
 const Signup = require("../models/Signup"); // Unified Signup model
+const fetch = require('node-fetch'); // Required for making HTTP requests to reCAPTCHA API
 
 // Set SendGrid API key
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -21,7 +22,7 @@ function formatTimeTo12Hour(time) {
 
 // Signup route
 router.post("/signup", async (req, res) => {
-    const { name, email, phone, classTitle, date, signature } = req.body;
+    const { recaptchaToken, name, email, phone, classTitle, date, signature } = req.body;
 
     // Validate required fields
     if (!name || !email || !phone || !date || !classTitle || !signature) {
@@ -29,29 +30,54 @@ router.post("/signup", async (req, res) => {
         return res.status(400).json({ error: "All fields are required." });
     }
 
+    if (!recaptchaToken) {
+        return res.status(400).json({ message: "reCAPTCHA token is missing" });
+    }
+
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify`;
+
     try {
-        // Check if the event exists
+        // Step 1: Verify reCAPTCHA token
+        const recaptchaResponse = await fetch(verifyUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ secret: secretKey, response: recaptchaToken }),
+        });
+
+        const recaptchaData = await recaptchaResponse.json();
+
+        // If reCAPTCHA verification fails
+        if (!recaptchaData.success || recaptchaData.score < 0.5) {
+            console.error("reCAPTCHA verification failed:", recaptchaData);
+            return res.status(400).json({
+                error: "Failed reCAPTCHA verification. Please try again.",
+                score: recaptchaData.score,
+            });
+        }
+
+        // Step 2: Check if the event exists
         const event = await Event.findOne({ title: classTitle, date });
         if (!event) {
             console.error("Event not found:", { classTitle, date });
             return res.status(404).json({ error: "Event not found for the given class and date." });
         }
 
-        // Check for duplicate signup
+        // Step 3: Check for duplicate signup
         const existingSignup = await Signup.findOne({ email, classTitle, date });
         if (existingSignup) {
             console.error("Duplicate signup detected:", { email, classTitle, date });
             return res.status(400).json({ error: "You have already signed up for this class." });
         }
 
-        // Check if the class is full (limit 25 attendees)
+        // Step 4: Check if the class is full (limit 25 attendees)
         const currentSignups = await Signup.countDocuments({ classTitle, date });
         if (currentSignups >= 25) {
             console.error("Class is full:", { classTitle, date });
             return res.status(400).json({ error: "This class is full. Please select another date." });
         }
 
-        // Save the signup to the database
+        // Step 5: Save the signup to the database
         const newSignup = new Signup({
             name,
             email,
@@ -61,6 +87,8 @@ router.post("/signup", async (req, res) => {
             signature,
         });
         await newSignup.save();
+
+        // Step 6: Send confirmation emails:
 
         // Format event time and location
         const time = event.time ? formatTimeTo12Hour(event.time) : "Time Not Specified";

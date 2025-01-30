@@ -1,10 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import SignaturePad from "react-signature-canvas";
 import "./SignUps.scss";
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import { useLocation } from 'react-router-dom'; // use useLocation to retrieve the passed state from Calendar.js
+import { useLocation, useNavigate } from 'react-router-dom'; // use useLocation to retrieve the passed state from Calendar.js
 
 const Signup = () => {
   const sigPad = useRef();
@@ -12,6 +11,7 @@ const Signup = () => {
   const queryParams = new URLSearchParams(location.search);
   const navigate = useNavigate(); // Define navigate
   const [signatureData, setSignatureData] = useState(null);
+  const [recaptchaToken, setRecaptchaToken] = useState('');
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,6 +20,34 @@ const Signup = () => {
     date: queryParams.get('date') || "", // Extract from query params
     waiver: false,
   });
+
+  useEffect(() => {
+    const siteKey = process.env.REACT_APP_CAPTCHA_SITE_KEY;
+    if (!siteKey) {
+      console.error('reCAPTCHA site key is missing.');
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      if (window.grecaptcha) {
+        window.grecaptcha.ready(() => {
+          console.log('reCAPTCHA ready');
+        });
+      } else {
+        console.error('reCAPTCHA library not loaded.');
+      }
+    };
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const clearSignature = () => sigPad.current.clear();
 
@@ -43,17 +71,32 @@ const Signup = () => {
       Swal.fire({
         icon: 'error',
         title: 'Error!',
-        text: `Please sign and press "save signature" to complete!`,
+        text: `Please sign and click "save" signature to complete!`,
       })
       return;
     }
 
+    const siteKey = process.env.REACT_APP_CAPTCHA_SITE_KEY;
+    if (!window.grecaptcha || !siteKey) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'reCAPTCHA Not Ready',
+        text: 'Please wait a moment and try again.',
+      });
+      return;
+    }
+
     try {
+      console.log('Executing reCAPTCHA...');
+      const recaptchaToken = await window.grecaptcha.execute(siteKey, { action: 'signup_form_submit' });
+
+      console.log('reCAPTCHA token generated:', recaptchaToken);
+
       // Mock API call to save form data and signature
       const response = await fetch("http://localhost:5001/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, signature: signatureData }),
+        body: JSON.stringify({ ...formData, signature: signatureData, recaptchaToken }),
       });
 
       if (!response.ok) throw new Error("Failed to submit signup form.");
