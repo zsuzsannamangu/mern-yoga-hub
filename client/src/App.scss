@@ -123,6 +123,10 @@ a {
   }
 }
 
+.cart-button {
+  color: $button-text-color;
+}
+
 @media (max-width: 768px) {
   .navbar {
     display: flex;

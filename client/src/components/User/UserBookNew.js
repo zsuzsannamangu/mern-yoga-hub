@@ -277,6 +277,9 @@ function UserBookNew() {
             setSelectedSlot(null);
             setSessionType('');
             setMessage('');
+            setPaymentAmount(null); // Clears payment amount
+            setShowPayPal(false); // Hides PayPal buttons so they don't persist.
+            setPaymentSuccess(false); // Ensures PayPal validation resets
         } catch (error) {
             console.error('Error booking slot:', error);
             Swal.fire({
@@ -427,7 +430,7 @@ function UserBookNew() {
                                     </p>
                                 )}
                                 {paymentSuccess && (
-                                    <button onClick={handleSlotBooking}>Book</button>
+                                    <button className="book-slot-button" onClick={handleSlotBooking}>Finalize Booking</button>
                                 )}
                             </div>
                         </div>

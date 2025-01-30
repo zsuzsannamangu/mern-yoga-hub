@@ -14,6 +14,7 @@ const contactRoutes = require('./routes/contact');
 const userRoutes = require('./routes/user');
 const signupRoutes = require("./routes/signup");
 const publicBookingsRoutes = require('./routes/publicBookings');
+const orderRoutes = require("./routes/orders");
 
 const cookieParser = require('cookie-parser');
 
@@ -73,6 +74,7 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/user', userRoutes);
 app.use("/api", signupRoutes);
 app.use('/api/publicBookings', publicBookingsRoutes);
+app.use("/api", orderRoutes);
 
 io.on('connection', (socket) => {
     console.log('New client connected:', socket.id);

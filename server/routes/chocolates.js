@@ -3,7 +3,7 @@ const router = express.Router();
 const Chocolate = require('../models/Chocolate');
 const { authMiddleware, adminMiddleware } = require('../middlewares/auth');
 
-// GET: Fetch all chocolates
+// GET: Fetch all chocolates (public)
 router.get('/', async (req, res) => {
     try {
         const chocolates = await Chocolate.find();

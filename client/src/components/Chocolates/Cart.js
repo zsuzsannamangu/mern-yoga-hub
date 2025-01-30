@@ -89,10 +89,27 @@ function Cart() {
             Swal.fire({
               icon: 'success',
               title: 'Payment Successful',
-              text: `Transaction completed by ${details.payer.name.given_name}`,
+              text: 'Transaction completed!',
             });
+
+            // Send order details to backend
+            fetch("http://localhost:5001/api/orders", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                orderId: details.id,
+                payerName: details.payer.name.given_name,
+                payerEmail: details.payer.email_address,
+                transactionAmount: details.purchase_units[0].amount.value,
+                cartItems,
+              }),
+            })
+              .then((res) => res.json())
+              .then((response) => console.log("Order saved:", response))
+              .catch((error) => console.error("Order save failed:", error));
           });
         },
+
         onError: (err) => {
           console.error('PayPal Checkout Error:', err);
           Swal.fire({

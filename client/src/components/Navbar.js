@@ -63,7 +63,13 @@ function Navbar() {
             </div>
 
             <div className="nav-buttons">
-                {isAuthenticated ? (
+                {isChocolatesOrCartPage ? (
+                    <button>
+                        <Link to="/cart" className="cart-button">
+                            Cart ({cartCount}) {/* Display cart item count */}
+                        </Link>
+                    </button>
+                ) : isAuthenticated ? (
                     <div ref={menuRef}>
                         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
                             {/* ProfileIcon now only displays initials */}
