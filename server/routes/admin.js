@@ -6,6 +6,7 @@ const Event = require('../models/Event');
 const { authMiddleware, adminMiddleware } = require('../middlewares/auth'); // Import middlewares
 const router = express.Router();
 const dotenv = require('dotenv');
+const User = require('../models/User');
 dotenv.config();
 
 // Admin Login
@@ -110,7 +111,15 @@ router.delete('/bookings/cleanup', async (req, res) => {
     }
 });
 
-
-
+// GET all users for the admin page
+router.get('/users', async (req, res) => {
+    try {
+        const users = await User.find(); // Fetch all users, use model: User
+        res.status(200).json(users);
+    } catch (error) {
+        console.error("Error fetching users:", error.message);
+        res.status(500).json({ error: "Failed to fetch users." });
+    }
+});
 
 module.exports = router;

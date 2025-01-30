@@ -34,6 +34,11 @@ const AdminNavbar = () => {
                             Classes
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink to="/admin/users" activeClassName="active-link">
+                            Clients
+                        </NavLink>
+                    </li>
                     <button onClick={logout}>Logout</button>
                 </ul>
             </nav>

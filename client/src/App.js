@@ -30,6 +30,7 @@ import AdminBookings from './components/Admin/AdminBooking';
 import AdminChocolates from './components/Admin/AdminChocolates';
 import SignUpSelection from './components/Calendar/SignUpSelection';
 import AdminSignups from './components/Admin/AdminSignups';
+import AdminUsers from './components/Admin/AdminUsers';
 
 // Protected routes for guarding user and admin routes
 import { UserProtectedRoute, AdminProtectedRoute } from './routes/ProtectedRoutes';
@@ -130,6 +131,14 @@ function App() {
                   element={
                     <AdminProtectedRoute>
                       <AdminSignups showAlert={showAlert} />
+                    </AdminProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/users"
+                  element={
+                    <AdminProtectedRoute>
+                      <AdminUsers showAlert={showAlert} />
                     </AdminProtectedRoute>
                   }
                 />

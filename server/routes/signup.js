@@ -147,7 +147,7 @@ router.get("/admin/signups", async (req, res) => {
     }
 });
 
-// DELETE a specific signup by ID
+// DELETE a specific signup by ID on Admin page
 router.delete("/signup/:id", async (req, res) => {
     const { id } = req.params;
     try {
