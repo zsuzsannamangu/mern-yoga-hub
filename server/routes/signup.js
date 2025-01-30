@@ -90,15 +90,15 @@ router.post("/signup", async (req, res) => {
             subject: "New Sign Up",
             html: `
                 <h2>New Signup Received</h2>
-                <p><b>Name:</b> ${name}</p>
-                <p><b>Email:</b> ${email}</p>
-                <p><b>Phone:</b> ${phone}</p>
-                <p><b>Class:</b> ${classTitle}</p>
-                <p><b>Date:</b> ${date}</p>
+                <p><b>Name:</b> ${newSignup.name}</p>
+                <p><b>Email:</b> ${newSignup.email}</p>
+                <p><b>Phone:</b> ${newSignup.phone}</p>
+                <p><b>Class:</b> ${newSignup.classTitle}</p>
+                <p><b>Date:</b> ${newSignup.date}</p>
                 <p><b>Time:</b> ${time}</p>
                 <p><b>Location:</b> ${location}</p>
                 <p><b>Signature:</b></p>
-                <img src="${signature}" alt="Signature" style="border: 1px solid #000; width: 300px;" />
+                <img src="${newSignup.signature}" alt="Signature" style="border: 1px solid #000; width: 300px;" />
             `,
         };
 
@@ -106,20 +106,20 @@ router.post("/signup", async (req, res) => {
         const userEmail = {
             to: email,
             from: process.env.EMAIL_USER,
-            subject: `You're in! Confirmation for ${classTitle} on ${date}`,
+            subject: `You're in! Confirmation for ${newSignup.classTitle} on ${newSignup.date}`,
             html: `
-                <p>Dear ${name},</p>
-                <p>Thank you for signing up for the ${classTitle} class on ${date}.</p>
+                <p>Dear ${newSignup.name},</p>
+                <p>Thank you for signing up for the ${newSignup.classTitle} class on ${newSignup.date}.</p>
                 <p>Here are the details of the class:</p>
                 <ul>
-                    <li><strong>Date:</strong> ${date}</li>
+                    <li><strong>Date:</strong> ${newSignup.date}</li>
                     <li><strong>Time:</strong> ${time}</li>
                     <li><strong>Duration:</strong> 60 minutes</li>
                     <li><strong>Location:</strong> ${location}</li>
                 </ul>
                 <p>There is no front desk, so please try your best to arrive on time. If you’re running late, text Zsuzsanna at <a href="tel:+15037346656">503-734-6656</a> with your name and estimated time of arrival if possible.</p>
                 <p>Below is a copy of the waiver you signed:</p>
-                <pre style="white-space: pre-wrap;">${waiverText}</pre>
+                <pre style="white-space: pre-wrap;">${newSignup.waiverText}</pre>
                 <p>Looking forward to seeing you!</p>
                 <p>With gratitude,<br>Zsuzsanna</p>
             `,
@@ -170,6 +170,8 @@ router.post('/check-student', async (req, res) => {
         // Check if the user has signed up for any previous class
         const pastSignup = await Signup.findOne({ email });
 
+        const { name, phone } = pastSignup;
+
         if (!pastSignup) {
             return res.status(404).json({ message: "Email doesn't exist. Please sign up as a new student!" });
         }
@@ -191,15 +193,16 @@ router.post('/check-student', async (req, res) => {
             from: process.env.EMAIL_USER,
             subject: `You're in! Confirmation for ${classTitle} on ${date}`,
             html: `
-                <p>Dear Student,</p>
+                <p>Dear ${name},</p>
                 <p>Thank you for signing up for the <strong>${classTitle}</strong> class on <strong>${date}</strong>.</p>
                 <p>Here are the details of the class:</p>
                 <ul>
                     <li><strong>Date:</strong> ${date}</li>
                     <li><strong>Time:</strong> ${time}</li>
+                    <li><strong>Duration:</strong> 60 minutes</li>
                     <li><strong>Location:</strong> ${location}</li>
                 </ul>
-                <p>Please arrive on time. If you're running late, text Zsuzsanna at <a href="tel:+15037346656">503-734-6656</a>.</p>
+                <p>There is no front desk, so please try your best to arrive on time. If you’re running late, text Zsuzsanna at <a href="tel:+15037346656">503-734-6656</a> with your name and estimated time of arrival if possible.</p>
                 <p>Looking forward to seeing you!</p>
                 <p>With gratitude,<br>Zsuzsanna</p>
             `,
@@ -212,7 +215,9 @@ router.post('/check-student', async (req, res) => {
             subject: "Returning Student Signed Up",
             html: `
                 <h2>Returning Student Signup</h2>
+                <p><b>Name:</b> ${name}</p>
                 <p><b>Email:</b> ${email}</p>
+                <p><b>Phone:</b> ${phone}</p>
                 <p><b>Class:</b> ${classTitle}</p>
                 <p><b>Date:</b> ${date}</p>
                 <p><b>Time:</b> ${time}</p>
