@@ -35,21 +35,25 @@ const SignUpSelection = () => {
             });
 
             const data = await response.json();
-            if (response.ok) {
+            if (response.status === 200) {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Registration email sent!',
-                    text: 'Check your email for sign-up confirmation.',
+                    title: 'Registration confirmed!',
+                    text: 'Check your email for details.',
                 });
-                setEmail(''); // Clear email input
-                setError(''); // Clear error message
+                setEmail('');
+                setError('');
+            } else if (response.status === 400) {
+                setError(data.error); // "You have already signed up for this class."
+            } else if (response.status === 404) {
+                setError(data.message); // "Email not found. Please sign up as a new student!"
             } else {
-                setError(data.message || 'Error checking email.');
+                setError('Unexpected error. Please try again.');
             }
         } catch (err) {
             setError('Server error. Please try again.');
         }
-        setIsChecking(false); // Stops loading state, ensures the button updates correctly
+        setIsChecking(false); // Stops loading state, frontend should prevent multiple clicks while checking
     };
 
     const handleNewStudent = () => {
@@ -65,8 +69,8 @@ const SignUpSelection = () => {
             <div className="signup-options">
                 {/* Returning Student Section */}
                 <div className="returning-student">
-                    <h3>Returning Student</h3>
-                    <p>If you’ve attended a class before, enter your email to receive registration confirmation.</p>
+                    <h3>I'm a Returning Student</h3>
+                    <p>If you’ve attended a class with me before, enter your email to receive registration confirmation.</p>
                     <div className="returning-student-container">
                         <input
                             type="email"
@@ -81,8 +85,8 @@ const SignUpSelection = () => {
 
                 {/* New Student Section */}
                 <div className="new-student">
-                    <h3>New Student</h3>
-                    <p>If this is your first class, complete the sign up form and sign the waiver.</p>
+                    <h3>I'm a New Student</h3>
+                    <p>If this is your first class with me, complete the sign up form and sign the waiver.</p>
                     <button onClick={handleNewStudent}>New student sign up</button>
                 </div>
             </div>

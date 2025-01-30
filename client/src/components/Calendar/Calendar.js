@@ -36,10 +36,13 @@ export default class Calendar extends Component {
       }
 
       const data = await response.json();
-
       const eventsObject = {};
-      data.forEach((event) => {
+
+      //data.forEach((event) => {
+      // Iterate through each event and check if it's full
+      for (const event of data) {
         const dateKey = event.date; // Ensure event.date is in YYYY-MM-DD format
+
         const formatTime = (time) => {
           const [hour, minute] = time.split(':');
           const date = new Date();
@@ -50,6 +53,13 @@ export default class Calendar extends Component {
             hour12: true,
           });
         };
+
+        // Check if the class is full
+        const classStatusResponse = await fetch(
+          `http://localhost:5001/api/class-status?classTitle=${encodeURIComponent(event.title)}&date=${event.date}`
+        );
+        const classStatusData = await classStatusResponse.json();
+        const isFull = classStatusData.isFull; // Boolean indicating if class is full
 
         if (!eventsObject[dateKey]) {
           eventsObject[dateKey] = [];
@@ -62,9 +72,10 @@ export default class Calendar extends Component {
           location: event.location,
           signUpLink: event.signUpLink,
           isExternal: event.isExternal || false,
+          isFull, // Store class full status
         });
 
-      });
+      }
 
       this.setState({ events: eventsObject }, this.setFirstAvailableEvent);
     } catch (error) {
@@ -182,9 +193,6 @@ export default class Calendar extends Component {
                     const eventDateTime = new Date(`${formattedDate}T${event.rawTime}`);
                     const isPast = eventDateTime < new Date();
 
-                    // Add a check for the signup count (assuming you can fetch it from the backend)
-                    //const isFull = event.currentSignups >= 25; // Replace with the actual property or a backend API call if needed
-
                     return (
                       <div
                         key={index}
@@ -200,7 +208,9 @@ export default class Calendar extends Component {
                         </p>
                         <p>
                           {!isPast ? (
-                            event.signUpLink ? (
+                            event.isFull ? ( // Check if the class is full
+                              <span className="disabled-link">Class Full</span>
+                            ) : event.signUpLink ? (
                               <a
                                 href={event.signUpLink}
                                 target="_blank"
