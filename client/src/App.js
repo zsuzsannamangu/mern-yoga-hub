@@ -31,6 +31,7 @@ import AdminChocolates from './components/Admin/AdminChocolates';
 import SignUpSelection from './components/Calendar/SignUpSelection';
 import AdminSignups from './components/Admin/AdminSignups';
 import AdminUsers from './components/Admin/AdminUsers';
+import AboutWebsite from "./components/AboutWebsite/AboutWebsite"; // Import the new page
 
 // Protected routes for guarding user and admin routes
 import { UserProtectedRoute, AdminProtectedRoute } from './routes/ProtectedRoutes';
@@ -73,6 +74,7 @@ function App() {
                 <Route path="/login" element={<Login showAlert={showAlert} />} />
                 <Route path="/signup" element={<Signups />} />
                 <Route path="/signup-selection" element={<SignUpSelection />} />
+                <Route path="/aboutwebsite" element={<AboutWebsite />} />
 
                 {/* User Protected Routes */}
                 <Route

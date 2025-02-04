@@ -1,0 +1,90 @@
+@use "../../styles/variables" as *;
+
+.about-app {
+    background-color: $secondary-background-color;
+    padding: 40px 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+
+    .about-container {
+        max-width: 800px;
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            color: $main-title-color;
+            font-family: $font-secondary;
+            margin-bottom: 20px;
+        }
+
+        section {
+            margin-bottom: 30px;
+
+            h2 {
+                font-size: 1.5rem;
+                color: $primary-button-color;
+                border-bottom: 2px solid $border-color;
+                padding-bottom: 5px;
+                margin-bottom: 15px;
+            }
+
+            p {
+                font-size: 1rem;
+                color: $text-color;
+                line-height: 1.6;
+            }
+
+            ul {
+                list-style-type: none;
+                padding: 0;
+
+                li {
+                    padding: 8px 0;
+                    font-size: 1rem;
+                    color: $text-color;
+
+                    strong {
+                        color: $main-title-color;
+                    }
+                }
+            }
+
+            a {
+                color: $primary-button-color;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .about-app {
+        padding: 20px;
+    }
+
+    .about-container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    p, li {
+        font-size: 0.95rem;
+    }
+}

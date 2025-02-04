@@ -3,6 +3,7 @@ import Swal from 'sweetalert2'; // SweetAlert2 is already imported
 import './Cart.scss';
 import '../../App.scss';
 import { useCart } from '../../context/CartContext';
+import axios from 'axios';
 
 function Cart() {
   const { cartItems, updateQuantity, removeFromCart } = useCart();
@@ -184,12 +185,13 @@ function Cart() {
             </div>
           ))}
         </div>
+
         <div className="order-summary">
           <h2>Order summary</h2>
           <div className="summary-details">
             <p>Subtotal <span>${subtotal.toFixed(2)}</span></p>
-            <p>Shipping <span>$5.00</span></p>
-            <p>Tax <span>${(subtotal * 0.1).toFixed(2)}</span></p>
+            <p>Shipping <span>$5.50</span></p>
+            {/* <p>Tax <span>${(subtotal * 0.1).toFixed(2)}</span></p> */}
             <p className="total">Total <span>${total}</span></p>
           </div>
           {!showPayPal ? (
