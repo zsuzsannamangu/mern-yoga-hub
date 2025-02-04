@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Import Link for navigation
 import "./AboutWebsite.scss";
-import { FaGithub } from 'react-icons/fa'; // GitHub and Instagram icons from react-icons
+import { FaGithub } from 'react-icons/fa'; // GitHub icon from react-icons
 
 const AboutWebsite = () => {
     return (
@@ -64,9 +64,11 @@ const AboutWebsite = () => {
                         <Link to="/contact" className="contact-link"> Message me! </Link>
                     </p>
                 </section>
+
+                {/* GitHub link */}
                 <section className="code">
                     <p>
-                        <FaGithub style={{ marginLeft: '8px', verticalAlign: 'middle' }} /> {/* GitHub icon */} See the code on 
+                        <FaGithub style={{ marginLeft: '8px', verticalAlign: 'middle' }} /> {/* GitHub icon */} See the code on
                         <a
                             href="https://github.com/zsuzsannamangu/MERN-yoga-hub/tree/main" // GitHub profile link
                             target="_blank" // Open in a new tab

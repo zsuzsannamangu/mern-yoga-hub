@@ -4,6 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import './Offerings.scss';
 import '../../App.scss';
 
+/**
+ * Offerings Data
+ * An array of objects representing different yoga offerings.
+ * Each object contains:
+ * - id: Unique identifier
+ * - title: Name of the offering
+ * - description: HTML formatted description
+ * - image: Path to the offering image
+ */
+
 const offeringsData = [
     {
         id: 1,
@@ -43,29 +53,38 @@ const offeringsData = [
     },
 ];
 
-function Offerings() {
-    const navigate = useNavigate();
-    const [selectedOffering, setSelectedOffering] = useState(null);
+/**
+ * Offerings Component
+ * Displays different yoga offerings, allowing users to view details and book sessions.
+ */
 
-    const handleOpenModal = (offering) => {
+function Offerings() {
+    const navigate = useNavigate(); // React Router hook for navigation
+    const [selectedOffering, setSelectedOffering] = useState(null); // State for managing modal visibility
+
+    const handleOpenModal = (offering) => {     // Opens the modal for the selected offering
         setSelectedOffering(offering);
     };
 
+    const handleCloseModal = () => { // Closes the modal
+        setSelectedOffering(null);
+    };
+
+    //Navigates to the booking section on the homepage
     const handleBookClick = () => {
         navigate('/'); // Navigate to homepage
-        setTimeout(() => {
+        setTimeout(() => { // Uses a timeout to ensure the section is scrolled into view after navigation
             document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' });
         }, 0); // Delay to ensure the page has loaded
     };
 
-    const handleCloseModal = () => {
-        setSelectedOffering(null);
-    };
 
     return (
         <div className="offerings-section">
             <h2 className="section-title">Offerings</h2>
             <div className="title-line"></div>
+
+            {/* Offerings List */}
             <div className="offerings-grid">
                 {offeringsData.map((offering) => (
                     <div key={offering.id} className="offering-card">
@@ -78,6 +97,7 @@ function Offerings() {
                 ))}
             </div>
 
+            {/* Modal Section */}
             {selectedOffering && (
                 <div className="modal-overlay" onClick={handleCloseModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
