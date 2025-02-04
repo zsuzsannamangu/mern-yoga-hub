@@ -4,7 +4,7 @@
 ## Overview
 This project is a full-stack web application built using the MERN stack. The application provides functionality for managing bookings, signing up for calendar events, sending email notifications, and a secure payment system.
 
-I am currently in the process of finalizing, then Dockerizing and deploying this application. The expected deployment date is 01/31/2025.
+I am currently in the process of finalizing, then Dockerizing and deploying this application. The expected deployment date is 02/15/2025.
 
 - **MongoDB**: A NoSQL database for storing application data.
 - **Express.js**: A Node.js framework for building the backend API.
