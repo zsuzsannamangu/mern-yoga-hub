@@ -180,7 +180,6 @@ router.delete("/signup/:id", async (req, res) => {
     const { id } = req.params;
     try {
         const deletedSignup = await Signup.findByIdAndDelete(id);
-        console.log("Deleted signup result:", deletedSignup);
         if (!deletedSignup) {
             return res.status(404).json({ error: "Signup not found." });
         }

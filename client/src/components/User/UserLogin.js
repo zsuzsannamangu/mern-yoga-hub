@@ -29,19 +29,18 @@ function UserLogin() {
             // Clear the email field
             setForm({ email: '' });
         } catch (error) {
-            console.error('Login Error:', error.response?.data);
 
             const errorMessage =
                 error.response?.data?.message || 'Could not send login email. Please try again.';
 
             Swal.fire({
-                title: 'Login Failed',
-                text: errorMessage,
                 icon: 'error',
-                confirmButtonText: 'OK',
+                title: 'Login Failed',
+                text: errorMessage || 'We couldn’t log you in. Please check your credentials and try again.',
+                confirmButtonText: 'OK'
             });
         }
-    };    
+    };
 
     return (
         <div className="login-page">

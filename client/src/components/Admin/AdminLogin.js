@@ -16,10 +16,8 @@ const AdminLogin = () => {
     useEffect(() => { //useEffect() is used here to prevent the redirection logic from interfering with React's rendering process
         const token = localStorage.getItem('adminToken'); //Fetches adminToken from localStorage (browser storage)
         if (token) { //If the token exists it assumes the admin is logged in and redirects to admin/dashboard
-            console.log('Token found, redirecting to dashboard');
             navigate('/admin/dashboard');
         } else { //If no token exists, remain on login page
-            console.log('No token found, staying on login page');
         }
     }, [navigate]);
 

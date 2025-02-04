@@ -3,6 +3,8 @@ import { adminAxiosInstance } from '../../config/axiosConfig'; //using named exp
 import AdminNavbar from './AdminNavbar';
 import './AdminBooking.scss';
 import '../../App.scss';
+import Swal from 'sweetalert2';
+import '@sweetalert2/theme-material-ui/material-ui.css';
 
 const AdminBooking = () => {
     const [availableSlots, setAvailableSlots] = useState([]);
@@ -37,12 +39,9 @@ const AdminBooking = () => {
             const sortedAvailableSlots = availableSlots.sort((a, b) => new Date(a.date) - new Date(b.date));
             const sortedBookedSlots = bookedSlots.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-            console.log("Sorted Available Slots:", sortedAvailableSlots);
-            console.log("Sorted Booked Slots:", sortedBookedSlots);
-
             setAvailableSlots(sortedAvailableSlots);
             setBookedSlots(sortedBookedSlots); // This will trigger useEffect for categorization
-            let {upcoming, passed} = categorizeBookedSlots(sortedBookedSlots); // Ensure slots are categorized after sorting
+            let { upcoming, passed } = categorizeBookedSlots(sortedBookedSlots); // Ensure slots are categorized after sorting
             setUpcomingSlots([...upcoming]); // Ensure immutability
             setPassedSlots([...passed]);    // Ensure immutability
         } catch (error) {
@@ -66,7 +65,7 @@ const AdminBooking = () => {
                 passed.push(slot);
             }
         });
-        return {upcoming, passed}
+        return { upcoming, passed }
     };
 
     // Re-categorize slots periodically
@@ -81,7 +80,12 @@ const AdminBooking = () => {
     const addSlot = async (e) => {
         e.preventDefault();
         if (!newSlot.date || !newSlot.time) {
-            alert('Please fill out all fields');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please fill out all the fields!',
+                confirmButtonText: 'OK'
+            });
             return;
         }
 
@@ -111,46 +115,104 @@ const AdminBooking = () => {
             await adminAxiosInstance.post('/api/bookings', { slots }, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            alert('Slots added successfully');
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Slots added successfully.',
+                confirmButtonText: 'OK'
+            });
             setNewSlot({ date: '', time: '', repeat: '', occurrences: '' });
             fetchSlots();
         } catch (error) {
-            console.error('Error adding slot:', error.message);
-            alert('Failed to add slots. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to add slot.',
+                text: 'Please try again later.',
+                confirmButtonText: 'OK'
+            });
         }
     };
 
     // Delete a slot
     const deleteSlot = async (id) => {
-        if (!window.confirm('Are you sure you want to delete this slot?')) return;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This will permanently delete the slot.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ff6b6b',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            customClass: {
+                confirmButton: 'swal-confirm-button', // Ensures correct text color
+            }
+        }).then(async (result) => {
+            if (!result.isConfirmed) return; // Exit if user cancels
 
-        try {
-            const token = localStorage.getItem('adminToken');
-            await adminAxiosInstance.delete(`/api/bookings/${id}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            alert('Slot deleted successfully');
-            fetchSlots();
-        } catch (error) {
-            console.error('Error deleting slot:', error.message);
-        }
+            try {
+                const token = localStorage.getItem('adminToken');
+                await adminAxiosInstance.delete(`/api/bookings/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Slot deleted successfully.',
+                    confirmButtonText: 'OK'
+                });
+
+                fetchSlots(); // Refresh slot list after deletion
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error Deleting Slot',
+                    text: error.response?.data?.message || 'Something went wrong. Please try again later.',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
     };
 
     // Delete a session (upcoming or passed)
     const deleteSession = async (id) => {
-        if (!window.confirm('Are you sure you want to delete this session?')) return;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This will permanently delete this session.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ff6b6b',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            customClass: {
+                confirmButton: 'swal-confirm-button', // Ensures correct text color
+            }
+        }).then(async (result) => {
+            if (!result.isConfirmed) return; // Exit if user cancels
 
-        try {
-            const token = localStorage.getItem('adminToken');
-            await adminAxiosInstance.delete(`/api/bookings/${id}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            alert('Session deleted successfully');
-            fetchSlots(); // Refresh the slots after deletion
-        } catch (error) {
-            console.error('Error deleting session:', error.message);
-            alert('Failed to delete session. Please try again.');
-        }
+            try {
+                const token = localStorage.getItem('adminToken');
+                await adminAxiosInstance.delete(`/api/bookings/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Session deleted successfully',
+                    confirmButtonText: 'OK'
+                });
+                fetchSlots(); // Refresh the slots after deletion
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to delete session.',
+                    text: error.message,
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
     };
 
     // Load slots on component mount

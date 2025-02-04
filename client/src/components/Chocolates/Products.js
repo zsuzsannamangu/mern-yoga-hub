@@ -20,8 +20,12 @@ function Products({ showAlert }) {
         const res = await userAxiosInstance.get('/api/chocolates');
         setProducts(res.data);
       } catch (error) {
-        console.error('Failed to fetch products:', error.message);
-        alert('Error! Failed to fetch products.', 'error');
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops! Unable to Load Products!',
+          text: 'Please check your internet connection or refresh the page to try again.',
+          confirmButtonText: 'OK'
+        });
       }
     };
     fetchProducts();

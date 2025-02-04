@@ -34,13 +34,22 @@ const Signup = () => {
     script.defer = true;
     document.body.appendChild(script);
 
+    let isRecaptchaReady = false;
+
     script.onload = () => {
       if (window.grecaptcha) {
         window.grecaptcha.ready(() => {
-          console.log('reCAPTCHA ready');
+          isRecaptchaReady = true;
+          // Perform any action needed when reCAPTCHA is ready
         });
       } else {
-        console.error('reCAPTCHA library not loaded.');
+        // Handle failure case, such as showing a warning message to the user
+        Swal.fire({
+          icon: 'error',
+          title: 'reCAPTCHA Failed to Load',
+          text: 'Please refresh the page or check your internet connection.',
+          confirmButtonText: 'OK'
+        });
       }
     };
 
@@ -70,9 +79,10 @@ const Signup = () => {
     if (!signatureData) {
       Swal.fire({
         icon: 'error',
-        title: 'Error!',
-        text: `Please sign and click "save" signature to complete!`,
-      })
+        title: 'Signature Required',
+        text: 'Please sign your name and save your signature before submitting the form.',
+        confirmButtonText: 'Got it'
+      });
       return;
     }
 
@@ -80,17 +90,15 @@ const Signup = () => {
     if (!window.grecaptcha || !siteKey) {
       Swal.fire({
         icon: 'warning',
-        title: 'reCAPTCHA Not Ready',
-        text: 'Please wait a moment and try again.',
+        title: 'Verification Not Ready',
+        text: 'reCAPTCHA is still loading. Please wait a moment and try again.',
+        confirmButtonText: 'Okay'
       });
       return;
     }
 
     try {
-      console.log('Executing reCAPTCHA...');
       const recaptchaToken = await window.grecaptcha.execute(siteKey, { action: 'signup_form_submit' });
-
-      console.log('reCAPTCHA token generated:', recaptchaToken);
 
       // Mock API call to save form data and signature
       const response = await fetch("http://localhost:5001/api/signup", {
@@ -116,8 +124,9 @@ const Signup = () => {
     } catch (error) {
       Swal.fire({
         icon: 'error',
-        title: 'Error!',
-        text: `Failed to sign up. Please try again later.`,
+        title: 'Sign-Up Failed',
+        text: 'Something went wrong. Please try again later or contact me if the issue persists.',
+        confirmButtonText: 'Okay'
       });
     }
   };

@@ -73,7 +73,7 @@ function UserAccount() {
             console.error('Error updating profile:', error);
             Swal.fire({
                 icon: 'error',
-                title: 'Error!',
+                title: 'Something went wrong!',
                 text: 'Failed to update profile. Please try again later.',
             });
         }

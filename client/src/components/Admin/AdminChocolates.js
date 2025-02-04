@@ -3,6 +3,8 @@ import { adminAxiosInstance } from '../../config/axiosConfig';
 import './AdminChocolates.scss';
 import AdminNavbar from './AdminNavbar';
 import '../../App.scss';
+import Swal from 'sweetalert2';
+import '@sweetalert2/theme-material-ui/material-ui.css';
 
 const AdminChocolates = () => {
   const [products, setProducts] = useState([]);
@@ -36,16 +38,25 @@ const AdminChocolates = () => {
     const product = products[index];
     try {
       await adminAxiosInstance.put(`/api/chocolates/${product._id}`, product); // Use `_id` from MongoDB
-      alert('Product updated successfully!');
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Product updated successfully!',
+        confirmButtonText: 'OK'
+      });
     } catch (error) {
-      console.error('Error updating product:', error.message);
-      alert('Failed to update product.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error updating product:',
+        text: error.message,
+        confirmButtonText: 'OK'
+      });
     }
   };
 
   return (
     <div className="admin-chocolates">
-        <AdminNavbar />
+      <AdminNavbar />
       <h3 className="section-title">Manage Chocolates</h3>
       <div className="products-grid">
         {products.map((product, index) => (

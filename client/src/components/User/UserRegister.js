@@ -17,9 +17,10 @@ function UserRegister() {
             const response = await userAxiosInstance.post('/api/user/register', form);
 
             Swal.fire({
-                title: 'Registration Successful!',
-                text: response.data.message,
                 icon: 'success',
+                title: 'Registration Successful!',
+                text: response.data.message || 'Your account has been created successfully. Welcome aboard!',
+                confirmButtonText: 'OK'
             });
 
             // Automatically log the user in if the token is included in the response
@@ -32,11 +33,11 @@ function UserRegister() {
             // Clear the form fields
             setForm({ firstName: '', lastName: '', email: '' });
         } catch (error) {
-            console.error('[User Response Error]', error);
             Swal.fire({
-                title: 'Registration Failed',
-                text: error.response?.data?.message || 'An error occurred. Please try again.',
                 icon: 'error',
+                title: 'Registration Failed',
+                text: error.response?.data?.message || 'We couldn’t complete your registration. Please check your details and try again.',
+                confirmButtonText: 'OK'
             });
         }
     };

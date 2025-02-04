@@ -32,11 +32,11 @@ function Cart() {
           script.id = 'paypal-sdk';
           script.onload = () => renderPayPalButtons();
           script.onerror = () => {
-            console.error('Failed to load PayPal SDK.');
             Swal.fire({
               icon: 'error',
-              title: 'Error',
-              text: 'Failed to load PayPal. Please try again later.',
+              title: 'Payment Service Unavailable',
+              text: 'We couldn’t load PayPal. Please refresh the page or try again later.',
+              confirmButtonText: 'OK'
             });
             setPaypalError(true);
             setShowPayPal(false);
@@ -44,11 +44,11 @@ function Cart() {
           document.body.appendChild(script);
         })
         .catch((error) => {
-          console.error('Error fetching PayPal Client ID:', error);
           Swal.fire({
             icon: 'error',
-            title: 'Error',
-            text: 'Failed to load PayPal. Please try again later.',
+            title: 'Payment Service Unavailable',
+            text: 'We couldn’t load PayPal. Please check your internet connection, refresh the page, or try again later.',
+            confirmButtonText: 'Retry'
           });
           setPaypalError(true);
           setShowPayPal(false);
@@ -61,11 +61,11 @@ function Cart() {
   const renderPayPalButtons = () => {
     const container = document.getElementById('paypal-button-container');
     if (!container) {
-      console.error('PayPal button container not found.');
       Swal.fire({
         icon: 'error',
-        title: 'Error',
-        text: 'PayPal button container not found. Please try again.',
+        title: 'Payment Error',
+        text: 'We couldn’t find the PayPal button. Please refresh the page and try again.',
+        confirmButtonText: 'OK'
       });
       setShowPayPal(false);
       return;
@@ -105,17 +105,33 @@ function Cart() {
               }),
             })
               .then((res) => res.json())
-              .then((response) => console.log("Order saved:", response))
-              .catch((error) => console.error("Order save failed:", error));
+              .then((response) => {
+                // Show confirmation message or redirect user
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Order Confirmed!',
+                  text: 'Your order has been successfully placed.',
+                  confirmButtonText: 'OK'
+                });
+              })
+              .catch((error) => {
+                // Handle error with a user-friendly message
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Order Submission Failed',
+                  text: 'We couldn’t save your order. Please contact support if this issue persists.',
+                  confirmButtonText: 'OK'
+                });
+              });
           });
         },
 
         onError: (err) => {
-          console.error('PayPal Checkout Error:', err);
           Swal.fire({
             icon: 'error',
-            title: 'Payment Failed',
-            text: 'Payment failed. Please try again.',
+            title: 'Payment Unsuccessful',
+            text: 'Your payment could not be processed. Please check your payment details and try again.',
+            confirmButtonText: 'Try Again'
           });
           setPaypalError(true);
           setShowPayPal(false);
@@ -123,11 +139,11 @@ function Cart() {
       })
       .render('#paypal-button-container')
       .catch((err) => {
-        console.error('PayPal Buttons Rendering Error:', err);
         Swal.fire({
           icon: 'error',
-          title: 'Error',
-          text: 'Failed to render PayPal buttons. Please try again.',
+          title: 'Payment Button Error',
+          text: 'We couldn’t load the PayPal buttons. Please refresh the page and try again.',
+          confirmButtonText: 'Refresh Page'
         });
         setPaypalError(true);
         setShowPayPal(false);

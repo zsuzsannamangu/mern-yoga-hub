@@ -21,7 +21,6 @@ router.post('/request', async (req, res) => {
     try {
         const captchaResponse = await fetch(verificationUrl, { method: 'POST' });
         const captchaData = await captchaResponse.json();
-        console.log('CAPTCHA Response:', captchaData);
 
         // Check if reCAPTCHA was successful
         if (!captchaData.success) {

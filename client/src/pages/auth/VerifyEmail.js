@@ -31,7 +31,7 @@ function VerifyEmail() {
                     const userData = userResponse.data;
 
                     // Call login function to update context
-                    login({userData, id: userData._id}, token);
+                    login({ userData, id: userData._id }, token);
 
                     // Save the token and user to localStorage
                     localStorage.setItem('userToken', token);
@@ -39,9 +39,10 @@ function VerifyEmail() {
 
                     // Redirect user to their dashboard
                     Swal.fire({
-                        title: 'Email Verified',
-                        text: 'You have been logged in successfully.',
                         icon: 'success',
+                        title: 'Email Verified!',
+                        text: 'Your email has been successfully verified, and you are now logged in.',
+                        confirmButtonText: 'OK'
                     }).then(() => {
                         navigate(`/user/${userId}`);
                     });
@@ -49,7 +50,6 @@ function VerifyEmail() {
                     throw new Error('Invalid response: Missing token or userId.');
                 }
             } catch (error) {
-                console.error('Verification failed:', error.response?.data || error.message);
                 setMessage(error.response?.data?.message || 'Verification failed.');
             }
         };

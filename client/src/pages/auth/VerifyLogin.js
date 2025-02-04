@@ -30,6 +30,7 @@ function VerifyLogin() {
 
                     // Redirect user to their dashboard
                     Swal.fire({
+                        icon: 'success',
                         title: 'Login Successful',
                         text: 'You have been logged in successfully.',
                         icon: 'success',
@@ -40,11 +41,11 @@ function VerifyLogin() {
                     throw new Error('Invalid response: Missing token or user.');
                 }
             } catch (error) {
-                console.error('Login Verification Error:', error.response?.data || error.message);
                 Swal.fire({
-                    title: 'Login Failed',
-                    text: 'Invalid or expired login link.',
                     icon: 'error',
+                    title: 'Login Failed',
+                    text: 'Your login link is invalid or has expired. Please request a new link and try again.',
+                    confirmButtonText: 'OK'
                 }).then(() => {
                     navigate('/login');
                 });
@@ -55,9 +56,10 @@ function VerifyLogin() {
             verifyLogin();
         } else {
             Swal.fire({
-                title: 'Error',
-                text: 'Invalid login link.',
                 icon: 'error',
+                title: 'Login Failed',
+                text: 'Your login link is invalid or may have expired. Please request a new link and try again.',
+                confirmButtonText: 'OK'
             }).then(() => {
                 navigate('/login');
             });

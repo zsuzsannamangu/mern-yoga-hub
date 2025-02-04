@@ -18,7 +18,6 @@ function UserBookings() {
                 const now = new Date();
 
                 // Add the isPast flag to each booking
-                console.log('API Response:', response.data);
                 const sortedBookings = (response.data.bookedSlots || [])
                     .map((slot) => {
                         const slotDateTime = new Date(`${slot.date}T${slot.time}`);
@@ -32,8 +31,6 @@ function UserBookings() {
                         const dateB = new Date(`${b.date}T${b.time}`);
                         return dateA - dateB;
                     });
-
-                console.log('Sorted Bookings:', sortedBookings); // Debug log
                 setBookings(sortedBookings);
             } catch (error) {
                 console.error('Error fetching bookings:', error.message);

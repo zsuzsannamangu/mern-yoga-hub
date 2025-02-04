@@ -33,8 +33,9 @@ function UserBookNew() {
         if (!userId) {
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                text: 'User ID is missing.',
+                title: 'User ID Required',
+                text: 'We couldn’t find your User ID. Please log in again or contact me if the issue persists.',
+                confirmButtonText: 'OK'
             });
             return;
         }
@@ -121,7 +122,8 @@ function UserBookNew() {
             Swal.fire({
                 icon: 'error',
                 title: 'Invalid Payment Amount',
-                text: 'Please enter an amount between $35 and $130.',
+                text: 'The amount must be between $35 and $130. Please adjust your entry and try again.',
+                confirmButtonText: 'OK'
             });
             return;
         }
@@ -137,11 +139,11 @@ function UserBookNew() {
                     script.id = 'paypal-sdk';
                     script.onload = () => renderPayPalButtons();
                     script.onerror = () => {
-                        console.error('Failed to load PayPal SDK.');
                         Swal.fire({
                             icon: 'error',
-                            title: 'Error',
-                            text: 'Failed to load PayPal. Please try again later.',
+                            title: 'Payment Service Unavailable',
+                            text: 'We couldn’t load PayPal. Please refresh the page or try again later.',
+                            confirmButtonText: 'OK'
                         });
                         setPaypalError(true);
                         setShowPayPal(false);
@@ -149,11 +151,11 @@ function UserBookNew() {
                     document.body.appendChild(script);
                 })
                 .catch((error) => {
-                    console.error('Error fetching PayPal Client ID:', error);
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error',
-                        text: 'Failed to load PayPal. Please try again later.',
+                        title: 'Payment Service Unavailable',
+                        text: 'We couldn’t load PayPal. Please refresh the page or try again later.',
+                        confirmButtonText: 'OK'
                     });
                     setPaypalError(true);
                     setShowPayPal(false);
@@ -167,11 +169,11 @@ function UserBookNew() {
     const renderPayPalButtons = () => {
         const container = document.getElementById('paypal-button-container');
         if (!container) {
-            console.error('PayPal button container not found.');
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                text: 'PayPal button container not found. Please try again.',
+                title: 'Payment Button Not Found',
+                text: 'We couldn’t load the PayPal button. Please refresh the page and try again.',
+                confirmButtonText: 'OK'
             });
             setShowPayPal(false);
             return;
@@ -201,11 +203,11 @@ function UserBookNew() {
                     });
                 },
                 onError: (err) => {
-                    console.error('PayPal Checkout Error:', err);
                     Swal.fire({
                         icon: 'error',
-                        title: 'Payment Failed',
-                        text: 'Payment failed. Please try again.',
+                        title: 'Payment Unsuccessful',
+                        text: 'Your payment could not be processed. Please check your payment details and try again.',
+                        confirmButtonText: 'OK'
                     });
                     setPaypalError(true);
                     setShowPayPal(false);
@@ -213,11 +215,11 @@ function UserBookNew() {
             })
             .render('#paypal-button-container')
             .catch((err) => {
-                console.error('PayPal Buttons Rendering Error:', err);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
-                    text: 'Failed to render PayPal buttons. Please try again.',
+                    title: 'Payment Button Error',
+                    text: 'We couldn’t display the PayPal buttons. Please refresh the page and try again.',
+                    confirmButtonText: 'OK'
                 });
                 setPaypalError(true);
                 setShowPayPal(false);
@@ -229,8 +231,9 @@ function UserBookNew() {
         if (!selectedSlot) {
             Swal.fire({
                 icon: 'warning',
-                title: 'Warning',
-                text: 'Please select a time slot before booking.',
+                title: 'Time Slot Required',
+                text: 'Please select a time slot before proceeding with your booking.',
+                confirmButtonText: 'OK'
             });
             return;
         }
@@ -238,8 +241,9 @@ function UserBookNew() {
         if (!paymentSuccess) {
             Swal.fire({
                 icon: 'info',
-                title: 'Payment Required',
-                text: 'Please complete payment before booking the appointment.',
+                title: 'Payment Needed',
+                text: 'Please complete your payment before finalizing your appointment.',
+                confirmButtonText: 'OK'
             });
             return;
         }
@@ -267,8 +271,9 @@ function UserBookNew() {
 
             Swal.fire({
                 icon: 'success',
-                title: 'Success',
-                text: 'Slot booked successfully!',
+                title: 'Booking Confirmed!',
+                text: 'Your slot has been successfully booked. Check your email for confirmation.',
+                confirmButtonText: 'OK'
             });
 
             setAvailableSlots((prevSlots) =>
@@ -281,11 +286,11 @@ function UserBookNew() {
             setShowPayPal(false); // Hides PayPal buttons so they don't persist.
             setPaymentSuccess(false); // Ensures PayPal validation resets
         } catch (error) {
-            console.error('Error booking slot:', error);
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                text: 'Failed to book the slot. Please try again.',
+                title: 'Booking Failed',
+                text: 'We couldn’t confirm your booking. Please try again or contact support if the issue persists.',
+                confirmButtonText: 'OK'
             });
         }
     };

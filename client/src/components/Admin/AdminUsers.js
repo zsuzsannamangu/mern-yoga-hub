@@ -3,6 +3,8 @@ import { adminAxiosInstance } from '../../config/axiosConfig';
 import './AdminUsers.scss';
 import '../../App.scss';
 import AdminNavbar from './AdminNavbar';
+import Swal from 'sweetalert2';
+import '@sweetalert2/theme-material-ui/material-ui.css';
 
 const AdminUsers = () => {
     const [users, setUsers] = useState([]);
@@ -16,7 +18,12 @@ const AdminUsers = () => {
             const sortedUsers = res.data.sort((a, b) => new Date(a.date) - new Date(b.date));
             setUsers(sortedUsers);
         } catch (error) {
-            alert('Failed to fetch users. Please try again later.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to fetch users.',
+                text: 'Please try again later.',
+                confirmButtonText: 'OK'
+            });
             console.error('Fetch Users Error:', error.message);
         } finally {
             setLoading(false);

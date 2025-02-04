@@ -27,10 +27,15 @@ function Contact() {
         script.onload = () => {
             if (window.grecaptcha) {
                 window.grecaptcha.ready(() => {
-                    console.log('reCAPTCHA ready');
                 });
             } else {
-                console.error('reCAPTCHA library not loaded.');
+                // Show a user-friendly alert if reCAPTCHA fails to load
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Security Check Failed',
+                    text: 'We couldn’t load the reCAPTCHA service. Please refresh the page or check your internet connection.',
+                    confirmButtonText: 'OK'
+                });
             }
         };
 
@@ -51,19 +56,16 @@ function Contact() {
         if (!window.grecaptcha || !siteKey) {
             Swal.fire({
                 icon: 'warning',
-                title: 'reCAPTCHA Not Ready',
-                text: 'Please wait a moment and try again.',
+                title: 'Verification Not Ready',
+                text: 'reCAPTCHA is still loading. Please wait a moment and try again.',
+                confirmButtonText: 'Got it'
             });
             return;
         }
 
         try {
             // Execute reCAPTCHA v3 to get the token
-            console.log('Executing reCAPTCHA...');
             const recaptchaToken = await window.grecaptcha.execute(siteKey, { action: 'contact_form_submit' });
-
-            // Log the token to the console for debugging
-            console.log('reCAPTCHA token generated:', recaptchaToken);
 
             // Send the form data along with the reCAPTCHA token to the backend
             const response = await fetch('http://localhost:5001/api/contact', {
@@ -82,12 +84,11 @@ function Contact() {
                 setFormData({ name: '', email: '', message: '' });
             } else {
                 const errorData = await response.json();
-                console.error('Error Details:', errorData);
 
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error!',
-                    text: errorData.message || 'Failed to send the message. Please try again later.',
+                    title: 'Something went wrong!',
+                    text: errorData.message || 'Failed to send message. Please try again later.',
                 });
             }
         } catch (error) {
@@ -95,8 +96,8 @@ function Contact() {
 
             Swal.fire({
                 icon: 'error',
-                title: 'Error!',
-                text: 'Failed to send the message. Please try again later.',
+                title: 'Something went wrong!',
+                text: 'Failed to send message. Please try again later.',
             });
         }
     };

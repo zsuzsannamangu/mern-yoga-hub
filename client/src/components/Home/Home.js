@@ -2,6 +2,8 @@
 import React, { useEffect } from 'react';
 import './Home.scss';
 import '../../App.scss';
+import Swal from 'sweetalert2';
+import '@sweetalert2/theme-material-ui/material-ui.css';
 
 function Home({ showAlert }) {
   useEffect(() => {
@@ -20,10 +22,8 @@ function Home({ showAlert }) {
     script.onload = () => {
       if (window.grecaptcha) {
         window.grecaptcha.ready(() => {
-          console.log('Executing reCAPTCHA');
           window.grecaptcha.execute(siteKey, { action: 'submit' })
             .then((token) => {
-              console.log('Generated reCAPTCHA Token:', token);
               localStorage.setItem('captchaToken', token);
             })
             .catch((error) => console.error('Error generating token:', error));
@@ -45,7 +45,12 @@ function Home({ showAlert }) {
 
     const captchaToken = localStorage.getItem('captchaToken');
     if (!captchaToken) {
-      alert('CAPTCHA verification failed. Please try again.');
+      Swal.fire({
+        title: 'Verification Failed',
+        text: 'We couldn’t verify that you’re human. Please try again.',
+        icon: 'warning',
+        confirmButtonText: 'Retry'
+      });
       return;
     }
 
@@ -68,12 +73,20 @@ function Home({ showAlert }) {
       if (!response.ok) {
         throw new Error('Failed to submit the form');
       }
-
-      alert('Form submitted successfully!');
+      Swal.fire({
+        title: 'Success!',
+        text: 'Your form has been submitted successfully.',
+        icon: 'success',
+        confirmButtonText: 'Great!'
+      });
       form.reset(); // Clear the form fields after successful submission
     } catch (error) {
-      console.error('Error submitting form:', error.message);
-      alert('Failed to submit the form. Please try again.');
+      Swal.fire({
+        title: 'Oops! Something went wrong!',
+        text: 'We couldn’t submit your form. Please try again later.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     }
   };
 

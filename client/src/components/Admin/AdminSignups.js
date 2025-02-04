@@ -4,6 +4,8 @@ import { FaTrash } from 'react-icons/fa';
 import './AdminSignups.scss';
 import '../../App.scss';
 import AdminNavbar from './AdminNavbar';
+import Swal from 'sweetalert2';
+import '@sweetalert2/theme-material-ui/material-ui.css';
 
 const AdminSignups = () => {
     const [signups, setSignups] = useState([]);
@@ -17,7 +19,12 @@ const AdminSignups = () => {
             const sortedSignups = res.data.sort((a, b) => new Date(a.date) - new Date(b.date));
             setSignups(sortedSignups);
         } catch (error) {
-            alert('Failed to fetch signups. Please try again later.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to fetch class signups.',
+                text: 'Please try again later.',
+                confirmButtonText: 'OK'
+            });
             console.error('Fetch Signups Error:', error.message);
         } finally {
             setLoading(false);
@@ -26,21 +33,43 @@ const AdminSignups = () => {
 
     // Delete a signup by ID
     const deleteSignup = async (id) => {
-        if (!window.confirm("Are you sure you want to delete this signup?")) {
-            return;
-        }
-        console.log("Received ID for deletion:", id);
-        try {
-            const token = localStorage.getItem('adminToken');
-            await adminAxiosInstance.delete(`/api/signup/${id}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            alert("Signup deleted successfully.");
-            fetchSignups(); // Refresh the list after deletion
-        } catch (error) {
-            console.error("[Delete Signup Error]", error.message);
-            alert("Failed to delete signup. Please try again.");
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This will permanently delete the signup.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ff6b6b',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            customClass: {
+                confirmButton: 'swal-confirm-button', // Custom class for fixing button text color
+            }
+        }).then(async (result) => {
+            if (!result.isConfirmed) {
+                return; // Exit function if user cancels
+            }
+            try {
+                const token = localStorage.getItem('adminToken');
+                await adminAxiosInstance.delete(`/api/signup/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Signup deleted successfully.',
+                    confirmButtonText: 'OK'
+                });
+                fetchSignups(); // Refresh the list after deletion
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to delete signup.',
+                    text: 'Please try again later.',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
     };
 
     useEffect(() => {
