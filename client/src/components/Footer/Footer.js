@@ -28,7 +28,7 @@ function Footer() {
                     <a href="/calendar">Calendar</a>
                     <a href="/contact">Contact</a>
                     <a href="/chocolates">Chocolates</a>
-                    <a href="/aboutwebsite">About This Website</a>
+                    <a href="/aboutwebsite">Website</a>
 
                     {/* Instagram link */}
                     <a

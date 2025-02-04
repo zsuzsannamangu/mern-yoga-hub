@@ -6,13 +6,27 @@ import '../../App.scss';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 
+/**
+ * AdminBooking Component:
+ * - Manages bookable slots (available, booked, upcoming, passed)
+ * - Fetches slots from backend
+ * - Allows admin to add, delete, and categorize slots
+ */
+
 const AdminBooking = () => {
+    // State to store different types of slots
     const [availableSlots, setAvailableSlots] = useState([]);
     const [bookedSlots, setBookedSlots] = useState([]);
     const [upcomingSlots, setUpcomingSlots] = useState([]);
     const [passedSlots, setPassedSlots] = useState([]);
-    const [newSlot, setNewSlot] = useState({ date: '', time: '' });
-    const [loading, setLoading] = useState(false);
+    const [newSlot, setNewSlot] = useState({ date: '', time: '' }); // New slot form state
+    const [loading, setLoading] = useState(false); // Loading state for API calls
+
+    /**
+     * Formats a time string into a human-readable format.
+     * @param {string} time - Time in HH:mm format
+     * @returns {string} - Formatted time (e.g., "10:30 AM")
+     */
 
     const formatTime = (time) => {
         const [hour, minute] = time.split(':');
@@ -21,7 +35,10 @@ const AdminBooking = () => {
         return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
     };
 
-    // Fetch all slots (available and booked)
+    /**
+     * Fetches slots (available and booked) from the API, categorizes them into different states.
+     * Uses `useCallback` to ensure consistency in `useEffect`.
+     */
     const fetchSlots = useCallback(async () => {
         setLoading(true);
         try {
@@ -36,12 +53,17 @@ const AdminBooking = () => {
                 return slotDateTime > now;
             });
 
+            // Sort slots by date
             const sortedAvailableSlots = availableSlots.sort((a, b) => new Date(a.date) - new Date(b.date));
             const sortedBookedSlots = bookedSlots.sort((a, b) => new Date(a.date) - new Date(b.date));
 
             setAvailableSlots(sortedAvailableSlots);
             setBookedSlots(sortedBookedSlots); // This will trigger useEffect for categorization
+
+            // Categorize booked slots
             let { upcoming, passed } = categorizeBookedSlots(sortedBookedSlots); // Ensure slots are categorized after sorting
+
+            // Update state
             setUpcomingSlots([...upcoming]); // Ensure immutability
             setPassedSlots([...passed]);    // Ensure immutability
         } catch (error) {
@@ -68,7 +90,7 @@ const AdminBooking = () => {
         return { upcoming, passed }
     };
 
-    // Re-categorize slots periodically
+    // Re-categorize slots periodically, every minute
     useEffect(() => {
         const interval = setInterval(() => {
             fetchSlots(); // Refresh the slots periodically, which already categorizes them
@@ -76,7 +98,12 @@ const AdminBooking = () => {
         return () => clearInterval(interval);
     }, [fetchSlots]);
 
-    // Add a new slot
+    /**
+     * Handles adding a new slot.
+     * - Validates input fields
+     * - Allows repeating slots (daily/weekly)
+     * - Sends request to backend
+     */
     const addSlot = async (e) => {
         e.preventDefault();
         if (!newSlot.date || !newSlot.time) {
@@ -93,6 +120,7 @@ const AdminBooking = () => {
         const startDate = new Date(newSlot.date);
         const { repeat, occurrences } = newSlot;
 
+        // Handle repeating slots
         if (repeat && occurrences > 0) {
             const confirmation = window.confirm(`This will add ${occurrences} slots. Proceed?`);
             if (!confirmation) return;
@@ -110,6 +138,7 @@ const AdminBooking = () => {
             slots.push({ date: newSlot.date, time: newSlot.time });
         }
 
+        // Send request to add slots
         try {
             const token = localStorage.getItem('adminToken');
             await adminAxiosInstance.post('/api/bookings', { slots }, {
@@ -122,7 +151,7 @@ const AdminBooking = () => {
                 confirmButtonText: 'OK'
             });
             setNewSlot({ date: '', time: '', repeat: '', occurrences: '' });
-            fetchSlots();
+            fetchSlots(); // Refresh slots list
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -133,7 +162,11 @@ const AdminBooking = () => {
         }
     };
 
-    // Delete a slot
+    /**
+     * Deletes a specific slot.
+     * - Prompts confirmation
+     * - Sends delete request to backend
+     */
     const deleteSlot = async (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -175,7 +208,11 @@ const AdminBooking = () => {
         });
     };
 
-    // Delete a session (upcoming or passed)
+    /**
+     * Deletes a booked session.
+     * - Prompts confirmation
+     * - Sends delete request to backend
+     */
     const deleteSession = async (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -187,7 +224,7 @@ const AdminBooking = () => {
             confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'Cancel',
             customClass: {
-                confirmButton: 'swal-confirm-button', // Ensures correct text color
+                confirmButton: 'swal-confirm-button',
             }
         }).then(async (result) => {
             if (!result.isConfirmed) return; // Exit if user cancels
