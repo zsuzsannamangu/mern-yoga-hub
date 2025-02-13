@@ -7,15 +7,15 @@ import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 
 const AdminUsers = () => {
-    const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [users, setUsers] = useState([]); // State to store users
+    const [loading, setLoading] = useState(false); // State to track loading status
 
     // Fetch all users from the database
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            const res = await adminAxiosInstance.get('/api/admin/users');
-            const sortedUsers = res.data.sort((a, b) => new Date(a.date) - new Date(b.date));
+            const res = await adminAxiosInstance.get('/api/admin/users'); // API request to get users
+            const sortedUsers = res.data.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort users by creation date
             setUsers(sortedUsers);
         } catch (error) {
             Swal.fire({
@@ -30,6 +30,7 @@ const AdminUsers = () => {
         }
     };
 
+    // Fetch users when the component mounts
     useEffect(() => {
         fetchUsers();
     }, []);

@@ -5,6 +5,13 @@ import { FaCalendarAlt, FaLocationArrow } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 
+/**
+ * SignUpSelection component 
+ * Provides an interface for students to sign up for a class
+ * Returning students can confirm their registration by email
+ * New students are redirected to the signup form with waiver signing.
+ */
+
 const SignUpSelection = () => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
@@ -12,16 +19,19 @@ const SignUpSelection = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const eventTitle = queryParams.get('title'); // Extract the title
-    const eventDate = queryParams.get('date');
-    const eventLocation = queryParams.get('location');
 
+    // Extract class details from URL parameters
+    const eventTitle = queryParams.get('title'); // Extract the title
+    const eventDate = queryParams.get('date'); // Extract the date
+    const eventLocation = queryParams.get('location'); // Extract the location
+
+    // Handles signup process for returning students. Sends an email to check if they are already registered for the class.
     const handleReturningStudent = async () => {
         if (!email) {
             setError('Please enter your email address.');
             return;
         }
-        setIsChecking(true); // Starts loading state, prevents multiple clicks while checking
+        setIsChecking(true); // Prevents multiple submissions
 
         try {
             const response = await fetch('http://localhost:5001/api/check-student', {
@@ -56,6 +66,7 @@ const SignUpSelection = () => {
         setIsChecking(false); // Stops loading state, frontend should prevent multiple clicks while checking
     };
 
+    // Redirects new students to the signup form, preserving class details in the URL
     const handleNewStudent = () => {
         navigate(`/signup?date=${eventDate}&title=${encodeURIComponent(eventTitle)}&location=${encodeURIComponent(eventLocation)}`);
 

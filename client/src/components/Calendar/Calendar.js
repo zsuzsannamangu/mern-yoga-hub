@@ -7,18 +7,20 @@ export default class Calendar extends Component {
   constructor() {
     super();
 
+    // Define weekdays and months for display
     this.weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     this.months = ['January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'];
 
     this.state = {
-      currentDay: new Date(),
-      selectedDate: null,
-      events: {}
+      currentDay: new Date(), // Current displayed date 
+      selectedDate: null, // User-selected date
+      events: {} // Store events grouped by date
     };
   }
 
   componentDidMount() {
+    // Initialize state with today's date and fetch events
     this.setState(
       {
         currentDay: new Date(),
@@ -28,6 +30,7 @@ export default class Calendar extends Component {
     );
   }
 
+  // Fetch events from the backend
   fetchEvents = async () => {
     try {
       const response = await fetch('http://localhost:5001/api/events');
@@ -67,14 +70,13 @@ export default class Calendar extends Component {
 
         eventsObject[dateKey].push({
           title: event.title,
-          time: formatTime(event.time), // Keep formatted for display
-          rawTime: event.time, // Preserve raw time for calculations
+          time: formatTime(event.time), // Formatted time for display
+          rawTime: event.time, // Raw time for calculations
           location: event.location,
           signUpLink: event.signUpLink,
           isExternal: event.isExternal || false,
           isFull, // Store class full status
         });
-
       }
 
       this.setState({ events: eventsObject }, this.setFirstAvailableEvent);
@@ -83,6 +85,7 @@ export default class Calendar extends Component {
     }
   };
 
+  // Set the first available event or default to today
   setFirstAvailableEvent = () => {
     const { events } = this.state;
 

@@ -4,18 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
 import './AdminDashboard.scss';
 import '../../App.scss';
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa'; //Trash icon for delete button
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 
 const AdminDashboard = () => {
-    const navigate = useNavigate();
-    const [events, setEvents] = useState([]);
+    const navigate = useNavigate(); // Navigation function
+    const [events, setEvents] = useState([]); // State to store events
     const [selectedEvents, setSelectedEvents] = useState([]); // State for selected events for bulk delete
-    const [newEvent, setNewEvent] = useState({ title: '', date: '', time: '', location: '', signUpLink: '' });
-    const [loading, setLoading] = useState(false);
-    const [signups, setSignups] = useState([]);
+    const [newEvent, setNewEvent] = useState({ title: '', date: '', time: '', location: '', signUpLink: '' }); // State for new event form
+    const [loading, setLoading] = useState(false); // State for loading indicator
+    const [signups, setSignups] = useState([]); // State for storing event signups
 
+    // Fetch events from the backend
     const fetchEvents = async () => {
         setLoading(true);
         try {
@@ -34,6 +35,7 @@ const AdminDashboard = () => {
         }
     };
 
+    // Add a new event
     const addEvent = async (e) => {
         e.preventDefault();
         if (!newEvent.title || !newEvent.date || !newEvent.time) {
@@ -49,7 +51,7 @@ const AdminDashboard = () => {
         try {
             const token = localStorage.getItem('adminToken');
 
-            // Generate recurring events if specified
+            // Generate recurring events weekly or monthly
             const eventsToAdd = [];
             let currentDate = new Date(newEvent.date);
 
@@ -73,6 +75,7 @@ const AdminDashboard = () => {
                 eventsToAdd.push(newEvent);
             }
 
+            // Send each event to the backend
             for (const event of eventsToAdd) {
                 await adminAxiosInstance.post('/api/admin/events', event, {
                     headers: { Authorization: `Bearer ${token}` },
@@ -84,6 +87,7 @@ const AdminDashboard = () => {
                 text: 'Event(s) added successfully',
                 confirmButtonText: 'OK'
             });
+            // Reset event form fields
             setNewEvent({ title: '', date: '', time: '', location: '', signUpLink: '', repeat: '' });
             fetchEvents();
         } catch (error) {
@@ -96,6 +100,7 @@ const AdminDashboard = () => {
         }
     };
 
+    // Delete a single event
     const deleteEvent = async (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -135,12 +140,14 @@ const AdminDashboard = () => {
         });
     };
 
+    // Select/deselect events for bulk delete
     const handleSelect = (id, isChecked) => {
         setSelectedEvents((prevSelected) =>
             isChecked ? [...prevSelected, id] : prevSelected.filter((eventId) => eventId !== id)
         );
     };
 
+    // Bulk delete selected events
     const handleBulkDelete = async () => {
         Swal.fire({
             title: 'Are you sure?',
@@ -205,6 +212,7 @@ const AdminDashboard = () => {
             }
         };
 
+        // Fetch event signups
         const fetchSignups = async () => {
             setLoading(true);
             try {
@@ -222,6 +230,7 @@ const AdminDashboard = () => {
             }
         };
 
+        // Check authentication and fetch data when component mounts
         useEffect(() => {
             const checkAuth = async () => {
                 try {

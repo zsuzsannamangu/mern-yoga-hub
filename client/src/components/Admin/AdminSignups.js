@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { adminAxiosInstance } from '../../config/axiosConfig';
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa'; // Trash icon for delete button
 import './AdminSignups.scss';
 import '../../App.scss';
 import AdminNavbar from './AdminNavbar';
@@ -8,10 +8,10 @@ import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 
 const AdminSignups = () => {
-    const [signups, setSignups] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [signups, setSignups] = useState([]); // State to store signups
+    const [loading, setLoading] = useState(false); // State to track loading status
 
-    // Fetch all signups from the database
+    // Fetch all class signups from the database
     const fetchSignups = async () => {
         setLoading(true);
         try {
@@ -50,7 +50,7 @@ const AdminSignups = () => {
                 return; // Exit function if user cancels
             }
             try {
-                const token = localStorage.getItem('adminToken');
+                const token = localStorage.getItem('adminToken'); // Retrieve authentication token
                 await adminAxiosInstance.delete(`/api/signup/${id}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
@@ -72,6 +72,7 @@ const AdminSignups = () => {
         });
     };
 
+    // Fetch signups when the component mounts
     useEffect(() => {
         fetchSignups();
     }, []);

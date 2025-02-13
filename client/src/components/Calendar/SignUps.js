@@ -5,23 +5,30 @@ import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 import { useLocation, useNavigate } from 'react-router-dom'; // use useLocation to retrieve the passed state from Calendar.js
 
+/**
+ * Signup component
+ * Handles user registration for yoga classes, including collecting personal details,
+ * accepting waiver agreement, signing electronically, and verifying submissions with reCAPTCHA.
+ */
+
 const Signup = () => {
-  const sigPad = useRef();
+  const sigPad = useRef(); // Reference for the signature pad
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const navigate = useNavigate(); // Define navigate
+  const navigate = useNavigate(); // React Router navigation hook
   const [signatureData, setSignatureData] = useState(null);
   const [recaptchaToken, setRecaptchaToken] = useState('');
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    classTitle: queryParams.get('title') || "",
-    date: queryParams.get('date') || "", // Extract from query params
+    classTitle: queryParams.get('title') || "", // Retrieve class title from URL params
+    date: queryParams.get('date') || "", // Extract class date from query params
     waiver: false,
   });
 
   useEffect(() => {
+    // Load reCAPTCHA script dynamically
     const siteKey = process.env.REACT_APP_CAPTCHA_SITE_KEY;
     if (!siteKey) {
       console.error('reCAPTCHA site key is missing.');
@@ -38,6 +45,7 @@ const Signup = () => {
 
     script.onload = () => {
       if (window.grecaptcha) {
+        // Show error message if reCAPTCHA fails to load
         window.grecaptcha.ready(() => {
           isRecaptchaReady = true;
           // Perform any action needed when reCAPTCHA is ready
@@ -58,10 +66,12 @@ const Signup = () => {
     };
   }, []);
 
+  // Clear signature pad
   const clearSignature = () => sigPad.current.clear();
 
+  // Handles form input changes. Updates state dynamically based on input field name and value
   const handleSignatureSave = () => {
-    const signature = sigPad.current.toDataURL(); // Save this data to your backend
+    const signature = sigPad.current.toDataURL(); // Save data to backend
     setSignatureData(signature);
   };
 
@@ -73,9 +83,11 @@ const Signup = () => {
     }));
   };
 
+  // Handles form submissions. Validates requires fields, reCAPTCHA and sends the data to the backend.
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Ensures a signature is provided.
     if (!signatureData) {
       Swal.fire({
         icon: 'error',
@@ -98,9 +110,10 @@ const Signup = () => {
     }
 
     try {
+      // Generate reCAPTCHA token
       const recaptchaToken = await window.grecaptcha.execute(siteKey, { action: 'signup_form_submit' });
 
-      // Mock API call to save form data and signature
+      // API call to save form data and signature
       const response = await fetch("http://localhost:5001/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -109,6 +122,7 @@ const Signup = () => {
 
       if (!response.ok) throw new Error("Failed to submit signup form.");
 
+      // Show success message and redirect user
       Swal.fire({
         icon: 'success',
         title: 'Success!',
@@ -118,6 +132,8 @@ const Signup = () => {
           navigate('/calendar'); // Navigate to the calendar page
         }
       });
+      
+      // Reset form
       setFormData({ name: "", email: "", phone: "", classTitle: "", waiver: false });
       setSignatureData(null);
       sigPad.current.clear(); // Clear the signature pad after successful submission

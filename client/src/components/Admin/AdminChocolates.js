@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 
 const AdminChocolates = () => {
+  // State to store the list of chocolate products
   const [products, setProducts] = useState([]);
 
   // Fetch products from the backend on load
@@ -26,18 +27,18 @@ const AdminChocolates = () => {
     fetchProducts();
   }, []);
 
-  // Handle edits
+  // Handle product field edits dynamically
   const handleEdit = (index, field, value) => {
-    const updatedProducts = [...products];
-    updatedProducts[index][field] = value;
-    setProducts(updatedProducts);
+    const updatedProducts = [...products]; // Copy the current product list
+    updatedProducts[index][field] = value; // Update the specific field
+    setProducts(updatedProducts); // Set the updated list
   };
 
-  // Save changes to the database
+  // Save edited product details to the database
   const saveChanges = async (index) => {
-    const product = products[index];
+    const product = products[index]; // Get the product to be updated
     try {
-      await adminAxiosInstance.put(`/api/chocolates/${product._id}`, product); // Use `_id` from MongoDB
+      await adminAxiosInstance.put(`/api/chocolates/${product._id}`, product); // Update the product via API
       Swal.fire({
         icon: 'success',
         title: 'Success!',
