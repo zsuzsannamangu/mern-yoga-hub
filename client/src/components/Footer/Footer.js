@@ -2,7 +2,6 @@ import React from 'react';
 import './Footer.scss'; // Importing the Footer-specific styles
 import { FaGithub, FaInstagram } from 'react-icons/fa'; // GitHub and Instagram icons from react-icons
 
-// Footer Component
 function Footer() {
     return (
         <div className="footer">

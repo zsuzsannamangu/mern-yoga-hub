@@ -4,10 +4,12 @@ import './AdminNavbar.scss';
 import '../../App.scss';
 
 const AdminNavbar = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Hook for navigation
+
+    // Logout function: Removes admin token and redirects to login page
     const logout = () => {
-        localStorage.removeItem('adminToken');
-        navigate('/admin');
+        localStorage.removeItem('adminToken'); // Remove token from local storage
+        navigate('/admin'); // Redirect to admin login page
     };
     return (
         <div className="admin-navbar">

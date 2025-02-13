@@ -5,11 +5,17 @@ import '../../App.scss';
 import { useCart } from '../../context/CartContext';
 import axios from 'axios';
 
+/* 
+* Cart Component
+* Displays a shopping cart with items, order summary, and PayPal payment integration
+*/
+
 function Cart() {
   const { cartItems, updateQuantity, removeFromCart } = useCart();
   const [showPayPal, setShowPayPal] = useState(false);
   const [paypalError, setPaypalError] = useState(false);
 
+  // Calculate subtotal and total cost
   const subtotal = cartItems.reduce((total, item) => {
     const itemTotal = item.price * item.quantity;
     return total + itemTotal;
@@ -17,10 +23,12 @@ function Cart() {
 
   const total = (subtotal + 5 + subtotal * 0.1).toFixed(2);
 
+  // Updates item quantity in the cart, ensuring it doesn't go below 1.
   const handleQuantityChange = (productId, quantity) => {
     updateQuantity(productId, Math.max(1, quantity));
   };
 
+  // Initiates PayPal checkout process. Loads PayPal SDK dynamically if not already loaded.
   const handlePaymentClick = () => {
     setShowPayPal(true);
 
@@ -59,6 +67,7 @@ function Cart() {
     }
   };
 
+  // Renders PayPal buttons for payment processing
   const renderPayPalButtons = () => {
     const container = document.getElementById('paypal-button-container');
     if (!container) {
