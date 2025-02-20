@@ -11,6 +11,9 @@ import axios from 'axios'; // import Axios library for making HTTP requests
 // Create an Axios instance for user-related requests
 export const userAxiosInstance = axios.create({
     baseURL: 'http://localhost:5001', // Backend server URL
+    headers: {
+        'Content-Type': 'application/json',
+    },
     withCredentials: true, // Include cookies with requests (e.g., for session management)
 });
 

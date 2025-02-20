@@ -31,7 +31,7 @@ import AdminChocolates from './components/Admin/AdminChocolates';
 import SignUpSelection from './components/Calendar/SignUpSelection';
 import AdminSignups from './components/Admin/AdminSignups';
 import AdminUsers from './components/Admin/AdminUsers';
-import AboutWebsite from "./components/AboutWebsite/AboutWebsite"; // Import the new page
+import AboutWebsite from "./components/AboutWebsite/AboutWebsite";
 
 // Protected routes for guarding user and admin routes
 import { UserProtectedRoute, AdminProtectedRoute } from './routes/ProtectedRoutes';

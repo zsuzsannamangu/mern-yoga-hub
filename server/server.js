@@ -26,15 +26,20 @@ app.use(helmet());
 app.use(cookieParser());
 
 const corsOptions = {
-    origin: 'http://localhost:3000', // Allow frontend origin
+    origin: 'http://localhost:3000', // Frontend origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true, // Allow cookies/credentials
+    allowedHeaders: ['Content-Type', 'Authorization'],
 };
 app.use(cors(corsOptions));
 
 app.get('/config/paypal', (req, res) => {
     res.json({ clientId: process.env.PAYPAL_CLIENT_ID });
-  });
+});
+
+app.get("/api/health", (req, res) => {
+    res.json({ status: "Backend is working!" });
+});
 
 // Add headers manually for extra safety
 app.use((req, res, next) => {

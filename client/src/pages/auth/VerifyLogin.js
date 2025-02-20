@@ -21,8 +21,24 @@ function VerifyLogin() {
                 const { user, token } = response.data;
 
                 if (user && token) {
-                    // Update context with user data
-                    login({ userData: user, id: user._id }, token);
+                    console.log("✅ VerifyLogin: Full user object before login:", JSON.stringify(user, null, 2));
+
+                    const userId = user.id || user._id; // Ensure we get the correct user ID
+
+                    console.log("✅ VerifyLogin: Extracted User ID before login:", userId);
+
+                    if (!userId) {
+                        console.error("❌ VerifyLogin: User ID is STILL undefined before login!", user);
+                    } else {
+                        console.log("✅ VerifyLogin: Extracted User ID before login:", userId);
+                    }
+
+                    login({ userData: user, id: userId }, token, () => {
+                        console.log("✅ Navigating after login state is updated...");
+                        setTimeout(() => {
+                            navigate(`/user/${userId}`, { replace: true }); // Ensures state is updated before navigation
+                        }, 500);
+                    });
 
                     // Save the token and user to localStorage
                     localStorage.setItem('userToken', token);
@@ -35,7 +51,8 @@ function VerifyLogin() {
                         text: 'You have been logged in successfully.',
                         icon: 'success',
                     }).then(() => {
-                        navigate(`/user/${user._id}`);
+                        console.log("✅ Navigating again after SweetAlert...");
+                        navigate(`/user/${userId}`);
                     });
                 } else {
                     throw new Error('Invalid response: Missing token or user.');
