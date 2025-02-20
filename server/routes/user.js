@@ -143,7 +143,7 @@ router.get('/verify-email', async (req, res) => {
 });
 
 //backend endpoint to validate the JWT
-router.post('/api/user/validate-token', async (req, res) => {
+router.post('/validate-token', async (req, res) => {
     try {
         const decoded = jwt.verify(req.body.token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.id).select('id firstName lastName email phone preferredName pronoun city zipcode');
@@ -255,6 +255,7 @@ router.get('/verify-login', async (req, res) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findOne({ email: decoded.email });
+        console.log("🛠️ Backend: Returning user:", user);
 
         if (!user) {
             return res.status(400).json({ message: 'Invalid login token.' });

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { userAxiosInstance } from '../../config/axiosConfig';
+import { useUserAuth } from './UserAuthContext';
 import Swal from 'sweetalert2';
 import './UserLogin.scss';
 
@@ -16,7 +17,7 @@ function UserLogin() {
         e.preventDefault();
 
         try {
-            // Send email to request a login link
+            //Send email to request a login link
             await userAxiosInstance.post('/api/user/login', { email: form.email });
 
             Swal.fire({
