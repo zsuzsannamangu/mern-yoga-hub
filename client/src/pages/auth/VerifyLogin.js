@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useUserAuth } from '../../components/User/UserAuthContext';
-import axios from 'axios';
+import { userAxiosInstance } from '../../config/axiosConfig';
 import Swal from 'sweetalert2';
 
 function VerifyLogin() {
@@ -14,27 +14,22 @@ function VerifyLogin() {
 
         const verifyLogin = async () => {
             try {
-                const response = await axios.get('http://localhost:5001/api/user/verify-login', {
+                const response = await userAxiosInstance.get('/verify-login', {
                     params: { token: tokenFromUrl },
                 });
 
                 const { user, token } = response.data;
 
                 if (user && token) {
-                    console.log("✅ VerifyLogin: Full user object before login:", JSON.stringify(user, null, 2));
-
-                    const userId = user.id || user._id; // Ensure we get the correct user ID
-
-                    console.log("✅ VerifyLogin: Extracted User ID before login:", userId);
+                    const userId = user.id || user._id; // Ensure we get the correct user Id
 
                     if (!userId) {
-                        console.error("❌ VerifyLogin: User ID is STILL undefined before login!", user);
+                        console.error("VerifyLogin: User ID is STILL undefined before login!", user);
                     } else {
-                        console.log("✅ VerifyLogin: Extracted User ID before login:", userId);
+                        console.log("VerifyLogin: Extracted User ID before login:", userId);
                     }
 
                     login({ userData: user, id: userId }, token, () => {
-                        console.log("✅ Navigating after login state is updated...");
                         setTimeout(() => {
                             navigate(`/user/${userId}`, { replace: true }); // Ensures state is updated before navigation
                         }, 500);
@@ -51,7 +46,6 @@ function VerifyLogin() {
                         text: 'You have been logged in successfully.',
                         icon: 'success',
                     }).then(() => {
-                        console.log("✅ Navigating again after SweetAlert...");
                         navigate(`/user/${userId}`);
                     });
                 } else {

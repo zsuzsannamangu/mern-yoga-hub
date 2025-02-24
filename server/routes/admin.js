@@ -40,7 +40,6 @@ router.post('/login', async (req, res) => {
 
         return res.status(200).json({ message: 'Login successful', admin: adminData, accessToken });
     } catch (error) {
-        console.error('Admin Login Error:', error.message);
         res.status(500).json({ message: 'Server error' });
     }
 });
@@ -106,7 +105,6 @@ router.delete('/bookings/cleanup', async (req, res) => {
 
         res.status(200).json({ message: `${result.deletedCount} passed slots removed.` });
     } catch (error) {
-        console.error('Error cleaning up passed slots:', error.message);
         res.status(500).json({ message: 'Failed to clean up passed slots.' });
     }
 });
@@ -117,7 +115,6 @@ router.get('/users', async (req, res) => {
         const users = await User.find(); // Fetch all users, use model: User
         res.status(200).json(users);
     } catch (error) {
-        console.error("Error fetching users:", error.message);
         res.status(500).json({ error: "Failed to fetch users." });
     }
 });

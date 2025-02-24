@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../../components/User/UserAuthContext';
-import axios from 'axios';
+import { userAxiosInstance } from '../../config/axiosConfig';
 import Swal from 'sweetalert2';
 
 function VerifyEmail() {
@@ -15,7 +15,7 @@ function VerifyEmail() {
 
         const verifyEmail = async () => {
             try {
-                const response = await axios.get('http://localhost:5001/api/user/verify-email', {
+                const response = await userAxiosInstance.get('/verify-email', {
                     params: { token: tokenFromUrl },
                 });
 
@@ -27,7 +27,7 @@ function VerifyEmail() {
 
                 if (token && userId) {
                     // Fetch user data
-                    const userResponse = await axios.get(`http://localhost:5001/api/user/${userId}`);
+                    const userResponse = await userAxiosInstance.get(`/${userId}`);
                     const userData = userResponse.data;
 
                     // Call login function to update context

@@ -19,13 +19,12 @@ function UserPage() {
 
     useEffect(() => {
         if (!userId) {
-            console.warn("UserPage: userId is undefined. Skipping fetch.");
             return;
         }
 
         const fetchUser = async () => {
             try {
-                const response = await userAxiosInstance.get(`/api/user/${userId}`);
+                const response = await userAxiosInstance.get(`/${userId}`);
                 setUserData(response.data);
             } catch (error) {
                 console.error('Error fetching user data:', error);

@@ -42,8 +42,6 @@ const AdminLogin = () => {
                 navigate('/admin/dashboard'); //Redirects to dashboard
             });
         } catch (error) {
-            console.error('Admin Login Error:', error.response?.data);
-
             const errorMessage =
                 error.response?.data?.message || 'Invalid email or password. Please try again.';
             Swal.fire({

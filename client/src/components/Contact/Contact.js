@@ -14,7 +14,6 @@ function Contact() {
         // Dynamically add reCAPTCHA script
         const siteKey = process.env.REACT_APP_CAPTCHA_SITE_KEY; // Replace with your site key
         if (!siteKey) {
-            console.error('reCAPTCHA site key is missing.');
             return;
         }
 
@@ -92,8 +91,6 @@ function Contact() {
                 });
             }
         } catch (error) {
-            console.error('Error sending message:', error.message);
-
             Swal.fire({
                 icon: 'error',
                 title: 'Something went wrong!',

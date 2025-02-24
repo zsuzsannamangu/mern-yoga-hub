@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { userAxiosInstance } from '../../config/axiosConfig';
+import axios from 'axios';
 import './Products.scss';
 import '../../App.scss';
 import Swal from 'sweetalert2';
@@ -17,7 +17,7 @@ function Products({ showAlert }) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await userAxiosInstance.get('/api/chocolates');
+        const res = await axios.get('http://localhost:5001/api/chocolates');
         setProducts(res.data);
       } catch (error) {
         Swal.fire({

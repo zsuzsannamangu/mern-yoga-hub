@@ -39,7 +39,6 @@ module.exports = (io) => {
                 bookedSlots,
             });
         } catch (error) {
-            console.error('Error fetching slots:', error.message);
             res.status(500).json({
                 success: false,
                 error: 'Failed to fetch slots',
@@ -67,7 +66,6 @@ module.exports = (io) => {
                 slots: createdSlots,
             });
         } catch (error) {
-            console.error('Error adding slots:', error.message);
             res.status(500).json({
                 success: false,
                 error: 'Failed to add slot(s)',
@@ -95,7 +93,6 @@ module.exports = (io) => {
                 message: 'Slot deleted successfully',
             });
         } catch (error) {
-            console.error('Error deleting slot:', error.message);
             res.status(500).json({
                 success: false,
                 error: 'Failed to delete slot',
@@ -184,7 +181,6 @@ module.exports = (io) => {
                 slot,
             });
         } catch (error) {
-            console.error('Error booking slot:', error.message);
             res.status(500).json({
                 success: false,
                 error: 'Failed to book slot',
