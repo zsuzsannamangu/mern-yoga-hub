@@ -91,7 +91,6 @@ router.post("/orders", async (req, res) => {
 
         res.status(200).json({ message: "Order saved and email sent." });
     } catch (error) {
-        console.error("Error processing order:", error);
         res.status(500).json({ error: "Failed to process order", details: error.message });
     }
 });
@@ -102,7 +101,6 @@ router.get("/orders", async (req, res) => {
         const orders = await Order.find().sort({ orderDate: -1 });
         res.status(200).json(orders);
     } catch (error) {
-        console.error("Error fetching orders:", error);
         res.status(500).json({ error: "Failed to fetch orders" });
     }
 });

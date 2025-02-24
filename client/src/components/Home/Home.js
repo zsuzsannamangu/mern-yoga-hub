@@ -10,7 +10,6 @@ function Home({ showAlert }) {
     // Dynamically add reCAPTCHA script
     const siteKey = process.env.REACT_APP_CAPTCHA_SITE_KEY;
     if (!siteKey) {
-      console.error('reCAPTCHA site key is missing.');
       return;
     }
     const script = document.createElement('script');

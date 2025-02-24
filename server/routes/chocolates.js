@@ -9,7 +9,6 @@ router.get('/', async (req, res) => {
         const chocolates = await Chocolate.find();
         return res.status(200).json(chocolates);
     } catch (error) {
-        console.error('Error fetching chocolates:', error.message); // Log error details
         return res.status(500).json({ error: 'Failed to fetch chocolates', details: error.message });
     }
 });

@@ -57,7 +57,6 @@ router.post('/register', async (req, res) => {
         await sgMail.send(emailContent);
         res.status(201).json({ message: 'Registration email sent. Please verify your email to complete registration.' });
     } catch (error) {
-        console.error('Registration Error:', error.message); // Log the error for debugging
         res.status(500).json({ message: 'Server error occurred during registration.' });
     }
 });
@@ -137,7 +136,6 @@ router.get('/verify-email', async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Verification Error:', error.message);
         res.status(500).json({ message: 'Server error occurred during verification.' });
     }
 });
@@ -180,7 +178,6 @@ router.post('/validate-token', async (req, res) => {
             isValid: true, user: userResponse,
         });
     } catch (error) {
-        console.error("Error validating token:", error.message);
         res.status(401).json({ isValid: false });
     }
 });
@@ -243,7 +240,6 @@ router.post('/login', async (req, res) => {
             },
         });
     } catch (error) {
-        console.error('Login Error:', error.message);
         res.status(500).json({ message: 'Server error' });
     }
 });
@@ -255,7 +251,6 @@ router.get('/verify-login', async (req, res) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findOne({ email: decoded.email });
-        console.log("🛠️ Backend: Returning user:", user);
 
         if (!user) {
             return res.status(400).json({ message: 'Invalid login token.' });
@@ -285,7 +280,6 @@ router.get('/verify-login', async (req, res) => {
             },
         });
     } catch (error) {
-        console.error('Login Token Verification Error:', error.message);
         res.status(400).json({ message: 'Invalid or expired login token.' });
     }
 });
@@ -298,7 +292,6 @@ router.get('/:id', async (req, res) => {
         }
         res.status(200).json(user);
     } catch (error) {
-        console.error('Error fetching user data:', error.message);
         res.status(500).json({ message: 'Server error' });
     }
 });
@@ -317,7 +310,6 @@ router.post('/refresh-token', (req, res) => {
 
         res.status(200).json({ accessToken: newAccessToken });
     } catch (error) {
-        console.error('Refresh Token Error:', error.message); // Log error
         res.status(403).json({ message: 'Invalid refresh token' });
     }
 });
@@ -336,7 +328,6 @@ router.get('/user/:userId', async (req, res) => {
         const bookings = await Booking.find({ userId: req.params.userId });
         res.status(200).json(bookings);
     } catch (error) {
-        console.error('Error fetching user bookings:', error.message);
         res.status(500).json({ message: 'Server error' });
     }
 });
@@ -360,7 +351,6 @@ router.put('/:userId/update', async (req, res) => {
 
         res.status(200).json({ message: 'User updated successfully.', user: updatedUser });
     } catch (error) {
-        console.error('Error updating user:', error.message);
         res.status(500).json({ message: 'Server error occurred while updating user.' });
     }
 });

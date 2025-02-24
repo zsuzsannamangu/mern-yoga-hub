@@ -25,7 +25,6 @@ const AdminSignups = () => {
                 text: 'Please try again later.',
                 confirmButtonText: 'OK'
             });
-            console.error('Fetch Signups Error:', error.message);
         } finally {
             setLoading(false);
         }

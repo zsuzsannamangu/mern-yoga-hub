@@ -73,7 +73,6 @@ router.post('/request', async (req, res) => {
         // Respond with success
         res.status(200).json({ message: 'Booking request submitted successfully.' });
     } catch (error) {
-        console.error('Error during booking request:', error.response?.body || error.message);
         res.status(500).json({ error: 'Failed to process booking request.' });
     }
 });

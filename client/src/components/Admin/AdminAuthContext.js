@@ -24,7 +24,6 @@ export const AdminAuthProvider = ({ children }) => {
                     setIsAuthenticated(true);
                 }
             } catch (error) {
-                console.error("Error parsing admin data from localStorage:", error);
                 localStorage.removeItem('admin');
                 localStorage.removeItem('adminToken');
             }
@@ -40,7 +39,6 @@ export const AdminAuthProvider = ({ children }) => {
                     });
                     if (!response.ok) throw new Error('Invalid token');
                 } catch (error) {
-                    console.error('Admin token validation failed:', error);
                     logout();
                 }
             }

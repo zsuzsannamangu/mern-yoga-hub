@@ -14,7 +14,7 @@ function UserRegister() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await userAxiosInstance.post('/api/user/register', form);
+            const response = await userAxiosInstance.post('/register', form);
 
             Swal.fire({
                 icon: 'success',

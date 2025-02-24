@@ -31,7 +31,6 @@ const Signup = () => {
     // Load reCAPTCHA script dynamically
     const siteKey = process.env.REACT_APP_CAPTCHA_SITE_KEY;
     if (!siteKey) {
-      console.error('reCAPTCHA site key is missing.');
       return;
     }
 
@@ -132,7 +131,7 @@ const Signup = () => {
           navigate('/calendar'); // Navigate to the calendar page
         }
       });
-      
+
       // Reset form
       setFormData({ name: "", email: "", phone: "", classTitle: "", waiver: false });
       setSignatureData(null);

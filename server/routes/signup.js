@@ -26,7 +26,6 @@ router.post("/signup", async (req, res) => {
 
     // Validate required fields
     if (!name || !email || !phone || !date || !classTitle || !signature) {
-        console.error("Missing required fields:", req.body);
         return res.status(400).json({ error: "All fields are required." });
     }
 
@@ -49,7 +48,6 @@ router.post("/signup", async (req, res) => {
 
         // If reCAPTCHA verification fails
         if (!recaptchaData.success || recaptchaData.score < 0.5) {
-            console.error("reCAPTCHA verification failed:", recaptchaData);
             return res.status(400).json({
                 error: "Failed reCAPTCHA verification. Please try again.",
                 score: recaptchaData.score,
@@ -59,21 +57,18 @@ router.post("/signup", async (req, res) => {
         // Step 2: Check if the event exists
         const event = await Event.findOne({ title: classTitle, date });
         if (!event) {
-            console.error("Event not found:", { classTitle, date });
             return res.status(404).json({ error: "Event not found for the given class and date." });
         }
 
         // Step 3: Check for duplicate signup
         const existingSignup = await Signup.findOne({ email, classTitle, date });
         if (existingSignup) {
-            console.error("Duplicate signup detected:", { email, classTitle, date });
             return res.status(400).json({ error: "You have already signed up for this class." });
         }
 
         // Step 4: Check if the class is full (limit 25 attendees)
         const currentSignups = await Signup.countDocuments({ classTitle, date });
         if (currentSignups >= 25) {
-            console.error("Class is full:", { classTitle, date });
             return res.status(400).json({ error: "This class is full. Please select another date." });
         }
 
@@ -159,7 +154,6 @@ router.post("/signup", async (req, res) => {
 
         res.status(200).json({ message: "Signup successful and emails sent." });
     } catch (error) {
-        console.error("Error in signup route:", error.response?.body || error.message);
         res.status(500).json({ error: "Failed to sign up." });
     }
 });
@@ -170,7 +164,6 @@ router.get("/admin/signups", async (req, res) => {
         const signups = await Signup.find(); // Fetch all signups
         res.status(200).json(signups);
     } catch (error) {
-        console.error("Error fetching signups:", error.message);
         res.status(500).json({ error: "Failed to fetch signups." });
     }
 });
@@ -185,7 +178,6 @@ router.delete("/signup/:id", async (req, res) => {
         }
         res.status(200).json({ message: "Signup deleted successfully." });
     } catch (error) {
-        console.error("Error deleting signup:", error.message);
         res.status(500).json({ error: "Failed to delete signup." });
     }
 });
@@ -204,14 +196,12 @@ router.post('/check-student', async (req, res) => {
         // Check for duplicate signup
         const existingSignup = await Signup.findOne({ email, classTitle, date });
         if (existingSignup) {
-            console.error("Duplicate signup detected:", { email, classTitle, date });
             return res.status(400).json({ error: "You have already signed up for this class." });
         }
 
         // Check if the class is full (limit 25 attendees), prevents race conditions & accidental overbooking to add this here even though there is another route as well: router.get('/class-status')
         const currentSignups = await Signup.countDocuments({ classTitle, date });
         if (currentSignups >= 25) {
-            console.error("Class is full:", { classTitle, date });
             return res.status(400).json({ error: "This class is full. Please select another date." });
         }
 
@@ -223,7 +213,6 @@ router.post('/check-student', async (req, res) => {
         // Check if the event exists
         const event = await Event.findOne({ title: classTitle, date });
         if (!event) {
-            console.error("Event not found:", { classTitle, date });
             return res.status(404).json({ error: "Event not found for the given class and date." });
         }
 
@@ -275,7 +264,6 @@ router.post('/check-student', async (req, res) => {
         res.json({ message: 'Sign-up confirmation sent successfully' });
 
     } catch (error) {
-        console.error('Error checking student:', error);
         res.status(500).json({ message: 'Server error' });
     }
 });
@@ -297,7 +285,6 @@ router.get('/class-status', async (req, res) => {
 
         res.status(200).json({ isFull, signupCount });
     } catch (error) {
-        console.error("Error checking class status:", error);
         res.status(500).json({ error: "Failed to check class status." });
     }
 });

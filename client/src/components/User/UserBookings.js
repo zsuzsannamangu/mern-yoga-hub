@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useUserAuth } from './UserAuthContext';
-import { userAxiosInstance } from '../../config/axiosConfig';
+import axios from 'axios';
 import { FaClock, FaCalendarAlt, FaLink, FaLocationArrow, FaEnvelope } from 'react-icons/fa';
 import './UserBookings.scss';
 
@@ -11,7 +11,7 @@ function UserBookings() {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await userAxiosInstance.get(`/api/bookings`, {
+                const response = await axios.get('http://localhost:5001/api/bookings', {
                     params: { userId: user.id },
                 });
 

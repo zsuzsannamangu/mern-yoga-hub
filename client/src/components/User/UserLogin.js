@@ -18,7 +18,7 @@ function UserLogin() {
 
         try {
             //Send email to request a login link
-            await userAxiosInstance.post('/api/user/login', { email: form.email });
+            await userAxiosInstance.post('/login', { email: form.email });
 
             Swal.fire({
                 title: 'Login Email Sent!',

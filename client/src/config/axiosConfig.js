@@ -10,7 +10,7 @@ import axios from 'axios'; // import Axios library for making HTTP requests
 
 // Create an Axios instance for user-related requests
 export const userAxiosInstance = axios.create({
-    baseURL: 'http://localhost:5001', // Backend server URL
+    baseURL: 'http://localhost:5001/api/user', // Backend server URL
     headers: {
         'Content-Type': 'application/json',
     },
@@ -37,7 +37,7 @@ userAxiosInstance.interceptors.response.use(
             isRefreshing = true; // Set the refreshing flag
             try {
                 // Request a new token from the refresh endpoint
-                const refreshResponse = await userAxiosInstance.post('/api/user/refresh-token');
+                const refreshResponse = await userAxiosInstance.post('/refresh-token');
                 const newAccessToken = refreshResponse.data.accessToken;
 
                 // Save the new token to localStorage
@@ -48,7 +48,6 @@ userAxiosInstance.interceptors.response.use(
                 return userAxiosInstance.request(error.config);
             } catch (refreshError) {
                 // Handle token refresh failure (e.g., log out the user)
-                console.error('User token refresh failed:', refreshError);
                 localStorage.removeItem('userToken'); // Clear the token
                 localStorage.removeItem('user'); // Clear user details
                 window.location.href = '/login'; // Redirect to the login page
@@ -98,7 +97,6 @@ adminAxiosInstance.interceptors.response.use(
                 return adminAxiosInstance.request(error.config);
             } catch (refreshError) {
                 // Handle token refresh failure (e.g., log out the admin)
-                console.error('Admin token refresh failed:', refreshError);
                 localStorage.removeItem('adminToken'); // Clear the token
                 localStorage.removeItem('admin'); // Clear admin details
                 window.location.href = '/admin'; // Redirect to the admin login page
@@ -120,7 +118,6 @@ userAxiosInstance.interceptors.request.use(
         return config;
     },
     (error) => {
-        console.error('[User Request Error]', error);
         return Promise.reject(error);
     }
 );
@@ -131,7 +128,6 @@ userAxiosInstance.interceptors.response.use(
         return response;
     },
     (error) => {
-        console.error('[User Response Error]', error);
         return Promise.reject(error);
     }
 );
@@ -139,22 +135,18 @@ userAxiosInstance.interceptors.response.use(
 // Log requests and responses for debugging (Admin Axios)
 adminAxiosInstance.interceptors.request.use(
     (config) => {
-        console.log('[Admin Request]', config);
         return config;
     },
     (error) => {
-        console.error('[Admin Request Error]', error);
         return Promise.reject(error);
     }
 );
 
 adminAxiosInstance.interceptors.response.use(
     (response) => {
-        console.log('[Admin Response]', response);
         return response;
     },
     (error) => {
-        console.error('[Admin Response Error]', error);
         return Promise.reject(error);
     }
 );
