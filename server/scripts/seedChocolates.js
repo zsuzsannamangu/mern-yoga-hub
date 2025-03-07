@@ -36,11 +36,11 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
         inventory: 20,
       },
       {
-        name: '2 Dark Chocolate Bars with Dried Fruit',
+        name: '2 Dark Chocolate Bars with Nuts and Dried Fruit',
         price: 15,
         image: '/images/chocolates/Strawberry_Chocolate.jpg',
-        description: '80% dark chocolate with bursts of sweet dried fruit.',
-        details: 'Ingredients: fair-trade organic cacao, organic cacao butter, organic maple sugar, organic dried strawberries, organic Madagascar vanilla powder',
+        description: '80% dark chocolate topped with nuts and dried fruit. Toppings vary.',
+        details: 'Ingredients: fair-trade organic cacao, organic cacao butter, organic maple sugar, organic Madagascar vanilla powder',
         inventory: 0,
       },
     ];

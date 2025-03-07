@@ -17,15 +17,14 @@ import '../../App.scss';
 const offeringsData = [
     {
         id: 1,
-        title: "Group, Individual & Partner Yoga",
+        title: "Individual & Group Yoga",
         description: `
         <strong>Slow Gentle Flow:</strong> These classes unite breath and movement in a flowing sequence, building strength and concentration with a mindful pace. Classes weave in pranayama (breathing practices), visualization, and meditation to support a holistic and grounding practice.
 	    <br><br><strong>Restorative Yoga:</strong> A deeply restful practice, using supportive postures to help release tension and foster a state of renewal and relaxation.
 	    <br><br><strong>Chair, Adaptive & Wheelchair Yoga:</strong> Inclusive classes offering gentle movement and thoughtful modifications.
         <br><br>--------
         <br><br><strong>Individual Sessions:</strong> Personalized one-on-one sessions designed to deepen your connection to yoga through tailored physical postures, breathwork, mindfulness practices, and philosophical insights.
-        <br><br><strong>Partner Yoga Sessions:</strong> Partner Yoga offers a unique opportunity to connect with a loved one through shared yoga practice. Integrating yoga therapy techniques, it cultivates presence, open communication, appreciation, empathy, and honesty for deeper connection and understanding.
-        <br><br>**Individual and partner yoga sessions are $35-$110/hr sliding scale. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked.**
+        <br><br>**Individual yoga sessions are $35-$110/hr sliding scale. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked.**
         `,
         image: '/images/yoga/Zsuzsi_Yoga_StandingSplit.jpg',
     },
@@ -37,8 +36,8 @@ const offeringsData = [
         explore the sensations of smell, taste, and touch, enhancing sensory awareness and grounding you in 
         the present moment. Gentle movement, meditative music, and rich flavors create a joyful experience to nurture body, mind, and taste buds. <br><br><strong>Mindfulness Practices Workshop:</strong> Explore mindfulness through sensory awareness, subtle body practices, 
         and breathing techniques to enrich daily life. Engage in activities like sensing light, eye gazing, tuning into touch, taste, and smell, and meditations on sound and space. 
-        Experience gentle movement, chanting, and breathwork, all while cultivating compassion and loving-kindness to deepen your connection to the present moment. <br><br><strong>Yoga Hikes:</strong> Experience the harmony of yoga practices and the exploration of
-        local plants. Immerse yourself in movement, breath, and the natural world as we hike, learn about the flora, and find balance outdoors. `,
+        Experience gentle movement, chanting, and breathwork, all while cultivating compassion and loving-kindness to deepen your connection to the present moment.
+        `,
         image: '/images/yoga/Zsuzsi_yoga_21.jpg',
     },
     {

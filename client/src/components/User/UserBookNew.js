@@ -24,7 +24,6 @@ function UserBookNew() {
 
     const sessionTypes = [
         "Individual Yoga Session (60 min)",
-        "Partner Yoga Session (60 min)",
         "Yoga Therapy Session (60 min)",
     ];
 
@@ -358,7 +357,7 @@ function UserBookNew() {
                             }
                             highlightedSlots={availableSlots.map((slot) => slot.date)}
                         />
-                        <p>**Individual and partner yoga sessions are $35-$110/hr sliding scale. Yoga therapy sessions are $35-$130/hr sliding scale.</p>
+                        <p>**Individual yoga sessions are $35-$110/hr sliding scale. Yoga therapy sessions are $35-$130/hr sliding scale.</p>
                         <p> Your investment is a personal choice, aligning with your current financial circumstances. No questions asked.**</p>
                     </div>
 
