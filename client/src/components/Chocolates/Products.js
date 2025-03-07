@@ -89,7 +89,7 @@ function Products({ showAlert }) {
             <h3 className="product-name" onClick={() => openProductModal(product)}>
               {product.name}
             </h3>
-            <p className="product-price">${product.price} / 2 bars in a tin</p> {/* Display price with $ */}
+            <p className="product-price">${product.price} </p> {/* Display price with $ */}
 
             <div className="product-buttons">
               <button className="add-to-cart-button" onClick={() => handleAddToCart(product)}>

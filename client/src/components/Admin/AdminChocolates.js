@@ -64,7 +64,10 @@ const AdminChocolates = () => {
           <div key={product._id} className="admin-product-card">
             <img src={product.image} alt={product.name} className="product-image" />
             <div>
-              <h4>{product.name}</h4>
+              <textarea
+                value={product.name}
+                onChange={(e) => handleEdit(index, 'name', e.target.value)}
+              />
               <textarea
                 value={product.description}
                 onChange={(e) => handleEdit(index, 'description', e.target.value)}
