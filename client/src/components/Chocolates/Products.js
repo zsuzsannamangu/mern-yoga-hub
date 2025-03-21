@@ -13,7 +13,7 @@ function Products({ showAlert }) {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const { addToCart } = useCart();
   const navigate = useNavigate(); // Define navigate
-
+  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
