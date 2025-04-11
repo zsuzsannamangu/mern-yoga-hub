@@ -59,4 +59,13 @@
             background-color: $primary-button-hover-color;
         }
     }
+
+    .deletebutton {
+        background-color: $delete-button;
+        margin-top: 5px;
+
+        &:hover {
+            background-color: $delete-button-hover;
+        }
+    }
 }
