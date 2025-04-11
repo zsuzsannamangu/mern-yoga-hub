@@ -55,6 +55,27 @@ const AdminChocolates = () => {
     }
   };
 
+    // Delete product
+    const deleteProduct = async (index) => {
+      const product = products[index]; // Get the product to be deleted
+      try {
+        await adminAxiosInstance.delete(`/api/chocolates/${product._id}`, product); // Update the product via API
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Product deleted successfully!',
+          confirmButtonText: 'OK'
+        });
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error deleting product:',
+          text: error.message,
+          confirmButtonText: 'OK'
+        });
+      }
+    };
+
   return (
     <div className="admin-chocolates">
       <AdminNavbar />
@@ -92,6 +113,7 @@ const AdminChocolates = () => {
                 />
               </p>
               <button onClick={() => saveChanges(index)}>Save Changes</button>
+              <button className="deletebutton" onClick={() => deleteProduct(index)}>Delete</button>
             </div>
           </div>
         ))}

@@ -3,3 +3,8 @@ client/.env
 node_modules/
 server/node_modules/*
 .DS_Store
+infra/setup-ssh.sh
+infra/.terraform/
+infra/terraform.tfstate
+infra/terraform.tfstate.backup
+infra/.terraform.lock.hcl
