@@ -2,43 +2,33 @@ version: "3.8"
 
 services:
   backend:
-    build: ./server  # Path to backend code
-    volumes:
-      - ./server:/app
+    build: ./server
     ports:
-      - "5001:5001"  # Map port 5001 of the container to 5001 on the host
+      - "5001:5001"
     env_file:
-      - ./server/.env  # Load environment variables for backend
+      - ./server/.env
     depends_on:
-      - mongo  # Ensure MongoDB starts before the backend
-    networks:
-      - app_network # Ensure mongodb, frontend and backend can communicate to each other
-    restart: unless-stopped # Restart unless manually stopped
-    
-
-  frontend:
-    build: ./client  # Path to frontend code
-    volumes:
-      - ./client:/app
-    environment:
-      - WATCHPACK_POLLING=true
-    ports:
-      - "3000:3000"  # Serve frontend on port 3000
-    depends_on:
-      - backend  # Ensure backend starts before frontend
+      - mongo
     networks:
       - app_network
-    restart: unless-stopped # Automatically restarts unless manually stopped
-    command: npm start
+    restart: unless-stopped
+    
+  frontend:
+    build: ./client
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app_network
+    restart: unless-stopped
 
   mongo:
-    image: mongo:latest  # Official MongoDB image
+    image: mongo:6.0  # Official MongoDB image
     container_name: mongo_db
     restart: unless-stopped
     env_file:
       - ./server/.env  # Load MongoDB credentials from environment file
-    ports:
-      - "27017:27017"  # Expose MongoDB for development access
     volumes:
       - mongo_data:/data/db  # Persist MongoDB data
     networks:
