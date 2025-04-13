@@ -7,7 +7,7 @@ import io from 'socket.io-client';
 export const SocketContext = createContext();
 
 // Socket.IO client instance
-const socket = io('http://localhost:5001'); // Replace with your server URL
+const socket = io(`${process.env.REACT_APP_API}`);
 
 export const SocketProvider = ({ children }) => {
     const [slots, setSlots] = useState([]);

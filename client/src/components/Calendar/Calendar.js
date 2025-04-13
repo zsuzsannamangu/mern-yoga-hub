@@ -33,7 +33,7 @@ export default class Calendar extends Component {
   // Fetch events from the backend
   fetchEvents = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/events');
+      const response = await fetch(`${process.env.REACT_APP_API}/api/events`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -59,8 +59,9 @@ export default class Calendar extends Component {
 
         // Check if the class is full
         const classStatusResponse = await fetch(
-          `http://localhost:5001/api/class-status?classTitle=${encodeURIComponent(event.title)}&date=${event.date}`
+          `${process.env.REACT_APP_API}/api/class-status?classTitle=${encodeURIComponent(event.title)}&date=${event.date}`
         );
+
         const classStatusData = await classStatusResponse.json();
         const isFull = classStatusData.isFull; // Boolean indicating if class is full
 

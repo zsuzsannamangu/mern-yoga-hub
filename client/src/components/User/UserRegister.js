@@ -51,12 +51,12 @@ function UserRegister() {
                     Have an account? <a href="/login">Log in now</a>
                 </p>
                 <div className="oauth-buttons">
-                    <a href="http://localhost:5001/user/auth/google" className="oauth-btn google">
+                    <a href={`${process.env.REACT_APP_API}/user/auth/google`} className="oauth-btn google">
                         <div className="google-icon">
                             <img src="../images/sign-in-google.svg" alt="Google Icon" />
                         </div>
                     </a>
-                    <a href="http://localhost:5001/user/auth/microsoft" className="oauth-btn microsoft">
+                    <a href={`${process.env.REACT_APP_API}/user/auth/microsoft`} className="oauth-btn microsoft">
                         <div className="microsoft-icon">
                             <img src="../images/sign-in-microsoft.svg" alt="Microsoft Icon" />
                         </div>

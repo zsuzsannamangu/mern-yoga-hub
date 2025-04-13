@@ -63,7 +63,7 @@ function Home({ showAlert }) {
     };
 
     try {
-      const response = await fetch('http://localhost:5001/api/publicBookings/request', {
+      const response = await fetch(`${process.env.REACT_APP_API}/api/publicBookings/request`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

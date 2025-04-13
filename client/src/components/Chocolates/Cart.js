@@ -33,7 +33,7 @@ function Cart() {
     setShowPayPal(true);
 
     if (!document.querySelector('#paypal-sdk')) {
-      fetch('http://localhost:5001/config/paypal')
+      fetch(`${process.env.REACT_APP_API}/config/paypal`)
         .then((response) => response.json())
         .then((data) => {
           const script = document.createElement('script');
@@ -103,7 +103,7 @@ function Cart() {
             });
 
             // Send order details to backend
-            fetch("http://localhost:5001/api/orders", {
+            fetch(`${process.env.REACT_APP_API}/api/orders`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({

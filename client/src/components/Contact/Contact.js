@@ -67,7 +67,7 @@ function Contact() {
             const recaptchaToken = await window.grecaptcha.execute(siteKey, { action: 'contact_form_submit' });
 
             // Send the form data along with the reCAPTCHA token to the backend
-            const response = await fetch('http://localhost:5001/api/contact', {
+            const response = await fetch(`${process.env.REACT_APP_API}/api/contact`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ...formData, recaptchaToken }),
