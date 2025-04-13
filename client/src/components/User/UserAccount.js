@@ -44,7 +44,7 @@ function UserAccount() {
     const handleSave = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://localhost:5001/api/user/${user.id}/update`, { // Explicitly set backend URL
+            const response = await fetch(`${process.env.REACT_APP_API}/api/user/${user.id}/update`, { // Explicitly set backend URL
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

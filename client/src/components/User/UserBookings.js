@@ -11,7 +11,7 @@ function UserBookings() {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get('http://localhost:5001/api/bookings', {
+                const response = await axios.get(`${process.env.REACT_APP_API}/bookings`, {
                     params: { userId: user.id },
                 });
 

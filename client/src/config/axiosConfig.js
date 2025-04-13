@@ -10,7 +10,7 @@ import axios from 'axios'; // import Axios library for making HTTP requests
 
 // Create an Axios instance for user-related requests
 export const userAxiosInstance = axios.create({
-    baseURL: 'http://localhost:5001/api/user', // Backend server URL
+    baseURL: `${process.env.REACT_APP_API}/api/user`,    // Backend server URL
     headers: {
         'Content-Type': 'application/json',
     },
@@ -64,7 +64,7 @@ userAxiosInstance.interceptors.response.use(
 
 // Create an Axios instance for admin-related requests
 export const adminAxiosInstance = axios.create({
-    baseURL: 'http://localhost:5001', // Backend server URL
+    baseURL: `${process.env.REACT_APP_API}`, // Backend server URL
     withCredentials: true, // Include cookies with requests
 });
 

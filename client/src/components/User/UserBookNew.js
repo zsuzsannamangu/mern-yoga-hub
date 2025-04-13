@@ -43,7 +43,7 @@ function UserBookNew() {
         fetchSlots();
 
         //Initialize Socket.IO connection
-        const socket = io('http://localhost:5001');
+        const socket = io(`${process.env.REACT_APP_API}`);
         socket.on('slotBooked', ({ slotId }) => {
             setAvailableSlots((prevSlots) =>
                 prevSlots.filter((slot) => slot._id !== slotId)
@@ -60,7 +60,7 @@ function UserBookNew() {
     // Fetch user details
     const fetchUser = async () => {
         try {
-            const response = await fetch(`http://localhost:5001/api/user/${userId}`);
+            const response = await fetch(`${process.env.REACT_APP_API}/api/user/${userId}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -74,7 +74,7 @@ function UserBookNew() {
     // Fetch available booking slots
     const fetchSlots = async () => {
         try {
-            const response = await fetch('http://localhost:5001/api/bookings');
+            const response = await fetch(`${process.env.REACT_APP_API}/api/bookings`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -130,7 +130,7 @@ function UserBookNew() {
         setShowPayPal(true);
 
         if (!document.querySelector('#paypal-sdk')) {
-            fetch('http://localhost:5001/config/paypal')
+            fetch(`${process.env.REACT_APP_API}/config/paypal`)
                 .then((response) => response.json())
                 .then((data) => {
                     const script = document.createElement('script');
@@ -249,7 +249,7 @@ function UserBookNew() {
 
         try {
             const response = await fetch(
-                `http://localhost:5001/api/bookings/${selectedSlot._id}/book`,
+                `${process.env.REACT_APP_API}/api/bookings/${selectedSlot._id}/book`,
                 {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
