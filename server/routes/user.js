@@ -36,7 +36,7 @@ router.post('/register', async (req, res) => {
         await newUser.save();
 
         // Construct the verification URL
-        const verificationUrl = `http://localhost:3000/verify-email?token=${verificationToken}`;
+        const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
 
         // Prepare the email content
         const emailContent = {
@@ -198,7 +198,7 @@ router.post('/login', async (req, res) => {
         }
 
         const loginToken = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '15m' });
-        const loginUrl = `http://localhost:3000/verify-login?token=${loginToken}`;
+        const loginUrl = `${process.env.FRONTEND_URL}/verify-login?token=${loginToken}`;
 
         const userName = user.firstName || 'there';
 
