@@ -26,7 +26,7 @@ app.use(helmet());
 app.use(cookieParser());
 
 const corsOptions = {
-    origin: 'http://localhost:3000', // Frontend origin
+    origin: 'https://mern-yoga-hub.vercel.app', // frontend connection
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true, // Allow cookies/credentials
     allowedHeaders: ['Content-Type', 'Authorization'],
