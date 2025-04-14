@@ -26,7 +26,7 @@ app.use(helmet());
 app.use(cookieParser());
 
 const corsOptions = {
-    origin: 'https://mern-yoga-hub.vercel.app', // frontend connection
+    origin: process.env.ALLOWED_ORIGIN, // frontend connection
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true, // Allow cookies/credentials
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -43,7 +43,7 @@ app.get("/api/health", (req, res) => {
 
 // Add headers manually for extra safety
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // Allow frontend origin
+    res.header('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN); // Allow frontend origin
     res.header('Access-Control-Allow-Credentials', 'true'); // Allow credentials
     res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE'); // Allowed methods
     res.header(
