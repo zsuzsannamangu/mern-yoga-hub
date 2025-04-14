@@ -25,12 +25,25 @@ app.use(helmet());
 // Apply cookie-parser middleware to parse cookies from requests
 app.use(cookieParser());
 
+const allowedOrigins = [
+    'https://www.yogaandchocolate.com',
+    'https://yogaandchocolate.com',
+    'https://mern-yoga-hub.vercel.app' // Optional, if still used
+];
+
 const corsOptions = {
-    origin: process.env.ALLOWED_ORIGIN, // frontend connection
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true, // Allow cookies/credentials
+    credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
+
 app.use(cors(corsOptions));
 
 app.get('/config/paypal', (req, res) => {
@@ -43,13 +56,16 @@ app.get("/api/health", (req, res) => {
 
 // Add headers manually for extra safety
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN); // Allow frontend origin
-    res.header('Access-Control-Allow-Credentials', 'true'); // Allow credentials
-    res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE'); // Allowed methods
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.header('Access-Control-Allow-Origin', origin);
+    }
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
     res.header(
         'Access-Control-Allow-Headers',
         'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-    ); // Allowed headers
+    );
     next();
 });
 

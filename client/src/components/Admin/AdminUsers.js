@@ -5,6 +5,7 @@ import '../../App.scss';
 import AdminNavbar from './AdminNavbar';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
+import { FaTrash } from 'react-icons/fa'; // Trash icon for delete button
 
 const AdminUsers = () => {
     const [users, setUsers] = useState([]); // State to store users
