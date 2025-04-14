@@ -17,7 +17,7 @@ function Products({ showAlert }) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_API}/chocolates`);
+        const res = await axios.get(`${process.env.REACT_APP_API}/api/chocolates`);
         setProducts(res.data);
       } catch (error) {
         Swal.fire({
