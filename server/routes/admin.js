@@ -39,7 +39,7 @@ router.post('/login', async (req, res) => {
                 score: recaptchaData.score,
             });
         }
-        
+
         const admin = await Admin.findOne({ email });
         if (!admin) {
             return res.status(401).json({ message: 'Invalid email or password' });
@@ -142,6 +142,21 @@ router.get('/users', async (req, res) => {
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch users." });
+    }
+});
+
+// DELETE a specific user by ID (Admin use only)
+router.delete('/users/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletedUser = await User.findByIdAndDelete(id);
+        if (!deletedUser) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+        res.status(200).json({ message: 'User deleted successfully.' });
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).json({ message: 'Server error while deleting user.' });
     }
 });
 
