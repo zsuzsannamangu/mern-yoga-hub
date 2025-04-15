@@ -31,6 +31,46 @@ const AdminUsers = () => {
         }
     };
 
+    // Delete a user by ID
+    const deleteUser = async (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This will permanently delete the user.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ff6b6b',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            customClass: {
+                confirmButton: 'swal-confirm-button',
+            }
+        }).then(async (result) => {
+            if (!result.isConfirmed) return;
+
+            try {
+                const token = localStorage.getItem('adminToken');
+                await adminAxiosInstance.delete(`/api/admin/users/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'User deleted successfully.',
+                    confirmButtonText: 'OK'
+                });
+                fetchUsers(); // Refresh the list
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to delete user.',
+                    text: 'Please try again later.',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    };
+
     // Fetch users when the component mounts
     useEffect(() => {
         fetchUsers();
@@ -56,6 +96,7 @@ const AdminUsers = () => {
                             <th>Location</th>
                             <th>Zip</th>
                             <th>User Since</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,6 +112,12 @@ const AdminUsers = () => {
                                 <td>{user.city}</td>
                                 <td>{user.zipcode}</td>
                                 <td>{user.createdAt}</td>
+                                <td>
+                                    <button className="delete-button" onClick={() => deleteUser(user._id)}>
+                                        <FaTrash />
+                                    </button>
+                                </td>
+
                             </tr>
                         ))}
                     </tbody>

@@ -11,9 +11,35 @@ dotenv.config();
 
 // Admin Login
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, recaptchaToken } = req.body;
+
+    // Step 1: Verify reCAPTCHA
+    if (!recaptchaToken) {
+        return res.status(400).json({ message: 'reCAPTCHA token is missing' });
+    }
+
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify`;
 
     try {
+        const recaptchaRes = await fetch(verifyUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                secret: secretKey,
+                response: recaptchaToken,
+            }),
+        });
+
+        const recaptchaData = await recaptchaRes.json();
+
+        if (!recaptchaData.success || recaptchaData.score < 0.5) {
+            return res.status(403).json({
+                message: 'Failed reCAPTCHA verification. Please try again.',
+                score: recaptchaData.score,
+            });
+        }
+        
         const admin = await Admin.findOne({ email });
         if (!admin) {
             return res.status(401).json({ message: 'Invalid email or password' });

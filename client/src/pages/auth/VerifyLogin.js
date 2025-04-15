@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useUserAuth } from '../../components/User/UserAuthContext';
 import { userAxiosInstance } from '../../config/axiosConfig';
@@ -8,6 +8,7 @@ function VerifyLogin() {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const { login } = useUserAuth(); // Access the login function from context
+    const alertShown = useRef(false); // Prevent multiple alerts
 
     useEffect(() => {
         const tokenFromUrl = searchParams.get('token'); // Extract token from URL query params
@@ -40,40 +41,49 @@ function VerifyLogin() {
                     localStorage.setItem('user', JSON.stringify(user));
 
                     // Redirect user to their dashboard
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Login Successful',
-                        text: 'You have been logged in successfully.',
-                        icon: 'success',
-                    }).then(() => {
-                        navigate(`/user/${userId}`);
-                    });
+                    if (!alertShown.current) {
+                        alertShown.current = true;
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Login Successful',
+                            text: 'You have been logged in successfully.',
+                            icon: 'success',
+                        }).then(() => {
+                            navigate(`/user/${userId}`);
+                        });
+                    }
                 } else {
                     throw new Error('Invalid response: Missing token or user.');
                 }
             } catch (error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Login Failed',
-                    text: 'Your login link is invalid or has expired. Please request a new link and try again.',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    navigate('/login');
-                });
+                if (!alertShown.current) {
+                    alertShown.current = true;
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Login Failed',
+                        text: 'Your login link is invalid or has expired. Please request a new link and try again.',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        navigate('/login');
+                    });
+                }
             }
         };
 
         if (tokenFromUrl) {
             verifyLogin();
         } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Login Failed',
-                text: 'Your login link is invalid or may have expired. Please request a new link and try again.',
-                confirmButtonText: 'OK'
-            }).then(() => {
-                navigate('/login');
-            });
+            if (!alertShown.current) {
+                alertShown.current = true;
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: 'Your login link is invalid or may have expired. Please request a new link and try again.',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    navigate('/login');
+                });
+            }
         }
     }, [searchParams, navigate, login]);
 

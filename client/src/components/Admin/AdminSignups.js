@@ -34,7 +34,7 @@ const AdminSignups = () => {
     const deleteSignup = async (id) => {
         Swal.fire({
             title: 'Are you sure?',
-            text: 'This will permanently delete the signup.',
+            text: 'This will permanently delete this signup.',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#ff6b6b',

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import './Products.scss';
 import '../../App.scss';
@@ -13,19 +13,24 @@ function Products({ showAlert }) {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const { addToCart } = useCart();
   const navigate = useNavigate(); // Define navigate
-  
+  const alertShown = useRef(false);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(`${process.env.REACT_APP_API}/api/chocolates`);
         setProducts(res.data);
+        alertShown.current = false; // reset if successful
       } catch (error) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops! Unable to Load Products!',
-          text: 'Please check your internet connection or refresh the page to try again.',
-          confirmButtonText: 'OK'
-        });
+        if (!alertShown.current) {
+          alertShown.current = true; // prevent repeat alerts
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops! Unable to Load Products!',
+            text: 'Please check your internet connection or refresh the page to try again.',
+            confirmButtonText: 'OK'
+          });
+        }
       }
     };
     fetchProducts();
