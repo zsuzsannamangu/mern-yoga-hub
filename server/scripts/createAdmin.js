@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const Admin = require('../models/Admin');
+const bcrypt = require('bcryptjs');
 
 dotenv.config();
 
@@ -19,9 +20,14 @@ const createAdmin = async () => {
       process.exit();
     }
 
+    //const admin = new Admin({
+      //email: process.env.ADMIN_EMAIL,
+      //password: process.env.ADMIN_PASSWORD,
+    //});
+    const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
     const admin = new Admin({
       email: process.env.ADMIN_EMAIL,
-      password: process.env.ADMIN_PASSWORD,
+      password: hashedPassword,
     });
 
     await admin.save();

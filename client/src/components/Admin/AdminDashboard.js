@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { adminAxiosInstance } from '../../config/axiosConfig';
 import { useNavigate } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
@@ -15,6 +15,7 @@ const AdminDashboard = () => {
     const [newEvent, setNewEvent] = useState({ title: '', date: '', time: '', location: '', signUpLink: '' }); // State for new event form
     const [loading, setLoading] = useState(false); // State for loading indicator
     const [signups, setSignups] = useState([]); // State for storing event signups
+    const alertShown = useRef(false);
 
     // Fetch events from the backend
     const fetchEvents = async () => {
@@ -24,12 +25,15 @@ const AdminDashboard = () => {
             const sortedEvents = res.data.sort((a, b) => new Date(a.date) - new Date(b.date));
             setEvents(sortedEvents);
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Failed to fetch events.',
-                text: error.message,
-                confirmButtonText: 'OK'
-            });
+            if (!alertShown.current) {
+                alertShown.current = true;
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to fetch events.',
+                    text: error.message,
+                    confirmButtonText: 'OK'
+                });
+            }
         } finally {
             setLoading(false);
         }
@@ -219,12 +223,15 @@ const AdminDashboard = () => {
                 const res = await adminAxiosInstance.get('/api/admin/signups');
                 setSignups(res.data);
             } catch (error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to fetch signups.',
-                    text: error.message,
-                    confirmButtonText: 'OK'
-                });
+                if (!alertShown.current) {
+                    alertShown.current = true;
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to fetch signups.',
+                        text: error.message,
+                        confirmButtonText: 'OK'
+                    });
+                }
             } finally {
                 setLoading(false);
             }
@@ -232,6 +239,7 @@ const AdminDashboard = () => {
 
         // Check authentication and fetch data when component mounts
         useEffect(() => {
+            alertShown.current = false;
             const checkAuth = async () => {
                 try {
                     const token = localStorage.getItem('adminToken');
@@ -240,13 +248,16 @@ const AdminDashboard = () => {
                         headers: { Authorization: `Bearer ${token}` },
                     });
                 } catch (error) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'You are not authorized to access this page. Redirecting to login.',
-                        text: error.message,
-                        confirmButtonText: 'OK'
-                    });
-                    navigate('/admin');
+                    if (!alertShown.current) {
+                        alertShown.current = true;
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'You are not authorized to access this page. Redirecting to login.',
+                            text: error.message,
+                            confirmButtonText: 'OK'
+                        });
+                        navigate('/admin');
+                    }
                 }
             };
 

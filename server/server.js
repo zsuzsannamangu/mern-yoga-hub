@@ -30,7 +30,8 @@ const allowedOrigins = [
     'https://yogaandchocolate.com',
     'https://mern-yoga-hub.vercel.app',
     'https://retreatpdx.com',
-    'https://www.retreatpdx.com'
+    'https://www.retreatpdx.com',
+    'http://localhost:3000'
 ];
 
 const corsOptions = {
@@ -85,7 +86,7 @@ const PORT = process.env.PORT || 5001;
 // MongoDB connection
 mongoose
     .connect(process.env.MONGODB_URI)
-    .then(() => console.log('MongoDB connected'))
+    .then(() => console.log('MongoDB connected to:', process.env.MONGODB_URI))
     .catch((err) => console.log('Error connecting to MongoDB:', err));
 
 // Register routes and pass `io` to specific routes
