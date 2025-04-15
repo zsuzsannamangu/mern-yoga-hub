@@ -12,6 +12,7 @@ const AdminLogin = () => {
     const navigate = useNavigate(); //A function to navigate programmatically between routes
     const { login, isAuthenticated } = useAdminAuth(); //Extracted from the AdminAuthContext for managing login and checking if the admin is logged in.
     const alertShown = useRef(false); // Prevent duplicate SweetAlerts
+    const [loading, setLoading] = useState(false);
 
     // Check token on mount and redirect if already logged in
     useEffect(() => { //useEffect() is used here to prevent the redirection logic from interfering with React's rendering process
@@ -64,6 +65,8 @@ const AdminLogin = () => {
             return;
         }
 
+        setLoading(true); // Start loading spinner
+
         try {
             const recaptchaToken = await window.grecaptcha.execute(siteKey, { action: 'admin_login' });
             const res = await adminAxiosInstance.post('/api/admin/login', { email, password, recaptchaToken });
@@ -96,6 +99,8 @@ const AdminLogin = () => {
                     confirmButtonText: 'OK',
                 });
             }
+        } finally {
+            setLoading(false); // Stop spinner regardless of outcome
         }
     };
     //Rendering the login form:
@@ -118,7 +123,9 @@ const AdminLogin = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <button type="submit">Login</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Logging in...' : 'Login'}
+                </button>
             </form>
         </div>
     );

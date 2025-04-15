@@ -7,6 +7,7 @@ const { authMiddleware, adminMiddleware } = require('../middlewares/auth'); // I
 const router = express.Router();
 const dotenv = require('dotenv');
 const User = require('../models/User');
+const fetch = require('node-fetch'); // For reCAPTCHA validation
 dotenv.config();
 
 // Admin Login
@@ -32,6 +33,7 @@ router.post('/login', async (req, res) => {
         });
 
         const recaptchaData = await recaptchaRes.json();
+        console.log('Verifying reCAPTCHA token:', recaptchaToken);
 
         if (!recaptchaData.success || recaptchaData.score < 0.5) {
             return res.status(403).json({
@@ -39,6 +41,7 @@ router.post('/login', async (req, res) => {
                 score: recaptchaData.score,
             });
         }
+        console.log('Score:', recaptchaData.score);
 
         const admin = await Admin.findOne({ email });
         if (!admin) {
