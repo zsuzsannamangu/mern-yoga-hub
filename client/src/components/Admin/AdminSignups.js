@@ -97,7 +97,7 @@ const AdminSignups = () => {
                     <tbody>
                         {signups.map((signup) => (
                             <tr key={signup._id}>
-                                <td>{new Date(signup.date).toLocaleDateString()}</td>
+                                <td>{signup.date}</td>
                                 <td>{signup.classTitle}</td>
                                 <td>{signup.name}</td>
                                 <td>{signup.email}</td>
