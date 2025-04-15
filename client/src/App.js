@@ -1,4 +1,5 @@
 import React from 'react';
+import { loadRecaptcha } from './utils/recaptcha';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; //// BrowserRouter for routing, Routes for defining routes, and Route for individual route declarations
 // Authentication providers for managing user and admin authentication contexts
 import { UserAuthProvider } from './components/User/UserAuthContext';
@@ -52,6 +53,9 @@ const showAlert = (title, text, icon) => {
 
 // Main App component wrapping all routes and contexts
 function App() {
+  useEffect(() => {
+    loadRecaptcha();
+  }, []);
   return (
     <UserAuthProvider>
       <AdminAuthProvider>
