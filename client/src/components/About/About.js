@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'; 
+import React, { useEffect, useRef } from 'react';
 //useEffect() is a React Hook that lets you perform side effects in function components, instead of class components. useRef is a React Hook that allows you to create a mutable reference to a DOM element.
 import { useLocation } from 'react-router-dom'; //useLocation is a hook provided by React Router that gives access to the current URL's location object.
 import './About.scss';
@@ -35,12 +35,22 @@ function About() {
             {/* Component to display offerings */}
             <Offerings />
 
-             {/* Trainings Section */}
+            {/* Trainings Section */}
             <div className="about-info-section">
                 <h2 className="section-title">Trainings</h2>
                 <div className="title-line"></div>
                 <div className="info-category">
                     <h3>Core Yoga Teacher Trainings</h3>
+                    <div className="info-item">
+                        <h4>800hr Integrative Yoga Therapy Training</h4>
+                        <h4>Accredited with International Association of Yoga Therapists</h4>
+                        <p><em>Sarahjoy Yoga, Portland OR</em><br />
+                            June 2025 - exp. June 2026</p>
+                        <p>The Science of the Breath and the Art of Yoga Therapy; The Chakras and Developmental Yoga and Western Psychology; Compassionate Approaches to Yoga Therapy with lessons from the Internal Family Systems Model; the study of 
+                            Chronic Pain and Brain-Based Approaches to Yoga Therapy; Yoga and Expressive Arts Therapy; Endocrine, Digestive 
+                            and Immune Health; Attachment Theory and Implicit Memory in Yoga Therapy; Yoga for Cancer; and Yoga, Biofeedback + Mind-Body Medicine; Kriya Yoga Model for Addiction Recovery, and The Business of Yoga: Collaboration, Referrals 
+                            and Innovation in the Health Care Industry.</p>
+                    </div>
                     <div className="info-item">
                         <h4>300hr Advanced Yoga Teacher Training</h4>
                         <h4>(RYT-500)</h4>
@@ -83,7 +93,7 @@ function About() {
                 </div>
             </div>
 
-             {/* Class Descriptions Section */}
+            {/* Class Descriptions Section */}
             <div className="about-info-section" ref={classDescriptionsRef}>
                 <h2 className="section-title">Class Descriptions</h2>
                 <div className="title-line"></div>
