@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { loadRecaptcha } from './utils/recaptcha';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; //// BrowserRouter for routing, Routes for defining routes, and Route for individual route declarations
 // Authentication providers for managing user and admin authentication contexts
