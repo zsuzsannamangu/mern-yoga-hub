@@ -363,17 +363,34 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 router.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
-        res.redirect(`${process.env.FRONTEND_URL}/user/${req.user._id}`);
+        if (!req.user) {
+            return res.redirect(`${process.env.FRONTEND_URL}/login?error=missing_user`);
+        }
+
+        // 🔐 Generate your own app token
+        const loginToken = jwt.sign(
+            {
+                id: req.user._id,
+                email: req.user.email,
+                firstName: req.user.firstName,
+                lastName: req.user.lastName,
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        // Redirect with token and user ID in the URL
+        res.redirect(`${process.env.FRONTEND_URL}/user/${req.user._id}?token=${loginToken}`);
     }
 );
 
 router.get('/auth/microsoft', passport.authenticate('microsoft', { scope: ['User.Read'] }));
 
 router.get('/auth/microsoft/callback',
-  passport.authenticate('microsoft', { failureRedirect: '/' }),
-  (req, res) => {
-    res.redirect(`${process.env.FRONTEND_URL}/user/${req.user._id}`);
-  }
+    passport.authenticate('microsoft', { failureRedirect: '/' }),
+    (req, res) => {
+        res.redirect(`${process.env.FRONTEND_URL}/user/${req.user._id}`);
+    }
 );
 
 
