@@ -362,36 +362,29 @@ router.get('/auth/google', (req, res, next) => {
     next();
 }, passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-router.get('/auth/google/callback',
-    (req, res, next) => {
-        console.log('🔁 Reached Google OAuth callback route');
-        next();
-    },
-    passport.authenticate('google', { failureRedirect: '/' }),
+router.get(
+    '/auth/google/callback',
+    passport.authenticate('google', {
+        session: false, // 🔥 disables session!
+        failureRedirect: '/login',
+    }),
     async (req, res) => {
-        console.log('✅ Google OAuth successful');
-        console.log('👤 User from Google:', req.user);
+        try {
+            const user = req.user;
 
-        if (!req.user) {
-            console.log('⚠️ No user returned from Google OAuth');
-            return res.redirect(`${process.env.FRONTEND_URL}/login?error=missing_user`);
+            // ✅ Create JWT manually (instead of req.login())
+            const token = jwt.sign(
+                { id: user._id },
+                process.env.JWT_SECRET,
+                { expiresIn: '7d' }
+            );
+
+            // ✅ Redirect with token to frontend
+            res.redirect(`https://www.yogaandchocolate.com/user/${user._id}?token=${token}`);
+        } catch (err) {
+            console.error("Google login error:", err);
+            res.status(500).send("OAuth login failed.");
         }
-
-        const token = jwt.sign(
-            {
-                id: req.user._id,
-                email: req.user.email,
-                firstName: req.user.firstName,
-                lastName: req.user.lastName,
-            },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' }
-        );
-
-        const redirectUrl = `${process.env.FRONTEND_URL}/user/${req.user._id}?token=${token}`;
-        console.log(`🔁 Redirecting to frontend: ${redirectUrl}`);
-
-        res.redirect(redirectUrl);
     }
 );
 
