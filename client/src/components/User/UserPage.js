@@ -25,6 +25,7 @@ function UserPage() {
         const tokenFromUrl = searchParams.get('token');
         if (tokenFromUrl) {
             localStorage.setItem('userToken', tokenFromUrl);
+            window.location.reload(); // Forces the provider to validate the token
         }
     }, [searchParams]); //This runs once when user lands with ?token=...
 
