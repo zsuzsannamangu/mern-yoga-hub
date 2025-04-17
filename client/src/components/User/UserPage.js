@@ -7,6 +7,7 @@ import './UserPage.scss';
 import '../../App.scss';
 import { useUserAuth } from '../User/UserAuthContext';
 import { userAxiosInstance } from '../../config/axiosConfig';
+import { useSearchParams } from 'react-router-dom';
 
 function UserPage() {
     const { user } = useUserAuth(); // Access user from context
@@ -16,6 +17,16 @@ function UserPage() {
 
     // Determine the current userId: prioritize context, fallback to param
     const userId = user?.id || paramUserId;
+
+    const [searchParams] = useSearchParams(); // Get search params (e.g., ?token=xyz)
+
+    // Store token if coming from OAuth login
+    useEffect(() => {
+        const tokenFromUrl = searchParams.get('token');
+        if (tokenFromUrl) {
+            localStorage.setItem('userToken', tokenFromUrl);
+        }
+    }, [searchParams]); //This runs once when user lands with ?token=...
 
     useEffect(() => {
         if (!userId) {
@@ -31,7 +42,7 @@ function UserPage() {
             }
         };
         fetchUser();
-    }, [userId]);
+    }, [userId]); // <-- This runs whenever the userId becomes available
 
     return (
         <div className="user-page">
