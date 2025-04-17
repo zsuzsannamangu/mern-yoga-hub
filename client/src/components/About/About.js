@@ -43,13 +43,13 @@ function About() {
                     <h3>Core Yoga Teacher Trainings</h3>
                     <div className="info-item">
                         <h4>800hr Integrative Yoga Therapy Training</h4>
-                        <h4>Accredited with International Association of Yoga Therapists</h4>
+                        <h4>Accredited with IAYT</h4>
                         <p><em>Sarahjoy Yoga, Portland OR</em><br />
                             June 2025 - exp. June 2026</p>
-                        <p>The Science of the Breath and the Art of Yoga Therapy; The Chakras and Developmental Yoga and Western Psychology; Compassionate Approaches to Yoga Therapy with lessons from the Internal Family Systems Model; the study of 
-                            Chronic Pain and Brain-Based Approaches to Yoga Therapy; Yoga and Expressive Arts Therapy; Endocrine, Digestive 
-                            and Immune Health; Attachment Theory and Implicit Memory in Yoga Therapy; Yoga for Cancer; and Yoga, Biofeedback + Mind-Body Medicine; Kriya Yoga Model for Addiction Recovery, and The Business of Yoga: Collaboration, Referrals 
-                            and Innovation in the Health Care Industry.</p>
+                        <p>The Science of the Breath and the Art of Yoga Therapy; Internal Family Systems Model;
+                            Chronic Pain and Brain-Based Approaches to Yoga Therapy; Yoga and Expressive Arts Therapy; 
+                            Endocrine, Digestive and Immune Health; Attachment Theory and Implicit Memory in Yoga Therapy; 
+                            Yoga for Cancer; Yoga, Biofeedback + Mind-Body Medicine; Kriya Yoga Model for Addiction Recovery.</p>
                     </div>
                     <div className="info-item">
                         <h4>300hr Advanced Yoga Teacher Training</h4>
@@ -100,20 +100,19 @@ function About() {
                 <div className="info-category">
                     <div className="info-item">
                         <h4>Yoga for Wheelchair Users</h4>
-                        <p>A yoga practice tailored for individuals who use wheelchairs, focusing on enhancing well-being through breath, gentle movement, and mindfulness. This class invites you
-                            to explore yoga’s many benefits in a way that respects and embraces unique needs.
+                        <p>A yoga practice tailored for individuals who use wheelchairs, focusing on enhancing well-being through breath, gentle movement, and mindfulness.
 
                             Through guided breathwork, we’ll cultivate a sense of calm, helping to lower stress, improve circulation, and support respiratory health. Gentle
-                            movements and modified poses are designed to improve flexibility, build strength, and enhance range of motion, all while remaining seated.
+                            movements are designed to improve flexibility, build strength, and enhance range of motion, all while remaining seated.
 
                             Mindfulness and meditation will be woven into the practice to foster mental clarity, emotional resilience, and a deeper connection to your body.
-                            All levels are welcome, and no prior experience is needed. Props and modifications will be offered to ensure accessibility and comfort for everyone.</p>
+                            All levels are welcome, and no prior experience is needed. Props will be offered.</p>
                     </div>
                     <div className="info-item">
                         <h4>Slow Flow</h4>
                         <p>This class focuses on mindful movement, allowing you to ease into each posture with intention and awareness.
-                            Through gentle flows, we’ll explore balance and strength at a pace that honors your body. Breathing exercises and repetition create a meditative rhythm, helping you connect with your breath and foster a sense of inner peace.
-                            This practice is inclusive and adaptive, offering a welcoming space for all levels, whether you’re new to yoga or looking to refine your practice. Props and modifications will be encouraged to ensure a comfortable and accessible experience.</p>
+                            Through gentle flows, we’ll explore balance and strength at a pace that honors your body.
+                            This practice is inclusive and adaptive, offering a welcoming space for all levels, whether you’re new to yoga or looking to refine your practice. Props and variations will be encouraged.</p>
                     </div>
                 </div>
             </div>
