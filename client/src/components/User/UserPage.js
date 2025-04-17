@@ -14,6 +14,7 @@ function UserPage() {
     const { userId: paramUserId } = useParams(); // Get userId from the URL
     const [userData, setUserData] = useState(null);
     const location = useLocation();
+    const { login } = useUserAuth();
 
     // Determine the current userId: prioritize context, fallback to param
     const userId = user?.id || paramUserId;
