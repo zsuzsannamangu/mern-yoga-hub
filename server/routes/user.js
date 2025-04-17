@@ -362,13 +362,12 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 // Callback after Google auth
 router.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/' }),
-    (req, res) => {
+    async (req, res) => {
         if (!req.user) {
             return res.redirect(`${process.env.FRONTEND_URL}/login?error=missing_user`);
         }
 
-        // Generate your own app token
-        const loginToken = jwt.sign(
+        const token = jwt.sign(
             {
                 id: req.user._id,
                 email: req.user.email,
@@ -379,8 +378,7 @@ router.get('/auth/google/callback',
             { expiresIn: '1h' }
         );
 
-        // Redirect with token and user ID in the URL
-        res.redirect(`${process.env.FRONTEND_URL}/user/${req.user._id}?token=${loginToken}`);
+        res.redirect(`${process.env.FRONTEND_URL}/user/${req.user._id}?token=${token}`);
     }
 );
 

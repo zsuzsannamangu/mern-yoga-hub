@@ -22,13 +22,25 @@ function UserPage() {
 
     // Store token if coming from OAuth login
     useEffect(() => {
-        const tokenFromUrl = searchParams.get('token');
-        if (tokenFromUrl) {
-            localStorage.setItem('userToken', tokenFromUrl);
-            console.log("Saved token:", tokenFromUrl); // DEBUG
-            window.location.href = window.location.pathname; // Clean URL and reload
+        const token = searchParams.get('token');
+        const userId = searchParams.get('userId') || paramUserId;
+
+        if (token && userId) {
+            // validate token
+            const validateToken = async () => {
+                try {
+                    const response = await userAxiosInstance.post('/validate-token', { token });
+                    if (response.data.isValid) {
+                        login(response.data.user, token); // use your context login function
+                    }
+                } catch (err) {
+                    console.error('OAuth login failed:', err);
+                }
+            };
+            validateToken();
         }
     }, [searchParams]);
+
     useEffect(() => {
         if (!userId) {
             return;

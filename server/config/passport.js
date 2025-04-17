@@ -14,24 +14,38 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        const existingUser = await User.findOne({ googleId: profile.id });
-        if (existingUser) return done(null, existingUser);
+        // Check if user already exists with googleId
+        let user = await User.findOne({ googleId: profile.id });
 
-        const newUser = new User({
-          googleId: profile.id,
-          firstName: profile.name.givenName,
-          lastName: profile.name.familyName,
-          email: profile.emails[0].value,
-          isVerified: true,
-        });
-        await newUser.save();
-        return done(null, newUser);
-      } catch (error) {
-        return done(error, null);
+        // If not, try finding user by email and link googleId
+        if (!user) {
+          user = await User.findOne({ email: profile.emails[0].value });
+          if (user) {
+            user.googleId = profile.id;
+            await user.save();
+          }
+        }
+
+        // If still no user, create new one
+        if (!user) {
+          user = new User({
+            googleId: profile.id,
+            firstName: profile.name.givenName,
+            lastName: profile.name.familyName,
+            email: profile.emails[0].value,
+            isVerified: true, // Auto-verify OAuth users
+          });
+          await user.save();
+        }
+
+        return done(null, user);
+      } catch (err) {
+        return done(err, null);
       }
     }
   )
 );
+
 
 // Microsoft Strategy
 passport.use(
