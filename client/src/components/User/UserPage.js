@@ -22,7 +22,9 @@ function UserPage() {
     // Store token if coming from OAuth login
     useEffect(() => {
         const token = searchParams.get('token');
+        console.log("OAuth token:", token);
         const userId = searchParams.get('userId') || paramUserId;
+        console.log("OAuth userId:", userId);
 
         if (token && userId) {
             // validate token

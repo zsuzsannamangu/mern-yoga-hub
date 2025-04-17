@@ -357,15 +357,23 @@ router.put('/:userId/update', async (req, res) => {
 
 //OAuth
 // Initiate Google OAuth
-router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/auth/google', (req, res, next) => {
+    console.log('🚀 Initiating Google OAuth');
+    next();
+}, passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// Callback after Google auth
 router.get('/auth/google/callback',
+    (req, res, next) => {
+        console.log('🔁 Reached Google OAuth callback route');
+        next();
+    },
     passport.authenticate('google', { failureRedirect: '/' }),
     async (req, res) => {
-        console.log('Reached Google callback');
-        console.log('User:', req.user);
+        console.log('✅ Google OAuth successful');
+        console.log('👤 User from Google:', req.user);
+
         if (!req.user) {
+            console.log('⚠️ No user returned from Google OAuth');
             return res.redirect(`${process.env.FRONTEND_URL}/login?error=missing_user`);
         }
 
@@ -380,7 +388,10 @@ router.get('/auth/google/callback',
             { expiresIn: '1h' }
         );
 
-        res.redirect(`${process.env.FRONTEND_URL}/user/${req.user._id}?token=${token}`);
+        const redirectUrl = `${process.env.FRONTEND_URL}/user/${req.user._id}?token=${token}`;
+        console.log(`🔁 Redirecting to frontend: ${redirectUrl}`);
+
+        res.redirect(redirectUrl);
     }
 );
 
