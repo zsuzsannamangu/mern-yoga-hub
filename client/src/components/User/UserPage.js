@@ -25,10 +25,10 @@ function UserPage() {
         const tokenFromUrl = searchParams.get('token');
         if (tokenFromUrl) {
             localStorage.setItem('userToken', tokenFromUrl);
-            window.location.reload(); // Forces the provider to validate the token
+            console.log("Saved token:", tokenFromUrl); // DEBUG
+            window.location.href = window.location.pathname; // Clean URL and reload
         }
-    }, [searchParams]); //This runs once when user lands with ?token=...
-
+    }, [searchParams]);
     useEffect(() => {
         if (!userId) {
             return;
