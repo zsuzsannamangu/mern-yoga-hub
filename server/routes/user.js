@@ -356,19 +356,25 @@ router.put('/:userId/update', async (req, res) => {
 });
 
 //OAuth
+// Initiate Google OAuth
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+// Callback after Google auth
 router.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
-      res.redirect(`${process.env.FRONTEND_URL}/user/${req.user._id}`);
+        res.redirect(`${process.env.FRONTEND_URL}/user/${req.user._id}`);
     }
-  );
-  
-  router.get('/auth/microsoft/callback',
-    passport.authenticate('microsoft', { failureRedirect: '/' }),
-    (req, res) => {
-      res.redirect(`${process.env.FRONTEND_URL}/user/${req.user._id}`);
-    }
-  );
-  
+);
+
+router.get('/auth/microsoft', passport.authenticate('microsoft', { scope: ['User.Read'] }));
+
+router.get('/auth/microsoft/callback',
+  passport.authenticate('microsoft', { failureRedirect: '/' }),
+  (req, res) => {
+    res.redirect(`${process.env.FRONTEND_URL}/user/${req.user._id}`);
+  }
+);
+
 
 module.exports = router;
