@@ -5,46 +5,41 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 // Google Strategy
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `${process.env.SERVER_URL}/api/user/auth/google/callback`,
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        // Check if user already exists with googleId
-        let user = await User.findOne({ googleId: profile.id });
-
-        // If not, try finding user by email and link googleId
-        if (!user) {
-          user = await User.findOne({ email: profile.emails[0].value });
-          if (user) {
-            user.googleId = profile.id;
-            await user.save();
-          }
-        }
-
-        // If still no user, create new one
-        if (!user) {
-          user = new User({
-            googleId: profile.id,
-            firstName: profile.name.givenName,
-            lastName: profile.name.familyName,
-            email: profile.emails[0].value,
-            isVerified: true, // Auto-verify OAuth users
-          });
-          await user.save();
-        }
-
-        return done(null, user);
-      } catch (err) {
-        return done(err, null);
-      }
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: `${process.env.SERVER_URL}/api/user/auth/google/callback`
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+    // Check if user already exists
+    let user = await User.findOne({ googleId: profile.id });
+    if (!user) {
+      // Create new user
+      user = await User.create({
+        googleId: profile.id,
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+        email: profile.emails[0].value,
+      });
     }
-  )
-);
+    return done(null, user);
+  } catch (err) {
+    return done(err, null);
+  }
+}));
+
+passport.serializeUser((user, done) => {
+  done(null, user.id); // usually the MongoDB _id
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
+});
 
 
 // Microsoft Strategy
