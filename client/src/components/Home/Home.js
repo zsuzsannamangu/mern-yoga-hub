@@ -109,9 +109,9 @@ function Home({ showAlert }) {
           <div className="title-line"></div>
         </div>
         <div className="right-section">
-          <p>In my work, I create a space for gentle exploration and grounded presence. Together, we’ll journey through practices of movement and stillness, attuning to the wisdom within the body and nurturing a path to balance.</p>
-          <p>I weave together somatic practices, breathwork, Ayurvedic wisdom, meditation, sensory experiences, and movement to support holistic well-being. My approach includes mindful vinyasa flow, restorative and adaptive yoga, and mindfulness practices, creating space for self-compassion,
-            balance, and a deeper connection to the present moment.</p>
+          <p>In my work, I create a space for gentle exploration and grounded presence. Together, we’ll journey through practices of movement and stillness, attuning to the wisdom within the body.</p>
+          <p>I weave together somatic practices, breathwork, Ayurvedic wisdom, meditation, sensory experiences, and movement to support holistic well-being. I teach gentle slow flow, restorative and adaptive yoga, and mindfulness practices, creating space for self-compassion
+            and a deeper connection to the present moment.</p>
         </div>
       </div>
       <div className="main-row" id="book-section">

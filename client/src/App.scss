@@ -99,6 +99,10 @@ a {
   &:hover {
     color: $tertiary-text-color; // Change color on hover
   }
+
+  .nav-item-chocolates {
+    border-style: solid;
+  }
 }
 
 .nav-buttons {

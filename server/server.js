@@ -15,6 +15,8 @@ const userRoutes = require('./routes/user');
 const signupRoutes = require("./routes/signup");
 const publicBookingsRoutes = require('./routes/publicBookings');
 const orderRoutes = require("./routes/orders");
+const passport = require('passport');
+require('./config/passport'); // load passport strategies
 
 const cookieParser = require('cookie-parser');
 
@@ -99,6 +101,7 @@ app.use('/api/user', userRoutes);
 app.use("/api", signupRoutes);
 app.use('/api/publicBookings', publicBookingsRoutes);
 app.use("/api", orderRoutes);
+app.use(passport.initialize());
 
 io.on('connection', (socket) => {
     console.log('New client connected:', socket.id);
