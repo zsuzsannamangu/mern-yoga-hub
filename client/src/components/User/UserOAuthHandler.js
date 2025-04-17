@@ -4,18 +4,20 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 const UserOAuthHandler = () => {
   const [searchParams] = useSearchParams();
-  const { userId } = useParams();
+  const { userId: paramUserId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = searchParams.get('token');
-    if (token) {
-      localStorage.setItem('userToken', token);
-    }
+    const queryUserId = searchParams.get('userId');
+    const finalUserId = queryUserId || paramUserId;
 
-    // Now redirect to the real protected route
-    navigate(`/user/${userId}`, { replace: true });
-  }, [searchParams, userId, navigate]);
+    if (token && finalUserId) {
+      localStorage.setItem('userToken', token);
+      localStorage.setItem('userId', finalUserId);
+      navigate(`/user/${finalUserId}`, { replace: true });
+    }
+  }, [searchParams, paramUserId, navigate]);
 
   return <div>Signing you in...</div>;
 };

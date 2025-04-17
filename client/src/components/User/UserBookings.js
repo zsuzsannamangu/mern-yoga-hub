@@ -8,6 +8,10 @@ function UserBookings() {
     const { user } = useUserAuth();
     const [bookings, setBookings] = useState([]);
 
+    if (!user) {
+        return <div>Loading your bookings...</div>;
+    } // Don't fetch if user ID isn't ready
+
     useEffect(() => {
         const fetchBookings = async () => {
             try {
@@ -37,9 +41,7 @@ function UserBookings() {
             }
         };
 
-        if (user) {
-            fetchBookings();
-        }
+        fetchBookings();
     }, [user]);
 
     const formatTime = (time) => {
