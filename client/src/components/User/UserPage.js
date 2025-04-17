@@ -10,11 +10,10 @@ import { userAxiosInstance } from '../../config/axiosConfig';
 import { useSearchParams } from 'react-router-dom';
 
 function UserPage() {
-    const { user } = useUserAuth(); // Access user from context
+    const { user, login } = useUserAuth(); // Access user from context
     const { userId: paramUserId } = useParams(); // Get userId from the URL
     const [userData, setUserData] = useState(null);
     const location = useLocation();
-    const { login } = useUserAuth();
 
     // Determine the current userId: prioritize context, fallback to param
     const userId = user?.id || paramUserId;
