@@ -85,7 +85,7 @@ function About() {
                     </div>
                     <div className="info-item">
                         <h4>8hr Kids Yoga Teacher Training</h4>
-                        <p><em>with Leslie Wilda, <strong><a href="https://www.yogaplaygrounds.com/" target='_blank'>Yoga Playgrounds</a></strong>, in-person in Portland, Oregon</em><br />
+                        <p><em>with Leslie Wilda, <strong><a href="https://www.yogaplaygrounds.com/" target='_blank'>Yoga Playgrounds</a></strong>, in-person in Portland, OR</em><br />
                             August 2024</p>
                         <p>Teaching yoga and mindfulness for kids ages 3-12.<br />
                             Yoga games, breathing exercises, visualizations, mindfulness activities and relaxation techniques.</p>
