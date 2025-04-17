@@ -363,6 +363,8 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 router.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/' }),
     async (req, res) => {
+        console.log('Reached Google callback');
+        console.log('User:', req.user);
         if (!req.user) {
             return res.redirect(`${process.env.FRONTEND_URL}/login?error=missing_user`);
         }
