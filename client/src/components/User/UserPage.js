@@ -58,6 +58,11 @@ function UserPage() {
         fetchUser();
     }, [userId]); // <-- This runs whenever the userId becomes available
 
+    // This prevents premature rendering before user is ready
+    if (!user && !userData) {
+        return <div>Signing you in...</div>;
+    }
+
     return (
         <div className="user-page">
             <div className="user-content">
