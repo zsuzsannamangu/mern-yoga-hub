@@ -51,7 +51,7 @@ function UserRegister() {
                     Have an account? <a href="/login">Log in now</a>
                 </p>
                 <div className="oauth-buttons">
-                    <a href="https://www.yogaandchocolate.com/auth/google" className="oauth-btn google">
+                    <a href={`${process.env.REACT_APP_API}/api/user/auth/google`} className="oauth-btn google">
                         <div className="google-icon">
                             <img src="../images/sign-in-google.svg" alt="Google Icon" />
                         </div>
