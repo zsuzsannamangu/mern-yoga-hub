@@ -112,7 +112,7 @@ function About() {
                         <h4>Slow Flow</h4>
                         <p>This class focuses on mindful movement, allowing you to ease into each posture with intention and awareness.
                             Through gentle flows, we’ll explore balance and strength at a pace that honors your body.
-                            This practice is inclusive and adaptive, offering a welcoming space for all levels, whether you’re new to yoga or looking to refine your practice. Props and variations will be encouraged.</p>
+                            This practice is inclusive and adaptive, offering a welcoming space for all levels, whether you’re new to yoga or looking to refine your practice.</p>
                     </div>
                 </div>
             </div>
