@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Routes, Route, useLocation } from 'react-router-dom';
+import { useParams, Routes, Route, useLocation, useSearchParams } from 'react-router-dom';
 import UserBookings from './UserBookings';
 import UserBookNew from './UserBookNew';
 import UserAccount from './UserAccount';
 import './UserPage.scss';
 import '../../App.scss';
-import { useUserAuth } from '../User/UserAuthContext';
+import { useUserAuth } from './UserAuthContext';
 import { userAxiosInstance } from '../../config/axiosConfig';
-import { useSearchParams } from 'react-router-dom';
 
 function UserPage() {
     const { user, login } = useUserAuth(); // Access user from context
