@@ -80,11 +80,12 @@ function App() {
                 <Route path="/signup" element={<Signups />} />
                 <Route path="/signup-selection" element={<SignUpSelection />} />
                 <Route path="/aboutwebsite" element={<AboutWebsite />} />
-                <Route path="/oauth" element={<UserOAuthHandler />} />
+                {/* This handles the token and redirects to the actual user page */}
+                <Route path="/user/:userId" element={<UserOAuthHandler />} />
 
                 {/* User Protected Routes */}
                 {/* This is the protected route that expects the token to be already present */}
-                <Route
+                <Route 
                   path="/user/:userId/*"
                   element={
                     <UserProtectedRoute>
