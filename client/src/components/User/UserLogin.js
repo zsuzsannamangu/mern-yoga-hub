@@ -46,7 +46,7 @@ function UserLogin() {
     return (
         <div className="login-page">
             <div className="login-container">
-                <h2 className="section-title">Log In</h2>
+                <h2 className="section-title">Log in to Your Account</h2>
                 <div className="title-line"></div>
                 <div className="oauth-buttons">
                     <a href={`${process.env.REACT_APP_API}/api/user/auth/google`} className="oauth-btn google">
