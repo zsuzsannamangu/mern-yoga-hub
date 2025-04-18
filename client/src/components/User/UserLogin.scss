@@ -1,46 +1,212 @@
+// @use '../../styles/variables' as *;
+
+// .login-page {
+//     max-width: 400px;
+//     margin: 0 auto;
+//     margin-top: 100px;
+// }
+
+// .login-page .login-instructions {
+//     font-size: 14px;
+//     color: $secondary-text-color;
+//     margin-bottom: 20px;
+//     line-height: 1.6;
+// }
+
+// .oauth-buttons {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     margin-bottom: 20px;
+// }
+
+// .login-page form {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 10px;
+// }
+
+// .login-page input {
+//     padding: 12px; /* Slightly larger padding for better UX */
+//     border-radius: 4px;
+//     border: 1px solid #ccc;
+//     font-size: 14px;
+// }
+
+// .login-page input:focus {
+//     border-color: $primary-button-color;
+//     outline: none;
+//     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Add a subtle focus shadow */
+// }
+
+// button {
+//     gap: 12px;
+//     font-family: $font-title;
+//     padding: 10px 16px;
+//     background-color: $primary-button-color;
+//     border-radius: 4px;
+//     color: $button-text-color;
+//     font-size: 16px;
+//     font-weight: 600;
+//     font-family: $font-title;
+//     border: none;
+//     cursor: pointer;
+// }
+
+// button:hover {
+//     background-color: $primary-button-hover-color;
+// }
+
+// .login-page .register-link {
+//     margin-top: 15px;
+//     font-size: 14px;
+//     color: $secondary-text-color;
+// }
+
+// .login-page .register-link a {
+//     color: $text-color;
+//     text-decoration: none;
+//     font-weight: bold;
+// }
+
+// .login-page .register-link a:hover {
+//     text-decoration: underline;
+// }
+
+// /* Responsive Adjustments */
+// @media (max-width: 768px) {
+//     .login-page {
+//         max-width: 100%; /* Allow the container to stretch to full width */
+//         padding: 20px; /* Add padding for smaller screens */
+//         margin-top: 50px; /* Reduce the top margin */
+//         margin-left: 20px;
+//         margin-right: 20px;
+
+//         .login-instructions {
+//             font-size: 13px; /* Slightly reduce font size for smaller screens */
+//         }
+
+//         form {
+//             gap: 15px; /* Increase spacing between form elements */
+//         }
+
+//         input {
+//             font-size: 14px; /* Keep the font size consistent */
+//             padding: 10px; /* Adjust padding for smaller screens */
+//         }
+
+//         button {
+//             font-size: 14px; /* Reduce font size */
+//             padding: 10px 12px; /* Compact padding */
+//         }
+
+//         .register-link {
+//             font-size: 12px; /* Slightly smaller font for the link */
+//         }
+//     }
+// }
+
+// @media (max-width: 480px) {
+//     .login-page {
+//         padding: 10px; /* Further reduce padding for very small screens */
+
+//         .login-instructions {
+//             font-size: 12px; /* Further reduce font size */
+//         }
+
+//         form {
+//             gap: 10px; /* Tighten spacing for very small screens */
+//         }
+
+//         input {
+//             font-size: 12px; /* Smaller font size for inputs */
+//             padding: 8px; /* Compact padding for inputs */
+//         }
+
+//         button {
+//             font-size: 12px; /* Smaller font size for the button */
+//             padding: 8px 10px; /* Adjust padding for compact layout */
+//         }
+
+//         .register-link {
+//             font-size: 11px; /* Adjust font size for the link */
+//         }
+//     }
+// }
+
 @use '../../styles/variables' as *;
 
 .login-page {
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 100px;
-}
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 100px;
 
-.login-page .login-instructions {
-    font-size: 14px;
-    color: $secondary-text-color;
+  .section-title {
+    margin-bottom: 0;
+  }
+
+  .title-line {
     margin-bottom: 20px;
-    line-height: 1.6;
-}
+  }
 
-.oauth-buttons {
+  .form-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    margin-bottom: 20px;
-    max-width: 400px;
-}
+    gap: 20px;
+  }
 
-.login-page form {
+  .oauth-btn.google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: white;
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-color;
+    text-decoration: none;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+
+    .google-icon {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      img {
+        height: 20px;
+        width: 20px;
+      }
+    }
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+
+  form {
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
+  }
 
-.login-page input {
-    padding: 12px; /* Slightly larger padding for better UX */
+  input {
+    padding: 12px;
     border-radius: 4px;
     border: 1px solid #ccc;
     font-size: 14px;
-}
 
-.login-page input:focus {
-    border-color: $primary-button-color;
-    outline: none;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Add a subtle focus shadow */
-}
+    &:focus {
+      border-color: $primary-button-color;
+      outline: none;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    }
+  }
 
-button {
+  button {
     gap: 12px;
     font-family: $font-title;
     padding: 10px 16px;
@@ -49,89 +215,92 @@ button {
     color: $button-text-color;
     font-size: 16px;
     font-weight: 600;
-    font-family: $font-title;
     border: none;
     cursor: pointer;
-}
 
-button:hover {
-    background-color: $primary-button-hover-color;
-}
+    &:hover {
+      background-color: $primary-button-hover-color;
+    }
+  }
 
-.login-page .register-link {
+  .register-link {
     margin-top: 15px;
     font-size: 14px;
     color: $secondary-text-color;
-}
 
-.login-page .register-link a {
-    color: $text-color;
-    text-decoration: none;
-    font-weight: bold;
-}
+    a {
+      color: $text-color;
+      text-decoration: none;
+      font-weight: bold;
 
-.login-page .register-link a:hover {
-    text-decoration: underline;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .login-page {
-        max-width: 100%; /* Allow the container to stretch to full width */
-        padding: 20px; /* Add padding for smaller screens */
-        margin-top: 50px; /* Reduce the top margin */
-        margin-left: 20px;
-        margin-right: 20px;
+  .login-page {
+    max-width: 100%;
+    padding: 20px;
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
 
-        .login-instructions {
-            font-size: 13px; /* Slightly reduce font size for smaller screens */
-        }
-
-        form {
-            gap: 15px; /* Increase spacing between form elements */
-        }
-
-        input {
-            font-size: 14px; /* Keep the font size consistent */
-            padding: 10px; /* Adjust padding for smaller screens */
-        }
-
-        button {
-            font-size: 14px; /* Reduce font size */
-            padding: 10px 12px; /* Compact padding */
-        }
-
-        .register-link {
-            font-size: 12px; /* Slightly smaller font for the link */
-        }
+    .form-wrapper {
+      gap: 15px;
     }
+
+    input,
+    button {
+      font-size: 14px;
+      padding: 10px;
+    }
+
+    .register-link {
+      font-size: 12px;
+    }
+
+    .oauth-btn.google {
+      font-size: 13px;
+      padding: 10px;
+
+      img {
+        height: 18px;
+        width: 18px;
+      }
+    }
+  }
 }
 
 @media (max-width: 480px) {
-    .login-page {
-        padding: 10px; /* Further reduce padding for very small screens */
+  .login-page {
+    padding: 10px;
 
-        .login-instructions {
-            font-size: 12px; /* Further reduce font size */
-        }
-
-        form {
-            gap: 10px; /* Tighten spacing for very small screens */
-        }
-
-        input {
-            font-size: 12px; /* Smaller font size for inputs */
-            padding: 8px; /* Compact padding for inputs */
-        }
-
-        button {
-            font-size: 12px; /* Smaller font size for the button */
-            padding: 8px 10px; /* Adjust padding for compact layout */
-        }
-
-        .register-link {
-            font-size: 11px; /* Adjust font size for the link */
-        }
+    .form-wrapper {
+      gap: 10px;
     }
-}
 
+    input,
+    button {
+      font-size: 12px;
+      padding: 8px;
+    }
+
+    .register-link {
+      font-size: 11px;
+    }
+
+    .oauth-btn.google {
+      font-size: 12px;
+      padding: 8px;
+
+      img {
+        height: 16px;
+        width: 16px;
+      }
+    }
+  }
+}
