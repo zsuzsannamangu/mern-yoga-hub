@@ -88,9 +88,9 @@ function App() {
                 <Route 
                   path="/user/:userId/*"
                   element={
-                    <UserProtectedRoute>
+
                       <UserPage />
-                    </UserProtectedRoute>
+
                   }
                 />
                 <Route

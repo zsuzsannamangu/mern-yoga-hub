@@ -63,7 +63,7 @@ function UserPage() {
     }, [userId]); // <-- This runs whenever the userId becomes available
 
     // This prevents premature rendering before user is ready
-    if (!user && token) {
+    if (!user && !userData) {
         return <div>Signing you in...</div>;
     }
 
