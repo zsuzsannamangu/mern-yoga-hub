@@ -387,7 +387,7 @@ router.get(
             //res.redirect(`https://www.yogaandchocolate.com/oauth?token=${token}&userId=${user._id}`);
             const redirectUrl = new URL('https://www.yogaandchocolate.com/user/oauth');
             redirectUrl.searchParams.set('token', token);
-            redirectUrl.searchParams.set('userId', user._id);
+            redirectUrl.searchParams.set('userId', user._id.toString());
             res.redirect(redirectUrl.toString());
 
         } catch (err) {
