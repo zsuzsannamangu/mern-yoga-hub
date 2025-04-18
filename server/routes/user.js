@@ -358,7 +358,6 @@ router.put('/:userId/update', async (req, res) => {
 //OAuth
 // Initiate Google OAuth
 router.get('/auth/google', (req, res, next) => {
-    console.log('🚀 Initiating Google OAuth');
     next();
 }, passport.authenticate('google', { scope: ['profile', 'email'] }));
 
@@ -372,19 +371,18 @@ router.get(
         try {
             const user = req.user;
 
-            // ✅ Create JWT manually (instead of req.login())
+            // Create JWT manually (instead of req.login())
             const token = jwt.sign(
                 { id: user._id },
                 process.env.JWT_SECRET,
                 { expiresIn: '7d' }
             );
-            console.log('✅ Redirecting with token:', token);
 
-            // ✅ Redirect with token to frontend
+            // Redirect with token to frontend
             // const redirectUrl = new URL(`https://www.yogaandchocolate.com/user/${user._id}`);
             // redirectUrl.searchParams.set('token', token);
             // res.redirect(redirectUrl.toString());
-            //res.redirect(`https://www.yogaandchocolate.com/oauth?token=${token}&userId=${user._id}`);
+            // res.redirect(`https://www.yogaandchocolate.com/oauth?token=${token}&userId=${user._id}`);
             const redirectUrl = new URL('https://www.yogaandchocolate.com/user/oauth');
             redirectUrl.searchParams.set('token', token);
             redirectUrl.searchParams.set('userId', user._id.toString());

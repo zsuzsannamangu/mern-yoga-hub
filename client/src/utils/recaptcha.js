@@ -13,7 +13,6 @@ export const loadRecaptcha = () => {
 
   script.onload = () => {
     recaptchaScriptLoaded = true;
-    console.log('reCAPTCHA v3 script loaded');
   };
 
   document.body.appendChild(script);
