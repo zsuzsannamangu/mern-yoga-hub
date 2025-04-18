@@ -27,8 +27,8 @@ const UserOAuthHandler = () => {
 
           const data = await response.json();
           if (data.isValid) {
-            login(data.user, token); // update context immediately
-            navigate(`/user/${userId}`, { replace: true });
+            login({ ...data.user, id: data.user._id }, token);
+            navigate(`/user/${data.user._id}`, { replace: true });
           } else {
             navigate('/login'); // fallback
           }
