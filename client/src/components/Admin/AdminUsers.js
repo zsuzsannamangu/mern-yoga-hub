@@ -111,7 +111,11 @@ const AdminUsers = () => {
                                 <td>{user.phone}</td>
                                 <td>{user.city}</td>
                                 <td>{user.zipcode}</td>
-                                <td>{user.createdAt}</td>
+                                <td>{new Date(user.createdAt).toLocaleString('en-US', {
+                                    timeZone: 'America/Los_Angeles',
+                                    dateStyle: 'medium',
+                                    timeStyle: 'short',
+                                })}</td>
                                 <td>
                                     <button className="delete-button" onClick={() => deleteUser(user._id)}>
                                         <FaTrash />
