@@ -39,9 +39,6 @@ const UserSchema = new mongoose.Schema(
         googleId: {
             type: String, // For Google OAuth users
         },
-        microsoftId: {
-            type: String, // For Microsoft OAuth users
-        },
         isAdmin: {
             type: Boolean,
             default: false, // Default to regular users

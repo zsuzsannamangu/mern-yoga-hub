@@ -377,13 +377,7 @@ router.get(
                 process.env.JWT_SECRET,
                 { expiresIn: '7d' }
             );
-
-            // Redirect with token to frontend
-            // const redirectUrl = new URL(`https://www.yogaandchocolate.com/user/${user._id}`);
-            // redirectUrl.searchParams.set('token', token);
-            // res.redirect(redirectUrl.toString());
-            // res.redirect(`https://www.yogaandchocolate.com/oauth?token=${token}&userId=${user._id}`);
-            const redirectUrl = new URL('https://www.yogaandchocolate.com/user/oauth');
+            const redirectUrl = new URL(`${process.env.SERVER_URL}/user/oauth`);
             redirectUrl.searchParams.set('token', token);
             redirectUrl.searchParams.set('userId', user._id.toString());
             res.redirect(redirectUrl.toString());
@@ -394,15 +388,5 @@ router.get(
         }
     }
 );
-
-router.get('/auth/microsoft', passport.authenticate('microsoft', { scope: ['User.Read'] }));
-
-router.get('/auth/microsoft/callback',
-    passport.authenticate('microsoft', { failureRedirect: '/' }),
-    (req, res) => {
-        res.redirect(`${process.env.FRONTEND_URL}/user/${req.user._id}`);
-    }
-);
-
 
 module.exports = router;
