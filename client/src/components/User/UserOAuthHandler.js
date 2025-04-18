@@ -1,4 +1,3 @@
-// UserOAuthHandler.js
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useUserAuth } from './UserAuthContext';
@@ -12,6 +11,9 @@ const UserOAuthHandler = () => {
     const token = searchParams.get('token');
     const userId = searchParams.get('userId');
 
+    console.log("🔁 OAuthHandler received token:", token);
+    console.log("🔁 OAuthHandler received userId:", userId);
+
     if (token && userId) {
       localStorage.setItem('userToken', token);
 
@@ -19,18 +21,16 @@ const UserOAuthHandler = () => {
         try {
           const response = await fetch(`${process.env.REACT_APP_API}/api/user/validate-token`, {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token }),
           });
 
           const data = await response.json();
           if (data.isValid) {
-            login({ ...data.user, id: data.user._id }, token);
-            navigate(`/user/${data.user._id}`, { replace: true });
+            login(data.user, token);
+            navigate(`/user/${userId}`, { replace: true });
           } else {
-            navigate('/login'); // fallback
+            navigate('/login');
           }
         } catch (err) {
           console.error('OAuth validation failed:', err);
