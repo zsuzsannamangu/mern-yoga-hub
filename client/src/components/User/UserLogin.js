@@ -43,68 +43,34 @@ function UserLogin() {
         }
     };
 
-    // return (
-    //     <div className="login-page">
-    //         <h2 className="section-title">Log In</h2>
-    //         <div className="title-line"></div>
-    //         <div className="oauth-buttons">
-    //             <a href={`${process.env.REACT_APP_API}/api/user/auth/google`} className="oauth-btn google">
-    //                 <div className="google-icon">
-    //                     <img src="../images/sign-in-google.svg" alt="Google Icon" />
-    //                 </div>
-    //             </a>
-    //         </div>
-    //         <form onSubmit={handleSubmit}>
-    //             <input
-    //                 type="email"
-    //                 name="email"
-    //                 value={form.email}
-    //                 onChange={handleChange}
-    //                 placeholder="Enter your email"
-    //                 required
-    //             />
-    //             <button type="submit">Send Login Link</button>
-    //         </form>
-    //         <p className="register-link">
-    //             Don't have an account yet? <Link to="/register">Register!</Link>
-    //         </p>
-    //     </div>
-    // );
     return (
         <div className="login-page">
             <h2 className="section-title">Log In</h2>
             <div className="title-line"></div>
-
-            <div className="form-wrapper">
-                <a
-                    href={`${process.env.REACT_APP_API}/api/user/auth/google`}
-                    className="oauth-btn google"
-                >
+            <div className="oauth-buttons">
+                <a href={`${process.env.REACT_APP_API}/api/user/auth/google`} className="oauth-btn google">
                     <div className="google-icon">
-                        <img src="/images/sign-in-google.svg" alt="Google Icon" />
-                        <span>Sign in with Google</span>
+                        <img src="../images/sign-in-google.svg" alt="Google Icon" />
                     </div>
                 </a>
-
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="email"
-                        name="email"
-                        value={form.email}
-                        onChange={handleChange}
-                        placeholder="Enter your email"
-                        required
-                    />
-                    <button type="submit">Send Login Link</button>
-                </form>
             </div>
-
+            <div className="divider">Or receive a link to your email</div>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder="Enter your email"
+                    required
+                />
+                <button type="submit">Send Login Link</button>
+            </form>
             <p className="register-link">
                 Don't have an account yet? <Link to="/register">Register!</Link>
             </p>
         </div>
     );
-
 }
 
 export default UserLogin;
