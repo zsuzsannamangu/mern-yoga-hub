@@ -40,7 +40,7 @@ export const UserAuthProvider = ({ children }) => { // Creating a provider compo
 
         if (navigate && standardizedUser.id && standardizedUser.id !== 'N/A' && standardizedUser.id !== 'undefined') {
             navigate(`/user/${standardizedUser.id}`, { replace: true }); // Use replace to prevent history stack issue
-        }        
+        }
     };
 
     const [loading, setLoading] = useState(true);
