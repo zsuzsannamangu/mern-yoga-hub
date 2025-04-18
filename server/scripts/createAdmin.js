@@ -20,10 +20,6 @@ const createAdmin = async () => {
       process.exit();
     }
 
-    //const admin = new Admin({
-      //email: process.env.ADMIN_EMAIL,
-      //password: process.env.ADMIN_PASSWORD,
-    //});
     const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
     const admin = new Admin({
       email: process.env.ADMIN_EMAIL,

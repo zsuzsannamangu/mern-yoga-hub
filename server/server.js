@@ -116,14 +116,12 @@ server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 // Graceful shutdown handlers
 process.on('SIGINT', () => {
     server.close(() => {
-        console.log('Process terminated with SIGINT');
         process.exit(0);
     });
 });
 
 process.on('SIGTERM', () => {
     server.close(() => {
-        console.log('Process terminated with SIGTERM');
         process.exit(0);
     });
 });

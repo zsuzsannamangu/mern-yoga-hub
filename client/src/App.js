@@ -80,7 +80,7 @@ function App() {
                 <Route path="/signup" element={<Signups />} />
                 <Route path="/signup-selection" element={<SignUpSelection />} />
                 <Route path="/aboutwebsite" element={<AboutWebsite />} />
-                {/* This handles the token and redirects to the actual user page */}
+                {/* This handles the token and redirects to the user page */}
                 <Route path="/user/oauth" element={<UserOAuthHandler />} />
 
                 {/* User Protected Routes */}
