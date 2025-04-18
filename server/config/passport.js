@@ -8,8 +8,8 @@ const User = require('../models/User');
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  //callbackURL: 'https://mern-yoga-hub.onrender.com/api/user/auth/google/callback'
-  callbackURL: "https://www.yogaandchocolate.com/api/user/auth/google/callback"
+  callbackURL: 'https://mern-yoga-hub.onrender.com/api/user/auth/google/callback'
+  //callbackURL: "https://www.yogaandchocolate.com/api/user/auth/google/callback"
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     // Check if user already exists
