@@ -378,6 +378,7 @@ router.get(
                 process.env.JWT_SECRET,
                 { expiresIn: '7d' }
             );
+            console.log('✅ Redirecting with token:', token);
 
             // ✅ Redirect with token to frontend
             res.redirect(`https://www.yogaandchocolate.com/user/${user._id}?token=${token}`);
