@@ -8,11 +8,8 @@ function UserBookings() {
     const { user } = useUserAuth();
     const [bookings, setBookings] = useState([]);
 
-    if (!user) {
-        return <div>Loading your bookings...</div>;
-    } // Don't fetch if user ID isn't ready
-
     useEffect(() => {
+        if (!user) return;
         const fetchBookings = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_API}/api/bookings`, {
@@ -43,6 +40,10 @@ function UserBookings() {
 
         fetchBookings();
     }, [user]);
+
+    if (!user) {
+        return <div>Loading your bookings...</div>; // ✅ moved below the hook
+    }
 
     const formatTime = (time) => {
         if (!time) return '';
