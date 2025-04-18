@@ -384,7 +384,11 @@ router.get(
             // const redirectUrl = new URL(`https://www.yogaandchocolate.com/user/${user._id}`);
             // redirectUrl.searchParams.set('token', token);
             // res.redirect(redirectUrl.toString());
-            res.redirect(`https://www.yogaandchocolate.com/oauth?token=${token}&userId=${user._id}`);
+            //res.redirect(`https://www.yogaandchocolate.com/oauth?token=${token}&userId=${user._id}`);
+            const redirectUrl = new URL('https://www.yogaandchocolate.com/user/oauth');
+            redirectUrl.searchParams.set('token', token);
+            redirectUrl.searchParams.set('userId', user._id);
+            res.redirect(redirectUrl.toString());
 
         } catch (err) {
             console.error("Google login error:", err);
