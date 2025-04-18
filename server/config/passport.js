@@ -8,10 +8,15 @@ const User = require('../models/User');
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  //callbackURL: 'https://mern-yoga-hub.onrender.com/api/user/auth/google/callback'
-  callbackURL: "https://connect.yogaandchocolate.com/api/user/auth/google/callback"
+  callbackURL: `${process.env.BASE_URL}/api/user/auth/google/callback`,
 }, async (accessToken, refreshToken, profile, done) => {
   try {
+    const existingUser = await User.findOne({ email: profile.emails[0].value });
+
+    if (existingUser) {
+      console.log("✅ Existing user found, logging in.");
+      return done(null, existingUser); // user already exists, return them
+    }
     // Check if user already exists
     let user = await User.findOne({ googleId: profile.id });
     if (!user) {
