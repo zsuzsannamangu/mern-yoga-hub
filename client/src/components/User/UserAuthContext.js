@@ -17,6 +17,7 @@ export const UserAuthProvider = ({ children }) => { // Creating a provider compo
     const [isAuthenticated, setIsAuthenticated] = useState(null); // State to track if the user is authenticated
     const [user, setUser] = useState(null); // State to store the user's information
     const login = (userData, token, navigate) => { // Function to log the user in and update state
+        console.log('🔥 login() was called with userData:', userData);
 
         const nestedUserData = userData?.userData || userData; // Handle cases where user data might be nested inside another object
 
