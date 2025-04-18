@@ -33,7 +33,7 @@ import SignUpSelection from './components/Calendar/SignUpSelection';
 import AdminSignups from './components/Admin/AdminSignups';
 import AdminUsers from './components/Admin/AdminUsers';
 import AboutWebsite from "./components/AboutWebsite/AboutWebsite";
-import UserOAuthHandler from './components/User/UserOAuthHandler';
+// import UserOAuthHandler from './components/User/UserOAuthHandler';
 
 // Protected routes for guarding user and admin routes
 import { UserProtectedRoute, AdminProtectedRoute } from './routes/ProtectedRoutes';
@@ -80,8 +80,6 @@ function App() {
                 <Route path="/signup" element={<Signups />} />
                 <Route path="/signup-selection" element={<SignUpSelection />} />
                 <Route path="/aboutwebsite" element={<AboutWebsite />} />
-                {/* This handles the token and redirects to the actual user page */}
-                <Route path="/user/:userId" element={<UserOAuthHandler />} />
 
                 {/* User Protected Routes */}
                 {/* This is the protected route that expects the token to be already present */}
