@@ -16,10 +16,9 @@
 .oauth-buttons {
     display: flex;
     flex-direction: column;
-    /* Changed from column to row */
     justify-content: center;
-    /* Aligns buttons horizontally */
     margin-bottom: 20px;
+    max-width: 400px;
 }
 
 .login-page form {
