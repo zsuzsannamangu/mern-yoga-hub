@@ -47,6 +47,13 @@ function UserLogin() {
         <div className="login-page">
             <h2 className="section-title">Log In</h2>
             <div className="title-line"></div>
+            <div className="oauth-buttons">
+                <a href={`${process.env.REACT_APP_API}/api/user/auth/google`} className="oauth-btn google">
+                    <div className="google-icon">
+                        <img src="../images/sign-in-google.svg" alt="Google Icon" />
+                    </div>
+                </a>
+            </div>
             <form onSubmit={handleSubmit}>
                 <input
                     type="email"

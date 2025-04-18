@@ -13,6 +13,15 @@
     line-height: 1.6;
 }
 
+.oauth-buttons {
+    display: flex;
+    flex-direction: column;
+    /* Changed from column to row */
+    justify-content: center;
+    /* Aligns buttons horizontally */
+    margin-bottom: 20px;
+}
+
 .login-page form {
     display: flex;
     flex-direction: column;
