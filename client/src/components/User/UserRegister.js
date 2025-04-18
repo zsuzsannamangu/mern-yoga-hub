@@ -56,13 +56,7 @@ function UserRegister() {
                             <img src="../images/sign-in-google.svg" alt="Google Icon" />
                         </div>
                     </a>
-                    <a href={`${process.env.REACT_APP_API}/api/user/auth/microsoft`} className="oauth-btn microsoft">
-                        <div className="microsoft-icon">
-                            <img src="../images/sign-in-microsoft.svg" alt="Microsoft Icon" />
-                        </div>
-                    </a>
                 </div>
-
                 <div className="divider">Or receive a link to your email</div>
                 <form className="register-form" onSubmit={handleSubmit}>
                     <input

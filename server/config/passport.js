@@ -1,6 +1,5 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const MicrosoftStrategy = require('passport-microsoft').Strategy;
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
@@ -35,52 +34,6 @@ passport.use(new GoogleStrategy({
 
 passport.serializeUser((user, done) => {
   done(null, user.id); // usually the MongoDB _id
-});
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await User.findById(id);
-    done(null, user);
-  } catch (err) {
-    done(err, null);
-  }
-});
-
-
-// Microsoft Strategy
-passport.use(
-  new MicrosoftStrategy(
-    {
-      clientID: process.env.MICROSOFT_CLIENT_ID,
-      clientSecret: process.env.MICROSOFT_CLIENT_SECRET,
-      callbackURL: `${process.env.SERVER_URL}/api/user/auth/microsoft/callback`,
-    },
-    async (accessToken, refreshToken, params, profile, done) => {
-      const decodedProfile = jwt.decode(params.id_token);
-      const { email, given_name, family_name } = decodedProfile;
-
-      try {
-        const existingUser = await User.findOne({ microsoftId: params.id });
-        if (existingUser) return done(null, existingUser);
-
-        const newUser = new User({
-          microsoftId: params.id,
-          firstName: given_name,
-          lastName: family_name,
-          email,
-          isVerified: true,
-        });
-        await newUser.save();
-        return done(null, newUser);
-      } catch (error) {
-        return done(error, null);
-      }
-    }
-  )
-);
-
-passport.serializeUser((user, done) => {
-  done(null, user._id);
 });
 
 passport.deserializeUser(async (id, done) => {
