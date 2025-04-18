@@ -10,6 +10,8 @@ function Navbar() {
     const location = useLocation();
 
     const { isAuthenticated, user, logout } = useUserAuth();
+    console.log('👤 Navbar: user =', user);
+    console.log('✅ Navbar: isAuthenticated =', isAuthenticated);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef(null);
     const { cartCount } = useCart();
