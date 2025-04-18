@@ -30,6 +30,7 @@ app.use(cookieParser());
 const allowedOrigins = [
     'https://www.yogaandchocolate.com',
     'https://yogaandchocolate.com',
+    'https://connect.yogaandchocolate.com',
     'https://mern-yoga-hub.vercel.app',
     'https://retreatpdx.com',
     'https://www.retreatpdx.com',

@@ -11,13 +11,12 @@ passport.use(new GoogleStrategy({
   callbackURL: `${process.env.BASE_URL}/api/user/auth/google/callback`,
 }, async (accessToken, refreshToken, profile, done) => {
   try {
+    // Check if user already exists
     const existingUser = await User.findOne({ email: profile.emails[0].value });
-
     if (existingUser) {
-      console.log("✅ Existing user found, logging in.");
       return done(null, existingUser); // user already exists, return them
     }
-    // Check if user already exists
+    // If user is new:
     let user = await User.findOne({ googleId: profile.id });
     if (!user) {
       // Create new user
