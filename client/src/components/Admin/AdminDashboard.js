@@ -193,198 +193,222 @@ const AdminDashboard = () => {
         });
     };
 
-        const updateEvent = async (id, updatedEvent) => {
-            try {
-                const token = localStorage.getItem('adminToken');
-                await adminAxiosInstance.put(`/api/events/${id}`, updatedEvent, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: 'Event updated successfully',
-                    confirmButtonText: 'OK'
-                });
-                fetchEvents();
-            } catch (error) {
+    const updateEvent = async (id, updatedEvent) => {
+        try {
+            const token = localStorage.getItem('adminToken');
+            await adminAxiosInstance.put(`/api/events/${id}`, updatedEvent, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Event updated successfully',
+                confirmButtonText: 'OK'
+            });
+            fetchEvents();
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to update event.',
+                text: error.message,
+                confirmButtonText: 'OK'
+            });
+        }
+    };
+
+    // Fetch event signups
+    const fetchSignups = async () => {
+        setLoading(true);
+        try {
+            const res = await adminAxiosInstance.get('/api/admin/signups');
+            setSignups(res.data);
+        } catch (error) {
+            if (!alertShown.current) {
+                alertShown.current = true;
                 Swal.fire({
                     icon: 'error',
-                    title: 'Failed to update event.',
+                    title: 'Failed to fetch signups.',
                     text: error.message,
                     confirmButtonText: 'OK'
                 });
             }
-        };
+        } finally {
+            setLoading(false);
+        }
+    };
 
-        // Fetch event signups
-        const fetchSignups = async () => {
-            setLoading(true);
+    // // Check authentication and fetch data when component mounts
+    // useEffect(() => {
+    //     alertShown.current = false;
+    //     const checkAuth = async () => {
+    //         try {
+    //             const token = localStorage.getItem('adminToken');
+    //             if (!token) throw new Error('No token found');
+    //             await adminAxiosInstance.get('/api/admin/verify', {
+    //                 headers: { Authorization: `Bearer ${token}` },
+    //             });
+    //         } catch (error) {
+    //             if (!alertShown.current) {
+    //                 alertShown.current = true;
+    //                 Swal.fire({
+    //                     icon: 'error',
+    //                     title: 'You are not authorized to access this page. Redirecting to login.',
+    //                     text: error.message,
+    //                     confirmButtonText: 'OK'
+    //                 });
+    //                 navigate('/admin');
+    //             }
+    //         }
+    //     };
+
+    useEffect(() => {
+        const checkAuth = async () => {
             try {
-                const res = await adminAxiosInstance.get('/api/admin/signups');
-                setSignups(res.data);
+                const token = localStorage.getItem('adminToken');
+                if (!token) throw new Error('No token found');
+
+                await adminAxiosInstance.get('/api/admin/verify', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
             } catch (error) {
                 if (!alertShown.current) {
                     alertShown.current = true;
                     Swal.fire({
                         icon: 'error',
-                        title: 'Failed to fetch signups.',
+                        title: 'You are not authorized to access this page. Redirecting to login.',
                         text: error.message,
                         confirmButtonText: 'OK'
+                    }).then(() => {
+                        navigate('/admin'); // navigate after alert closes
                     });
                 }
-            } finally {
-                setLoading(false);
             }
         };
 
-        // Check authentication and fetch data when component mounts
-        useEffect(() => {
-            alertShown.current = false;
-            const checkAuth = async () => {
-                try {
-                    const token = localStorage.getItem('adminToken');
-                    if (!token) throw new Error('No token found');
-                    await adminAxiosInstance.get('/api/admin/verify', {
-                        headers: { Authorization: `Bearer ${token}` },
-                    });
-                } catch (error) {
-                    if (!alertShown.current) {
-                        alertShown.current = true;
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'You are not authorized to access this page. Redirecting to login.',
-                            text: error.message,
-                            confirmButtonText: 'OK'
-                        });
-                        navigate('/admin');
-                    }
-                }
-            };
+        checkAuth();
+        fetchEvents();
+        fetchSignups();
+    }, [navigate]);
 
-            checkAuth();
-            fetchEvents();
-            fetchSignups();
-        }, [navigate]);
-
-        return (
-            <div className="admin-dashboard">
-                <AdminNavbar />
-                <h3 className="section-title">Manage Classes and Events</h3>
-                <form className="event-form" onSubmit={addEvent}>
-                    <h3>Add New Event</h3>
-                    <div className="form-group">
-                        <label>Title</label>
-                        <input
-                            type="text"
-                            placeholder=""
-                            value={newEvent.title}
-                            onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Date</label>
-                        <input
-                            type="date"
-                            value={newEvent.date}
-                            onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Time</label>
-                        <input
-                            type="time"
-                            value={newEvent.time}
-                            onChange={(e) => setNewEvent({ ...newEvent, time: e.target.value })}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Location</label>
-                        <input
-                            type="text"
-                            placeholder=""
-                            value={newEvent.location}
-                            onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Sign-Up Link</label>
-                        <input
-                            type="url"
-                            placeholder=""
-                            value={newEvent.signUpLink}
-                            onChange={(e) => setNewEvent({ ...newEvent, signUpLink: e.target.value })}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Repeat</label>
-                        <select
-                            value={newEvent.repeat}
-                            onChange={(e) => setNewEvent({ ...newEvent, repeat: e.target.value })}
-                        >
-                            <option value="">None</option>
-                            <option value="weekly">Weekly</option>
-                            <option value="monthly">Monthly</option>
-                        </select>
-                    </div>
-                    <button type="submit" className="add-event-button">Add Event</button>
-                </form>
-
-                <div className="upcoming-events-container">
-                    <h3>Upcoming Events</h3>
-                    {loading ? (
-                        <p>Loading events...</p>
-                    ) : events.length > 0 ? (
-                        <>
-                            <button
-                                onClick={handleBulkDelete}
-                                disabled={selectedEvents.length === 0}
-                                className="bulk-delete-button"
-                            >
-                                <FaTrash className="icon" />
-                            </button>
-                            <ul>
-                                {events.map((event) => (
-                                    <li key={event._id} className="event-card">
-                                        <div className="event-details">
-                                            <input
-                                                type="checkbox"
-                                                onChange={(e) => handleSelect(event._id, e.target.checked)}
-                                                checked={selectedEvents.includes(event._id)}
-                                            />
-                                            <p>
-                                                <strong>{event.title}</strong> - {event.date} {event.time} at {event.location}
-                                            </p>
-                                        </div>
-                                        <form
-                                            onSubmit={(e) => {
-                                                e.preventDefault();
-                                                const updatedData = {
-                                                    title: e.target.title.value,
-                                                    date: e.target.date.value,
-                                                    time: e.target.time.value,
-                                                    location: e.target.location.value,
-                                                    signUpLink: e.target.signUpLink.value,
-                                                };
-                                                updateEvent(event._id, updatedData);
-                                            }}
-                                        >
-                                            <input type="text" name="title" defaultValue={event.title} placeholder="Title" />
-                                            <input type="date" name="date" defaultValue={event.date} />
-                                            <input type="time" name="time" defaultValue={event.time} />
-                                            <input type="text" name="location" defaultValue={event.location} placeholder="Location" />
-                                            <input type="text" name="signUpLink" defaultValue={event.signUpLink} placeholder="Sign Up Link" />
-                                            <button type="submit" className="update-event-button">Update</button>
-                                        </form>
-                                    </li>
-                                ))}
-                            </ul>
-                        </>
-                    ) : (
-                        <p>No events added yet.</p>
-                    )}
+    return (
+        <div className="admin-dashboard">
+            <AdminNavbar />
+            <h3 className="section-title">Manage Classes and Events</h3>
+            <form className="event-form" onSubmit={addEvent}>
+                <h3>Add New Event</h3>
+                <div className="form-group">
+                    <label>Title</label>
+                    <input
+                        type="text"
+                        placeholder=""
+                        value={newEvent.title}
+                        onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
+                    />
                 </div>
-            </div>
-        );
-    };
+                <div className="form-group">
+                    <label>Date</label>
+                    <input
+                        type="date"
+                        value={newEvent.date}
+                        onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Time</label>
+                    <input
+                        type="time"
+                        value={newEvent.time}
+                        onChange={(e) => setNewEvent({ ...newEvent, time: e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Location</label>
+                    <input
+                        type="text"
+                        placeholder=""
+                        value={newEvent.location}
+                        onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Sign-Up Link</label>
+                    <input
+                        type="url"
+                        placeholder=""
+                        value={newEvent.signUpLink}
+                        onChange={(e) => setNewEvent({ ...newEvent, signUpLink: e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Repeat</label>
+                    <select
+                        value={newEvent.repeat}
+                        onChange={(e) => setNewEvent({ ...newEvent, repeat: e.target.value })}
+                    >
+                        <option value="">None</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                    </select>
+                </div>
+                <button type="submit" className="add-event-button">Add Event</button>
+            </form>
 
-    export default AdminDashboard;
+            <div className="upcoming-events-container">
+                <h3>Upcoming Events</h3>
+                {loading ? (
+                    <p>Loading events...</p>
+                ) : events.length > 0 ? (
+                    <>
+                        <button
+                            onClick={handleBulkDelete}
+                            disabled={selectedEvents.length === 0}
+                            className="bulk-delete-button"
+                        >
+                            <FaTrash className="icon" />
+                        </button>
+                        <ul>
+                            {events.map((event) => (
+                                <li key={event._id} className="event-card">
+                                    <div className="event-details">
+                                        <input
+                                            type="checkbox"
+                                            onChange={(e) => handleSelect(event._id, e.target.checked)}
+                                            checked={selectedEvents.includes(event._id)}
+                                        />
+                                        <p>
+                                            <strong>{event.title}</strong> - {event.date} {event.time} at {event.location}
+                                        </p>
+                                    </div>
+                                    <form
+                                        onSubmit={(e) => {
+                                            e.preventDefault();
+                                            const updatedData = {
+                                                title: e.target.title.value,
+                                                date: e.target.date.value,
+                                                time: e.target.time.value,
+                                                location: e.target.location.value,
+                                                signUpLink: e.target.signUpLink.value,
+                                            };
+                                            updateEvent(event._id, updatedData);
+                                        }}
+                                    >
+                                        <input type="text" name="title" defaultValue={event.title} placeholder="Title" />
+                                        <input type="date" name="date" defaultValue={event.date} />
+                                        <input type="time" name="time" defaultValue={event.time} />
+                                        <input type="text" name="location" defaultValue={event.location} placeholder="Location" />
+                                        <input type="text" name="signUpLink" defaultValue={event.signUpLink} placeholder="Sign Up Link" />
+                                        <button type="submit" className="update-event-button">Update</button>
+                                    </form>
+                                </li>
+                            ))}
+                        </ul>
+                    </>
+                ) : (
+                    <p>No events added yet.</p>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default AdminDashboard;
