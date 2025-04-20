@@ -16,7 +16,6 @@ const AdminDashboard = () => {
     const [loading, setLoading] = useState(false); // State for loading indicator
     const [signups, setSignups] = useState([]); // State for storing event signups
     const alertShown = useRef(false);
-    const isMounted = useRef(true); // persist across renders
 
     // Fetch events from the backend
     const fetchEvents = async () => {
@@ -272,17 +271,15 @@ const AdminDashboard = () => {
                     headers: { Authorization: `Bearer ${token}` },
                 });
             } catch (error) {
-                if (!alertShown.current && isMounted.current) {
+                if (!alertShown.current) {
                     alertShown.current = true;
                     Swal.fire({
                         icon: 'error',
-                        title: 'You are not authorized to access this page.',
+                        title: 'You are not authorized to access this page. Redirecting to login.',
                         text: error.message,
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        if (isMounted.current) {
-                            navigate('/admin'); // redirect only once
-                        }
+                        navigate('/admin'); // navigate after alert closes
                     });
                 }
             }
@@ -294,7 +291,7 @@ const AdminDashboard = () => {
 
         // Cleanup function: component unmounting or route change
         return () => {
-            isMounted.current = false;
+            isMounted = false;
         };
     }, [navigate]);
 
