@@ -262,6 +262,7 @@ const AdminDashboard = () => {
     //     };
 
     useEffect(() => {
+        let isMounted = true;
         const checkAuth = async () => {
             try {
                 const token = localStorage.getItem('adminToken');
