@@ -288,6 +288,11 @@ const AdminDashboard = () => {
         checkAuth();
         fetchEvents();
         fetchSignups();
+
+        // Cleanup function: component unmounting or route change
+        return () => {
+            isMounted = false;
+        };
     }, [navigate]);
 
     return (
