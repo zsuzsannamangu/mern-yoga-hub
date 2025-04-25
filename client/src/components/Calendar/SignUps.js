@@ -124,12 +124,19 @@ const Signup = () => {
         const errorMsg = errorData.message || "Something went wrong.";
 
         if (errorMsg.toLowerCase().includes("already")) {
-          return Swal.fire({
+          await Swal.fire({
             icon: 'warning',
             title: 'Already Signed Up',
             text: 'You’ve already registered for this class.',
             confirmButtonText: 'Okay'
           });
+        
+          // Clear form field
+          setFormData({ name: "", email: "", phone: "", classTitle: "", date: "", waiver: false });
+          setSignatureData(null);
+          sigPad.current.clear();
+        
+          return; // prevent further execution
         }
 
         throw new Error(errorMsg);
