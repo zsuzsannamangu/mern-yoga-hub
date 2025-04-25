@@ -1,3 +1,4 @@
+//seeds the database with one admin user
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const Admin = require('../models/Admin');
