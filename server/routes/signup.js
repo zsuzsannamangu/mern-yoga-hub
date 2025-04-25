@@ -63,13 +63,13 @@ router.post("/signup", async (req, res) => {
         // Step 3: Check for duplicate signup
         const existingSignup = await Signup.findOne({ email, classTitle, date });
         if (existingSignup) {
-            return res.status(400).json({ error: "You have already signed up for this class." });
+            return res.status(400).json({ message: "You have already signed up for this class." });
         }
 
         // Step 4: Check if the class is full (limit 25 attendees)
         const currentSignups = await Signup.countDocuments({ classTitle, date });
         if (currentSignups >= 25) {
-            return res.status(400).json({ error: "This class is full. Please select another date." });
+            return res.status(400).json({ message: "This class is full. Please select another date." });
         }
 
         // Step 5: Save the signup to the database
@@ -196,13 +196,13 @@ router.post('/check-student', async (req, res) => {
         // Check for duplicate signup
         const existingSignup = await Signup.findOne({ email, classTitle, date });
         if (existingSignup) {
-            return res.status(400).json({ error: "You have already signed up for this class." });
+            return res.status(400).json({ message: "You have already signed up for this class." });
         }
 
         // Check if the class is full (limit 25 attendees), prevents race conditions & accidental overbooking to add this here even though there is another route as well: router.get('/class-status')
         const currentSignups = await Signup.countDocuments({ classTitle, date });
         if (currentSignups >= 25) {
-            return res.status(400).json({ error: "This class is full. Please select another date." });
+            return res.status(400).json({ message: "This class is full. Please select another date." });
         }
 
         // Otherwise, allow signup (returning student)

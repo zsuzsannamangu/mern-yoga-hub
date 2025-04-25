@@ -119,7 +119,21 @@ const Signup = () => {
         body: JSON.stringify({ ...formData, signature: signatureData, recaptchaToken }),
       });
 
-      if (!response.ok) throw new Error("Failed to submit signup form.");
+      if (!response.ok) {
+        const errorData = await response.json();
+        const errorMsg = errorData.message || "Something went wrong.";
+
+        if (errorMsg.toLowerCase().includes("already")) {
+          return Swal.fire({
+            icon: 'warning',
+            title: 'Already Signed Up',
+            text: 'You’ve already registered for this class.',
+            confirmButtonText: 'Okay'
+          });
+        }
+
+        throw new Error(errorMsg);
+      }
 
       // Show success message and redirect user
       Swal.fire({
