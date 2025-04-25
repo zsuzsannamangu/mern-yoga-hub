@@ -41,7 +41,7 @@ router.post('/request', async (req, res) => {
         // If all checks pass, process the booking request
         const adminEmail = {
             to: process.env.EMAIL_RECEIVER,
-            from: process.env.EMAIL_USER, // The verified SendGrid sender email
+            from: process.env.EMAIL_USER, // This is the verified SendGrid sender email
             subject: 'New Public Booking Request',
             html: `
                 <h2>New Public Booking Request</h2>
