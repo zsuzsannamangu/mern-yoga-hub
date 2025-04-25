@@ -162,7 +162,7 @@ module.exports = (io) => {
                 text: `A new booking has been made:\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nSession Type: ${slot.sessionType}\nMessage: ${slot.message}\nDate: ${slot.date}\nTime: ${slot.time}`,
             };
 
-            // Send email notifications
+            // Send email notification
             try {
                 await sgMail.send(userEmail);
             } catch (error) {
