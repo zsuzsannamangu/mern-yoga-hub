@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import SignaturePad from "react-signature-canvas";
-import Signature from "@uiw/react-signature";
 import "./SignUps.scss";
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
@@ -71,7 +70,7 @@ const Signup = () => {
 
   // Handles form input changes. Updates state dynamically based on input field name and value
   const handleSignatureSave = () => {
-    const signature = sigPad.current?.toDataURL(); // Save data to backend
+    const signature = sigPad.current.toDataURL(); // Save data to backend
     setSignatureData(signature);
   };
 
@@ -229,7 +228,7 @@ const Signup = () => {
           </p>
         </label>
 
-        {/* <div className="signature-section">
+        <div className="signature-section">
           <h3>Sign below then click save:</h3>
           <SignaturePad
             ref={sigPad}
@@ -241,23 +240,6 @@ const Signup = () => {
           <button type="button" onClick={handleSignatureSave}>
             Save
           </button>
-        </div> */}
-        <div className="signature-section">
-          <h3>Sign below then click save:</h3>
-          <Signature
-            ref={sigPad}
-            style={{ border: "1px solid #ccc", width: 500, height: 200 }}
-          />
-          <button type="button" onClick={() => sigPad.current?.clear()}>
-            Clear
-          </button>
-          <button type="button" onClick={() => {
-            const signature = sigPad.current?.toDataURL();
-            setSignatureData(signature);
-          }}>
-            Save
-          </button>
-          {signatureData && <img src={signatureData} alt="Your signature" />}
         </div>
 
         <button type="submit">Sign Up</button>
