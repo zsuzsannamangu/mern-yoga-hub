@@ -290,7 +290,7 @@ const AdminDashboard = () => {
         fetchEvents();
         fetchSignups();
 
-        // Cleanup function: component unmounting or route change
+        // Cleanup function: component unmounting or route change.
         return () => {
             isMounted = false;
         };
