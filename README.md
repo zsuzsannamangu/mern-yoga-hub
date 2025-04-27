@@ -4,8 +4,6 @@
 ## Overview
 This project is a full-stack web application built using the MERN stack. The application provides functionality for managing bookings, signing up for calendar events, sending email notifications, and a secure payment system.
 
-I am currently in the process of finalizing, then Dockerizing and deploying this application. The expected deployment date is 02/15/2025.
-
 - **MongoDB**: A NoSQL database for storing application data.
 - **Express.js**: A Node.js framework for building the backend API.
 - **React**: A JavaScript library for building the user interface.
@@ -50,8 +48,8 @@ Ensure you have the following installed:
 
 #### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/zsuzsannamangu/mern-yoga-hub
+cd mern-yoga-hub
 ```
 
 #### 2. Install Dependencies
@@ -72,7 +70,7 @@ npm install
 Create a `.env` file in the `server` directory with the following variables:
 ```plaintext
 PORT=5001
-MONGO_URI=your_mongo_connection_string
+MONGO_URI=mongodb://<db-username>:<db-password>@<ec2-ip>:27017/mern-yogahub?authSource=admin
 ADMIN_EMAIL=email_used_for_admin_login
 ADMIN_PASSWORD=password_used_for_admin_login
 REFRESH_TOKEN_SECRET=token_based_authentication
@@ -83,6 +81,16 @@ JWT_SECRET=your_jwt_secret
 SENDGRID_API_KEY=your_sendgrid_api_key
 PAYPAL_CLIENT_ID=your_paypal_client_id
 PAYPAL_SECRET=your_paypal_secret
+GOOGLE_CLIENT_ID=for_oauth_login
+GOOGLE_CLIENT_SECRET=for_oauth_login
+RECAPTCHA_SECRET_KEY
+CLIENT_URL
+SERVER_URL
+```
+Create a `.env` file in the `client` directory with the following variables:
+```plaintext
+REACT_APP_API=https://connect.yogaandchocolate.com
+REACT_APP_CAPTCHA_SITE_KEY=your_google_recaptcha_site_key
 ```
 
 #### 4. Run the Application
@@ -140,6 +148,34 @@ root/
 ### Additional Tools
 - Socket.IO (for real-time updates).
 - SCSS Modules (for styling).
+- SendGrid (email notifications)
+- PayPal SDK (payment processing)
+- Google reCAPTCHA v3 (spam protection)
+
+### Deployment Overview
+
+This application uses a cloud-based distributed deployment:
+- Frontend: Hosted on Vercel — https://yogaandchocolate.com
+- Backend: Hosted on Render — https://connect.yogaandchocolate.com
+- Database: MongoDB Community Edition hosted on an AWS EC2 instance (self-managed)
+
+Domain and subdomain DNS are managed via Namecheap.
+
+### Deployment Notes
+- Frontend and backend are hosted separately and communicate securely over HTTPS.
+- MongoDB runs on EC2 and accepts connections only from trusted IPs (Render backend, optionally admin IP).
+- Backend on Render automatically binds to the system-provided $PORT environment variable.
+- OAuth, API calls, and domain redirects are configured to work with connect.yogaandchocolate.com.
+- DNS setup (on Namecheap):
+  - @ (root domain) → Vercel IP address
+  - www (CNAME) → Vercel
+  - connect (CNAME) → Render
+
+### Security Considerations
+- Port exposure: Only ports 22 (SSH) and 27017 (MongoDB) are open on EC2.
+- MongoDB authentication: Admin and application users are configured with strong passwords.
+- Environment variables: Sensitive credentials are securely stored in hosting providers (Vercel, Render).
+- Backups: MongoDB database dumps can be scheduled to AWS S3 for disaster recovery (recommended).
 
 ---
 
@@ -156,3 +192,7 @@ For questions or collaboration, please contact:
 - **Name**: Zsuzsanna Mangu
 - **Email**: zsuzsannamangu@gmail.com
 - **GitHub**: https://github.com/zsuzsannamangu/
+
+**Deployed on:** 🚀 [Vercel](https://vercel.com/) (Frontend) • [Render](https://render.com/) (Backend) • AWS EC2 (MongoDB)
+
+
