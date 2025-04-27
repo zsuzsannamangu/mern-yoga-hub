@@ -120,15 +120,17 @@ root/
 ├── client/       # React frontend
 │   ├── public/   # Static assets
 │   ├── src/      # React components, pages, and utilities
-│   ├── config/   # passport.js to implement OAuth
+    ├── .env      # Environment variables
 ├── server/       # Node.js backend
 │   ├── models/   # Mongoose schemas
+│   ├── config/   # passport.js to implement OAuth
 │   ├── routes/   # API routes
 │   ├── scripts/  # Utility scripts to create an admin user and for database seeding
-│   ├── middleware/ # Authentication and error handling
+│   ├── middlewares/ # Authentication and error handling
+    ├── .env      # Environment variables
 ├── README.md     # Project documentation
-├── .env          # Environment variables
 ├── package.json  # Dependencies for the root
+├── .gitignore    # env files and node modules
 ```
 
 ---
@@ -148,8 +150,8 @@ root/
 - Passport.js (OAuth 2.0 strategy for Google login)
 
 ### Additional Tools
-- Socket.IO (for real-time updates).
-- SCSS Modules (for styling).
+- Socket.IO (for real-time updates)
+- SCSS Modules (for styling)
 - SendGrid (email notifications)
 - PayPal SDK (payment processing)
 - Google reCAPTCHA v3 (spam protection)
