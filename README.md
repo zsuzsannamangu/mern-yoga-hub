@@ -15,6 +15,7 @@ This project is a full-stack web application built using the MERN stack. The app
 
 - **User Authentication and Authorization**:
   - Sign up, login, and role-based access (admin and user).
+  - OAuth 2.0 login via Google account.
 - **CRUD Functionality**:
   - Create, read, update, and delete bookings, events, and more.
 - **Real-Time Updates**:
@@ -144,6 +145,7 @@ root/
 - Express.js
 - Mongoose (MongoDB ORM)
 - JWT (JSON Web Tokens for authentication)
+- Passport.js (OAuth 2.0 strategy for Google login)
 
 ### Additional Tools
 - Socket.IO (for real-time updates).
