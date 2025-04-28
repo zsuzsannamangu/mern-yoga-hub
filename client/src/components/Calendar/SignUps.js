@@ -148,11 +148,7 @@ const Signup = () => {
           });
 
           //Clear email field
-          setFormData((prevFormData) => ({
-            ...prevFormData,
-            email: ""
-          }));
-
+          setFormData({ email: "" });
           return;
         }
 
