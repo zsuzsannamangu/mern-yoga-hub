@@ -147,8 +147,6 @@ const Signup = () => {
             confirmButtonText: 'Okay'
           });
 
-          //Clear email field
-          setFormData({ email: "" });
           return;
         }
 
