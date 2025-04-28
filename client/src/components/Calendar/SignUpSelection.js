@@ -81,7 +81,7 @@ const SignUpSelection = () => {
                 {/* Returning Student Section */}
                 <div className="returning-student">
                     <h3>I'm a Returning Student</h3>
-                    <p>If you’ve attended a class with me before, enter your email to receive registration confirmation.</p>
+                    <p>If you’ve attended a class with me before and signed the waiver, you can simply enter your email to receive registration confirmation.</p>
                     <div className="returning-student-container">
                         <input
                             type="email"
