@@ -130,13 +130,30 @@ const Signup = () => {
             text: 'You’ve already registered for this class.',
             confirmButtonText: 'Okay'
           });
-        
+
           // Clear form field
           setFormData({ name: "", email: "", phone: "", classTitle: "", date: "", waiver: false });
           setSignatureData(null);
           sigPad.current.clear();
-        
+
           return; // prevent further execution
+        }
+
+        if (errorMsg.toLowerCase().includes("email doesn't exist")) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Student Not Found',
+            text: "Email not found. Please register as a new student.",
+            confirmButtonText: 'Okay'
+          });
+
+          //Clear email field
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            email: ""
+          }));
+
+          return;
         }
 
         throw new Error(errorMsg);

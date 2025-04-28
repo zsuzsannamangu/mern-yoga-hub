@@ -339,7 +339,7 @@ const AdminDashboard = () => {
                 <div className="form-group">
                     <label>Sign-Up Link</label>
                     <input
-                        type="text"
+                        type="url"
                         placeholder=""
                         value={newEvent.signUpLink}
                         onChange={(e) => setNewEvent({ ...newEvent, signUpLink: e.target.value })}
