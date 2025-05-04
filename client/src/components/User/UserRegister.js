@@ -18,7 +18,7 @@ function UserRegister() {
 
             Swal.fire({
                 icon: 'success',
-                title: 'Registration Successful!',
+                title: 'Registration Successful! Please check your email!',
                 text: response.data.message || 'Your account has been created successfully. Welcome aboard!',
                 confirmButtonText: 'OK'
             });
