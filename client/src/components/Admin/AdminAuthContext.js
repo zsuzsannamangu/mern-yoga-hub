@@ -48,7 +48,7 @@ export const AdminAuthProvider = ({ children }) => {
         checkTokenValidity();
 
         return () => {
-            // Cleanup function (if needed in the future)
+            // Cleanup function (if needed in the future).
         };
     }, []);
 
