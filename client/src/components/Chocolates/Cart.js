@@ -12,6 +12,10 @@ import axios from 'axios';
 
 function Cart() {
   const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
+  React.useEffect(() => {
+    clearCart(); // clear the cart when the page loads (temporary)
+  }, []);
+  
   const [showPayPal, setShowPayPal] = useState(false);
   const [paypalError, setPaypalError] = useState(false);
 
