@@ -21,7 +21,10 @@ function Cart() {
     return total + itemTotal;
   }, 0);
 
-  const total = (subtotal + 5 + subtotal * 0.1).toFixed(2);
+  const shipping = 5.5;
+  const tax = subtotal * 0.1;
+  const totalNumber = subtotal + shipping + tax;
+  const total = totalNumber.toFixed(2); // for display only
 
   // Updates item quantity in the cart, ensuring it doesn't go below 1.
   const handleQuantityChange = (productId, quantity) => {
@@ -84,11 +87,12 @@ function Cart() {
     window.paypal
       .Buttons({
         createOrder: (data, actions) => {
+          console.log("Creating order for:", totalNumber.toFixed(2));
           return actions.order.create({
             purchase_units: [
               {
                 amount: {
-                  value: total,
+                  value: totalNumber.toFixed(2),
                 },
               },
             ],
