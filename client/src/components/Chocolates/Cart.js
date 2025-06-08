@@ -11,7 +11,7 @@ import axios from 'axios';
 */
 
 function Cart() {
-  const { cartItems, updateQuantity, removeFromCart } = useCart();
+  const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
   const [showPayPal, setShowPayPal] = useState(false);
   const [paypalError, setPaypalError] = useState(false);
 
@@ -100,6 +100,7 @@ function Cart() {
         },
         onApprove: (data, actions) => {
           return actions.order.capture().then((details) => {
+            clearCart(); // clear the cart after successful payment
             Swal.fire({
               icon: 'success',
               title: 'Payment Successful',

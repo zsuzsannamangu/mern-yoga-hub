@@ -46,9 +46,9 @@ function About() {
                         <h4>Accredited with IAYT</h4>
                         <p><em>Sarahjoy Yoga, Portland OR</em><br />
                             June 2025 - exp. June 2026</p>
-                        <p>The Science of the Breath and the Art of Yoga Therapy; Internal Family Systems Model;
-                            Chronic Pain and Brain-Based Approaches to Yoga Therapy; Yoga and Expressive Arts Therapy; 
-                            Endocrine, Digestive and Immune Health; Attachment Theory and Implicit Memory in Yoga Therapy; 
+                        <p>The Science of the Breath and the Art of Yoga Therapy; Internal Family Systems Model;<br/>
+                            Chronic Pain and Brain-Based Approaches to Yoga Therapy; Yoga and Expressive Arts Therapy;<br/>
+                            Endocrine, Digestive and Immune Health; Attachment Theory and Implicit Memory in Yoga Therapy;<br/>
                             Yoga for Cancer; Yoga, Biofeedback + Mind-Body Medicine; Kriya Yoga Model for Addiction Recovery.</p>
                     </div>
                     <div className="info-item">
@@ -70,7 +70,7 @@ function About() {
                     </div>
                 </div>
                 <div className="info-category">
-                    <h3>Other Trainings & Courses</h3>
+                    <h3>Other Yoga Trainings</h3>
                     <div className="info-item">
                         <h4>10hr "Yoga for Disabled Folks" Training</h4>
                         <p><em>with <strong><a href="https://www.allihopayoga.com/about" target='_blank'>Rodrigo Souza</a></strong>, live via Accessible Yoga</em><br />
@@ -89,6 +89,21 @@ function About() {
                             August 2024</p>
                         <p>Teaching yoga and mindfulness for kids ages 3-12.<br />
                             Yoga games, breathing exercises, visualizations, mindfulness activities and relaxation techniques.</p>
+                    </div>
+                </div>
+                <div className="info-category">
+                    <h3>Other Programs</h3>
+                    <div className="info-item">
+                        <h4>Master of Arts in International Studies</h4>
+                        <p><em> <strong><a href="https://www.nccu.edu.tw/index.php?Lang=en" target='_blank'>National Chengchi University</a></strong>, Taipei, Taiwan</em><br />
+                            2009-2011</p>
+                        <p>Full scholarship recipient of the Ministry of Education, Taiwan</p>
+                    </div>
+                    <div className="info-item">
+                        <h4>Bachelor of Arts in International Studies</h4>
+                        <p><em> <strong><a href="https://english.nye.hu/" target='_blank'>University of Nyíregyháza</a></strong>Nyíregyháza, Hungary</em><br />
+                            2003-2007</p>
+                        <p>Scholarship recipient of the Ministry of Education, Hungary</p>
                     </div>
                 </div>
             </div>
