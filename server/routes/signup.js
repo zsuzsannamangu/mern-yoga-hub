@@ -148,7 +148,7 @@ router.post("/signup", async (req, res) => {
             `,
         };
 
-        // Send emails to user and admin
+        // Send emails
         await sgMail.send(adminEmail);
         await sgMail.send(userEmail);
 
