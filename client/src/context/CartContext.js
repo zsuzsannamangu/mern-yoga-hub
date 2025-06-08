@@ -46,11 +46,16 @@ export const CartProvider = ({ children }) => {
         setCartItems((prevItems) => prevItems.filter((item) => item._id !== productId));
     };
 
+    // Clear all items from the cart
+    const clearCart = () => {
+        setCartItems([]);
+    };
+
     // Calculate total number of items in the cart
     const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, updateQuantity, removeFromCart, cartCount }}>
+        <CartContext.Provider value={{ cartItems, addToCart, updateQuantity, removeFromCart, clearCart, cartCount }}>
             {children}
         </CartContext.Provider>
     );
