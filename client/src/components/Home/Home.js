@@ -99,7 +99,7 @@ function Home({ showAlert }) {
         </button>
       </div>
       <div className="images-row">
-        <img src="./images/yoga/Zsuzsi_Home_11.jpg" alt="Yoga Vertical" className="left-image" id="homeimage-1" />
+        <img src="./images/yoga/Zsuzsi_Home_111.jpg" alt="Yoga Vertical" className="left-image" id="homeimage-1" />
         <img src="./images/yoga/Zsuzsi_Home_2.jpg" alt="Yoga Horizontal" className="left-image" id="homeimage-2" />
         <img src="./images/yoga/Zsuzsi_Home_4.jpg" alt="Yoga Horizontal" className="left-image" id="homeimage-3" />
       </div>
