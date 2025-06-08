@@ -22,8 +22,7 @@ function Cart() {
   }, 0);
 
   const shipping = 5.5;
-  const tax = subtotal * 0.1;
-  const totalNumber = subtotal + shipping + tax;
+  const totalNumber = subtotal + shipping;
   const total = totalNumber.toFixed(2); // for display only
 
   // Updates item quantity in the cart, ensuring it doesn't go below 1.
