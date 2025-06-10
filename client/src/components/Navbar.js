@@ -68,7 +68,7 @@ function Navbar() {
                     <button>
                         <Link to="/cart" className="cart-button">
                             <FaShoppingCart />
-                            {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+                            {cartCount > 0 && <span className="cart-count">({cartCount})</span>}
                             {/* Display cart item count */}
                         </Link>
                     </button>
