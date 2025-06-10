@@ -44,7 +44,7 @@ router.post("/orders", async (req, res) => {
         const orderEmailToUser = {
             to: payerEmail,
             from: process.env.EMAIL_USER,
-            subject: "Your Chocolate Order Confirmation",
+            subject: "Chocolate Order Confirmation",
             html: `
                 <p>Dear ${payerName},</p>
                 <p>Thank you for your order! Below are the details:</p>
@@ -56,9 +56,10 @@ router.post("/orders", async (req, res) => {
                     )
                     .join("")}
                 </ul>
-                <p><b>Total Amount:</b> $${transactionAmount}</p>
-                <p>Your chocolates will be prepared and shipped within 7 days! You'll receive an email when your order is on its way.</p>
-                <p>We appreciate your support!</p>
+                <p><b>Total amount paid including shipping:</b> $${transactionAmount}</p>
+                <p>Your chocolates will be prepared and shipped within 4-6 days! You'll receive an email when your order is on its way.</p>
+                <p>I appreciate your support!</p>
+                <p>Feel free to email me with any questions.</p>
                 <p>Best regards,<br>Zsuzsanna,<br>Owner of ReTreat Chocolates</p>
             `,
         };

@@ -72,6 +72,22 @@ router.post("/signup", async (req, res) => {
             return res.status(400).json({ message: "This class is full. Please select another date." });
         }
 
+        //save the base64 signature to a file and generate the file path
+        const fs = require("fs");
+        const path = require("path");
+
+        // Save signature as PNG file
+        const base64Data = signature.replace(/^data:image\/png;base64,/, "");
+        const fileName = `signature-${Date.now()}.png`;
+        const uploadsDir = path.join(__dirname, "..", "uploads");
+
+        if (!fs.existsSync(uploadsDir)) {
+            fs.mkdirSync(uploadsDir);
+        }
+
+        const filePath = path.join(uploadsDir, fileName);
+        fs.writeFileSync(filePath, base64Data, "base64");
+
         // Step 5: Save the signup to the database
         const newSignup = new Signup({
             name,
@@ -79,7 +95,7 @@ router.post("/signup", async (req, res) => {
             phone,
             classTitle,
             date,
-            signature,
+            signatureUrl: `/uploads/${fileName}`,
         });
         await newSignup.save();
 
@@ -107,6 +123,7 @@ router.post("/signup", async (req, res) => {
         `;
 
         // Email to admin
+        const imageData = fs.readFileSync(filePath).toString("base64");
         const adminEmail = {
             to: process.env.EMAIL_RECEIVER,
             from: process.env.EMAIL_USER,
@@ -120,9 +137,19 @@ router.post("/signup", async (req, res) => {
                 <p><b>Date:</b> ${newSignup.date}</p>
                 <p><b>Time:</b> ${time}</p>
                 <p><b>Location:</b> ${location}</p>
+                <pre style="white-space: pre-wrap;">${waiverText}</pre>
                 <p><b>Signature:</b></p>
-                <img src="${newSignup.signature}" alt="Signature" style="border: 1px solid #000; width: 300px;" />
+                <img src="cid:signatureImage"/>
             `,
+            attachments: [
+                {
+                    content: imageData,
+                    filename: fileName,
+                    type: "image/png",
+                    disposition: "inline",
+                    content_id: "signatureImage",
+                },
+            ],
         };
 
         // Email to user
@@ -206,8 +233,8 @@ router.post('/check-student', async (req, res) => {
         }
 
         // Otherwise, allow signup (returning student)
-        const { name, phone, signature } = pastSignup; // Retrieve student's previous details
-        const newSignup = new Signup({ name, email, phone, classTitle, date, signature }); // Save the signup to the database
+        const { name, phone, signatureUrl } = pastSignup; // Retrieve student's previous details
+        const newSignup = new Signup({ name, email, phone, classTitle, date, signatureUrl }); // Save the signup to the database
         await newSignup.save();
 
         // Check if the event exists

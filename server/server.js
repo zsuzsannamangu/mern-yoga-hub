@@ -92,6 +92,9 @@ mongoose
     .then(() => console.log('MongoDB connected to:', process.env.MONGODB_URI))
     .catch((err) => console.log('Error connecting to MongoDB:', err));
 
+const path = require("path");
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 // Register routes and pass `io` to specific routes
 app.use('/api/bookings', bookingsRoutes(io));
 app.use('/api/admin', adminRoutes); // Admin routes
