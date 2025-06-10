@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useUserAuth } from './User/UserAuthContext';
 import { useCart } from '../context/CartContext';
 import ProfileIcon from './User/ProfileIcon';
+import { FaShoppingCart } from 'react-icons/fa';
 import '../App.scss';
 
 function Navbar() {
@@ -66,7 +67,9 @@ function Navbar() {
                 {isChocolatesOrCartPage ? (
                     <button>
                         <Link to="/cart" className="cart-button">
-                            Cart ({cartCount}) {/* Display cart item count */}
+                            <FaShoppingCart />
+                            {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+                            {/* Display cart item count */}
                         </Link>
                     </button>
                 ) : isAuthenticated ? (
