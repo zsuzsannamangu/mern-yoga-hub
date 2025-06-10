@@ -5,6 +5,7 @@ import './UserBookNew.scss';
 import '../../App.scss';
 import io from 'socket.io-client';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 function UserBookNew() {
     const { userId } = useParams(); // Get user ID from URL parameters
@@ -22,6 +23,7 @@ function UserBookNew() {
     const [paypalError, setPaypalError] = useState(false); // Track PayPal errors
     const [paymentSuccess, setPaymentSuccess] = useState(false); // Track if payment was successful
     const [couponCode, setCouponCode] = useState('');
+    const navigate = useNavigate();
 
     const sessionTypes = [
         "Individual Yoga Session (60 min)",
@@ -64,6 +66,21 @@ function UserBookNew() {
             setPaymentAmount(0);
         }
     }, [couponCode]);
+
+    useEffect(() => {
+        if (selectedDate) {
+            // Reset all form values when the user selects a new date
+            setSelectedSlot(null);
+            setSessionType('');
+            setMessage('');
+            setCouponCode('');
+            setPaymentAmount(null);
+            setShowPayPal(false);
+            setPaymentSuccess(false);
+            const container = document.getElementById('paypal-button-container');
+            if (container) container.innerHTML = '';
+        }
+    }, [selectedDate]);
 
     // Fetch user details
     const fetchUser = async () => {
@@ -301,6 +318,9 @@ function UserBookNew() {
                 title: 'Booking Confirmed!',
                 text: 'Booking successful. Check your email for confirmation and details.',
                 confirmButtonText: 'OK'
+            }).then(() => {
+                // Redirect to user bookings page after closing the popup
+                navigate(`/user/${userId}`);
             });
 
             setAvailableSlots((prevSlots) =>
