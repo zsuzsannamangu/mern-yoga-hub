@@ -129,8 +129,9 @@ function UserBookNew() {
         const isFree = trimmedCode === 'YOURJOURNEY';
         const amount = Number(paymentAmount);
 
+        // ✅ Skip all checks if coupon is valid
         if (isFree) {
-            setPaymentAmount(0);
+            setPaymentAmount(0); // just for visibility
             setPaymentSuccess(true);
             setShowPayPal(false);
             const container = document.getElementById('paypal-button-container');
@@ -144,7 +145,8 @@ function UserBookNew() {
             return;
         }
 
-        if (isNaN(amount) || amount < 35 || amount > 130) {
+        // ✅ Only validate if not free
+        if (!isFree && (isNaN(amount) || amount < 35 || amount > 130)) {
             Swal.fire({
                 icon: 'error',
                 title: 'Invalid Payment Amount',
@@ -154,6 +156,7 @@ function UserBookNew() {
             return;
         }
 
+        // ✅ Load PayPal buttons
         setShowPayPal(true);
 
         if (!document.querySelector('#paypal-sdk')) {
