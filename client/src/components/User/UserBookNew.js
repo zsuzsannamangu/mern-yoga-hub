@@ -126,27 +126,27 @@ function UserBookNew() {
     // Trigger PayPal payment flow
     const handlePaymentClick = () => {
         const isFree = couponCode.trim().toUpperCase() === 'YOURJOURNEY';
+        const amount = Number(paymentAmount); // always convert to number
 
         if (isFree) {
-            setPaymentAmount(0);            // ⬅ ensure amount is actually set
-            setPaymentSuccess(true);        // skip PayPal
-            setShowPayPal(false);           // hide PayPal buttons
+            setPaymentAmount(0);
+            setPaymentSuccess(true);
+            setShowPayPal(false);
             document.getElementById('paypal-button-container').innerHTML = '';
             Swal.fire({
                 icon: 'success',
                 title: 'Coupon Applied',
-                text: 'Please finalize your booking!',
+                text: 'Your session is free! You may now finalize your booking.',
                 confirmButtonText: 'OK',
             });
             return;
         }
 
-        // Only check amount if not using a coupon
-        if (paymentAmount < 35 || paymentAmount > 130) {
+        if (amount < 50 || amount > 130) {
             Swal.fire({
                 icon: 'error',
                 title: 'Invalid Payment Amount',
-                text: 'The amount must be between $35 and $130. Please adjust your entry and try again.',
+                text: 'The amount must be between $50 and $130. Please adjust your entry and try again.',
                 confirmButtonText: 'OK',
             });
             return;
@@ -323,7 +323,7 @@ function UserBookNew() {
     //function to check if all required fields are filled
     const isFormValid = () => {
         const isFree = couponCode.trim().toUpperCase() === 'YOURJOURNEY';
-        const validAmount = paymentAmount >= 35 && paymentAmount <= 140;
+        const validAmount = paymentAmount >= 50 && paymentAmount <= 140;
         return (
             sessionType.trim() !== '' &&
             selectedSlot !== null &&
@@ -383,7 +383,7 @@ function UserBookNew() {
                             }
                             highlightedSlots={availableSlots.map((slot) => slot.date)}
                         />
-                        <p>**Individual yoga sessions are $35-$110/hr sliding scale. Yoga therapy sessions are $35-$130/hr sliding scale.</p>
+                        <p>**Individual yoga sessions are $50-$110/hr sliding scale. Yoga therapy sessions are $50-$130/hr sliding scale.</p>
                         <p> Your investment is a personal choice, aligning with your current financial circumstances. No questions asked.**</p>
                     </div>
 
@@ -454,12 +454,12 @@ function UserBookNew() {
 
                                 {couponCode.trim().toUpperCase() !== 'YOURJOURNEY' && (
                                     <label>
-                                        Payment Amount (sliding scale: $35–$130):
+                                        Payment Amount (sliding scale: $50–$130):
                                         <input
                                             type="number"
                                             value={paymentAmount || ''}
-                                            onChange={(e) => setPaymentAmount(e.target.value)}
-                                            min="35"
+                                            onChange={(e) => setPaymentAmount(Number(e.target.value))}
+                                            min="50"
                                             max="130"
                                             step="1"
                                             placeholder="Enter amount without $ sign"
