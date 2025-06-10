@@ -125,35 +125,37 @@ function UserBookNew() {
 
     // Trigger PayPal payment flow
     const handlePaymentClick = () => {
-        const isFree = couponCode.trim().toUpperCase() === 'YOURJOURNEY';
-        const amount = Number(paymentAmount); // always convert to number
+        const trimmedCode = couponCode.trim().toUpperCase();
+        const isFree = trimmedCode === 'YOURJOURNEY';
+        const amount = Number(paymentAmount);
 
         if (isFree) {
             setPaymentAmount(0);
             setPaymentSuccess(true);
             setShowPayPal(false);
-            document.getElementById('paypal-button-container').innerHTML = '';
+            const container = document.getElementById('paypal-button-container');
+            if (container) container.innerHTML = '';
             Swal.fire({
                 icon: 'success',
                 title: 'Coupon Applied',
                 text: 'Your session is free! You may now finalize your booking.',
-                confirmButtonText: 'OK',
+                confirmButtonText: 'OK'
             });
             return;
         }
 
-        if (amount < 50 || amount > 130) {
+        if (isNaN(amount) || amount < 35 || amount > 130) {
             Swal.fire({
                 icon: 'error',
                 title: 'Invalid Payment Amount',
-                text: 'The amount must be between $50 and $130. Please adjust your entry and try again.',
-                confirmButtonText: 'OK',
+                text: 'The amount must be between $35 and $130. Please adjust your entry and try again.',
+                confirmButtonText: 'OK'
             });
             return;
         }
 
-        // Proceed with PayPal setup
         setShowPayPal(true);
+
         if (!document.querySelector('#paypal-sdk')) {
             fetch(`${process.env.REACT_APP_API}/config/paypal`)
                 .then((res) => res.json())
@@ -304,11 +306,13 @@ function UserBookNew() {
             setSelectedSlot(null);
             setSessionType('');
             setMessage('');
+            setCouponCode(''); // Resets coupon code
             setPaymentAmount(null); // Clears payment amount
             setShowPayPal(false); // Hides PayPal buttons so they don't persist.
             document.getElementById('paypal-button-container').innerHTML = '';
             setPaymentSuccess(false); // Ensures PayPal validation resets
-            setCouponCode(''); // Resets coupon code
+            const container = document.getElementById('paypal-button-container');
+            if (container) container.innerHTML = ''; // remove PayPal buttons
 
         } catch (error) {
             Swal.fire({
