@@ -58,6 +58,13 @@ function UserBookNew() {
         };
     }, [userId]);
 
+    useEffect(() => {
+        const code = couponCode.trim().toUpperCase();
+        if (code === 'YOURJOURNEY') {
+            setPaymentAmount(0);
+        }
+    }, [couponCode]);
+
     // Fetch user details
     const fetchUser = async () => {
         try {
@@ -129,7 +136,7 @@ function UserBookNew() {
         }
 
         // Check for coupon before validating amount
-        if (couponCode.trim().toUpperCase() === 'LETSBEGIN') {
+        if (couponCode.trim().toUpperCase() === 'YOURJOURNEY') {
             setPaymentAmount(0);
             setPaymentSuccess(true); // bypass PayPal entirely
             Swal.fire({
@@ -310,7 +317,7 @@ function UserBookNew() {
 
     //function to check if all required fields are filled
     const isFormValid = () => {
-        const isFree = couponCode.trim().toUpperCase() === 'FREESESSION'; //with coupon code there is no need to pay
+        const isFree = couponCode.trim().toUpperCase() === 'YOURJOURNEY';
         const validAmount = paymentAmount >= 35 && paymentAmount <= 140;
         return (
             sessionType.trim() !== '' &&
@@ -429,6 +436,12 @@ function UserBookNew() {
                                         placeholder="Enter code"
                                     />
                                 </label>
+
+                                {couponCode.trim().toUpperCase() === 'YOURJOURNEY' && (
+                                    <p style={{ color: 'green', marginTop: '0.3rem' }}>
+                                        Coupon applied!
+                                    </p>
+                                )}
                                 <label>
                                     Payment Amount (sliding scale: $35–$130):
                                     <input
