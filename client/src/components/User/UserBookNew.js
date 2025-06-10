@@ -485,9 +485,12 @@ function UserBookNew() {
                                         Failed to load PayPal. Please try again later.
                                     </p>
                                 )}
-                                {paymentSuccess && (
-                                    <button className="book-slot-button" onClick={handleSlotBooking}>Finalize Booking</button>
+                                {(paymentSuccess || couponCode.trim().toUpperCase() === 'YOURJOURNEY') && (
+                                    <button className="book-slot-button" onClick={handleSlotBooking}>
+                                        Finalize Booking
+                                    </button>
                                 )}
+
                             </div>
                         </div>
                     )}
