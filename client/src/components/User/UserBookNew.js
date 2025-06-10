@@ -21,6 +21,7 @@ function UserBookNew() {
     const [showPayPal, setShowPayPal] = useState(false); // Show or hide PayPal buttons
     const [paypalError, setPaypalError] = useState(false); // Track PayPal errors
     const [paymentSuccess, setPaymentSuccess] = useState(false); // Track if payment was successful
+    const [couponCode, setCouponCode] = useState('');
 
     const sessionTypes = [
         "Individual Yoga Session (60 min)",
@@ -122,6 +123,19 @@ function UserBookNew() {
                 icon: 'error',
                 title: 'Invalid Payment Amount',
                 text: 'The amount must be between $35 and $130. Please adjust your entry and try again.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        // Check for coupon before validating amount
+        if (couponCode.trim().toUpperCase() === 'LETSBEGIN') {
+            setPaymentAmount(0);
+            setPaymentSuccess(true); // bypass PayPal entirely
+            Swal.fire({
+                icon: 'success',
+                title: 'Coupon Applied',
+                text: 'Your session is free! You may now finalize your booking.',
                 confirmButtonText: 'OK'
             });
             return;
@@ -296,12 +310,12 @@ function UserBookNew() {
 
     //function to check if all required fields are filled
     const isFormValid = () => {
+        const isFree = couponCode.trim().toUpperCase() === 'FREESESSION'; //with coupon code there is no need to pay
+        const validAmount = paymentAmount >= 35 && paymentAmount <= 140;
         return (
-            sessionType.trim() !== '' && // Check if session type is selected
-            //message.trim() !== '' && // Check if message is provided
-            selectedSlot !== null && // Check if a slot is selected
-            paymentAmount >= 35 && // Check if payment amount is within the range
-            paymentAmount <= 140
+            sessionType.trim() !== '' &&
+            selectedSlot !== null &&
+            (isFree || validAmount)
         );
     };
 
@@ -404,6 +418,15 @@ function UserBookNew() {
                                     <textarea
                                         value={message}
                                         onChange={(e) => setMessage(e.target.value)}
+                                    />
+                                </label>
+                                <label>
+                                    Coupon Code:
+                                    <input
+                                        type="text"
+                                        value={couponCode}
+                                        onChange={(e) => setCouponCode(e.target.value)}
+                                        placeholder="Enter code"
                                     />
                                 </label>
                                 <label>
