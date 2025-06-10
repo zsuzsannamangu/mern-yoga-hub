@@ -129,7 +129,7 @@ router.post("/signup", async (req, res) => {
             from: process.env.EMAIL_USER,
             subject: "New Sign Up",
             html: `
-                <h2>New Signup Received</h2>
+                <h2>New Signup and Waiver Received</h2>
                 <p><b>Name:</b> ${newSignup.name}</p>
                 <p><b>Email:</b> ${newSignup.email}</p>
                 <p><b>Phone:</b> ${newSignup.phone}</p>
@@ -158,21 +158,35 @@ router.post("/signup", async (req, res) => {
             from: process.env.EMAIL_USER,
             subject: `You're in! Confirmation for ${newSignup.classTitle} on ${newSignup.date}`,
             html: `
-                <p>Dear ${newSignup.name},</p>
-                <p>Thank you for signing up for the ${newSignup.classTitle} class on ${newSignup.date}.</p>
-                <p>Here are the details of the class:</p>
-                <ul>
-                    <li><strong>Date:</strong> ${newSignup.date}</li>
-                    <li><strong>Time:</strong> ${time}</li>
-                    <li><strong>Duration:</strong> 60 minutes</li>
-                    <li><strong>Location:</strong> ${location}</li>
-                </ul>
-                <p>There is no front desk, so please try your best to arrive on time. If you’re running late, text Zsuzsanna at <a href="tel:+15037346656">503-734-6656</a> with your name and estimated time of arrival if possible.</p>
-                <p>Below is a copy of the waiver you signed:</p>
-                <pre style="white-space: pre-wrap;">${waiverText}</pre>
-                <p>Looking forward to seeing you!</p>
-                <p>With gratitude,<br>Zsuzsanna</p>
+              <p>Dear ${newSignup.name},</p>
+              <p>Thank you for signing up for the ${newSignup.classTitle} class on ${newSignup.date}.</p>
+              <p>Here are the details of the class:</p>
+              <ul>
+                  <li><strong>Date:</strong> ${newSignup.date}</li>
+                  <li><strong>Time:</strong> ${time}</li>
+                  <li><strong>Duration:</strong> 60 minutes</li>
+                  <li><strong>Location:</strong> ${location}</li>
+              </ul>
+              <p>There is no front desk, so please try your best to arrive on time. If you’re running late, text Zsuzsanna at <a href="tel:+15037346656">503-734-6656</a> with your name and estimated time of arrival if possible.</p>
+              
+              <p>Below is a copy of the waiver you signed:</p>
+              <pre style="white-space: pre-wrap;">${waiverText}</pre>
+          
+              <p><strong>Your Signature:</strong></p>
+              <img src="cid:userSignatureImage" style="max-width: 300px;"/>
+          
+              <p>Looking forward to seeing you!</p>
+              <p>With gratitude,<br>Zsuzsanna</p>
             `,
+            attachments: [
+                {
+                    content: imageData,
+                    filename: fileName,
+                    type: "image/png",
+                    disposition: "inline",
+                    content_id: "userSignatureImage", // must match img src
+                },
+            ],
         };
 
         // Send emails
