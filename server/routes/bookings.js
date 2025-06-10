@@ -164,8 +164,9 @@ module.exports = (io) => {
                   Location: We can meet at my home in North Portland, Arbor Lodge area or use Google Meets. I'll email you to confirm.</p>
               
                   <p>Before your first session, please fill out this form:<br/>
-                  <a href="https://your-intake-form-link.com" target="_blank">Intake Form</a></p>
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLScvgtnQnBdWWTJqwQbqo98X_vNYpjuH9x-YpsAlced_xKjbSA/viewform?usp=header" target="_blank">Intake Form</a></p>
               
+                  <p>I'm looking forward to working with you!</p>
                   <p>Warm regards,<br/>Zsuzsanna</p>
                 `,
             };

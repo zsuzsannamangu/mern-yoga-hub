@@ -127,55 +127,57 @@ function UserBookNew() {
     const handlePaymentClick = () => {
         const isFree = couponCode.trim().toUpperCase() === 'YOURJOURNEY';
 
-        if (!isFree && (paymentAmount < 35 || paymentAmount > 130)) {
+        if (isFree) {
+            setPaymentAmount(0);            // ⬅ ensure amount is actually set
+            setPaymentSuccess(true);        // skip PayPal
+            setShowPayPal(false);           // hide PayPal buttons
+            document.getElementById('paypal-button-container').innerHTML = '';
+            Swal.fire({
+                icon: 'success',
+                title: 'Coupon Applied',
+                text: 'Please finalize your booking!',
+                confirmButtonText: 'OK',
+            });
+            return;
+        }
+
+        // Only check amount if not using a coupon
+        if (paymentAmount < 35 || paymentAmount > 130) {
             Swal.fire({
                 icon: 'error',
                 title: 'Invalid Payment Amount',
                 text: 'The amount must be between $35 and $130. Please adjust your entry and try again.',
-                confirmButtonText: 'OK'
+                confirmButtonText: 'OK',
             });
             return;
         }
 
-        if (isFree) {
-            setPaymentSuccess(true); // skip PayPal
-            Swal.fire({
-                icon: 'success',
-                title: 'Coupon Applied',
-                text: 'Coupon applied. Please finalize your booking.',
-                confirmButtonText: 'OK'
-            });
-            return;
-        }
-
+        // Proceed with PayPal setup
         setShowPayPal(true);
-
         if (!document.querySelector('#paypal-sdk')) {
             fetch(`${process.env.REACT_APP_API}/config/paypal`)
-                .then((response) => response.json())
+                .then((res) => res.json())
                 .then((data) => {
                     const script = document.createElement('script');
                     script.src = `https://www.paypal.com/sdk/js?client-id=${data.clientId}&currency=USD`;
                     script.id = 'paypal-sdk';
-                    script.onload = () => renderPayPalButtons();
+                    script.onload = renderPayPalButtons;
                     script.onerror = () => {
                         Swal.fire({
                             icon: 'error',
                             title: 'Payment Service Unavailable',
-                            text: 'We couldn’t load PayPal. Please refresh the page or try again later.',
-                            confirmButtonText: 'OK'
+                            text: 'We couldn’t load PayPal. Please try again later.',
                         });
                         setPaypalError(true);
                         setShowPayPal(false);
                     };
                     document.body.appendChild(script);
                 })
-                .catch((error) => {
+                .catch(() => {
                     Swal.fire({
                         icon: 'error',
                         title: 'Payment Service Unavailable',
-                        text: 'We couldn’t load PayPal. Please refresh the page or try again later.',
-                        confirmButtonText: 'OK'
+                        text: 'We couldn’t load PayPal. Please try again later.',
                     });
                     setPaypalError(true);
                     setShowPayPal(false);
@@ -469,7 +471,7 @@ function UserBookNew() {
                                         onClick={handlePaymentClick}
                                         disabled={!isFormValid()} // Disable the button based on validation
                                     >
-                                        Continue to Payment
+                                        Continue
                                     </button>
                                 ) : (
                                     <div id="paypal-button-container"></div>
