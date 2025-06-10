@@ -125,7 +125,9 @@ function UserBookNew() {
 
     // Trigger PayPal payment flow
     const handlePaymentClick = () => {
-        if (paymentAmount < 35 || paymentAmount > 130) {
+        const isFree = couponCode.trim().toUpperCase() === 'YOURJOURNEY';
+
+        if (!isFree && (paymentAmount < 35 || paymentAmount > 130)) {
             Swal.fire({
                 icon: 'error',
                 title: 'Invalid Payment Amount',
@@ -135,10 +137,8 @@ function UserBookNew() {
             return;
         }
 
-        // Check for coupon before validating amount
-        if (couponCode.trim().toUpperCase() === 'YOURJOURNEY') {
-            setPaymentAmount(0);
-            setPaymentSuccess(true); // bypass PayPal entirely
+        if (isFree) {
+            setPaymentSuccess(true); // skip PayPal
             Swal.fire({
                 icon: 'success',
                 title: 'Coupon Applied',
@@ -436,24 +436,31 @@ function UserBookNew() {
                                         placeholder="Enter code"
                                     />
                                 </label>
-
-                                {couponCode.trim().toUpperCase() === 'YOURJOURNEY' && (
+                                {couponCode.trim() && couponCode.trim().toUpperCase() === 'YOURJOURNEY' && (
                                     <p style={{ color: 'green', marginTop: '0.3rem' }}>
                                         Coupon applied!
                                     </p>
                                 )}
-                                <label>
-                                    Payment Amount (sliding scale: $35–$130):
-                                    <input
-                                        type="number"
-                                        value={paymentAmount || ''} // Show an empty input until the user types a value
-                                        onChange={(e) => setPaymentAmount(e.target.value)}
-                                        min="35"
-                                        max="130"
-                                        step="1"
-                                        placeholder='Enter amount without $ sign'
-                                    />
-                                </label>
+                                {couponCode.trim() && couponCode.trim().toUpperCase() !== 'YOURJOURNEY' && (
+                                    <p style={{ color: 'red', fontSize: '0.9rem' }}>
+                                        Invalid code. Double-check or continue without one.
+                                    </p>
+                                )}
+
+                                {couponCode.trim().toUpperCase() !== 'YOURJOURNEY' && (
+                                    <label>
+                                        Payment Amount (sliding scale: $35–$130):
+                                        <input
+                                            type="number"
+                                            value={paymentAmount || ''}
+                                            onChange={(e) => setPaymentAmount(e.target.value)}
+                                            min="35"
+                                            max="130"
+                                            step="1"
+                                            placeholder="Enter amount without $ sign"
+                                        />
+                                    </label>
+                                )}
                                 {!showPayPal ? (
                                     <button className="continue-button"
                                         onClick={handlePaymentClick}
