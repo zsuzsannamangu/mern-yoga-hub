@@ -152,20 +152,22 @@ module.exports = (io) => {
                 to: email,
                 from: process.env.EMAIL_USER,
                 subject: `Booking Confirmation: Yoga Session on ${slot.date} at ${slot.time}`,
-                text: `Dear ${firstName},
+                html: `
+                  <p>Dear ${firstName},</p>
               
-              Your booking has been successfully made!
+                  <p>Your booking has been successfully made!</p>
               
-              Session Details:
-              Date: ${slot.date}
-              Time: ${slot.time}
-              Session Type: ${slot.sessionType}
+                  <p><strong>Session Details:</strong><br/>
+                  Date: ${slot.date}<br/>
+                  Time: ${slot.time}<br/>
+                  Session Type: ${slot.sessionType}<br/>
+                  Location: We can meet at my home in North Portland, Arbor Lodge area or use Google Meets. I'll email you to confirm.</p>
               
-              Before your first session, please fill out this form:
-              [Intake Form] https://docs.google.com/forms/d/e/1FAIpQLScvgtnQnBdWWTJqwQbqo98X_vNYpjuH9x-YpsAlced_xKjbSA/viewform?usp=sharing
+                  <p>Before your first session, please fill out this form:<br/>
+                  <a href="https://your-intake-form-link.com" target="_blank">Intake Form</a></p>
               
-              Warm regards,
-              Zsuzsanna`
+                  <p>Warm regards,<br/>Zsuzsanna</p>
+                `,
             };
 
             const adminEmail = {

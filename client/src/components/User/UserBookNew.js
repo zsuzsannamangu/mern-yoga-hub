@@ -142,7 +142,7 @@ function UserBookNew() {
             Swal.fire({
                 icon: 'success',
                 title: 'Coupon Applied',
-                text: 'Your session is free! You may now finalize your booking.',
+                text: 'Coupon applied. Please finalize your booking.',
                 confirmButtonText: 'OK'
             });
             return;
@@ -292,7 +292,7 @@ function UserBookNew() {
             Swal.fire({
                 icon: 'success',
                 title: 'Booking Confirmed!',
-                text: 'Your slot has been successfully booked. Check your email for confirmation.',
+                text: 'Booking successful. Check your email for confirmation and details.',
                 confirmButtonText: 'OK'
             });
 
@@ -304,7 +304,10 @@ function UserBookNew() {
             setMessage('');
             setPaymentAmount(null); // Clears payment amount
             setShowPayPal(false); // Hides PayPal buttons so they don't persist.
+            document.getElementById('paypal-button-container').innerHTML = '';
             setPaymentSuccess(false); // Ensures PayPal validation resets
+            setCouponCode(''); // Resets coupon code
+
         } catch (error) {
             Swal.fire({
                 icon: 'error',
