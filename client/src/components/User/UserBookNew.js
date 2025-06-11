@@ -320,7 +320,8 @@ function UserBookNew() {
             console.log('Parsed result:', result);
 
 
-            if (response.status >= 200 && response.status < 300) {
+            if (response.ok && result.success) {
+                // Booking was successful
                 Swal.fire({
                     icon: 'success',
                     title: 'Booking Confirmed!',
