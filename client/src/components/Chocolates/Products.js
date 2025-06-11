@@ -109,6 +109,8 @@ function Products({ showAlert }) {
             key={product._id}
             className="product-card"
             variants={itemVariants}
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: 'spring', stiffness: 250, damping: 12 }}
           >
             <img
               src={product.image}
