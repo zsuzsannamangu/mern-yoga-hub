@@ -30,17 +30,19 @@ function About() {
     return (
         <div className='about-page'>
             {/* Top section with an introductory overlay about the instructor */}
-            <motion.div className='about-top' variants={fadeInUp}>
+            <motion.div
+                className='about-top'
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1 }}
+            >
                 <div className="about-overlay">
-                    <motion.div
-                        className="about-overlay-text"
-                        variants={fadeInUp}
-                    >
-                        <p>I'm Zsuzsanna, a yoga teacher and yoga therapist-in-training, here to support you in finding alignment between body and mind. My teaching approach
-                            embraces each layer of your experience, the physical, emotional, and mental.</p>
-                    </motion.div>
+                    <div className="about-overlay-text">
+                        <p>I'm Zsuzsanna, a yoga teacher and yoga therapist-in-training, here to support you in finding alignment between body and mind.</p>
+                    </div>
                 </div>
             </motion.div>
+
 
             <motion.div
                 initial={{ opacity: 0 }}
