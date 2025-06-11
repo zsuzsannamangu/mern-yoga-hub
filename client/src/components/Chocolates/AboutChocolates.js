@@ -1,12 +1,17 @@
 import React from 'react';
 import './AboutChocolates.scss';
 import '../../App.scss';
+import { motion } from 'framer-motion';
 
 function AboutChocolates() {
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 1 } }
+  };
   return (
     <div className="about-chocolates-section">
       <div className="about-chocolates-content">
-        <div className="about-chocolates-text">
+        <motion.div className="about-chocolates-text" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <h2 className="section-title">The ReTreat Culture</h2>
           <div className="title-line"></div>
           <p>Hello! Welcome to ReTreat Chocolates!</p>
@@ -28,12 +33,17 @@ function AboutChocolates() {
           <p>At ReTreat, I prioritize both taste and sustainability. From fair trade cacao to locally harvested sea salt, every ingredient is chosen with care. My simple chocolates reflect my dedication to sustainability, quality and transparency.</p>
           <h3>Join the ReTreat Movement</h3>
           <p>Have questions or feedback? I'd love to hear from you. <strong><a href="/contact">Message me!</a></strong></p>
-        </div>
-        <div className="about-chocolates-image">
+        </motion.div>
+        <motion.div className="about-chocolates-image" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <img src="/images/Zsuzsi/Zsuzsi_and_chocolates_sm.jpg" alt="Zsuzsi" />
           <p className="photo-credit">Photo by Jason Quigley</p>
-        </div>
-        <div className="about-chocolates-text">
+        </motion.div>
+        <motion.div className="about-chocolates-image" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+          <img src="/images/Zsuzsi/Zsuzsi_and_chocolates_sm_2.jpg" alt="Zsuzsi" />
+          <p className="photo-credit">Photo by Jason Quigley</p>
+        </motion.div>
+
+        <motion.div className="about-chocolates-text" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <h2 className="section-title">Shipping and Discounts</h2>
           <div className="title-line"></div>
           <h3>Shipping Info</h3>
@@ -55,11 +65,7 @@ function AboutChocolates() {
           </p>
           <h3>Instagram discount</h3>
           <p>If you loved your chocolates, please mention it on Instagram and tag me at <strong><a href="https://www.instagram.com/zsuzsannacreates/">@zsuzsannacreates</a></strong>, and receive 15% off your next order.</p>
-        </div>
-        <div className="about-chocolates-image">
-          <img src="/images/Zsuzsi/Zsuzsi_and_chocolates_sm_2.jpg" alt="Zsuzsi" />
-          <p className="photo-credit">Photo by Jason Quigley</p>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
