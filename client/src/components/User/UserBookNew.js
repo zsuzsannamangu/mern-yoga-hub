@@ -146,7 +146,7 @@ function UserBookNew() {
         const isFree = trimmedCode === 'YOURJOURNEY';
         const amount = Number(paymentAmount);
 
-        // ✅ Skip all checks if coupon is valid
+        // Skip all checks if coupon is valid
         if (isFree) {
             setPaymentAmount(0); // just for visibility
             setPaymentSuccess(true);
@@ -162,7 +162,7 @@ function UserBookNew() {
             return;
         }
 
-        // ✅ Only validate if not free
+        // Only validate if not free
         if (!isFree && (isNaN(amount) || amount < 35 || amount > 130)) {
             Swal.fire({
                 icon: 'error',
@@ -173,7 +173,7 @@ function UserBookNew() {
             return;
         }
 
-        // ✅ Load PayPal buttons
+        // Load PayPal buttons
         setShowPayPal(true);
 
         if (!document.querySelector('#paypal-sdk')) {
@@ -309,33 +309,34 @@ function UserBookNew() {
                 }
             );
 
-            if (!response.ok) {
-                throw new Error('Failed to book the slot.');
+            const result = await response.json();
+
+            if (response.status >= 200 && response.status < 300) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Booking Confirmed!',
+                    text: 'Booking successful. Check your email for confirmation and details.',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    navigate(`/user/${userId}`);
+                });
+
+                setAvailableSlots((prevSlots) =>
+                    prevSlots.filter((slot) => slot._id !== selectedSlot._id)
+                );
+                setSelectedSlot(null);
+                setSessionType('');
+                setMessage('');
+                setCouponCode(''); // Resets coupon code
+                setPaymentAmount(null); // Clears payment amount
+                setShowPayPal(false); // Hides PayPal buttons so they don't persist.
+                document.getElementById('paypal-button-container').innerHTML = '';
+                setPaymentSuccess(false); // Ensures PayPal validation resets
+                const container = document.getElementById('paypal-button-container');
+                if (container) container.innerHTML = ''; // remove PayPal buttons
+            } else {
+                throw new Error(result?.message || 'Unknown error');
             }
-
-            Swal.fire({
-                icon: 'success',
-                title: 'Booking Confirmed!',
-                text: 'Booking successful. Check your email for confirmation and details.',
-                confirmButtonText: 'OK'
-            }).then(() => {
-                // Redirect to user bookings page after closing the popup
-                navigate(`/user/${userId}`);
-            });
-
-            setAvailableSlots((prevSlots) =>
-                prevSlots.filter((slot) => slot._id !== selectedSlot._id)
-            );
-            setSelectedSlot(null);
-            setSessionType('');
-            setMessage('');
-            setCouponCode(''); // Resets coupon code
-            setPaymentAmount(null); // Clears payment amount
-            setShowPayPal(false); // Hides PayPal buttons so they don't persist.
-            document.getElementById('paypal-button-container').innerHTML = '';
-            setPaymentSuccess(false); // Ensures PayPal validation resets
-            const container = document.getElementById('paypal-button-container');
-            if (container) container.innerHTML = ''; // remove PayPal buttons
 
         } catch (error) {
             Swal.fire({
