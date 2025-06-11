@@ -165,11 +165,11 @@ function UserBookNew() {
         }
 
         // Only validate if not free
-        if (!isFree && (isNaN(amount) || amount < 35 || amount > 130)) {
+        if (!isFree && (isNaN(amount) || amount < 50 || amount > 201)) {
             Swal.fire({
                 icon: 'error',
                 title: 'Invalid Payment Amount',
-                text: 'The amount must be between $35 and $130. Please adjust your entry and try again.',
+                text: 'The amount must be at least $50. Please adjust your entry and try again.',
                 confirmButtonText: 'OK'
             });
             return;
@@ -494,7 +494,7 @@ function UserBookNew() {
                                             value={paymentAmount || ''}
                                             onChange={(e) => setPaymentAmount(Number(e.target.value))}
                                             min="50"
-                                            max="130"
+                                            max="200"
                                             step="1"
                                             placeholder="Enter amount without $ sign"
                                         />
