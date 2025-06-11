@@ -7,6 +7,18 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 module.exports = (io) => {
+
+    function formatLocalTime(date, time) {
+        const dateTime = new Date(`${date}T${time}`);
+        return dateTime.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+            timeZoneName: 'short',
+            timeZone: 'America/Los_Angeles' // Or detect from user if needed
+        });
+    }
+
     // GET: Fetch all slots (available and booked)
     router.get('/', async (req, res) => {
         const { email, userId } = req.query;
@@ -159,7 +171,7 @@ module.exports = (io) => {
               
                   <p><strong>Session Details:</strong><br/>
                   Date: ${slot.date}<br/>
-                  Time: ${slot.time}<br/>
+                  Time: ${formatLocalTime(slot.date, slot.time)}<br/>
                   Session Type: ${slot.sessionType}<br/>
                   Location: We can meet at my home in North Portland, Arbor Lodge area or use Google Meets. I'll email you to confirm.</p>
               
@@ -175,7 +187,7 @@ module.exports = (io) => {
                 to: process.env.EMAIL_RECEIVER,
                 from: process.env.EMAIL_USER,
                 subject: `New Booking: ${firstName} ${lastName} on ${slot.date} at ${slot.time}`,
-                text: `A new booking has been made:\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nSession Type: ${slot.sessionType}\nMessage: ${slot.message}\nDate: ${slot.date}\nTime: ${slot.time}`,
+                text: `A new booking has been made:\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nSession Type: ${slot.sessionType}\nMessage: ${slot.message}\nDate: ${slot.date}\nTime: ${formatLocalTime(slot.date, slot.time)}`,
             };
 
             // Send email notification
