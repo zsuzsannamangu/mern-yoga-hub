@@ -423,9 +423,6 @@ function UserBookNew() {
                         <div className="availability-section">
                             <h4>Available Slots</h4>
                             <p>{selectedDate ? `${formatDate(selectedDate)}` : ''}</p>
-                            <p style={{ fontStyle: 'italic', marginBottom: '0.5rem' }}>
-                                Times shown are in your local timezone ({Intl.DateTimeFormat().resolvedOptions().timeZone})
-                            </p>
                             <div className="availability-times">
                                 {availableSlots.filter(
                                     (slot) => slot.date === selectedDate?.toISOString().split('T')[0]
