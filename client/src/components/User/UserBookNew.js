@@ -309,7 +309,16 @@ function UserBookNew() {
                 }
             );
 
-            const result = await response.json();
+            let result;
+            try {
+                result = await response.json();
+            } catch (jsonError) {
+                result = {};
+            }
+
+            console.log('Booking API response:', response);
+            console.log('Parsed result:', result);
+
 
             if (response.status >= 200 && response.status < 300) {
                 Swal.fire({
