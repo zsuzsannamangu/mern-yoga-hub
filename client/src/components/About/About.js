@@ -45,20 +45,35 @@ function About() {
             {/* Top section with an introductory overlay about the instructor */}
             <motion.div className='about-top' variants={fadeInUp}>
                 <div className="about-overlay">
-                    <div className="about-overlay-text">
+                    <motion.div
+                        className="about-overlay-text"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1 }}
+                    >
                         <p>I'm Zsuzsanna, a yoga teacher and yoga therapist-in-training, here to support you in finding alignment between body and mind. My teaching approach
                             embraces each layer of your experience, the physical, emotional, and mental.</p>
-                    </div>
+                    </motion.div>
                 </div>
             </motion.div>
 
-            {/* Offerings */}
-            <motion.div variants={fadeInUp}>
+            <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
                 <Offerings />
             </motion.div>
 
             {/* Trainings Section */}
-            <div className="about-info-section">
+            <motion.div
+                className="about-info-section"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
                 <motion.h2 className="section-title" variants={fadeInUp}>Trainings</motion.h2>
                 <div className="title-line"></div>
                 <div className="info-category">
@@ -128,10 +143,17 @@ function About() {
                         <p>Scholarship recipient of the Ministry of Education, Hungary</p>
                     </div>
                 </div>
-            </div>
+            </motion.div>
 
             {/* Class Descriptions Section */}
-            <div className="about-info-section" ref={classDescriptionsRef}>
+            <motion.div
+                className="about-info-section"
+                ref={classDescriptionsRef}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
                 <motion.h2 className="section-title" variants={fadeInUp}>Class Descriptions</motion.h2>
                 <div className="title-line"></div>
                 <div className="info-category">
@@ -152,7 +174,7 @@ function About() {
                             This practice is inclusive and adaptive, offering a welcoming space for all levels, whether you’re new to yoga or looking to refine your practice.</p>
                     </motion.div>
                 </div>
-            </div>
+            </motion.div>
         </motion.div>
     );
 }
