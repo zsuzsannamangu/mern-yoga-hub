@@ -101,7 +101,7 @@ function About() {
                     </div>
                     <div className="info-item">
                         <h4>Bachelor of Arts in International Studies</h4>
-                        <p><em> <strong><a href="https://english.nye.hu/" target='_blank'>University of Nyíregyháza</a></strong>Nyíregyháza, Hungary</em><br />
+                        <p><em> <strong><a href="https://english.nye.hu/" target='_blank'>University of Nyíregyháza</a></strong>, Nyíregyháza, Hungary</em><br />
                             2003-2007</p>
                         <p>Scholarship recipient of the Ministry of Education, Hungary</p>
                     </div>
