@@ -424,27 +424,29 @@ function UserBookNew() {
                             <h4>Available Slots</h4>
                             <p>{selectedDate ? `${formatDate(selectedDate)}` : ''}</p>
                             <div className="availability-times">
-                                {availableSlots.filter(
-                                    (slot) => slot.date === selectedDate?.toISOString().split('T')[0]
-                                ).length > 0 ? (
-                                    availableSlots
-                                        .filter((slot) => slot.date === selectedDate?.toISOString().split('T')[0])
-                                        .map((slot) => (
-                                            <button
-                                                key={slot._id}
-                                                className={`availability-time ${selectedSlot?._id === slot._id ? 'selected' : ''}`}
-                                                onClick={() => setSelectedSlot(slot)}
-                                            >
-                                                {formatTime(slot.date, slot.time)}
-                                            </button>
-                                        ))
-                                ) : (
-                                    <p className="no-slots-message">No available slots this day.</p>
-                                )}
+                                <label>Choose Time:*
+                                    {availableSlots.filter(
+                                        (slot) => slot.date === selectedDate?.toISOString().split('T')[0]
+                                    ).length > 0 ? (
+                                        availableSlots
+                                            .filter((slot) => slot.date === selectedDate?.toISOString().split('T')[0])
+                                            .map((slot) => (
+                                                <button
+                                                    key={slot._id}
+                                                    className={`availability-time ${selectedSlot?._id === slot._id ? 'selected' : ''}`}
+                                                    onClick={() => setSelectedSlot(slot)}
+                                                >
+                                                    {formatTime(slot.date, slot.time)}
+                                                </button>
+                                            ))
+                                    ) : (
+                                        <p className="no-slots-message">No available slots this day.</p>
+                                    )}
+                                </label>
                             </div>
                             <div className="availability-inputs">
                                 <label>
-                                    Session Type:
+                                    Session Type:*
                                     <select
                                         value={sessionType}
                                         onChange={(e) => setSessionType(e.target.value)}
@@ -475,7 +477,7 @@ function UserBookNew() {
                                 </label>
                                 {couponCode.trim() && couponCode.trim().toUpperCase() === 'YOURJOURNEY' && (
                                     <p style={{ color: 'green', marginTop: '0.3rem' }}>
-                                        Coupon valid
+                                        Coupon valid. Click Continue to apply.
                                     </p>
                                 )}
                                 {couponCode.trim() && couponCode.trim().toUpperCase() !== 'YOURJOURNEY' && (
