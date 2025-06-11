@@ -43,7 +43,7 @@ function Footer() {
                         href="https://www.etsy.com/shop/retreatcreations" // Etsy profile link
                         target="_blank" // Open in a new tab
                         rel="noopener noreferrer" // Security best practice for external links
-                        className="instagram-link"
+                        className="etsy-link"
                     >
                         <SiEtsy style={{ marginRight: '4px', verticalAlign: 'middle' }} /> {/* Etsy icon */}
                     </a>
