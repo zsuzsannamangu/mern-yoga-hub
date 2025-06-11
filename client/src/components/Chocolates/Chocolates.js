@@ -21,9 +21,19 @@ function Chocolates() {
 
     return (
         <div className='chocolates-page'>
-            <motion.div className='chocolates-top' variants={fadeInUp}>
+            <motion.div
+                className='chocolates-top'
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1 }}
+            >
                 <div className="overlay">
-                    <motion.div className="overlay-text" variants={fadeInUp}>
+                    <motion.div
+                        className="overlay-text"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.5, duration: 1 }}
+                    >
                         <p>Plant-based. Sustainably sourced. Low waste packaging.</p>
                         <p>Organic, local and seasonal ingredients.</p>
                         <p>I never use: gluten, soy, palm oil, and refined sugar.</p>
