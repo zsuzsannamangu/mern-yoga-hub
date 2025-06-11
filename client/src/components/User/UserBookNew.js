@@ -344,9 +344,10 @@ function UserBookNew() {
                 setPaymentSuccess(false); // Ensures PayPal validation resets
                 const container = document.getElementById('paypal-button-container');
                 if (container) container.innerHTML = ''; // remove PayPal buttons
-            } else {
-                throw new Error(result?.message || 'Unknown error');
+                return;
             }
+
+            throw new Error(result?.message || 'Unknown error');
 
         } catch (error) {
             Swal.fire({
@@ -357,6 +358,7 @@ function UserBookNew() {
             });
         }
     };
+
 
     //function to check if all required fields are filled
     const isFormValid = () => {
