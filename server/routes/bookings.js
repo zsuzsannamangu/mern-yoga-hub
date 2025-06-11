@@ -9,13 +9,17 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 module.exports = (io) => {
 
     function formatLocalTime(date, time) {
-        const dateTime = new Date(`${date}T${time}`);
+        const [hour, minute] = time.split(':').map(Number);
+        const [year, month, day] = date.split('-').map(Number);
+
+        const dateTime = new Date(year, month - 1, day, hour, minute); // JS months are 0-indexed
+
         return dateTime.toLocaleTimeString('en-US', {
             hour: 'numeric',
             minute: '2-digit',
             hour12: true,
             timeZoneName: 'short',
-            timeZone: 'America/Los_Angeles' // Or detect from user if needed
+            timeZone: 'America/Los_Angeles' // or adjust to a default timezone of your sessions
         });
     }
 
