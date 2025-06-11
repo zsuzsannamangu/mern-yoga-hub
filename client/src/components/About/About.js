@@ -13,7 +13,8 @@ function About() {
     //Animation Variants
     const fadeInUp = {
         hidden: { opacity: 0, y: 30 },
-        visible: { opacity: 1, y: 0 }
+        visible: { opacity: 1, y: 0 },
+        transition: { duration: 1 }
     };
 
     // Scroll to the "Class Descriptions" section if the URL contains the appropriate query parameter.
@@ -33,9 +34,7 @@ function About() {
                 <div className="about-overlay">
                     <motion.div
                         className="about-overlay-text"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1 }}
+                        variants={fadeInUp}
                     >
                         <p>I'm Zsuzsanna, a yoga teacher and yoga therapist-in-training, here to support you in finding alignment between body and mind. My teaching approach
                             embraces each layer of your experience, the physical, emotional, and mental.</p>
