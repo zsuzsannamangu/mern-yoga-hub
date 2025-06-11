@@ -44,7 +44,7 @@ function About() {
                     <div className="info-item">
                         <h4>800hr Integrative Yoga Therapy Training</h4>
                         <h4>Accredited with IAYT</h4>
-                        <p><em>Sarahjoy Yoga, Portland OR</em><br />
+                        <p><em><a href="https://www.sarahjoyyoga.com/800-hour-yoga-therapy-training-curriculum-dates.html" target='_blank'>Institute for Living Yoga, Portland OR</a></em><br />
                             June 2025 - exp. June 2026</p>
                         <p>The Science of the Breath and the Art of Yoga Therapy; Internal Family Systems Model;<br/>
                             Chronic Pain and Brain-Based Approaches to Yoga Therapy; Yoga and Expressive Arts Therapy;<br/>
