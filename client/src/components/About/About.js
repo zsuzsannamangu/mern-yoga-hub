@@ -4,10 +4,25 @@ import { useLocation } from 'react-router-dom'; //useLocation is a hook provided
 import './About.scss';
 import Offerings from './Offerings';
 import '../../App.scss';
+import { motion } from 'framer-motion';
 
 function About() {
     const location = useLocation(); // React Router hook to access current location (current URL, such as the path or query parameters)
     const classDescriptionsRef = useRef(null); // Reference for the "Class Descriptions" section to enable scrolling.
+
+    //Animation Variants
+    const fadeInUp = {
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0 }
+    };
+    const containerVariants = {
+        hidden: {},
+        visible: {
+            transition: {
+                staggerChildren: 0.3,
+            }
+        }
+    };
 
     // Scroll to the "Class Descriptions" section if the URL contains the appropriate query parameter.
     useEffect(() => {
@@ -20,35 +35,43 @@ function About() {
     }, [location]); //'location' is a dependency, the dependencies array is an array of variables that the effect depends on. [location] ensures the effect runs only when the location object changes.
 
     return (
-        <div className='about-page'>
+        <motion.div
+            className='about-page'
+            initial="hidden"
+            whileInView="visible"
+            animate="visible"
+            variants={containerVariants}
+        >
 
             {/* Top section with an introductory overlay about the instructor */}
-            <div className='about-top'>
+            <motion.div className='about-top' variants={fadeInUp}>
                 <div className="about-overlay">
                     <div className="about-overlay-text">
                         <p>I'm Zsuzsanna, a yoga teacher and yoga therapist-in-training, here to support you in finding alignment between body and mind. My teaching approach
                             embraces each layer of your experience—the physical, emotional, and mental—as we explore what it means to feel whole.</p>
                     </div>
                 </div>
-            </div>
+            </motion.div>
 
-            {/* Component to display offerings */}
-            <Offerings />
+            {/* Offerings */}
+            <motion.div variants={fadeInUp}>
+                <Offerings />
+            </motion.div>
 
             {/* Trainings Section */}
             <div className="about-info-section">
-                <h2 className="section-title">Trainings</h2>
+                <motion.h2 className="section-title" variants={fadeInUp}>Trainings</motion.h2>
                 <div className="title-line"></div>
                 <div className="info-category">
-                    <h3>Core Yoga Teacher Trainings</h3>
+                    <motion.h3 variants={fadeInUp}>Core Yoga Teacher Trainings</motion.h3>
                     <div className="info-item">
                         <h4>800hr Integrative Yoga Therapy Training</h4>
                         <h4>Accredited with IAYT</h4>
                         <p><em><a href="https://www.sarahjoyyoga.com/800-hour-yoga-therapy-training-curriculum-dates.html" target='_blank'>Institute for Living Yoga, Portland OR</a></em><br />
                             June 2025 - exp. June 2026</p>
-                        <p>The Science of the Breath and the Art of Yoga Therapy; Internal Family Systems Model;<br/>
-                            Chronic Pain and Brain-Based Approaches to Yoga Therapy; Yoga and Expressive Arts Therapy;<br/>
-                            Endocrine, Digestive and Immune Health; Attachment Theory and Implicit Memory in Yoga Therapy;<br/>
+                        <p>The Science of the Breath and the Art of Yoga Therapy; Internal Family Systems Model;<br />
+                            Chronic Pain and Brain-Based Approaches to Yoga Therapy; Yoga and Expressive Arts Therapy;<br />
+                            Endocrine, Digestive and Immune Health; Attachment Theory and Implicit Memory in Yoga Therapy;<br />
                             Yoga for Cancer; Yoga, Biofeedback + Mind-Body Medicine; Kriya Yoga Model for Addiction Recovery.</p>
                     </div>
                     <div className="info-item">
@@ -110,10 +133,10 @@ function About() {
 
             {/* Class Descriptions Section */}
             <div className="about-info-section" ref={classDescriptionsRef}>
-                <h2 className="section-title">Class Descriptions</h2>
+                <motion.h2 className="section-title" variants={fadeInUp}>Class Descriptions</motion.h2>
                 <div className="title-line"></div>
                 <div className="info-category">
-                    <div className="info-item">
+                    <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Yoga for Wheelchair Users</h4>
                         <p>A yoga practice tailored for individuals who use wheelchairs, focusing on enhancing well-being through breath, gentle movement, and mindfulness.
 
@@ -122,16 +145,16 @@ function About() {
 
                             Mindfulness and meditation will be woven into the practice to foster mental clarity, emotional resilience, and a deeper connection to your body.
                             All levels are welcome, and no prior experience is needed. Props will be offered.</p>
-                    </div>
-                    <div className="info-item">
+                    </motion.div>
+                    <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Slow Flow</h4>
                         <p>This class focuses on mindful movement, allowing you to ease into each posture with intention and awareness.
                             Through gentle flows, we’ll explore balance and strength at a pace that honors your body.
                             This practice is inclusive and adaptive, offering a welcoming space for all levels, whether you’re new to yoga or looking to refine your practice.</p>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
 
