@@ -156,7 +156,7 @@ function UserBookNew() {
             Swal.fire({
                 icon: 'success',
                 title: 'Coupon Applied',
-                text: 'Your session is free! You may now finalize your booking.',
+                text: 'Please finalize your booking!',
                 confirmButtonText: 'OK'
             });
             return;
@@ -478,7 +478,7 @@ function UserBookNew() {
                                 </label>
                                 {couponCode.trim() && couponCode.trim().toUpperCase() === 'YOURJOURNEY' && (
                                     <p style={{ color: 'green', marginTop: '0.3rem' }}>
-                                        Coupon applied!
+                                        Coupon valid
                                     </p>
                                 )}
                                 {couponCode.trim() && couponCode.trim().toUpperCase() !== 'YOURJOURNEY' && (
