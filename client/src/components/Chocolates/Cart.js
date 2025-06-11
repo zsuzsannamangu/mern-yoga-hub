@@ -14,6 +14,7 @@ function Cart() {
   const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
   const [showPayPal, setShowPayPal] = useState(false);
   const [paypalError, setPaypalError] = useState(false);
+  const [isLocalPickup, setIsLocalPickup] = useState(false);
 
   // Calculate subtotal and total cost
   const subtotal = cartItems.reduce((total, item) => {
@@ -21,7 +22,7 @@ function Cart() {
     return total + itemTotal;
   }, 0);
 
-  const shipping = 5.5;
+  const shipping = isLocalPickup ? 0 : 5.0;
   const totalNumber = subtotal + shipping;
   const total = totalNumber.toFixed(2); // for display only
 
@@ -116,6 +117,7 @@ function Cart() {
                 payerEmail: details.payer.email_address,
                 transactionAmount: details.purchase_units[0].amount.value,
                 cartItems,
+                isLocalPickup,
               }),
             })
               .then((res) => res.json())
@@ -203,7 +205,17 @@ function Cart() {
           <h2>Order summary</h2>
           <div className="summary-details">
             <p>Subtotal <span>${subtotal.toFixed(2)}</span></p>
-            <p>Shipping <span>$5.50</span></p>
+            <div className="pickup-option">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isLocalPickup}
+                  onChange={(e) => setIsLocalPickup(e.target.checked)}
+                />
+                Local Pickup (no shipping fee)
+              </label>
+            </div>
+            <p>Shipping <span>${shipping.toFixed(2)}</span></p>
             {/* <p>Tax <span>${(subtotal * 0.1).toFixed(2)}</span></p> */}
             <p className="total">Total <span>${total}</span></p>
           </div>
