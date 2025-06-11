@@ -30,6 +30,21 @@
     margin-bottom: 18px;
 }
 
+.about-chocolates-text-2 {
+    background-color: $background-color;
+    border-radius: 2px;
+    color: $text-color;
+    font-family: $font-main;
+    line-height: 1.8rem;
+}
+
+.about-chocolates-text-2 h2 {
+    font-size: 2rem;
+    color: $main-title-color;
+    font-family: $font-title;
+    margin-bottom: 18px;
+}
+
 .about-chocolates-image img{
     max-width: 100%;
     height: auto;

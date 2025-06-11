@@ -16,7 +16,7 @@ function AboutChocolates() {
             philosophy. When I couldn't find chocolate with sustainable packaging, I decided to make it myself, leading to the creation of ReTreat.</p>
           <h3>Ingredients and Packaging</h3>
           <ul>
-            <li>Zero Waste Packaging: My chocolates come in returnable and reusable aluminum tins.</li>
+            <li>Zero Waste Packaging: My chocolates come in returnable and reusable, dishwasher safe tins.</li>
             <li>Local and Ethical Sourcing: I support local farmers and use fair trade, sustainably sourced cacao from the Dominican Republic, Ecuador, Peru or Guatemala.</li>
             <li>Natural Sweeteners: My dark chocolates are sweetened with organic maple sugar directly sourced from a farm in Pennsylvania, while white chocolates use Lakanto monkfruit sweetener. (I opted for monkfruit
               in white chocolates to stay true to its 'white' color as maple sugar would create a brownish white chocolate.)
@@ -32,6 +32,29 @@ function AboutChocolates() {
         <div className="about-chocolates-image">
           <img src="/images/Zsuzsi/Zsuzsi_and_chocolates_sm.jpg" alt="Zsuzsi" />
           <p className="photo-credit">Photo by Jason Quigley</p>
+        </div>
+        <div className="about-chocolates-text-2">
+          <h2 className="section-title">Shipping and Discounts</h2>
+          <div className="title-line"></div>
+          <h3>Shipping Info</h3>
+          <p>I ship via USPS Priority Mail (1–3 days) or Priority Mail Express (1–2 days) during the summer months. Orders are shipped within 2–5 days of purchase.</p>
+          <p>To ensure your chocolates arrive fresh and unmelted, I ship at the beginning of the week (Monday–Wednesday) to avoid weekend delays.</p>
+          <p>If you need your order sooner, feel free to reach out, I'm happy to be flexible when possible.</p>
+          <p>Shipping materials such as packing paper, bubble wraps, and packing peanuts are all reused from previous shipments. The packing peanuts are plant-based and will dissolve in water in seconds. Instead of throwing them away, please soak them in water (or reuse them).</p>
+          <h3>Local Pickup</h3>
+          <p>
+            You can pick up your order for free at <strong>Hail Snail</strong>, a vegan cinnamon roll shop located at:<br />
+            <strong>6550 N Interstate Ave., Portland, OR 97217</strong><br />
+            <em>Hours: Thursday–Sunday, 11am–5pm</em>
+          </p>
+          <p>
+            If these hours don’t work for you, feel free to contact me—we’ll find an alternative that fits your schedule.
+          </p>
+          <p>
+            <strong>To waive the shipping fee, be sure to check the “Local Pickup” option at checkout.</strong>
+          </p>
+          <h3>Instagram discount</h3>
+          <p>If you loved your chocolates, please mention it on Instagram and tag me at <strong><a href="https://www.instagram.com/zsuzsannacreates/">@zsuzsannacreates</a></strong>, and receive 15% off your next order.</p>
         </div>
       </div>
     </div>
