@@ -3,25 +3,11 @@ const router = express.Router();
 const Booking = require('../models/Booking');
 const { authMiddleware, adminMiddleware } = require('../middlewares/auth');
 const sgMail = require('@sendgrid/mail');
+const { DateTime } = require('luxon');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 module.exports = (io) => {
-
-    function formatLocalTime(date, time) {
-        const [hour, minute] = time.split(':').map(Number);
-        const [year, month, day] = date.split('-').map(Number);
-
-        const dateTime = new Date(year, month - 1, day, hour, minute); // JS months are 0-indexed
-
-        return dateTime.toLocaleTimeString('en-US', {
-            hour: 'numeric',
-            minute: '2-digit',
-            hour12: true,
-            timeZoneName: 'short',
-            timeZone: 'America/Los_Angeles' // or adjust to a default timezone of your sessions
-        });
-    }
 
     // GET: Fetch all slots (available and booked)
     router.get('/', async (req, res) => {
@@ -164,17 +150,20 @@ module.exports = (io) => {
             });
 
             const formatTimeWithZone = (dateStr, timeStr) => {
-                const [hour, minute] = timeStr.split(':').map(Number);
-                const [year, month, day] = dateStr.split('-').map(Number);
-                const localDate = new Date(year, month - 1, day, hour, minute); // ← local time
+                // Combine date and time into ISO-like string
+                const [hour, minute] = timeStr.split(':');
+                const dateTime = DateTime.fromObject(
+                    {
+                        year: Number(dateStr.split('-')[0]),
+                        month: Number(dateStr.split('-')[1]),
+                        day: Number(dateStr.split('-')[2]),
+                        hour: Number(hour),
+                        minute: Number(minute),
+                    },
+                    { zone: 'America/Los_Angeles' } // Force interpretation in this zone
+                );
             
-                return localDate.toLocaleTimeString('en-US', {
-                    timeZone: 'America/Los_Angeles',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    hour12: true,
-                    timeZoneName: 'short',
-                });
+                return dateTime.toLocaleString(DateTime.TIME_SIMPLE) + ' ' + dateTime.offsetNameShort; // e.g., 9:00 AM PDT
             };
             
             const formattedTime = formatTimeWithZone(slot.date, slot.time);
@@ -183,7 +172,7 @@ module.exports = (io) => {
             const userEmail = {
                 to: email,
                 from: process.env.EMAIL_USER,
-                subject: `Booking Confirmation: Yoga Session on ${slot.date} at ${slot.time}`,
+                subject: `Booking Confirmation: Yoga Session on ${slot.date} at ${formattedTime}`,
                 html: `
                   <p>Dear ${firstName},</p>
               
@@ -206,7 +195,7 @@ module.exports = (io) => {
             const adminEmail = {
                 to: process.env.EMAIL_RECEIVER,
                 from: process.env.EMAIL_USER,
-                subject: `New Booking: ${firstName} ${lastName} on ${slot.date} at ${slot.time}`,
+                subject: `New Booking: ${firstName} ${lastName} on ${slot.date} at ${formattedTime}`,
                 text: `A new booking has been made:\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nSession Type: ${slot.sessionType}\nMessage: ${slot.message}\nDate: ${slot.date}\nTime: ${formattedTime}`,
             };
 
