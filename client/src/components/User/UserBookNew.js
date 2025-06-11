@@ -429,6 +429,7 @@ function UserBookNew() {
                                 ).length > 0 ? (
                                     availableSlots
                                         .filter((slot) => slot.date === selectedDate?.toISOString().split('T')[0])
+                                        .sort((a, b) => a.time.localeCompare(b.time)) // Sort by time string
                                         .map((slot) => (
                                             <button
                                                 key={slot._id}
