@@ -166,10 +166,10 @@ module.exports = (io) => {
             const formatTimeWithZone = (dateStr, timeStr) => {
                 const [hour, minute] = timeStr.split(':').map(Number);
                 const [year, month, day] = dateStr.split('-').map(Number);
-                const dt = new Date(Date.UTC(year, month - 1, day, hour, minute));
+                const localDate = new Date(year, month - 1, day, hour, minute); // ← local time
             
-                return dt.toLocaleTimeString('en-US', {
-                    timeZone: 'America/Los_Angeles', // ⬅️ Set your desired zone here
+                return localDate.toLocaleTimeString('en-US', {
+                    timeZone: 'America/Los_Angeles',
                     hour: 'numeric',
                     minute: '2-digit',
                     hour12: true,
