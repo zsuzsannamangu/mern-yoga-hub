@@ -37,9 +37,31 @@ function Chocolates() {
                     </motion.div>
                 </div>
             </div>
-            <Products />
-            <AboutChocolates />
-            <Slideshow />
+            <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <Products />
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <AboutChocolates />
+            </motion.div>
+            <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <Slideshow />
+            </motion.div>
         </div>
     );
 }
