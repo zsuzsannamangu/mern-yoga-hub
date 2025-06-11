@@ -110,7 +110,7 @@ function Products({ showAlert }) {
             className="product-card"
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}
-            transition={{ type: 'spring', stiffness: 250, damping: 12 }}
+            transition={{ type: 'spring', stiffness: 300 }}
           >
             <img
               src={product.image}
