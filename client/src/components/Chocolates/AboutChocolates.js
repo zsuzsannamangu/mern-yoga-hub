@@ -33,7 +33,7 @@ function AboutChocolates() {
           <img src="/images/Zsuzsi/Zsuzsi_and_chocolates_sm.jpg" alt="Zsuzsi" />
           <p className="photo-credit">Photo by Jason Quigley</p>
         </div>
-        <div className="about-chocolates-text-2">
+        <div className="about-chocolates-image">
           <h2 className="section-title">Shipping and Discounts</h2>
           <div className="title-line"></div>
           <h3>Shipping Info</h3>
