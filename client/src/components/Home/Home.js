@@ -152,8 +152,7 @@ function Home({ showAlert }) {
           <div className="title-line"></div>
         </div>
         <div className="right-section">
-          <p>Book a free 30-minute online session where we’ll take time to connect and talk about you and any goals you might have. Together, we’ll create a plan for your journey, focusing on what matters most
-            to you—whether it’s building a personalized practice, finding support on your path to healing, or cultivating mindfulness with gentle guidance.</p>
+          <p>Book a free 30-minute online session where we’ll take time to connect and talk about you and any goals you might have. </p>
           <form className="booking-form" onSubmit={handleSubmit}>
             <label>
               <input type="text" name="name" placeholder="Name" required />
