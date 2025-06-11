@@ -17,12 +17,12 @@ function AboutChocolates() {
           <h3>Ingredients and Packaging</h3>
           <ul>
             <li>Zero Waste Packaging: My chocolates come in returnable and reusable aluminum tins.</li>
-            <li>Local and Ethical Sourcing: I support local farmers and use fair trade, sustainably sourced cacao from the Dominican Republic, Ecuador, Venezuela and Guatemala.</li>
+            <li>Local and Ethical Sourcing: I support local farmers and use fair trade, sustainably sourced cacao from the Dominican Republic, Ecuador, Peru or Guatemala.</li>
             <li>Natural Sweeteners: My dark chocolates are sweetened with organic maple sugar directly sourced from a farm in Pennsylvania, while white chocolates use Lakanto monkfruit sweetener. (I opted for monkfruit
               in white chocolates to stay true to its 'white' color as maple sugar would create a brownish white chocolate.)
             </li>
             <li>Pure Ingredients: I avoid artificial additives and use organic and locally sourced ingredients whenever possible. I don't use sunflower or soy lecithin or other substitutes. My core
-              ingredients are fair-trade and organic cacao, organic cacao butter, organic maple sugar, Madagascar bourbon vanilla powder, Oregon sea salt, and organic pure coconut milk powder for the white chocolates.</li>
+              ingredients are fair-trade and organic cacao, organic cacao butter, organic maple sugar, Madagascar bourbon vanilla powder, Oregon sea salt, and organic coconut milk powder for the white chocolates.</li>
           </ul>
           <h3>Commitment to Quality</h3>
           <p>At ReTreat, I prioritize both taste and sustainability. From fair trade cacao to locally harvested sea salt, every ingredient is chosen with care. My simple chocolates reflect my dedication to sustainability, quality and transparency.</p>
