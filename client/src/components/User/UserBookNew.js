@@ -287,8 +287,8 @@ function UserBookNew() {
         if (!paymentSuccess) {
             Swal.fire({
                 icon: 'info',
-                title: 'Payment Needed',
-                text: 'Please complete your payment before finalizing your appointment.',
+                title: 'Missing Information or Payment',
+                text: 'Please choose time, session type and/or complete payment before finalizing your appointment.',
                 confirmButtonText: 'OK'
             });
             return;
@@ -424,25 +424,23 @@ function UserBookNew() {
                             <h4>Available Slots</h4>
                             <p>{selectedDate ? `${formatDate(selectedDate)}` : ''}</p>
                             <div className="availability-times">
-                                <label>Choose Time:*
-                                    {availableSlots.filter(
-                                        (slot) => slot.date === selectedDate?.toISOString().split('T')[0]
-                                    ).length > 0 ? (
-                                        availableSlots
-                                            .filter((slot) => slot.date === selectedDate?.toISOString().split('T')[0])
-                                            .map((slot) => (
-                                                <button
-                                                    key={slot._id}
-                                                    className={`availability-time ${selectedSlot?._id === slot._id ? 'selected' : ''}`}
-                                                    onClick={() => setSelectedSlot(slot)}
-                                                >
-                                                    {formatTime(slot.date, slot.time)}
-                                                </button>
-                                            ))
-                                    ) : (
-                                        <p className="no-slots-message">No available slots this day.</p>
-                                    )}
-                                </label>
+                                {availableSlots.filter(
+                                    (slot) => slot.date === selectedDate?.toISOString().split('T')[0]
+                                ).length > 0 ? (
+                                    availableSlots
+                                        .filter((slot) => slot.date === selectedDate?.toISOString().split('T')[0])
+                                        .map((slot) => (
+                                            <button
+                                                key={slot._id}
+                                                className={`availability-time ${selectedSlot?._id === slot._id ? 'selected' : ''}`}
+                                                onClick={() => setSelectedSlot(slot)}
+                                            >
+                                                {formatTime(slot.date, slot.time)}
+                                            </button>
+                                        ))
+                                ) : (
+                                    <p className="no-slots-message">No available slots this day.</p>
+                                )}
                             </div>
                             <div className="availability-inputs">
                                 <label>
