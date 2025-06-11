@@ -18,12 +18,17 @@ function UserBookNew() {
     const [selectedSlot, setSelectedSlot] = useState(null); // Store the selected booking slot
     const [sessionType, setSessionType] = useState(''); // Store the selected session type
     const [message, setMessage] = useState(''); // Store user message
-    const [paymentAmount, setPaymentAmount] = useState(null); // Sliding scale payment amount (no default value)
+    const [paymentAmount, setPaymentAmount] = useState(null); // // User-entered sliding scale payment amount (set manually or via coupon)
     const [showPayPal, setShowPayPal] = useState(false); // Show or hide PayPal buttons
     const [paypalError, setPaypalError] = useState(false); // Track PayPal errors
     const [paymentSuccess, setPaymentSuccess] = useState(false); // Track if payment was successful
     const [couponCode, setCouponCode] = useState('');
     const navigate = useNavigate();
+
+    const clearPayPalButtons = () => {
+        const container = document.getElementById('paypal-button-container');
+        if (container) container.innerHTML = '';
+    };
 
     const sessionTypes = [
         "Individual Yoga Session (60 min)",
@@ -77,8 +82,7 @@ function UserBookNew() {
             setPaymentAmount(null);
             setShowPayPal(false);
             setPaymentSuccess(false);
-            const container = document.getElementById('paypal-button-container');
-            if (container) container.innerHTML = '';
+            clearPayPalButtons();
         }
     }, [selectedDate]);
 
@@ -148,11 +152,9 @@ function UserBookNew() {
 
         // Skip all checks if coupon is valid
         if (isFree) {
-            setPaymentAmount(0); // just for visibility
             setPaymentSuccess(true);
             setShowPayPal(false);
-            const container = document.getElementById('paypal-button-container');
-            if (container) container.innerHTML = '';
+            clearPayPalButtons();
             Swal.fire({
                 icon: 'success',
                 title: 'Coupon Applied',
@@ -311,9 +313,6 @@ function UserBookNew() {
 
             const result = await response.json();
 
-            console.log('Booking API response:', response);
-            console.log('Parsed result:', result);
-
             if (response.ok && result.success) {
                 // Exit early if successful
                 Swal.fire({
@@ -335,8 +334,7 @@ function UserBookNew() {
                 setPaymentAmount(null);
                 setShowPayPal(false);
                 setPaymentSuccess(false);
-                const container = document.getElementById('paypal-button-container');
-                if (container) container.innerHTML = '';
+                clearPayPalButtons();
                 return; // IMPORTANT: prevent falling through to catch
             }
 
@@ -377,15 +375,14 @@ function UserBookNew() {
     };
 
     //convert the time to a 12-hour format with AM/PM
-    const formatTime = (time) => {
-        if (!time) return '';
-        const [hour, minute] = time.split(':');
-        const date = new Date();
-        date.setHours(hour, minute);
-        return date.toLocaleTimeString('en-US', {
-            hour: 'numeric', //Use numeric format for the hour
-            minute: '2-digit', // Always show two digits for minutes
-            hour12: true, //Convert to a 12hr format
+    const formatTime = (date, time) => {
+        if (!date || !time) return '';
+        const localTime = new Date(`${date}T${time}`);
+        return localTime.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+            timeZoneName: 'short', // 👈 adds PDT, EDT, etc.
         });
     };
 
@@ -419,13 +416,16 @@ function UserBookNew() {
                             highlightedSlots={availableSlots.map((slot) => slot.date)}
                         />
                         <p>**Individual yoga sessions are $50-$110/hr sliding scale. Yoga therapy sessions are $50-$130/hr sliding scale.</p>
-                        <p> Your investment is a personal choice, aligning with your current financial circumstances. No questions asked.**</p>
+                        <p> Your investment is a personal choice, aligning with your current financial circumstances.**</p>
                     </div>
 
                     {selectedDate && (
                         <div className="availability-section">
                             <h4>Available Slots</h4>
                             <p>{selectedDate ? `${formatDate(selectedDate)}` : ''}</p>
+                            <p style={{ fontStyle: 'italic', marginBottom: '0.5rem' }}>
+                                Times shown are in your local timezone ({Intl.DateTimeFormat().resolvedOptions().timeZone})
+                            </p>
                             <div className="availability-times">
                                 {availableSlots.filter(
                                     (slot) => slot.date === selectedDate?.toISOString().split('T')[0]
@@ -438,7 +438,7 @@ function UserBookNew() {
                                                 className={`availability-time ${selectedSlot?._id === slot._id ? 'selected' : ''}`}
                                                 onClick={() => setSelectedSlot(slot)}
                                             >
-                                                {formatTime(slot.time)}
+                                                {formatTime(slot.date, slot.time)}
                                             </button>
                                         ))
                                 ) : (
