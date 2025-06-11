@@ -15,6 +15,14 @@
     gap: 40px;
 }
 
+.about-chocolates-content-2 {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+}
+
 .about-chocolates-text {
     background-color: $secondary-background-color;
     border-radius: 2px;
