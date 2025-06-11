@@ -139,7 +139,14 @@ function Home({ showAlert }) {
             and a deeper connection to the present moment.</p>
         </div>
       </motion.div>
-      <div className="main-row" id="book-section">
+      <motion.div
+        className="main-row"
+        id="book-section"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+      >
         <div className="main-left">
           <h1 className="section-title">Book</h1>
           <div className="title-line"></div>
@@ -173,8 +180,8 @@ function Home({ showAlert }) {
             <button type="submit">Submit</button>
           </form>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </div >
   );
 }
 
