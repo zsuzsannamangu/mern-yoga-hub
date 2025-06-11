@@ -11,16 +11,19 @@ function Chocolates() {
     const scrollToProductsSection = () => {
         document.getElementById("products-section").scrollIntoView({ behavior: "smooth" });
     };
+
+    //Animation Variants
+    const fadeInUp = {
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0 },
+        transition: { duration: 1 }
+    };
+
     return (
         <div className='chocolates-page'>
-            <div className='chocolates-top'>
+            <motion.div className='chocolates-top' variants={fadeInUp}>
                 <div className="overlay">
-                    <motion.div
-                        className="overlay-text"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1 }}
-                    >
+                    <motion.div className="overlay-text" variants={fadeInUp}>
                         <p>Plant-based. Sustainably sourced. Low waste packaging.</p>
                         <p>Organic, local and seasonal ingredients.</p>
                         <p>I never use: gluten, soy, palm oil, and refined sugar.</p>
@@ -36,7 +39,7 @@ function Chocolates() {
                         </motion.button>
                     </motion.div>
                 </div>
-            </div>
+            </motion.div>
             <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
