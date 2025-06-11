@@ -5,6 +5,7 @@ import '../../App.scss';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 import { getRecaptchaToken } from '../../utils/recaptcha';
+import { motion } from 'framer-motion';
 
 function Home({ showAlert }) {
   useEffect(() => {
@@ -92,18 +93,42 @@ function Home({ showAlert }) {
 
   return (
     <div className="main-section">
-      <div className="mainTitle">Yoga Teacher and Chocolatier</div>
-      <div className="BookAFreeConsultation_Button">
+      <motion.div
+        className="mainTitle"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        Yoga Teacher and Chocolatier
+      </motion.div>
+      <motion.div
+        className="BookAFreeConsultation_Button"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 1 }}
+      >
         <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
           Book a Free Session
         </button>
-      </div>
-      <div className="images-row">
+      </motion.div>
+      <motion.div
+        className="images-row"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+      >
         <img src="./images/yoga/Zsuzsi_Home_111.jpg" alt="Yoga Vertical" className="left-image" id="homeimage-1" />
         <img src="./images/yoga/Zsuzsi_Home_22.jpg" alt="Yoga Horizontal" className="left-image" id="homeimage-2" />
         <img src="./images/yoga/Zsuzsi_Home_44.jpg" alt="Yoga Horizontal" className="left-image" id="homeimage-3" />
-      </div>
-      <div className="main-row" id="about-section">
+      </motion.div>
+      <motion.div
+        className="main-row"
+        id="about-section"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+      >
         <div className="main-left">
           <h1 className="section-title">About</h1>
           <div className="title-line"></div>
@@ -113,7 +138,7 @@ function Home({ showAlert }) {
           <p>I weave together somatic practices, breathwork, Ayurvedic wisdom, meditation, sensory experiences, and movement to support holistic well-being. I teach gentle slow flow, restorative and adaptive yoga, and mindfulness practices, creating space for self-compassion
             and a deeper connection to the present moment.</p>
         </div>
-      </div>
+      </motion.div>
       <div className="main-row" id="book-section">
         <div className="main-left">
           <h1 className="section-title">Book</h1>
