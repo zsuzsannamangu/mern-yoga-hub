@@ -1,6 +1,7 @@
 import React from 'react';
 import './Footer.scss'; // Importing the Footer-specific styles
 import { FaGithub, FaInstagram } from 'react-icons/fa'; // GitHub and Instagram icons from react-icons
+import { SiEtsy } from 'react-icons/si';
 
 function Footer() {
     return (
@@ -38,6 +39,15 @@ function Footer() {
                     >
                         <FaInstagram style={{ marginRight: '4px', verticalAlign: 'middle' }} /> {/* Instagram icon */}
                     </a>
+                    <a
+                        href="https://www.etsy.com/shop/retreatcreations" // Etsy profile link
+                        target="_blank" // Open in a new tab
+                        rel="noopener noreferrer" // Security best practice for external links
+                        className="instagram-link"
+                    >
+                        <SiEtsy style={{ marginRight: '4px', verticalAlign: 'middle' }} /> {/* Etsy icon */}
+                    </a>
+
                 </div>
             </div>
         </div>
