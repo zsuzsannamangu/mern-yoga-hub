@@ -15,14 +15,6 @@ function About() {
         hidden: { opacity: 0, y: 30 },
         visible: { opacity: 1, y: 0 }
     };
-    const containerVariants = {
-        hidden: {},
-        visible: {
-            transition: {
-                staggerChildren: 0.3,
-            }
-        }
-    };
 
     // Scroll to the "Class Descriptions" section if the URL contains the appropriate query parameter.
     useEffect(() => {
@@ -35,13 +27,7 @@ function About() {
     }, [location]); //'location' is a dependency, the dependencies array is an array of variables that the effect depends on. [location] ensures the effect runs only when the location object changes.
 
     return (
-        <motion.div
-            className='about-page'
-            initial="hidden"
-            whileInView="visible"
-            animate="visible"
-            variants={containerVariants}
-        >
+        <div className='about-page'>
             {/* Top section with an introductory overlay about the instructor */}
             <motion.div className='about-top' variants={fadeInUp}>
                 <div className="about-overlay">
@@ -175,7 +161,7 @@ function About() {
                     </motion.div>
                 </div>
             </motion.div>
-        </motion.div>
+        </div>
     );
 }
 

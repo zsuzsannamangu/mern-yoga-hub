@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CalendarDays from './CalendarDays';
 import './Calendar.scss';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 export default class Calendar extends Component {
   constructor() {
@@ -140,22 +141,36 @@ export default class Calendar extends Component {
 
     return (
       <div className="calendar-container">
-        <div className="calendar-top">
+        <motion.div
+          className="calendar-top"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
           <div className="calendar-overlay">
             <div className="calendar-overlay-text">
               <p>Join me in these practices!</p>
-              <p>
-                Let’s move, breathe, and be present together, creating space for
-                growth and connection.
-              </p>
+              <p>Let’s move, breathe, and be present together, creating space for growth and connection.</p>
             </div>
           </div>
-        </div>
-        <div className="calendar-title">
+        </motion.div>
+        <motion.div
+          className="calendar-title"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+        >
           <h2 className="section-title">Upcoming Yoga Classes and Events</h2>
           <div className="title-line"></div>
-        </div>
-        <div className="calendar-section">
+        </motion.div>
+        <motion.div
+          className="calendar-section"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+        >
           <div className="calendar">
             <div className="calendar-header">
               <button onClick={this.handlePreviousMonth}>&lt;</button>
@@ -242,7 +257,7 @@ export default class Calendar extends Component {
               </div>
             </div>
           )}
-        </div>
+        </motion.div>
       </div>
     );
   }
