@@ -204,7 +204,6 @@ function Cart() {
         <div className="order-summary">
           <h2>Order summary</h2>
           <div className="summary-details">
-            <p>Subtotal <span>${subtotal.toFixed(2)}</span></p>
             <div className="pickup-option">
               <label>
                 <input
@@ -215,6 +214,7 @@ function Cart() {
                 Local Pickup (no shipping fee)
               </label>
             </div>
+            <p>Subtotal <span>${subtotal.toFixed(2)}</span></p>
             <p>Shipping <span>${shipping.toFixed(2)}</span></p>
             {/* <p>Tax <span>${(subtotal * 0.1).toFixed(2)}</span></p> */}
             <p className="total">Total <span>${total}</span></p>
