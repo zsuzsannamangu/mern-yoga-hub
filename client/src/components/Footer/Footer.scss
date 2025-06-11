@@ -89,6 +89,14 @@
 
     .footer-links a {
         font-size: 0.8rem; // Smaller font size for links
+
+        .etsy-link {
+            font-size: 0.7rem; // Smaller font size for links
+        }
+    }
+
+    .footer-links a:hover {
+        color: #e1306c; // Smaller font size for links
     }
 }
 
