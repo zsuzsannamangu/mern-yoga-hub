@@ -38,6 +38,8 @@ function AboutChocolates() {
           <img src="/images/Zsuzsi/Zsuzsi_and_chocolates_sm.jpg" alt="Zsuzsi" />
           <p className="photo-credit">Photo by Jason Quigley</p>
         </motion.div>
+        <h2 className="section-title">Shipping and Discounts</h2>
+        <div className="title-line"></div>
       </div>
       <div className="about-chocolates-content-2">
         <motion.div className="about-chocolates-image" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -45,8 +47,6 @@ function AboutChocolates() {
           <p className="photo-credit">Photo by Jason Quigley</p>
         </motion.div>
         <motion.div className="about-chocolates-text" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          <h2 className="section-title">Shipping and Discounts</h2>
-          <div className="title-line"></div>
           <h3>Shipping Info</h3>
           <p>I ship via USPS Priority Mail (1–3 days) or Priority Mail Express (1–2 days) during the summer months. Orders are shipped within 2–5 days of purchase.</p>
           <p>To ensure your chocolates arrive fresh and unmelted, I ship at the beginning of the week (Monday–Wednesday) to avoid weekend delays.</p>
