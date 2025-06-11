@@ -33,7 +33,7 @@ function AboutChocolates() {
           <img src="/images/Zsuzsi/Zsuzsi_and_chocolates_sm.jpg" alt="Zsuzsi" />
           <p className="photo-credit">Photo by Jason Quigley</p>
         </div>
-        <div className="about-chocolates-image">
+        <div className="about-chocolates-text">
           <h2 className="section-title">Shipping and Discounts</h2>
           <div className="title-line"></div>
           <h3>Shipping Info</h3>
@@ -48,13 +48,17 @@ function AboutChocolates() {
             <em>Hours: Thursday–Sunday, 11am–5pm</em>
           </p>
           <p>
-            If these hours don’t work for you, feel free to contact me—we’ll find an alternative that fits your schedule.
+            If these hours don’t work for you, feel free to contact me. We’ll find an alternative that fits your schedule.
           </p>
           <p>
             <strong>To waive the shipping fee, be sure to check the “Local Pickup” option at checkout.</strong>
           </p>
           <h3>Instagram discount</h3>
           <p>If you loved your chocolates, please mention it on Instagram and tag me at <strong><a href="https://www.instagram.com/zsuzsannacreates/">@zsuzsannacreates</a></strong>, and receive 15% off your next order.</p>
+        </div>
+        <div className="about-chocolates-image">
+          <img src="/images/Zsuzsi/Zsuzsi_and_chocolates_sm_2.jpg" alt="Zsuzsi" />
+          <p className="photo-credit">Photo by Jason Quigley</p>
         </div>
       </div>
     </div>
