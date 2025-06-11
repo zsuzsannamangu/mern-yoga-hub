@@ -5,6 +5,7 @@ import Products from './Products';
 import AboutChocolates from './AboutChocolates';
 import '../../App.scss';
 import Slideshow from './Slideshow';
+import { motion } from 'framer-motion';
 
 function Chocolates() {
     const scrollToProductsSection = () => {
@@ -14,16 +15,29 @@ function Chocolates() {
         <div className='chocolates-page'>
             <div className='chocolates-top'>
                 <div className="overlay">
-                    <div className="overlay-text">
+                    <motion.div
+                        className="overlay-text"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1 }}
+                    >
                         <p>Plant-based. Sustainably sourced. Low waste packaging.</p>
                         <p>Organic, local and seasonal ingredients.</p>
                         <p>I never use: gluten, soy, palm oil, and refined sugar.</p>
                         <p>Made to order, from scratch, by hand, in very small batches.</p>
-                        <button onClick={scrollToProductsSection} className="order-button">Order</button>
-                    </div>
+                        <motion.button
+                            onClick={scrollToProductsSection}
+                            className="order-button"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ type: 'spring', stiffness: 300 }}
+                        >
+                            Order
+                        </motion.button>
+                    </motion.div>
                 </div>
             </div>
-            <Products/>
+            <Products />
             <AboutChocolates />
             <Slideshow />
         </div>
