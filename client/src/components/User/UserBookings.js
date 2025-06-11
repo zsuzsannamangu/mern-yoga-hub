@@ -45,15 +45,17 @@ function UserBookings() {
         return <div>Loading your bookings...</div>; // ✅ moved below the hook
     }
 
-    const formatTime = (time) => {
-        if (!time) return '';
-        const [hour, minute] = time.split(':');
-        const date = new Date();
-        date.setHours(hour, minute);
-        return date.toLocaleTimeString('en-US', {
+    const formatTime = (time, date) => {
+        if (!time || !date) return '';
+        const [hour, minute] = time.split(':').map(Number);
+        const [year, month, day] = date.split('-').map(Number);
+        const dateTime = new Date(year, month - 1, day, hour, minute);
+
+        return dateTime.toLocaleTimeString('en-US', {
             hour: 'numeric',
             minute: '2-digit',
             hour12: true,
+            timeZoneName: 'short',
         });
     };
 
@@ -73,7 +75,7 @@ function UserBookings() {
                             </div>
                             <div className="booking-info">
                                 <FaCalendarAlt className="icon" />
-                                <span>{`${booking.date} at ${formatTime(booking.time)}`}</span>
+                                <span>{`${booking.date} at ${formatTime(booking.time, booking.date)}`}</span>
                             </div>
                             <div className="booking-info">
                                 <FaClock className="icon" />

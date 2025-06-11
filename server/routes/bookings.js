@@ -163,6 +163,22 @@ module.exports = (io) => {
                 time: slot.time,
             });
 
+            const formatTimeWithZone = (dateStr, timeStr) => {
+                const [hour, minute] = timeStr.split(':').map(Number);
+                const [year, month, day] = dateStr.split('-').map(Number);
+                const dt = new Date(Date.UTC(year, month - 1, day, hour, minute));
+            
+                return dt.toLocaleTimeString('en-US', {
+                    timeZone: 'America/Los_Angeles', // ⬅️ Set your desired zone here
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true,
+                    timeZoneName: 'short',
+                });
+            };
+            
+            const formattedTime = formatTimeWithZone(slot.date, slot.time);
+
             // Send emails
             const userEmail = {
                 to: email,
@@ -175,7 +191,7 @@ module.exports = (io) => {
               
                   <p><strong>Session Details:</strong><br/>
                   Date: ${slot.date}<br/>
-                  Time: ${formatLocalTime(slot.date, slot.time)}<br/>
+                  Time: ${formattedTime}<br/>
                   Session Type: ${slot.sessionType}<br/>
                   Location: We can meet at my home in North Portland, Arbor Lodge area or use Google Meets. I'll email you to confirm.</p>
               
@@ -191,7 +207,7 @@ module.exports = (io) => {
                 to: process.env.EMAIL_RECEIVER,
                 from: process.env.EMAIL_USER,
                 subject: `New Booking: ${firstName} ${lastName} on ${slot.date} at ${slot.time}`,
-                text: `A new booking has been made:\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nSession Type: ${slot.sessionType}\nMessage: ${slot.message}\nDate: ${slot.date}\nTime: ${formatLocalTime(slot.date, slot.time)}`,
+                text: `A new booking has been made:\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nSession Type: ${slot.sessionType}\nMessage: ${slot.message}\nDate: ${slot.date}\nTime: ${formattedTime}`,
             };
 
             // Send email notification
