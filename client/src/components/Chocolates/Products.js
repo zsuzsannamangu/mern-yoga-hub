@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 import { useCart } from '../../context/CartContext';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { motion } from 'framer-motion';
 
 function Products({ showAlert }) {
   const [products, setProducts] = useState([]);
@@ -14,6 +15,20 @@ function Products({ showAlert }) {
   const { addToCart } = useCart();
   const navigate = useNavigate(); // Define navigate
   const alertShown = useRef(false);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3, // delay between each product
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -40 },
+    visible: { opacity: 1, x: 0 },
+  };  
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -82,9 +97,19 @@ function Products({ showAlert }) {
         </button>
       </div>
 
-      <div className="products-grid">
+      <motion.div
+        className="products-grid"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+      >
         {products.map((product) => (
-          <div key={product._id} className="product-card">
+          <motion.div
+            key={product._id}
+            className="product-card"
+            variants={itemVariants}
+          >
             <img
               src={product.image}
               alt={product.name}
@@ -94,7 +119,7 @@ function Products({ showAlert }) {
             <h3 className="product-name" onClick={() => openProductModal(product)}>
               {product.name}
             </h3>
-            <p className="product-price">${product.price} </p> {/* Display price with $ */}
+            <p className="product-price">${product.price}</p>
 
             <div className="product-buttons">
               <button className="add-to-cart-button" onClick={() => handleAddToCart(product)}>
@@ -104,10 +129,9 @@ function Products({ showAlert }) {
                 Details
               </button>
             </div>
-          </div>
-
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Product Modal */}
       {selectedProduct && (
