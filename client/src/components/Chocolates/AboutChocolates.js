@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 function AboutChocolates() {
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 1 } }
+    visible: { opacity: 1, y: 0, transition: { duration: 2 } }
   };
   return (
     <div className="about-chocolates-section">
