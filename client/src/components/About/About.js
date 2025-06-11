@@ -42,13 +42,12 @@ function About() {
             animate="visible"
             variants={containerVariants}
         >
-
             {/* Top section with an introductory overlay about the instructor */}
             <motion.div className='about-top' variants={fadeInUp}>
                 <div className="about-overlay">
                     <div className="about-overlay-text">
                         <p>I'm Zsuzsanna, a yoga teacher and yoga therapist-in-training, here to support you in finding alignment between body and mind. My teaching approach
-                            embraces each layer of your experience—the physical, emotional, and mental—as we explore what it means to feel whole.</p>
+                            embraces each layer of your experience, the physical, emotional, and mental.</p>
                     </div>
                 </div>
             </motion.div>
