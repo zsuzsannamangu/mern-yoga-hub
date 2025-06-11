@@ -40,13 +40,13 @@ function AboutChocolates() {
         </motion.div>
       </div>
       <div className="about-chocolates-content-2">
+      <motion.div className="about-chocolates-image" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+          <img src="/images/Zsuzsi/Zsuzsi_and_chocolates_sm_2.jpg" alt="Zsuzsi" />
+          <p className="photo-credit">Photo by Jason Quigley</p>
+        </motion.div>
         <motion.div className="about-chocolates-text" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <h2 className="section-title">Shipping and Discounts</h2>
           <div className="title-line"></div>
-        </motion.div>
-        <motion.div className="about-chocolates-image" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          <img src="/images/Zsuzsi/Zsuzsi_and_chocolates_sm_2.jpg" alt="Zsuzsi" />
-          <p className="photo-credit">Photo by Jason Quigley</p>
         </motion.div>
         <motion.div className="about-chocolates-text" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <h3>Shipping Info</h3>
