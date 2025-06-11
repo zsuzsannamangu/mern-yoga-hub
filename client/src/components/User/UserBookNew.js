@@ -309,19 +309,13 @@ function UserBookNew() {
                 }
             );
 
-            let result;
-            try {
-                result = await response.json();
-            } catch (jsonError) {
-                result = {};
-            }
+            const result = await response.json();
 
             console.log('Booking API response:', response);
             console.log('Parsed result:', result);
 
-
             if (response.ok && result.success) {
-                // Booking was successful
+                // Exit early if successful
                 Swal.fire({
                     icon: 'success',
                     title: 'Booking Confirmed!',
@@ -337,19 +331,21 @@ function UserBookNew() {
                 setSelectedSlot(null);
                 setSessionType('');
                 setMessage('');
-                setCouponCode(''); // Resets coupon code
-                setPaymentAmount(null); // Clears payment amount
-                setShowPayPal(false); // Hides PayPal buttons so they don't persist.
-                document.getElementById('paypal-button-container').innerHTML = '';
-                setPaymentSuccess(false); // Ensures PayPal validation resets
+                setCouponCode('');
+                setPaymentAmount(null);
+                setShowPayPal(false);
+                setPaymentSuccess(false);
                 const container = document.getElementById('paypal-button-container');
-                if (container) container.innerHTML = ''; // remove PayPal buttons
-                return;
+                if (container) container.innerHTML = '';
+                return; // IMPORTANT: prevent falling through to catch
             }
 
+            // Only throws if failed
             throw new Error(result?.message || 'Unknown error');
 
         } catch (error) {
+            // Only shows if the fetch OR the result fails
+            console.error('Booking error caught:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Booking Failed',
@@ -358,7 +354,6 @@ function UserBookNew() {
             });
         }
     };
-
 
     //function to check if all required fields are filled
     const isFormValid = () => {
