@@ -17,40 +17,62 @@
 
 @media (max-width: 1024px) {
     .slideshow img {
-        height: 60% !important; /* Increase the height for medium screens */
-        width: 100% !important; /* Ensure full width */
-        object-fit: cover !important; /* Maintain cover for visual appeal */
+        height: 60% !important;
+        /* Increase the height for medium screens */
+        width: 100% !important;
+        /* Ensure full width */
+        object-fit: cover !important;
+        /* Maintain cover for visual appeal */
     }
 
-    .photography {
-        font-size: 0.70rem !important; /* Slightly larger font for credits */
-        margin-top: 20px !important; /* Adjust top margin */
-        text-align: center !important; /* Center-align the text */
+    .slideshow {
+        .photography {
+            font-size: 0.60rem !important;
+            /* Slightly larger font for credits */
+            margin-top: 20px !important;
+            /* Adjust top margin */
+            text-align: center !important;
+            /* Center-align the text */
+        }
     }
 }
 
 @media (max-width: 768px) {
     .slideshow img {
-        height: 70% !important; /* Further increase height for smaller screens */
-        width: 100% !important; /* Ensure the image spans the container */
-        object-fit: cover !important; /* Maintain a balanced fit */
+        height: 70% !important;
+        /* Further increase height for smaller screens */
+        width: 100% !important;
+        /* Ensure the image spans the container */
+        object-fit: cover !important;
+        /* Maintain a balanced fit */
     }
 
-    .photography {
-        font-size: 0.60rem !important; /* Keep text readable */
-        margin-top: 15px !important; /* Adjust spacing */
+    .slideshow {
+        .photography {
+            font-size: 0.60rem !important;
+            /* Keep text readable */
+            margin-top: 15px !important;
+            /* Adjust spacing */
+        }
     }
 }
 
 @media (max-width: 480px) {
     .slideshow img {
-        height: 80% !important; /* Maximize height for very small screens */
-        width: 100% !important; /* Use full width */
-        object-fit: contain !important; /* Ensure the full image is visible */
+        height: 80% !important;
+        /* Maximize height for very small screens */
+        width: 100% !important;
+        /* Use full width */
+        object-fit: contain !important;
+        /* Ensure the full image is visible */
     }
 
-    .photography {
-        font-size: 0.50rem !important; /* Slightly smaller font for compact screens */
-        margin-top: 10px !important; /* Reduce top margin */
+    .slideshow {
+        .photography {
+            font-size: 0.50rem !important;
+            /* Slightly smaller font for compact screens */
+            margin-top: 10px !important;
+            /* Reduce top margin */
+        }
     }
 }
