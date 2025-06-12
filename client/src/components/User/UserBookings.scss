@@ -88,6 +88,10 @@
                 font-size: 0.9rem;
                 color: $text-color;
 
+                @media (max-width: 480px) {
+                    font-size: 0.8rem;
+                }
+
                 &:hover {
                     text-decoration: underline;
                 }
