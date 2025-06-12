@@ -89,7 +89,7 @@ const PORT = process.env.PORT || 5001;
 // MongoDB connection
 mongoose
     .connect(process.env.MONGODB_URI)
-    .then(() => console.log('MongoDB connected to:', process.env.MONGODB_URI))
+    .then(() => console.log('MongoDB connected to successfully.'))
     .catch((err) => console.log('Error connecting to MongoDB:', err));
 
 const path = require("path");
