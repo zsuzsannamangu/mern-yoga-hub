@@ -99,7 +99,7 @@ function Home({ showAlert }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        Yoga Teacher and Chocolatier
+        Yoga Teacher, Yoga Therapist and Chocolatier
       </motion.div>
       <motion.div
         className="BookAFreeConsultation_Button"
