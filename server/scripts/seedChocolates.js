@@ -38,14 +38,14 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
       {
         name: 'Two Dark Chocolate Bars with Nuts and Dried Fruit',
         price: 20,
-        image: '/images/chocolates/Strawberry_Chocolate.jpg',
+        image: '/images/chocolates/nutfruitbar_2.jpg',
         description: '80% dark chocolate topped with pistachios + raisins (2 pieces) and almonds + cranberries (2 pieces)',
         details: 'Ingredients: fair-trade organic cacao, organic cacao butter, organic maple sugar, organic pistachios, organic almonds, organic raisins, organic cranberries, organic Madagascar vanilla powder, Oregon sea salt',
         inventory: 5,
       },
       {
         name: 'Big Dark Chocolate Assortment (35 pieces)',
-        price: 99,
+        price: 96,
         image: '/images/chocolates/Big chocolate tin 2_edited.jpg',
         description: '80% dark chocolate with a soft, coconut oil based filling. 5 flavors (7 of each): Lemon, Oregon peppermint, Rosemary ginger, Cardamom rose, Oregon sea salt',
         details: 'Ingredients: fair-trade organic cacao, organic cacao butter, organic coconut oil, organic maple sugar, organic Madagascar vanilla powder, cardamom oil, rose petals, Oregon peppermint oil, organic Oregon dried peppermint, rosemary oil, Oregon dried rosemary, ginger oil, lemon oil, organic lemon peel powder, Oregon sea salt',
@@ -53,7 +53,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
       },
       {
         name: 'Truffle Assortment (18 pieces)',
-        price: 103,
+        price: 99,
         image: '/images/chocolates/Truffles_5.jpg',
         description: 'Coconut oil based truffles covered in dark chocolate. 4 flavors: Oregon lavender, Smoked Oregon sea salt, Annatto cinnamon, Oregon raspberry',
         details: 'Ingredients: fair-trade organic cacao, organic cacao butter, organic coconut oil, organic maple sugar, organic Madagascar vanilla powder, lavender oil, organic Oregon lavender flowers, smoked Oregon sea salt, organic annatto powder, organic Ceylon cinnamon, organic Oregon raspberry powder, Oregon sea salt',
@@ -61,7 +61,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
       },
       {
         name: 'Dark Chocolate Truffles with Oregon Sea Salt',
-        price: 14,
+        price: 13,
         image: '/images/chocolates/Sea_salt_chocolate.jpg',
         description: '6 pieces of chocolate topped with Oregon sea salt',
         details: 'Ingredients: fair-trade organic cacao, organic cacao butter, organic coconut oil, organic maple sugar, organic Madagascar vanilla powder, Oregon sea salt. Cacao source: Peru, Ecuador or The Dominican Republic. Contains: coconut oil!',
@@ -69,7 +69,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
       },
       {
         name: 'Dark Chocolate Truffle Assortment',
-        price: 18,
+        price: 17,
         image: '/images/chocolates/classic.jpg',
         description: '6 pieces of chocolate, 3 flavors (2 of each flavor): Oregon Sea Salt, Cardamom Rose, Oregon Raspberry. Cacao source: Peru, Ecuador or The Dominican Republic.',
         details: 'Ingredients: fair-trade organic cacao, organic cacao butter, organic coconut oil, organic maple sugar, organic Madagascar vanilla powder, cardamom oil, rose petals, organic Oregon raspberry powder, Oregon sea salt. Contains: coconut oil!',
