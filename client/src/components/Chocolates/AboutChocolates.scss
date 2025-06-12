@@ -62,7 +62,8 @@
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-    .about-chocolates-content {
+    .about-chocolates-content,
+    .about-chocolates-content-2 {
         grid-template-columns: 1fr;
         /* Stack the columns vertically */
         gap: 30px !important;
@@ -78,9 +79,9 @@
 }
 
 @media (max-width: 768px) {
-    .about-chocolates-content {
+    .about-chocolates-content,
+    .about-chocolates-content-2 {
         padding: 0 20px !important;
-        /* Force padding for smaller screens */
         display: block;
     }
 
@@ -100,6 +101,10 @@
         margin-top: 40px !important;
     }
 
+    .about-chocolates-image-2 img{
+        margin-top: 40px !important;
+    }
+
     .photo-credit {
         text-align: left;
     }
@@ -116,8 +121,13 @@
         /* Force gap for readability */
     }
 
+    .about-chocolates-content-2 {
+        gap: 15px !important;
+        /* Force gap for readability */
+    }
+
     .photo-credit {
-        font-size: 0.65rem !important;
+        font-size: 0.4s0rem !important;
         /* Adjust text size */
     }
 }
