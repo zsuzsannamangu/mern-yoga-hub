@@ -99,7 +99,7 @@ function Home({ showAlert }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        Yoga Teacher, Yoga Therapist and Chocolatier
+        Yoga Teacher and Chocolatier
       </motion.div>
       <motion.div
         className="BookAFreeConsultation_Button"
@@ -168,7 +168,7 @@ function Home({ showAlert }) {
               <select name="session-type" required>
                 <option value="private yoga">Individual Yoga Class</option>
                 <option value="group yoga">Group Yoga Class</option>
-                <option value="yoga therapy">Yoga Therapy Session</option>
+                <option value="yoga therapy">Therapeutic Yoga</option>
               </select>
             </label>
             <label>

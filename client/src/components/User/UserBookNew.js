@@ -415,7 +415,7 @@ function UserBookNew() {
                             }
                             highlightedSlots={availableSlots.map((slot) => slot.date)}
                         />
-                        <p>**Individual yoga sessions are $50-$110/hr sliding scale. Yoga therapy sessions are $50-$130/hr sliding scale.</p>
+                        <p>**Individual yoga sessions are $50-$110/hr sliding scale. Individualized therapeutic yoga sessions are $50-$130/hr sliding scale.</p>
                         <p> Your investment is a personal choice, aligning with your current financial circumstances.**</p>
                     </div>
 
