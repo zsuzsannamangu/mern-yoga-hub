@@ -32,7 +32,7 @@ function UserBookNew() {
 
     const sessionTypes = [
         "Individual Yoga Session (60 min)",
-        "Yoga Therapy Session (60 min)",
+        "Theraputic Yoga Session (60 min)",
     ];
 
     // Fetch user data and available slots when component mounts
