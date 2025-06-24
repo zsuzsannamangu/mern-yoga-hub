@@ -110,10 +110,7 @@ function Home({ showAlert }) {
         <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
           Book a Free Session
         </button>
-        {/* <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
-          Buy Chocolate
-        </button> */}
-        <button>Have questions or feedback? I'd love to hear from you.<a href="/chocolates">Buy Chocolate</a></button>
+        <button><a href="/chocolates">Buy Chocolate</a></button>
       </motion.div>
       <motion.div
         className="images-row"
