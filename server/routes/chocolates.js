@@ -65,4 +65,22 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// POST /api/chocolates/validate-coupon
+router.post('/validate-coupon', (req, res) => {
+    const { code } = req.body;
+
+    const coupons = {
+        YOURCHOCOLATE11: 0.11,
+        YOGAXCHOCOLATE: 0.10,
+    };
+
+    const discount = coupons[code?.trim().toUpperCase()];
+
+    if (discount) {
+        return res.status(200).json({ discount });
+    } else {
+        return res.status(400).json({ message: 'Invalid coupon code' });
+    }
+});
+
 module.exports = router;
