@@ -163,6 +163,15 @@
     }
 }
 
+.coupon-section {
+    .coupon-message {
+        font-weight: bold;
+        margin-top: 0.5rem;
+        color: green;
+        /* or red for errors */
+    }
+}
+
 /* Responsive Adjustments */
 @media (max-width: 1024px) {
     .cart-content {

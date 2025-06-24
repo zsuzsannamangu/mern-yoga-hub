@@ -4,6 +4,7 @@ import './Cart.scss';
 import '../../App.scss';
 import { useCart } from '../../context/CartContext';
 import axios from 'axios';
+import { useEffect } from 'react';
 
 /* 
 * Cart Component
@@ -15,6 +16,43 @@ function Cart() {
   const [showPayPal, setShowPayPal] = useState(false);
   const [paypalError, setPaypalError] = useState(false);
   const [isLocalPickup, setIsLocalPickup] = useState(false);
+  const [couponCode, setCouponCode] = useState('');
+  const [discount, setDiscount] = useState(0);
+  const [couponMessage, setCouponMessage] = useState('');
+  const [appliedCode, setAppliedCode] = useState('');
+
+  // Function to apply coupon code:
+  const applyCoupon = async () => {
+    const enteredCode = couponCode.trim().toUpperCase();
+
+    // Prevent re-applying the same code
+    if (enteredCode === appliedCode) {
+      setCouponMessage('This coupon is already applied.');
+      return;
+    }
+    if (subtotal < 15) {
+      setCouponMessage('Coupon valid only on orders $15 or more.');
+      setDiscount(0);
+      return;
+    }
+    try {
+      const res = await axios.post(`${process.env.REACT_APP_API}/api/chocolates/validate-coupon`, {
+        code: couponCode,
+      });
+      if (res.data.discount) {
+        setDiscount(res.data.discount);
+        setAppliedCode(enteredCode); //tracks the applied coupon
+        setCouponMessage(`Coupon applied: ${res.data.discount * 100}% off!`);
+      } else {
+        setCouponMessage('Invalid coupon code');
+        setDiscount(0);
+      }
+    } catch (err) {
+      console.error(err);
+      setCouponMessage('Error applying coupon');
+      setDiscount(0);
+    }
+  };
 
   // Calculate subtotal and total cost
   const subtotal = cartItems.reduce((total, item) => {
@@ -23,7 +61,8 @@ function Cart() {
   }, 0);
 
   const shipping = isLocalPickup ? 0 : 5.0;
-  const totalNumber = subtotal + shipping;
+  const discountedSubtotal = subtotal * (1 - discount);
+  const totalNumber = discountedSubtotal + shipping;
   const total = totalNumber.toFixed(2); // for display only
 
   // Updates item quantity in the cart, ensuring it doesn't go below 1.
@@ -118,6 +157,8 @@ function Cart() {
                 transactionAmount: details.purchase_units[0].amount.value,
                 cartItems,
                 isLocalPickup,
+                couponCode,
+                discount,
               }),
             })
               .then((res) => res.json())
@@ -213,6 +254,18 @@ function Cart() {
                 />
                 Local Pickup (no shipping fee)
               </label>
+            </div>
+            <div className="coupon-section">
+              <label htmlFor="coupon">Coupon Code</label>
+              <input
+                type="text"
+                id="coupon"
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                className="coupon-input"
+              />
+              <button onClick={applyCoupon} className="apply-coupon-button">Apply</button>
+              {couponMessage && <p className="coupon-message">{couponMessage}</p>}
             </div>
             <p>Subtotal <span>${subtotal.toFixed(2)}</span></p>
             <p>Shipping <span>${shipping.toFixed(2)}</span></p>
