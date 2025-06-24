@@ -49,7 +49,8 @@ function Cart() {
       }
     } catch (err) {
       console.error(err);
-      setCouponMessage('Error applying coupon');
+      const serverMessage = err.response?.data?.message;
+      setCouponMessage(serverMessage || 'Error applying coupon');
       setDiscount(0);
     }
   };
@@ -257,15 +258,21 @@ function Cart() {
             </div>
             <div className="coupon-section">
               <label htmlFor="coupon">Coupon Code</label>
-              <input
-                type="text"
-                id="coupon"
-                value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                className="coupon-input"
-              />
-              <button onClick={applyCoupon} className="apply-coupon-button">Apply</button>
-              {couponMessage && <p className="coupon-message">{couponMessage}</p>}
+              <div className="coupon-input-group">
+                <input
+                  type="text"
+                  id="coupon"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                  className="coupon-input"
+                />
+                <button onClick={applyCoupon} className="apply-coupon-button">
+                  Apply
+                </button>
+              </div>
+              {couponMessage && (
+                <p className={`coupon-message ${discount === 0 ? 'error' : ''}`}>{couponMessage}</p>
+              )}
             </div>
             <p>Subtotal <span>${subtotal.toFixed(2)}</span></p>
             <p>Shipping <span>${shipping.toFixed(2)}</span></p>

@@ -52,7 +52,7 @@ const Slideshow = () => {
                     <img src='/images/Zsuzsi/Slideshow_13.jpg' alt="Topping chocolate pieces" />
                 </div>
                 <div>
-                    <img src="/images/chocolates/Truffles_5.jpg" alt="Truffles" />
+                    <img src="/images/chocolates/chocolatepage.jpg" alt="Truffles" />
                 </div>
                 <div>
                     <img src="/images/Zsuzsi/Slideshow_12.jpg" alt="Tasting chocolate" />
@@ -79,7 +79,7 @@ const Slideshow = () => {
                     <img src='/images/chocolates/Tea_truffle.jpg' alt="Green Tea Truffles" />
                 </div>
                 <div>
-                    <img src='/images/chocolates/Truffles_1.jpg' alt="Truffles" />
+                    <img src='/images/chocolates/Truffles_4.jpg' alt="Truffles" />
                 </div>
             </Slider>
         </div>

@@ -164,54 +164,53 @@
 }
 
 .coupon-section {
-  margin: 1rem 0;
+    margin: 1rem 0;
 
-  label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-    color: $main-title-color;
-  }
-
-  .coupon-input {
-    width: 100%;
-    padding: 8px 10px;
-    border: 1px solid $border-color;
-    border-radius: 4px;
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-    outline: none;
-
-    &:focus {
-      border-color: $primary-button-color;
+    label {
+        font-weight: 600;
+        color: $main-title-color;
+        margin-bottom: 0.4rem;
+        display: block;
     }
-  }
 
-  .apply-coupon-button {
-    background-color: $primary-button-color;
-    color: $button-text-color;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
+    .coupon-input-group {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
 
-    &:hover {
-      background-color: $primary-button-hover-color;
+        input.coupon-input {
+            flex: 1;
+            padding: 8px 10px;
+            font-size: 1rem;
+            border: 1px solid $border-color;
+            border-radius: 4px;
+        }
+
+        button.apply-coupon-button {
+            background-color: $primary-button-color;
+            color: $button-text-color;
+            padding: 8px 12px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+
+            &:hover {
+                background-color: $primary-button-hover-color;
+            }
+        }
     }
-  }
 
-  .coupon-message {
-    font-weight: bold;
-    margin-top: 0.5rem;
-    color: green;
+    .coupon-message {
+        font-weight: bold;
+        margin-top: 0.5rem;
+        color: green;
 
-    &.error {
-      color: red;
+        &.error {
+            color: red;
+        }
     }
-  }
 }
 
 /* Responsive Adjustments */
