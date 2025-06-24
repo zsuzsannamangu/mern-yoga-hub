@@ -72,6 +72,7 @@ router.post('/validate-coupon', (req, res) => {
     const coupons = {
         YOURCHOCOLATE11: 0.11,
         YOGAXCHOCOLATE: 0.10,
+        TESTINGFORTEST: 0.99,
     };
 
     const discount = coupons[code?.trim().toUpperCase()];
