@@ -72,9 +72,9 @@ function AboutChocolates() {
         <motion.div className="about-chocolates-text" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <h2 className="section-title">Host a Chocolate Tasting Event</h2>
           <div className="title-line"></div>
-          <p>I’m available for chocolate tasting events. Add chocolates to wine tastings, yoga gatherings, or any occasion.</p>
-          <p>For a 2-hour event with 50 guests, my rate starts at <strong>$889</strong>, which includes five pieces of handcrafted 
-          chocolate per person. I personally serve the chocolates and guide your guests through the tasting experience.</p>
+          <p>I’m available for chocolate tasting events. Add chocolates to wine tastings, yoga events, or any occasion.</p>
+          <p>Prices start at $520 for a 2-hour event serving 20 people, and include four pieces of handcrafted chocolate per person - each one a different flavor. 
+            I personally serve the chocolates and guide your guests through the tasting experience.</p>
           <p><strong><a href="/contact">Book your event!</a></strong></p>
         </motion.div>
         <motion.div className="about-chocolates-image" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>

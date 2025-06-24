@@ -31,7 +31,7 @@ function Cart() {
       return;
     }
     if (subtotal < 15) {
-      setCouponMessage('Coupon valid only on orders $15 or more.');
+      setCouponMessage('Coupons valid only on orders $15 or more.');
       setDiscount(0);
       return;
     }
@@ -274,7 +274,7 @@ function Cart() {
                 <p className={`coupon-message ${discount === 0 ? 'error' : ''}`}>{couponMessage}</p>
               )}
             </div>
-            <p>Subtotal <span>${subtotal.toFixed(2)}</span></p>
+            <p>Subtotal <span>${discountedSubtotal.toFixed(2)}</span></p>
             <p>Shipping <span>${shipping.toFixed(2)}</span></p>
             {/* <p>Tax <span>${(subtotal * 0.1).toFixed(2)}</span></p> */}
             <p className="total">Total <span>${total}</span></p>
