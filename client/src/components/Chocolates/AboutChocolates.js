@@ -78,7 +78,7 @@ function AboutChocolates() {
           <p><strong><a href="/contact">Book your event!</a></strong></p>
         </motion.div>
         <motion.div className="about-chocolates-image" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          <img src="/images/chocolates/Truffles_2.jpg" alt="Truffles" />
+          <img src="/images/chocolates/Truffles_6.jpg" alt="Truffles" />
           <p className="photo-credit">Photo by Zsuzsanna Mangu</p>
         </motion.div>
       </div>

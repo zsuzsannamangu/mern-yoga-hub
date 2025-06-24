@@ -164,12 +164,54 @@
 }
 
 .coupon-section {
-    .coupon-message {
-        font-weight: bold;
-        margin-top: 0.5rem;
-        color: green;
-        /* or red for errors */
+  margin: 1rem 0;
+
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: $main-title-color;
+  }
+
+  .coupon-input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    outline: none;
+
+    &:focus {
+      border-color: $primary-button-color;
     }
+  }
+
+  .apply-coupon-button {
+    background-color: $primary-button-color;
+    color: $button-text-color;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: $primary-button-hover-color;
+    }
+  }
+
+  .coupon-message {
+    font-weight: bold;
+    margin-top: 0.5rem;
+    color: green;
+
+    &.error {
+      color: red;
+    }
+  }
 }
 
 /* Responsive Adjustments */
