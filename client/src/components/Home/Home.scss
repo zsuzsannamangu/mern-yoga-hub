@@ -55,26 +55,16 @@
     max-width: 1200px;
     margin: 40px auto 40px auto;
     gap: 10px;
-    height: 600px;
-    /* or any height you like */
+    height: 800px;
     overflow: hidden; //ensures no scrollbars or overflow from large images
 }
-
-// .images-row img {
-//     width: 100%;
-//     height: 100%;
-//     object-fit: cover; //keeps image proportionate and fills space
-//     object-position: center 30%; //nudges the crop to show less sky and more subject
-// }
 
 .left-image {
     width: 100%;
     max-width: 400px;
-    // height: 100%;
     border-radius: 2px;
     object-fit: cover;
     object-position: center 30%;
-    /* Pushes the image up to reveal more body, less sky */
 }
 
 .main-row {
