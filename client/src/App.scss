@@ -133,6 +133,11 @@ a {
   gap: 0.3rem;
   font-size: 1.1rem;
   color: $button-text-color;
+
+  .cart-count {
+    font-size: 1rem;
+    font-family: $font-main;
+  }
 }
 
 @media (max-width: 768px) {
