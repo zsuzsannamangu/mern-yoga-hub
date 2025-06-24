@@ -36,6 +36,11 @@
     font-family: $font-title;
     border: none;
     cursor: pointer;
+    margin: 15px;
+
+    a {
+        color: $button-text-color;
+    }
 }
 
 .BookAFreeConsultation_Button button:hover {
