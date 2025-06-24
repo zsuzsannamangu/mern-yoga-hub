@@ -57,15 +57,14 @@
     gap: 10px;
     height: 400px;
     /* or any height you like */
-    overflow: hidden;
+    overflow: hidden; //ensures no scrollbars or overflow from large images
 }
 
 .images-row img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center 30%;
-    /* focus lower than center to avoid too much sky */
+    object-fit: cover; //keeps image proportionate and fills space
+    object-position: center bottom; //nudges the crop to show less sky and more subject
 }
 
 .left-image {
