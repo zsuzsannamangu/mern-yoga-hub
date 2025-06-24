@@ -60,10 +60,10 @@
 .left-image {
     width: 100%;
     max-width: 400px;
-    height: 800px;
+    height: 100%;
     border-radius: 2px;
     object-fit: cover;
-
+    object-position: center 30%; /* Pushes the image up to reveal more body, less sky */
     
 }
 
