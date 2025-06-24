@@ -99,7 +99,7 @@ function Home({ showAlert }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        Yoga Teacher and Chocolatier
+        Yoga and Chocolate
       </motion.div>
       <motion.div
         className="BookAFreeConsultation_Button"
@@ -110,6 +110,10 @@ function Home({ showAlert }) {
         <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
           Book a Free Session
         </button>
+        {/* <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
+          Buy Chocolate
+        </button> */}
+        <button>Have questions or feedback? I'd love to hear from you.<a href="/chocolates">Buy Chocolate</a></button>
       </motion.div>
       <motion.div
         className="images-row"
