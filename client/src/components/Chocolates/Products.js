@@ -149,7 +149,13 @@ function Products({ showAlert }) {
             <p className="modal-description">{selectedProduct.description}</p>
             <p className="modal-details">{selectedProduct.details}</p>
             <p className="modal-price">${selectedProduct.price} / tin</p>
-            <button className="add-to-cart-button" onClick={() => handleAddToCart(selectedProduct)}>Add to Cart</button>
+            {product.inventory === 0 ? (
+              <button disabled className="sold-out-button">Sold Out</button>
+            ) : (
+              <button className="add-to-cart-button" onClick={() => handleAddToCart(selectedProduct)}>
+                Add to Cart
+              </button>
+            )}
           </div>
         </div>
       )}
