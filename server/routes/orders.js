@@ -57,9 +57,13 @@ router.post("/orders", async (req, res) => {
                     .join("")}
                 </ul>
                 <p><b>Total amount paid including shipping:</b> $${transactionAmount}</p>
-                <p>Your chocolates will be prepared and shipped within 4-6 days! You'll receive an email when your order is on its way.</p>
+                <p>Your chocolates are being lovingly prepared and will ship within 4–6 days. You'll receive an email when your order is on its way.</p>
                 <p>I appreciate your support!</p>
+                <p>As a small gift, you're invited to book a <b>free 60-minute therapeutic yoga session</b> with me. 
+                Just use the code <b>YOURJOURNEY</b> when scheduling, after registering for an account.</p>
+
                 <p>Feel free to email me with any questions.</p>
+
                 <p>Best regards,<br>Zsuzsanna,<br>Owner of ReTreat Chocolates</p>
             `,
         };
