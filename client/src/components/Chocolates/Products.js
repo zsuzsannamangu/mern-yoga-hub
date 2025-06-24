@@ -28,7 +28,7 @@ function Products({ showAlert }) {
   const itemVariants = {
     hidden: { opacity: 0, x: -40 },
     visible: { opacity: 1, x: 0 },
-  };  
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -124,9 +124,13 @@ function Products({ showAlert }) {
             <p className="product-price">${product.price}</p>
 
             <div className="product-buttons">
-              <button className="add-to-cart-button" onClick={() => handleAddToCart(product)}>
-                Add to Cart
-              </button>
+              {product.inventory === 0 ? (
+                <button disabled className="sold-out-button">Sold Out</button>
+              ) : (
+                <button className="add-to-cart-button" onClick={() => handleAddToCart(product)}>
+                  Add to Cart
+                </button>
+              )}
               <button className="details-button" onClick={() => openProductModal(product)}>
                 Details
               </button>
