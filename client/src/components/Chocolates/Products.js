@@ -77,6 +77,9 @@ function Products({ showAlert }) {
       showCancelButton: true,
       confirmButtonText: 'Go to Cart',
       cancelButtonText: 'Continue Shopping',
+      customClass: {
+        confirmButton: 'swal-gotocart-button',
+      }
     }).then((result) => {
       if (result.isConfirmed) {
         navigate('/cart'); // Navigate to the cart page
