@@ -204,3 +204,7 @@ button:disabled:hover {
   background-color: #a0a050;
   /* Match the color of the Add to Cart button */
 }
+
+.swal-gotocart-button {
+    background-color: rgb(110, 110, 237) !important; /* Ensures the text is white */
+  }
