@@ -70,7 +70,7 @@ function AboutChocolates() {
       </div>
       <div className="about-chocolates-content">
         <motion.div className="about-chocolates-text" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          <h2 className="section-title">Host a Chocolate Tasting Event</h2>
+          <h2 className="section-title">Chocolate Tasting Events</h2>
           <div className="title-line"></div>
           <p>I’m available for chocolate tasting events. Add chocolates to wine tastings, yoga events, or any occasion.</p>
           <p>Prices start at $520 for a 2-hour event serving 20 people, and include four pieces of handcrafted chocolate per person - each one a different flavor. 
