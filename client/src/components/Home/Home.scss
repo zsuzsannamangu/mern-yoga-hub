@@ -153,20 +153,34 @@
 }
 
 .newsletter {
-    background-color: #fef9f4;
-    padding: 2rem;
-    border-radius: 8px;
+    padding: 40px 20px;
+    background-color: #f9f9f9;
     text-align: center;
 
-    input {
-        padding: 0.5rem;
-        margin-right: 0.5rem;
-        width: 250px;
+    h3 {
+        font-size: 24px;
+        margin-bottom: 10px;
     }
 
-    button {
-        padding: 0.5rem 1rem;
-        cursor: pointer;
+    p {
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            width: 250px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
     }
 }
 
