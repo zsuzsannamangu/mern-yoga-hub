@@ -155,6 +155,7 @@
 .newsletter {
     margin-top: 4rem;
     width: 100%;
+    max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
     background-color: $secondary-background-color;
@@ -300,6 +301,29 @@
         padding: 8px 16px;
         width: 100%;
         /* Full-width button */
+    }
+
+    .newsletter {
+        padding: 1rem;
+
+        p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        form {
+            gap: 0.8rem;
+
+            input[type='email'] {
+                padding: 8px;
+                font-size: 0.95rem;
+            }
+
+            button {
+                font-size: 0.95rem;
+                padding: 8px;
+            }
+        }
     }
 }
 
