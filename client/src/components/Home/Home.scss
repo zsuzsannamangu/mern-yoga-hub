@@ -164,11 +164,9 @@
     }
 
     form {
-        display: flex;
-        justify-content: center;
+        justify-content: left;
         align-items: center;
         gap: 1rem;
-        flex-wrap: wrap;
 
         input[type='email'] {
             padding: 10px;
@@ -177,8 +175,6 @@
             color: $text-color;
             font-size: 1rem;
             font-family: $font-secondary;
-            width: 70%;
-            max-width: 150px;
         }
 
         button {
@@ -190,8 +186,6 @@
             font-size: 1.1rem;
             cursor: pointer;
             font-family: $font-secondary;
-            width: 30%;
-            max-width: 150px;
             margin: 0;
 
             &:disabled {
