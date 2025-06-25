@@ -122,8 +122,6 @@ function Home({ showAlert }) {
       });
 
       const result = await response.json(); // parse the response JSON
-      console.log('Status:', response.status);
-      console.log('Result:', result);
 
       if (response.status === 409) {
         Swal.fire({
@@ -258,7 +256,7 @@ function Home({ showAlert }) {
         transition={{ duration: 1 }}
       >
         <div className="main-left">
-          <h1 className="section-title">My newsletter</h1>
+          <h1 className="section-title">News</h1>
         </div>
         <div className="right-section">
           <p>Get updates about yoga classes, events, and chocolate drops.</p>
