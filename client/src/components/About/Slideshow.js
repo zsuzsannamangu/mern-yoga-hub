@@ -67,9 +67,6 @@ const Slideshow = () => {
                     <img src='/images/Zsuzsi/12.jpg' alt="Downward facing dog pose" />
                 </div>
                 <div>
-                    <img src='/images/Zsuzsi/12.jpg' alt="Downward facing dog pose" />
-                </div>
-                <div>
                     <img src='/images/Zsuzsi/13.jpg' alt="Figure four chair pose" />
                 </div>
                 <div>
@@ -86,6 +83,36 @@ const Slideshow = () => {
                 </div>
                 <div>
                     <img src='/images/Zsuzsi/18.jpg' alt="Sit on heels" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/190.jpg' alt="Sit crosslegged" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/200.jpg' alt="Twist" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/220.jpg' alt="Side stretch" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/230.jpg' alt="Seated cat" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/240.jpg' alt="Tabletop" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/250.jpg' alt="Modified sideplank" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/260.jpg' alt="Child's pose" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/270.jpg' alt="Back stretch" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/280.jpg' alt="Rabbit pose" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/290.jpg' alt="Sit on heels" />
                 </div>
             </Slider>
         </div>
