@@ -1,175 +1,189 @@
 @use '../../styles/variables' as *;
 
 .admin-subscribers {
-  padding: 20px;
-  font-family: $font-main;
-  background-color: $background-color;
-  max-width: 1200px;
-  margin: 0 auto;
-
-  h3 {
-    color: $secondary-text-color;
-    margin-bottom: 20px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: $secondary-background-color;
+    padding: 20px;
     font-family: $font-main;
+    background-color: $background-color;
+    max-width: 1200px;
+    margin: 0 auto;
 
-    th,
-    td {
-      text-align: center;
-      padding: 10px;
-      border: 1px solid $border-color;
+    h3 {
+        color: $secondary-text-color;
+        margin-bottom: 20px;
     }
 
-    th {
-      background-color: $background-color;
-      color: $text-color;
-      font-weight: bold;
-    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: $secondary-background-color;
+        font-family: $font-main;
 
-    tr:nth-child(even) {
-      background-color: $content-background-color;
-    }
+        th,
+        td {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid $border-color;
 
-    tr:hover {
-      background-color: $content-background-color-hover;
-    }
 
-    td {
-      a {
-        color: $tertiary-text-color;
-        text-decoration: none;
+            .delete-button {
+                background-color: $delete-button;
+                color: $button-text-color;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px;
+                cursor: pointer;
 
-        &:hover {
-          text-decoration: underline;
+                &:hover {
+                    background-color: $delete-button-hover;
+                }
+            }
         }
-      }
 
-      .delete-button {
-        background-color: $delete-button;
-        color: $button-text-color;
-        border: none;
-        border-radius: 5px;
-        padding: 5px 10px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: $delete-button-hover;
+        th {
+            background-color: $background-color;
+            color: $text-color;
+            font-weight: bold;
         }
-      }
 
-      .view-link {
-        color: $primary-button-color;
-        cursor: pointer;
-
-        &:hover {
-          color: $primary-button-hover-color;
-          text-decoration: underline;
+        tr:nth-child(even) {
+            background-color: $content-background-color;
         }
-      }
+
+        tr:hover {
+            background-color: $content-background-color-hover;
+        }
+
+        td {
+            a {
+                color: $tertiary-text-color;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            .delete-button {
+                background-color: $delete-button;
+                color: $button-text-color;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $delete-button-hover;
+                }
+            }
+
+            .view-link {
+                color: $primary-button-color;
+                cursor: pointer;
+
+                &:hover {
+                    color: $primary-button-hover-color;
+                    text-decoration: underline;
+                }
+            }
+        }
     }
-  }
 
-  .no-subscribers {
-    text-align: center;
-    font-size: 16px;
-    margin-top: 20px;
-    color: $secondary-text-color;
-  }
-
-  .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-
-    .page-item {
-      margin: 0 5px;
-      cursor: pointer;
-      color: $primary-button-color;
-      font-weight: bold;
-
-      &.active {
-        color: $button-text-color;
-        background-color: $primary-button-color;
-        border-radius: 50%;
-        padding: 5px 10px;
-      }
-
-      &:hover {
-        text-decoration: underline;
-      }
+    .no-subscribers {
+        text-align: center;
+        font-size: 16px;
+        margin-top: 20px;
+        color: $secondary-text-color;
     }
-  }
 
-  .actions {
-    display: flex;
-    justify-content: space-evenly;
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
 
-    .icon {
-      cursor: pointer;
-      font-size: 18px;
+        .page-item {
+            margin: 0 5px;
+            cursor: pointer;
+            color: $primary-button-color;
+            font-weight: bold;
 
-      &:hover {
-        color: $delete-button-hover;
-      }
+            &.active {
+                color: $button-text-color;
+                background-color: $primary-button-color;
+                border-radius: 50%;
+                padding: 5px 10px;
+            }
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
-  }
+
+    .actions {
+        display: flex;
+        justify-content: space-evenly;
+
+        .icon {
+            cursor: pointer;
+            font-size: 18px;
+
+            &:hover {
+                color: $delete-button-hover;
+            }
+        }
+    }
 }
 
 // Responsive Design
 @media (max-width: $breakpoint-lg) {
-  .admin-subscribers {
-    h2 {
-      font-size: 22px;
-    }
+    .admin-subscribers {
+        h2 {
+            font-size: 22px;
+        }
 
-    table th,
-    table td {
-      font-size: 14px;
-      padding: 8px;
+        table th,
+        table td {
+            font-size: 14px;
+            padding: 8px;
+        }
     }
-  }
 }
 
 @media (max-width: $breakpoint-md) {
-  .admin-subscribers {
-    padding: 10px;
+    .admin-subscribers {
+        padding: 10px;
 
-    table th,
-    table td {
-      font-size: 12px;
-      padding: 6px;
-    }
+        table th,
+        table td {
+            font-size: 12px;
+            padding: 6px;
+        }
 
-    .pagination .page-item {
-      font-size: 12px;
+        .pagination .page-item {
+            font-size: 12px;
+        }
     }
-  }
 }
 
 @media (max-width: $breakpoint-sm) {
-  .admin-subscribers {
-    table {
-      font-size: 10px;
+    .admin-subscribers {
+        table {
+            font-size: 10px;
 
-      th,
-      td {
-        padding: 4px;
-      }
-    }
+            th,
+            td {
+                padding: 4px;
+            }
+        }
 
-    .pagination .page-item {
-      font-size: 10px;
+        .pagination .page-item {
+            font-size: 10px;
+        }
     }
-  }
 }
 
 .swal-confirm-button {
-  color: white !important;
+    color: white !important;
 }
