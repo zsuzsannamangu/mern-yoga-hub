@@ -16,58 +16,76 @@ const Slideshow = () => {
         autoplaySpeed: 3000, // Set to a reasonable speed for a smooth transition
         responsive: [
             {
-              breakpoint: 768, // Screen width below 768px
-              settings: {
-                dots: false,
-                slidesToShow: 2, // Show one slide at a time
-                slidesToScroll: 1,
-                arrows: false, // Hide arrows for small screens
-              },
+                breakpoint: 768, // Screen width below 768px
+                settings: {
+                    dots: false,
+                    slidesToShow: 2, // Show one slide at a time
+                    slidesToScroll: 1,
+                    arrows: false, // Hide arrows for small screens
+                },
             },
-          ],
+        ],
     };
 
     return (
         <div className="slideshow">
-            <div className='photography'>
-                <p>Photos by Zsuzsanna Mangu and Jason Quigley</p>
-            </div>
             <Slider {...settings}>
                 <div>
-                    <img src='/images/Zsuzsi/1.jpg' alt="Melting cacao" />
+                    <img src='/images/Zsuzsi/1.jpg' alt="Downward facing dog" />
                 </div>
                 <div>
-                    <img src='/images/Zsuzsi/2.jpg' alt="Pouring chocolate" />
+                    <img src='/images/Zsuzsi/2.jpg' alt="One legged downdog" />
                 </div>
                 <div>
-                    <img src='/images/Zsuzsi/3.jpg' alt="Filling chocolate molds" />
+                    <img src='/images/Zsuzsi/3.jpg' alt="High lunge" />
                 </div>
                 <div>
-                    <img src='/images/Zsuzsi/4.jpg' alt="Chocolate mold" />
+                    <img src='/images/Zsuzsi/4.jpg' alt="Warrior 2" />
                 </div>
                 <div>
-                    <img src="/images/Zsuzsi/5.jpg" alt="Adding toppings to chocolate" />
+                    <img src="/images/Zsuzsi/5.jpg" alt="Reverse warrior" />
                 </div>
                 <div>
-                    <img src='/images/Zsuzsi/6.jpg' alt="Topping chocolate pieces" />
+                    <img src='/images/Zsuzsi/6.jpg' alt="High lunge" />
                 </div>
                 <div>
-                    <img src="/images/Zsuzsi/7.jpg" alt="Truffles" />
+                    <img src="/images/Zsuzsi/7.jpg" alt="Side plank" />
                 </div>
                 <div>
-                    <img src="/images/Zsuzsi/8.jpg" alt="Tasting chocolate" />
+                    <img src="/images/Zsuzsi/8.jpg" alt="rockstar pose" />
                 </div>
                 <div>
-                    <img src="/images/Zsuzsi/9.jpg" alt="Viola and blackberry white chocolate bars" />
+                    <img src="/images/Zsuzsi/9.jpg" alt="Seated twist" />
                 </div>
                 <div>
-                    <img src="/images/Zsuzsi/10.jpg" alt="Strawberry Chocolate" />
+                    <img src="/images/Zsuzsi/10.jpg" alt="Plank" />
                 </div>
                 <div>
-                    <img src='/images/Zsuzsi/11.jpg' alt="Cranberry Chocolate" />
+                    <img src='/images/Zsuzsi/11.jpg' alt="Upward facing dog pose" />
                 </div>
                 <div>
-                    <img src='/images/Zsuzsi/12.jpg' alt="Chocolate tins" />
+                    <img src='/images/Zsuzsi/12.jpg' alt="Downward facing dog pose" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/12.jpg' alt="Downward facing dog pose" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/13.jpg' alt="Figure four chair pose" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/14.jpg' alt="Warrior 3" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/15.jpg' alt="Half moon" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/16.jpg' alt="Halflift" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/17.jpg' alt="Downward facing dog pose" />
+                </div>
+                <div>
+                    <img src='/images/Zsuzsi/18.jpg' alt="Sit on heels" />
                 </div>
             </Slider>
         </div>
