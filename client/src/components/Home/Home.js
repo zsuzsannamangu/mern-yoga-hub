@@ -248,32 +248,25 @@ function Home({ showAlert }) {
         </div>
       </motion.div>
       <motion.section
-        className="main-row"
-        id="newsletter"
+        className="newsletter"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
       >
-        <div className="main-left">
-          <h1 className="section-title">News</h1>
-        </div>
-        <div className="right-section">
-          <p>Get updates about yoga classes, events, and new chocolates.</p>
-          <form onSubmit={handleNewsletterSubmit}>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              required
-            />
-            <button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'Subscribe'}
-            </button>
-
-          </form>
-        </div>
+        <p>Get updates about yoga classes, events, and new chocolates.</p>
+        <form onSubmit={handleNewsletterSubmit}>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+            required
+          />
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Submitting...' : 'Subscribe'}
+          </button>
+        </form>
       </motion.section>
     </div >
   );
