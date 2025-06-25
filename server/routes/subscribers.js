@@ -3,9 +3,9 @@ const router = express.Router();
 const rateLimit = require('express-rate-limit');
 const Subscriber = require('../models/Subscriber');
 const sgMail = require('@sendgrid/mail');
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// Apply limiter to this POST route
 const subscriberLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 5,
@@ -15,7 +15,7 @@ const subscriberLimiter = rateLimit({
   },
 });
 
-router.post('/subscribe', async (req, res) => {
+router.post('/subscribe', subscriberLimiter, async (req, res) => {
   const { email } = req.body;
 
   if (!email || typeof email !== 'string') {
@@ -31,7 +31,7 @@ router.post('/subscribe', async (req, res) => {
     // Send welcome email
     const msg = {
       to: email,
-      from: process.env.FROM_EMAIL, // must be a verified sender in SendGrid
+      from: process.env.FROM_EMAIL,
       subject: 'Welcome to Yoga & Chocolate!',
       html: `
         <p>Hello,</p>
@@ -41,11 +41,15 @@ router.post('/subscribe', async (req, res) => {
       `
     };
 
-    await sgMail.send(msg);
+    try {
+      await sgMail.send(msg);
+    } catch (emailErr) {
+      console.error('Email send error:', emailErr); // Log but don’t fail request
+    }
 
-    res.status(200).json({ message: 'Subscribed and email sent' });
+    res.status(200).json({ message: 'Subscribed (email sent if possible)' });
   } catch (err) {
-    console.error(err);
+    console.error('Subscription error:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
