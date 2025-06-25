@@ -254,7 +254,7 @@ function Home({ showAlert }) {
         viewport={{ once: true }}
         transition={{ duration: 1 }}
       >
-        <p>Get updates about yoga classes, events, and new chocolates.</p>
+        <p>Get updates about yoga classes, workshops, events, and new chocolates.</p>
         <form onSubmit={handleNewsletterSubmit}>
           <input
             type="email"
