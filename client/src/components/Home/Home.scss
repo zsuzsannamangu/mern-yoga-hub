@@ -154,50 +154,51 @@
 
 .newsletter {
     margin-top: 4rem;
-    text-align: center;
-    background-color: #fff8ef;
-    padding: 3rem 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    width: 100%;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    background-color: #fff8ef;
+    padding: 2rem 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    text-align: center;
 
     p {
-        margin-bottom: 1.5rem;
-        font-weight: 500;
-        color: $text-color;
+        font-size: 1.1rem;
         font-family: $font-main;
-        font-size: 1.2rem;
+        color: $text-color;
+        margin-bottom: 1.5rem;
     }
 
     form {
         display: flex;
+        flex-direction: row;
         justify-content: center;
-        flex-wrap: wrap;
+        align-items: stretch;
         gap: 1rem;
+        flex-wrap: wrap;
 
         input[type='email'] {
             padding: 12px;
             border-radius: 4px;
             border: 1px solid $border-color;
-            color: $text-color;
-            font-size: 1rem;
             font-family: $font-secondary;
-            width: 60%;
+            font-size: 1rem;
+            flex-grow: 1;
             min-width: 220px;
-            max-width: 350px;
         }
 
         button {
             padding: 12px 24px;
+            font-size: 1rem;
+            font-family: $font-title;
             background-color: $primary-button-color;
+            color: $button-text-color;
             border: none;
             border-radius: 4px;
-            color: $button-text-color;
-            font-size: 1rem;
-            font-family: $font-secondary;
             cursor: pointer;
+            min-width: 120px;
             transition: background-color 0.3s ease;
 
             &:hover {
