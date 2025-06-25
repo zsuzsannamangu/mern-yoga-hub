@@ -5,6 +5,7 @@ import './About.scss';
 import Offerings from './Offerings';
 import '../../App.scss';
 import { motion } from 'framer-motion';
+import Slideshow from './Slideshow';
 
 function About() {
     const location = useLocation(); // React Router hook to access current location (current URL, such as the path or query parameters)
@@ -162,6 +163,7 @@ function About() {
                     </motion.div>
                 </div>
             </motion.div>
+            <Slideshow />
         </div>
     );
 }
