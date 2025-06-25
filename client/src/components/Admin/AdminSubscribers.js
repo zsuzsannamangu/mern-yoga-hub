@@ -22,11 +22,28 @@ const AdminSubscribers = () => {
   return (
     <div className="admin-subscribers">
       <h2>Newsletter Subscribers</h2>
-      <ul>
-        {subscribers.map(sub => (
-          <li key={sub._id}>{sub.email} – {new Date(sub.subscribedAt).toLocaleDateString()}</li>
-        ))}
-      </ul>
+      {subscribers.length === 0 ? (
+        <div className="no-subscribers">No subscribers yet.</div>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Email</th>
+              <th>Subscribed At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {subscribers.map((sub, index) => (
+              <tr key={sub._id}>
+                <td>{index + 1}</td>
+                <td>{sub.email}</td>
+                <td>{new Date(sub.subscribedAt).toLocaleString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };

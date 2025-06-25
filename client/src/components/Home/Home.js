@@ -121,6 +121,8 @@ function Home({ showAlert }) {
         body: JSON.stringify({ email: trimmedEmail }),
       });
 
+      const result = await response.json(); // parse the response JSON
+
       if (response.status === 409) {
         Swal.fire({
           title: 'Already Subscribed',
@@ -128,9 +130,9 @@ function Home({ showAlert }) {
           icon: 'info',
           confirmButtonText: 'OK'
         });
-      } else if (!response.ok) {
-        throw new Error('Subscription failed');
-      } else {
+        setEmail('');
+        e.target.reset();
+      } else if (response.ok) {
         Swal.fire({
           title: 'Subscribed!',
           text: 'Thanks for signing up! 🎉',
@@ -138,6 +140,9 @@ function Home({ showAlert }) {
           confirmButtonText: 'Awesome'
         });
         setEmail('');
+        e.target.reset();
+      } else {
+        throw new Error(result?.error || 'Subscription failed');
       }
     } catch (error) {
       Swal.fire({
@@ -146,6 +151,7 @@ function Home({ showAlert }) {
         icon: 'error',
         confirmButtonText: 'OK'
       });
+      setEmail(''); //clears email input field
     } finally {
       setIsSubmitting(false);
     }
