@@ -122,6 +122,8 @@ function Home({ showAlert }) {
       });
 
       const result = await response.json(); // parse the response JSON
+      console.log('Status:', response.status);
+      console.log('Result:', result);
 
       if (response.status === 409) {
         Swal.fire({
