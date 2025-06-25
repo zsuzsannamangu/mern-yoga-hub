@@ -153,15 +153,7 @@
 }
 
 #newsletter {
-    background: #f7f7f7;
-    padding: 2rem;
-    text-align: center;
     margin-top: 3rem;
-
-    h3 {
-        margin-bottom: 0.5rem;
-        font-size: 1.5rem;
-    }
 
     p {
         margin-bottom: 1rem;
@@ -171,7 +163,7 @@
     form {
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: left;
         gap: 1rem;
         flex-wrap: wrap;
 
