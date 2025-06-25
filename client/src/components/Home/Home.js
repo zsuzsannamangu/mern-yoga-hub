@@ -102,19 +102,15 @@ function Home({ showAlert }) {
         Yoga and Chocolate
       </motion.div>
       <motion.div
-        className="button-row"
+        className="BookAFreeConsultation_Button"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 1 }}
       >
-        <div className="BookAFreeConsultation_Button">
-          <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
-            Book a Free Session
-          </button>
-        </div>
-        <div className="BookAFreeConsultation_Button">
-          <button><a href="/chocolates">Buy Chocolate</a></button>
-        </div>
+        <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
+          Book a Free Session
+        </button>
+        <button><a href="/chocolates">Buy Chocolate</a></button>
       </motion.div>
       <motion.div
         className="images-row"
