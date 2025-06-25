@@ -17,12 +17,13 @@ const publicBookingsRoutes = require('./routes/publicBookings');
 const orderRoutes = require("./routes/orders");
 const passport = require('passport');
 const subscriberRoutes = require('./routes/subscribers');
-const rateLimit = require('express-rate-limit');
 require('./config/passport'); // load passport strategies
 
 const cookieParser = require('cookie-parser');
 
 const app = express();
+app.set('trust proxy', 1); // trust first proxy
+
 const server = http.createServer(app); // Wrap the Express app with HTTP server
 // Apply Helmet middleware
 app.use(helmet());
@@ -96,18 +97,6 @@ mongoose
 
 const path = require("path");
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-const subscriberLimiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute window
-  max: 5,              // limit each IP to 5 requests per minute
-  message: {
-    status: 429,
-    error: 'Too many subscription attempts from this IP, please try again later.',
-  },
-});
-
-// Apply rate limit only to the subscription endpoint
-app.use('/api/subscribers/subscribe', subscriberLimiter);
 
 // Register routes and pass `io` to specific routes
 app.use('/api/bookings', bookingsRoutes(io));

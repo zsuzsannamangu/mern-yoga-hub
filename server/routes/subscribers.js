@@ -1,9 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const rateLimit = require('express-rate-limit');
 const Subscriber = require('../models/Subscriber');
 const sgMail = require('@sendgrid/mail');
-
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+// Apply limiter to this POST route
+const subscriberLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 5,
+  message: {
+    status: 429,
+    error: 'Too many subscription attempts from this IP, please try again later.',
+  },
+});
 
 router.post('/subscribe', async (req, res) => {
   const { email } = req.body;

@@ -7,7 +7,7 @@
   max-width: 1200px;
   margin: 0 auto;
 
-  h2 {
+  h3 {
     color: $secondary-text-color;
     margin-bottom: 20px;
   }
@@ -17,25 +17,13 @@
     border-collapse: collapse;
     margin-top: 20px;
     background-color: $secondary-background-color;
+    font-family: $font-main;
 
     th,
     td {
-      text-align: left;
+      text-align: center;
       padding: 10px;
       border: 1px solid $border-color;
-
-      .delete-button {
-        background-color: $delete-button;
-        color: $button-text-color;
-        border: none;
-        border-radius: 5px;
-        padding: 5px 10px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: $delete-button-hover;
-        }
-      }
     }
 
     th {
@@ -52,22 +40,37 @@
       background-color: $content-background-color-hover;
     }
 
-    td a {
-      color: $tertiary-text-color;
-      text-decoration: none;
+    td {
+      a {
+        color: $tertiary-text-color;
+        text-decoration: none;
 
-      &:hover {
-        text-decoration: underline;
+        &:hover {
+          text-decoration: underline;
+        }
       }
-    }
 
-    .view-link {
-      color: $primary-button-color;
-      cursor: pointer;
+      .delete-button {
+        background-color: $delete-button;
+        color: $button-text-color;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
 
-      &:hover {
-        color: $primary-button-hover-color;
-        text-decoration: underline;
+        &:hover {
+          background-color: $delete-button-hover;
+        }
+      }
+
+      .view-link {
+        color: $primary-button-color;
+        cursor: pointer;
+
+        &:hover {
+          color: $primary-button-hover-color;
+          text-decoration: underline;
+        }
       }
     }
   }
@@ -78,9 +81,48 @@
     margin-top: 20px;
     color: $secondary-text-color;
   }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+
+    .page-item {
+      margin: 0 5px;
+      cursor: pointer;
+      color: $primary-button-color;
+      font-weight: bold;
+
+      &.active {
+        color: $button-text-color;
+        background-color: $primary-button-color;
+        border-radius: 50%;
+        padding: 5px 10px;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: space-evenly;
+
+    .icon {
+      cursor: pointer;
+      font-size: 18px;
+
+      &:hover {
+        color: $delete-button-hover;
+      }
+    }
+  }
 }
 
-// Responsive
+// Responsive Design
 @media (max-width: $breakpoint-lg) {
   .admin-subscribers {
     h2 {
@@ -89,7 +131,7 @@
 
     table th,
     table td {
-      font-size: 12px;
+      font-size: 14px;
       padding: 8px;
     }
   }
@@ -104,6 +146,10 @@
       font-size: 12px;
       padding: 6px;
     }
+
+    .pagination .page-item {
+      font-size: 12px;
+    }
   }
 }
 
@@ -117,5 +163,13 @@
         padding: 4px;
       }
     }
+
+    .pagination .page-item {
+      font-size: 10px;
+    }
   }
+}
+
+.swal-confirm-button {
+  color: white !important;
 }
