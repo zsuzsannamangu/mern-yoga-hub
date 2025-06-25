@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import './Home.scss';
+import './Unsubscribe.scss';
 
 const Unsubscribe = () => {
   const [searchParams] = useSearchParams();
