@@ -34,7 +34,7 @@ import AdminSignups from './components/Admin/AdminSignups';
 import AdminUsers from './components/Admin/AdminUsers';
 import AboutWebsite from "./components/AboutWebsite/AboutWebsite";
 import UserOAuthHandler from './components/User/UserOAuthHandler';
-import AdminSubscribers from '../components/admin/AdminSubscribers';
+import AdminSubscribers from './components/Admin/AdminSubscribers';
 
 // Protected routes for guarding user and admin routes
 import { UserProtectedRoute, AdminProtectedRoute } from './routes/ProtectedRoutes';
