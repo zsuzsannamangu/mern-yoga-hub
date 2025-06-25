@@ -162,14 +162,14 @@
     .mainTitle {
         font-size: 1.6rem;
         /* Slightly smaller font size for smaller screens */
-        margin-top: 40px;
+        margin-top: 30px;
         /* Reduce top margin for better spacing */
     }
 
     .BookAFreeConsultation_Button button {
         width: 50%;
-        /* Full-width button for smaller screens */
-        font-size: 14px;
+        /* 50%-width buttons for smaller screens */
+        font-size: 12px;
         /* Slightly smaller font */
     }
 
@@ -178,12 +178,12 @@
         /* Stack images vertically on smaller screens */
         gap: 10px;
         /* Reduce gap */
-        margin: 40px auto;
+        margin: 20px auto;
     }
 
     .left-image {
         max-width: 100%;
-        /* Ensure images take full width on smaller screens */
+        /* Ensure image takes full width on smaller screens */
     }
 
     #homeimage-1 {
