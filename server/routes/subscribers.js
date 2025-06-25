@@ -43,7 +43,7 @@ router.post('/subscribe', subscriberLimiter, async (req, res) => {
             <p>Hello,</p>
             <p>Thank you for signing up for updates about Yoga & ReTreat Chocolates!</p>
             <p>I'm excited to share upcoming classes, events, and delicious new creations with you.</p>
-            <p>With gratitude,<br/>Zsuzsanna</p>
+            <p>With gratitude,<br/>Zsuzsanna<br/>yogaandchocolate.com</p>
             <br/><br/>
             <p>If you'd like to unsubscribe, click here: 
             <a href="https://yogaandchocolate.com/unsubscribe?email=${encodeURIComponent(email)}">Unsubscribe</a>
