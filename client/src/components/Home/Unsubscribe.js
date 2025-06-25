@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import './Home.scss';
 
 const Unsubscribe = () => {
   const [searchParams] = useSearchParams();
@@ -36,7 +37,7 @@ const Unsubscribe = () => {
 
   if (status === 'loading') return <p>Processing your request...</p>;
   if (status === 'invalid') return <p>Invalid request. No email provided.</p>;
-  if (status === 'success') return <p>You’ve been unsubscribed successfully. We’re sorry to see you go!</p>;
+  if (status === 'success') return <p>You’ve been unsubscribed successfully. I'm sorry to see you go!</p>;
   if (status === 'error') return <p>Something went wrong. Please try again later.</p>;
 };
 
