@@ -8,6 +8,7 @@ const router = express.Router();
 const dotenv = require('dotenv');
 const User = require('../models/User');
 const fetch = require('node-fetch'); // For reCAPTCHA validation
+const Subscriber = require('../models/Subscriber');
 dotenv.config();
 
 // Admin Login
@@ -137,28 +138,39 @@ router.delete('/bookings/cleanup', async (req, res) => {
 });
 
 // GET all users for the admin page
-router.get('/users', async (req, res) => {
-    try {
-        const users = await User.find(); // Fetch all users, use model: User
-        res.status(200).json(users);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch users." });
-    }
+router.get('/users', authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch users." });
+  }
 });
 
-// DELETE a specific user by ID (Admin use only)
-router.delete('/users/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const deletedUser = await User.findByIdAndDelete(id);
-        if (!deletedUser) {
-            return res.status(404).json({ message: 'User not found.' });
-        }
-        res.status(200).json({ message: 'User deleted successfully.' });
-    } catch (error) {
-        console.error('Error deleting user:', error);
-        res.status(500).json({ message: 'Server error while deleting user.' });
+// DELETE a specific user by ID (Admin only)
+router.delete('/users/:id', authMiddleware, adminMiddleware, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedUser = await User.findByIdAndDelete(id);
+    if (!deletedUser) {
+      return res.status(404).json({ message: 'User not found.' });
     }
+    res.status(200).json({ message: 'User deleted successfully.' });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ message: 'Server error while deleting user.' });
+  }
+});
+
+// GET all newsletter subscribers (Admin only)
+router.get('/subscribers', authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const subscribers = await Subscriber.find().sort({ subscribedAt: -1 });
+    res.status(200).json(subscribers);
+  } catch (error) {
+    console.error('Error fetching subscribers:', error);
+    res.status(500).json({ message: 'Failed to fetch subscribers.' });
+  }
 });
 
 module.exports = router;

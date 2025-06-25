@@ -1,5 +1,5 @@
 /* global grecaptcha */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Home.scss';
 import '../../App.scss';
 import Swal from 'sweetalert2';
@@ -8,6 +8,8 @@ import { getRecaptchaToken } from '../../utils/recaptcha';
 import { motion } from 'framer-motion';
 
 function Home({ showAlert }) {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   useEffect(() => {
     // Dynamically add reCAPTCHA script
     const siteKey = process.env.REACT_APP_CAPTCHA_SITE_KEY;
@@ -88,6 +90,64 @@ function Home({ showAlert }) {
         icon: 'error',
         confirmButtonText: 'OK'
       });
+    }
+  };
+
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+
+    if (isSubmitting) return;
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) return;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      Swal.fire({
+        title: 'Invalid Email',
+        text: 'Please enter a valid email address.',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API}/api/subscribers/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: trimmedEmail }),
+      });
+
+      if (response.status === 409) {
+        Swal.fire({
+          title: 'Already Subscribed',
+          text: 'This email is already on our list.',
+          icon: 'info',
+          confirmButtonText: 'OK'
+        });
+      } else if (!response.ok) {
+        throw new Error('Subscription failed');
+      } else {
+        Swal.fire({
+          title: 'Subscribed!',
+          text: 'Thanks for signing up! 🎉',
+          icon: 'success',
+          confirmButtonText: 'Awesome'
+        });
+        setEmail('');
+      }
+    } catch (error) {
+      Swal.fire({
+        title: 'Oops!',
+        text: 'We couldn’t process your subscription.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -181,6 +241,29 @@ function Home({ showAlert }) {
           </form>
         </div>
       </motion.div>
+      <motion.section
+        className="newsletter"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+      >
+        <h3>Stay in the loop</h3>
+        <p>Get updates about yoga classes, events, and chocolate drops.</p>
+        <form onSubmit={handleNewsletterSubmit}>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+            required
+          />
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Submitting...' : 'Subscribe'}
+          </button>
+
+        </form>
+      </motion.section>
     </div >
   );
 }

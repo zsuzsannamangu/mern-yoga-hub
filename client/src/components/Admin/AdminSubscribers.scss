@@ -1,0 +1,121 @@
+@use '../../styles/variables' as *;
+
+.admin-subscribers {
+  padding: 20px;
+  font-family: $font-main;
+  background-color: $background-color;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  h2 {
+    color: $secondary-text-color;
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: $secondary-background-color;
+
+    th,
+    td {
+      text-align: left;
+      padding: 10px;
+      border: 1px solid $border-color;
+
+      .delete-button {
+        background-color: $delete-button;
+        color: $button-text-color;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $delete-button-hover;
+        }
+      }
+    }
+
+    th {
+      background-color: $background-color;
+      color: $text-color;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: $content-background-color;
+    }
+
+    tr:hover {
+      background-color: $content-background-color-hover;
+    }
+
+    td a {
+      color: $tertiary-text-color;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .view-link {
+      color: $primary-button-color;
+      cursor: pointer;
+
+      &:hover {
+        color: $primary-button-hover-color;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .no-subscribers {
+    text-align: center;
+    font-size: 16px;
+    margin-top: 20px;
+    color: $secondary-text-color;
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-lg) {
+  .admin-subscribers {
+    h2 {
+      font-size: 22px;
+    }
+
+    table th,
+    table td {
+      font-size: 12px;
+      padding: 8px;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .admin-subscribers {
+    padding: 10px;
+
+    table th,
+    table td {
+      font-size: 12px;
+      padding: 6px;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .admin-subscribers {
+    table {
+      font-size: 10px;
+
+      th,
+      td {
+        padding: 4px;
+      }
+    }
+  }
+}

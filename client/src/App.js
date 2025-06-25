@@ -34,6 +34,7 @@ import AdminSignups from './components/Admin/AdminSignups';
 import AdminUsers from './components/Admin/AdminUsers';
 import AboutWebsite from "./components/AboutWebsite/AboutWebsite";
 import UserOAuthHandler from './components/User/UserOAuthHandler';
+import AdminSubscribers from '../components/admin/AdminSubscribers';
 
 // Protected routes for guarding user and admin routes
 import { UserProtectedRoute, AdminProtectedRoute } from './routes/ProtectedRoutes';
@@ -85,7 +86,7 @@ function App() {
 
                 {/* User Protected Routes */}
                 {/* This is the protected route that expects the token to be already present */}
-                <Route 
+                <Route
                   path="/user/:userId/*"
                   element={
                     <UserProtectedRoute>
@@ -149,6 +150,14 @@ function App() {
                   element={
                     <AdminProtectedRoute>
                       <AdminUsers showAlert={showAlert} />
+                    </AdminProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/subscribers"
+                  element={
+                    <AdminProtectedRoute>
+                      <AdminSubscribers showAlert={showAlert} />
                     </AdminProtectedRoute>
                   }
                 />
