@@ -152,7 +152,7 @@
     background-color: $primary-button-hover-color;
 }
 
-#newsletter {
+.newsletter {
     margin-top: 3rem;
 
     p {
@@ -165,8 +165,8 @@
 
     form {
         display: flex;
-        justify-content: left;
-        align-items: left;
+        justify-content: center;
+        align-items: center;
         gap: 1rem;
         flex-wrap: wrap;
 
@@ -188,8 +188,8 @@
             font-size: 1.1rem;
             cursor: pointer;
             font-family: $font-secondary;
-            width: 100%;
-            max-width: 200px;
+            width: 80%;
+            max-width: 150px;
             margin: 0;
 
             &:disabled {

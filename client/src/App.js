@@ -83,6 +83,7 @@ function App() {
                 <Route path="/aboutwebsite" element={<AboutWebsite />} />
                 {/* This handles the token and redirects to the user page */}
                 <Route path="/user/oauth" element={<UserOAuthHandler />} />
+                <Route path="/unsubscribe" element={<Unsubscribe />} />
 
                 {/* User Protected Routes */}
                 {/* This is the protected route that expects the token to be already present */}
