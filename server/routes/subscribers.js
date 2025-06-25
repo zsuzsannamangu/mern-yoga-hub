@@ -4,11 +4,13 @@ const rateLimit = require('express-rate-limit');
 const Subscriber = require('../models/Subscriber');
 const sgMail = require('@sendgrid/mail');
 
+// Set your SendGrid API key
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+// Rate limiter to prevent abuse
 const subscriberLimiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 5,
+  windowMs: 60 * 1000, // 1 minute window
+  max: 5,              // max 5 requests per IP per minute
   message: {
     status: 429,
     error: 'Too many subscription attempts from this IP, please try again later.',
@@ -24,27 +26,30 @@ router.post('/subscribe', subscriberLimiter, async (req, res) => {
 
   try {
     const existing = await Subscriber.findOne({ email });
-    if (existing) return res.status(409).json({ message: 'Already subscribed' });
+    if (existing) {
+      return res.status(409).json({ message: 'Already subscribed' });
+    }
 
     await Subscriber.create({ email });
 
-    // Send welcome email
     const msg = {
       to: email,
-      from: process.env.FROM_EMAIL,
+      from: process.env.FROM_EMAIL, // must be verified in SendGrid
       subject: 'Welcome to Yoga & Chocolate!',
       html: `
         <p>Hello,</p>
         <p>Thank you for signing up for updates about Yoga & ReTreat Chocolates!</p>
         <p>I'm excited to share upcoming classes, events, and delicious new creations with you.</p>
         <p>With gratitude,<br/>Zsuzsanna</p>
-      `
+      `,
     };
 
+    // Send welcome email, but don’t fail if it breaks
     try {
       await sgMail.send(msg);
+      console.log(`Welcome email sent to ${email}`);
     } catch (emailErr) {
-      console.error('Email send error:', emailErr); // Log but don’t fail request
+      console.error('SendGrid error:', emailErr.response?.body || emailErr.message);
     }
 
     res.status(200).json({ message: 'Subscribed (email sent if possible)' });
@@ -56,11 +61,12 @@ router.post('/subscribe', subscriberLimiter, async (req, res) => {
 
 router.post('/unsubscribe', async (req, res) => {
   const { email } = req.body;
+
   try {
     await Subscriber.deleteOne({ email });
     res.status(200).send('Unsubscribed successfully');
   } catch (err) {
-    console.error(err);
+    console.error('Unsubscribe error:', err);
     res.status(500).send('Error unsubscribing');
   }
 });

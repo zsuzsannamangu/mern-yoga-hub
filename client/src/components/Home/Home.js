@@ -259,7 +259,7 @@ function Home({ showAlert }) {
           <h1 className="section-title">News</h1>
         </div>
         <div className="right-section">
-          <p>Get updates about yoga classes, events, and chocolate drops.</p>
+          <p>Get updates about yoga classes, events, and new chocolates.</p>
           <form onSubmit={handleNewsletterSubmit}>
             <input
               type="email"
