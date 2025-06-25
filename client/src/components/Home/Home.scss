@@ -152,6 +152,24 @@
     background-color: $primary-button-hover-color;
 }
 
+.newsletter {
+    background-color: #fef9f4;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+
+    input {
+        padding: 0.5rem;
+        margin-right: 0.5rem;
+        width: 250px;
+    }
+
+    button {
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+    }
+}
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .main-section {
