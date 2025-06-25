@@ -173,4 +173,19 @@ router.get('/subscribers', authMiddleware, adminMiddleware, async (req, res) => 
   }
 });
 
+// DELETE a newsletter subscriber by ID (Admin only)
+router.delete('/subscribers/:id', authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Subscriber.findByIdAndDelete(id);
+    if (!deleted) {
+      return res.status(404).json({ message: 'Subscriber not found.' });
+    }
+    res.status(200).json({ message: 'Subscriber deleted successfully.' });
+  } catch (error) {
+    console.error('Error deleting subscriber:', error);
+    res.status(500).json({ message: 'Failed to delete subscriber.' });
+  }
+});
+
 module.exports = router;

@@ -254,21 +254,25 @@ function Home({ showAlert }) {
         viewport={{ once: true }}
         transition={{ duration: 1 }}
       >
-        <h3>Stay in the loop</h3>
-        <p>Get updates about yoga classes, events, and chocolate drops.</p>
-        <form onSubmit={handleNewsletterSubmit}>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-            required
-          />
-          <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Submitting...' : 'Subscribe'}
-          </button>
+        <div className="main-left">
+          <h1 className="section-title">My newsletter</h1>
+        </div>
+        <div className="right-section">
+          <p>Get updates about yoga classes, events, and chocolate drops.</p>
+          <form onSubmit={handleNewsletterSubmit}>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              required
+            />
+            <button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Submitting...' : 'Subscribe'}
+            </button>
 
-        </form>
+          </form>
+        </div>
       </motion.section>
     </div >
   );
