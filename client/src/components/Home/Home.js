@@ -250,7 +250,8 @@ function Home({ showAlert }) {
         </div>
       </motion.div>
       <motion.section
-        className="newsletter"
+        className="main-row"
+        id="newsletter"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
