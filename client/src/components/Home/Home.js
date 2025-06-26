@@ -165,11 +165,9 @@ function Home({ showAlert }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        <motion.div
+        {/* <motion.div
           className="hero-overlay"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 1 }}
         >
           <div className="hero-buttons">
             <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
@@ -179,7 +177,7 @@ function Home({ showAlert }) {
               <a href="/chocolates">Buy Chocolate</a>
             </button>
           </div>
-        </motion.div>
+        </motion.div> */}
       </motion.div>
 
       <div className='main-section'>
