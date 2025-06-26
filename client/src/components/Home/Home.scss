@@ -54,13 +54,13 @@
         }
 
         &.left {
-            top: 60%;
-            left: 10%;
+            top: 45%; // Adjust to mid-torso
+            left: 8%;
         }
 
         &.right {
-            bottom: 20%;
-            right: 10%;
+            top: 60%; // Slightly below center
+            right: 8%; // Over chocolates
         }
     }
 }
