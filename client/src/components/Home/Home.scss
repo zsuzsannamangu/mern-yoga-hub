@@ -13,47 +13,6 @@
     text-align: center;
 }
 
-.about-top {
-    position: relative;
-    background-image: url('/../public/images/chocolates/Truffles_1.jpg');
-    background-size: cover;
-    height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-position: center;
-    padding-bottom: 60px;
-}
-
-.overlay {
-    background-color: rgba(255, 255, 255, 0.826);
-    /* White overlay with transparency */
-    padding: 30px 10px;
-    /* Adds more padding for height */
-    border-radius: 8px;
-    width: 50%;
-    /* Adjust width to be narrower */
-    max-width: 500px;
-    /* Restricts maximum width */
-    text-align: left;
-    color: $text-color;
-    /* Dark brown text color */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* Centered and slightly offset */
-    position: relative;
-    left: -25%;
-    /* Offset to the left (adjustable for centering over image) */
-    transform: translateY(-10%);
-    /* Vertically adjust to keep centered with the image */
-
-    @media (max-width: 768px) {
-        bottom: -7%;
-    }
-}
-
 .mainTitle {
     font-size: 2.5rem;
     color: $main-title-color;
@@ -62,6 +21,27 @@
     margin-top: 80px;
     margin-left: 0;
     margin-right: 0;
+}
+
+.hero-images {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0 auto;
+
+  img {
+    flex: 1 1 50%;
+    width: 50%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    img {
+      width: 100%;
+      flex: 1 1 100%;
+    }
+  }
 }
 
 /* Book Consultation Button */
