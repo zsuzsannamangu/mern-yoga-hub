@@ -184,8 +184,8 @@ function Home({ showAlert }) {
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
       >
-        <img src="./images/yoga/YogaHero1.jpg" alt="Yoga Banner 1" />
-        <img src="./images/yoga/YogaHero2.jpg" alt="Yoga Banner 2" />
+        <img src="./images/Zsuzsi/Zsuzsi_and_chocolates_sm_2.jpg" alt="Yoga Banner 1" />
+        <img src="./images/yoga/Zsuzsi_Home_22.jpg" alt="Yoga Banner 2" />
       </motion.div>
 
       <motion.div
