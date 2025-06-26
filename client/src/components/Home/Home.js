@@ -157,156 +157,37 @@ function Home({ showAlert }) {
     }
   };
 
-  //   return (
-  //     <div className="main-section">
-  //       <motion.div
-  //         className="mainTitle"
-  //         initial={{ opacity: 0, y: -20 }}
-  //         animate={{ opacity: 1, y: 0 }}
-  //         transition={{ duration: 1 }}
-  //       >
-  //         Yoga and Chocolate
-  //       </motion.div>
-  //       <motion.div
-  //         className="BookAFreeConsultation_Button"
-  //         initial={{ opacity: 0 }}
-  //         animate={{ opacity: 1 }}
-  //         transition={{ delay: 0.5, duration: 1 }}
-  //       >
-  //         <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
-  //           Book a Free Session
-  //         </button>
-  //         <button><a href="/chocolates">Buy Chocolate</a></button>
-  //       </motion.div>
-  //       <motion.div
-  //         className="images-row"
-  //         initial={{ opacity: 0 }}
-  //         animate={{ opacity: 1 }}
-  //         transition={{ delay: 1, duration: 1 }}
-  //       >
-  //         <img src="./images/yoga/Zsuzsi_Home_111.jpg" alt="Yoga Vertical" className="left-image" id="homeimage-1" />
-  //         <img src="./images/yoga/Zsuzsi_Home_22.jpg" alt="Yoga Horizontal" className="left-image" id="homeimage-2" />
-  //         <img src="./images/yoga/Zsuzsi_Home_44.jpg" alt="Yoga Horizontal" className="left-image" id="homeimage-3" />
-  //       </motion.div>
-  //       <motion.div
-  //         className="main-row"
-  //         id="about-section"
-  //         initial={{ opacity: 0, y: 30 }}
-  //         whileInView={{ opacity: 1, y: 0 }}
-  //         viewport={{ once: true }}
-  //         transition={{ duration: 1 }}
-  //       >
-  //         <div className="main-left">
-  //           <h1 className="section-title">About</h1>
-  //           <div className="title-line"></div>
-  //         </div>
-  //         <div className="right-section">
-  //           <p>In my work, I create a space for gentle exploration and grounded presence. Together, we’ll journey through practices of movement and stillness, attuning to the wisdom within the body.</p>
-  //           <p>I weave together somatic practices, breathwork, Ayurvedic wisdom, meditation, sensory experiences, and movement to support holistic well-being. I teach gentle slow flow, hatha, restorative and adaptive yoga, and mindfulness practices, creating space for self-compassion
-  //             and a deeper connection to the present moment.</p>
-  //         </div>
-  //       </motion.div>
-  //       <motion.div
-  //         className="main-row"
-  //         id="book-section"
-  //         initial={{ opacity: 0, y: 30 }}
-  //         whileInView={{ opacity: 1, y: 0 }}
-  //         viewport={{ once: true }}
-  //         transition={{ duration: 1 }}
-  //       >
-  //         <div className="main-left">
-  //           <h1 className="section-title">Book</h1>
-  //           <div className="title-line"></div>
-  //         </div>
-  //         <div className="right-section">
-  //           <p>Book a free 30-minute online session where we’ll take time to connect and talk about you and any goals you might have. </p>
-  //           <form className="booking-form" onSubmit={handleSubmit}>
-  //             <label>
-  //               <input type="text" name="name" placeholder="Name" required />
-  //             </label>
-  //             <label>
-  //               <input type="email" name="email" placeholder="Email" required />
-  //             </label>
-  //             <label>
-  //               <input type="tel" name="phone" placeholder="Phone" required />
-  //             </label>
-  //             <label>
-  //               What are you interested in?
-  //               <select name="session-type" required>
-  //                 <option value="private yoga">Individual Yoga Class</option>
-  //                 <option value="group yoga">Group Yoga Class</option>
-  //                 <option value="yoga therapy">Therapeutic Yoga</option>
-  //               </select>
-  //             </label>
-  //             <label>
-  //               Message
-  //               <textarea name="message" rows="10" placeholder="Anything you want me to know? (No sensitive information here please!)" />
-  //             </label>
-  //             <div id="recaptcha-container" className="g-recaptcha"></div>
-  //             <button type="submit">Submit</button>
-  //           </form>
-  //         </div>
-  //       </motion.div>
-  //       <motion.section
-  //         className="newsletter"
-  //         initial={{ opacity: 0 }}
-  //         whileInView={{ opacity: 1 }}
-  //         viewport={{ once: true }}
-  //         transition={{ duration: 1 }}
-  //       >
-  //         <p>Get updates about yoga classes, workshops, events, and new chocolates.</p>
-  //         <form onSubmit={handleNewsletterSubmit}>
-  //           <input
-  //             type="email"
-  //             value={email}
-  //             onChange={(e) => setEmail(e.target.value)}
-  //             placeholder="Enter your email"
-  //             required
-  //           />
-  //           <button type="submit" disabled={isSubmitting}>
-  //             {isSubmitting ? 'Submitting...' : 'Subscribe'}
-  //           </button>
-  //         </form>
-  //       </motion.section>
-  //     </div >
-  //   );
-  // }
-
   return (
     <div className="main-section">
-      <div className='about-top'>
-        <div className='overlay'>
-          <motion.div
-            className="mainTitle"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            Yoga and Chocolate
-          </motion.div>
-          <motion.div
-            className="BookAFreeConsultation_Button"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-          >
-            <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
-              Book a Free Session
-            </button>
-            <button><a href="/chocolates">Buy Chocolate</a></button>
-          </motion.div>
-          <motion.div
-            className="images-row"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 1 }}
-          >
-            <img src="./images/yoga/Zsuzsi_Home_111.jpg" alt="Yoga Vertical" className="left-image" id="homeimage-1" />
-            <img src="./images/yoga/Zsuzsi_Home_22.jpg" alt="Yoga Horizontal" className="left-image" id="homeimage-2" />
-            <img src="./images/yoga/Zsuzsi_Home_44.jpg" alt="Yoga Horizontal" className="left-image" id="homeimage-3" />
-          </motion.div>
-        </div>
-      </div>
+      <motion.div
+        className="mainTitle"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        Yoga and Chocolate
+      </motion.div>
+      <motion.div
+        className="BookAFreeConsultation_Button"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 1 }}
+      >
+        <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
+          Book a Free Session
+        </button>
+        <button><a href="/chocolates">Buy Chocolate</a></button>
+      </motion.div>
+      <motion.div
+        className="hero-images"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+      >
+        <img src="./images/yoga/YogaHero1.jpg" alt="Yoga Banner 1" />
+        <img src="./images/yoga/YogaHero2.jpg" alt="Yoga Banner 2" />
+      </motion.div>
+
       <motion.div
         className="main-row"
         id="about-section"
