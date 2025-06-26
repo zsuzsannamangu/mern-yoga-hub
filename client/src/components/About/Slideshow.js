@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 const Slideshow = () => {
     const settings = {
         dots: true,
-        speed: 500,
+        speed: 1200,
         slidesToShow: 4,
         slidesToScroll: 2,
         infinite: true,
