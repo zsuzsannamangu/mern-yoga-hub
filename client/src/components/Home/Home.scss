@@ -13,6 +13,47 @@
     text-align: center;
 }
 
+.about-top {
+    position: relative;
+    background-image: url('/../public/images/chocolates/Truffles_1.jpg');
+    background-size: cover;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+    padding-bottom: 60px;
+}
+
+.overlay {
+    background-color: rgba(255, 255, 255, 0.826);
+    /* White overlay with transparency */
+    padding: 30px 10px;
+    /* Adds more padding for height */
+    border-radius: 8px;
+    width: 50%;
+    /* Adjust width to be narrower */
+    max-width: 500px;
+    /* Restricts maximum width */
+    text-align: left;
+    color: $text-color;
+    /* Dark brown text color */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* Centered and slightly offset */
+    position: relative;
+    left: -25%;
+    /* Offset to the left (adjustable for centering over image) */
+    transform: translateY(-10%);
+    /* Vertically adjust to keep centered with the image */
+
+    @media (max-width: 768px) {
+        bottom: -7%;
+    }
+}
+
 .mainTitle {
     font-size: 2.5rem;
     color: $main-title-color;
@@ -155,10 +196,9 @@
 .newsletter {
     margin-top: 4rem;
     width: 100%;
-    max-width: 900px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    background-color: $secondary-background-color;
     padding: 2rem 2.5rem;
     border-radius: 8px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
