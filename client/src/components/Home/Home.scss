@@ -35,22 +35,22 @@
 }
 
 .hero-buttons {
-    margin-top: 1rem;
+    position: absolute;
+    top: 55%; // Move down more if needed
+    left: 47%; // Move left (lower % moves it right)
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 1rem;
+    z-index: 2;
 
     button {
-        margin: 0 0.5rem;
         background-color: #b8a641;
-        border: none;
         padding: 0.75rem 1.5rem;
+        border: none;
         color: white;
         font-weight: bold;
         cursor: pointer;
         border-radius: 4px;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-            background-color: #9c8c35;
-        }
 
         a {
             color: white;
@@ -256,33 +256,6 @@
         /* Reduce padding for smaller screens */
     }
 
-    .mainTitle {
-        font-size: 1.6rem;
-        /* Slightly smaller font size for smaller screens */
-        margin-top: 30px;
-        /* Reduce top margin for better spacing */
-    }
-
-    .BookAFreeConsultation_Button button {
-        width: 60%;
-        /* 50%-width buttons for smaller screens */
-        font-size: 13px;
-        /* Slightly smaller font */
-    }
-
-    .images-row {
-        flex-direction: flex;
-        /* Stack images vertically on smaller screens */
-        gap: 10px;
-        /* Reduce gap */
-        margin: 20px auto;
-    }
-
-    .left-image {
-        max-width: 100%;
-        /* Ensure image takes full width on smaller screens */
-    }
-
     #homeimage-1 {
         max-width: 0%;
     }
@@ -365,6 +338,9 @@
 
 /* Responsive Adjustments */
 @media (min-width: 769px) and (max-width: 1024px) {
+    .home-hero-banner {
+        background-image: url('/../public/images/yoga/Zsuzsi_Home_22.jpg');
+    }
 
     .main-section {
         margin-left: 3%;
