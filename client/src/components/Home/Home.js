@@ -160,32 +160,26 @@ function Home({ showAlert }) {
   return (
     <div className="main-section">
       <motion.div
-        className="mainTitle"
-        initial={{ opacity: 0, y: -20 }}
+        className="home-hero-banner"
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        Yoga and Chocolate
-      </motion.div>
-      <motion.div
-        className="BookAFreeConsultation_Button"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5, duration: 1 }}
-      >
-        <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
-          Book a Free Session
-        </button>
-        <button><a href="/chocolates">Buy Chocolate</a></button>
-      </motion.div>
-      <motion.div
-        className="hero-images"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-      >
-        <img src="./images/yoga/Zsuzsi_Home_22.jpg" alt="Yoga Banner" />
-        <img src="./images/Zsuzsi/Zsuzsi_and_chocolates_sm_2.jpg" alt="Chocolate Banner" />
+        <motion.div
+          className="hero-overlay"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 1 }}
+        >
+          <div className="hero-buttons">
+            <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
+              Book a Free Session
+            </button>
+            <button>
+              <a href="/chocolates">Buy Chocolate</a>
+            </button>
+          </div>
+        </motion.div>
       </motion.div>
 
       <motion.div
