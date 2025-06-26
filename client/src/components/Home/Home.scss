@@ -29,9 +29,8 @@
 
 .hero-buttons {
     position: absolute;
-    top: 95%; // Move down more if needed
-    left: 40%; // Move left (lower % moves it right)
-    transform: translate(-50%, -50%);
+    top: 92%; // Move down more if needed
+    left: 43%; // Move left (lower % moves it right)
     display: flex;
     gap: 1rem;
     z-index: 2;
