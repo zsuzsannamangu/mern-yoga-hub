@@ -85,9 +85,6 @@ const Slideshow = () => {
                     <img src='/images/Zsuzsi/18.jpg' alt="Sit on heels" />
                 </div>
                 <div>
-                    <img src='/images/Zsuzsi/190.jpg' alt="Sit crosslegged" />
-                </div>
-                <div>
                     <img src='/images/Zsuzsi/200.jpg' alt="Twist" />
                 </div>
                 <div>
