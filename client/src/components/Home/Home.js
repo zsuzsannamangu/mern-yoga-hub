@@ -159,7 +159,7 @@ function Home({ showAlert }) {
 
   return (
     <div className="homepage">
-      <motion.div
+      {/* <motion.div
         className="topscreen"
         initial={{ opacity: 0, y: 20 }}
       >
@@ -171,7 +171,7 @@ function Home({ showAlert }) {
             <a href="/chocolates">Buy Chocolate</a>
           </button>
         </div>
-      </motion.div>
+      </motion.div> */}
       <motion.div
         className="home-hero-banner"
         initial={{ opacity: 0, y: 30 }}
