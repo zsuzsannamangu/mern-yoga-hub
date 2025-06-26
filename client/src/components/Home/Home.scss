@@ -13,24 +13,17 @@
     text-align: center;
 }
 
-.home-hero-banner {
-    background-image: url('/../public/images/YogaChocolateBanner.png');
-    background-size: cover;
-    background-position: center bottom;
-    background-repeat: no-repeat;
-    height: 90vh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-position: center;
-    padding-bottom: 60px;
+.topscreen {
+    padding: 2rem;
+    text-align: center;
+    border-radius: 10px;
 }
 
 .hero-buttons {
     position: absolute;
-    top: 92%; // Move down more if needed
-    left: 41%; // Move left (lower % moves it right)
+    top: 55%; // Move down more if needed
+    left: 47%; // Move left (lower % moves it right)
+    transform: translate(-50%, -50%);
     display: flex;
     gap: 1rem;
     z-index: 2;
@@ -49,6 +42,20 @@
             text-decoration: none;
         }
     }
+}
+
+.home-hero-banner {
+    background-image: url('/../public/images/YogaChocolateBanner.png');
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    height: 90vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: center;
+    padding-bottom: 60px;
 }
 
 

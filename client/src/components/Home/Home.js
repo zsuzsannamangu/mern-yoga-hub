@@ -160,24 +160,24 @@ function Home({ showAlert }) {
   return (
     <div className="homepage">
       <motion.div
+        className="topscreen"
+        initial={{ opacity: 0, y: 20 }}
+      >
+        <div className="hero-buttons">
+          <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
+            Book a Free Session
+          </button>
+          <button>
+            <a href="/chocolates">Buy Chocolate</a>
+          </button>
+        </div>
+      </motion.div>
+      <motion.div
         className="home-hero-banner"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        {/* <motion.div
-          className="hero-overlay"
-          initial={{ opacity: 0, y: 20 }}
-        >
-          <div className="hero-buttons">
-            <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
-              Book a Free Session
-            </button>
-            <button>
-              <a href="/chocolates">Buy Chocolate</a>
-            </button>
-          </div>
-        </motion.div> */}
       </motion.div>
 
       <div className='main-section'>
