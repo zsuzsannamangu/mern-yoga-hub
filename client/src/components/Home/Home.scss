@@ -256,16 +256,8 @@
         /* Reduce padding for smaller screens */
     }
 
-    #homeimage-1 {
-        max-width: 0%;
-    }
-
-    #homeimage-2 {
-        max-width: 95%;
-    }
-
-    #homeimage-3 {
-        max-width: 0%;
+    .home-hero-banner {
+        background-image: url('/../public/images/yoga/Zsuzsi_Home_22.jpg');
     }
 
     .main-row {
