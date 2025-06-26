@@ -159,8 +159,6 @@ function Home({ showAlert }) {
 
   return (
     <div className="homepage">
-      import {motion} from 'framer-motion';
-
       <motion.div
         className="home-hero-banner"
         initial={{ opacity: 0, y: 30 }}
