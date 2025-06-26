@@ -27,17 +27,10 @@
     padding-bottom: 60px;
 }
 
-.hero-overlay {
-    background-color: rgba(255, 255, 255, 0.75);
-    padding: 2rem;
-    text-align: center;
-    border-radius: 10px;
-}
-
 .hero-buttons {
     position: absolute;
-    top: 55%; // Move down more if needed
-    left: 47%; // Move left (lower % moves it right)
+    top: 85%; // Move down more if needed
+    left: 35%; // Move left (lower % moves it right)
     transform: translate(-50%, -50%);
     display: flex;
     gap: 1rem;
