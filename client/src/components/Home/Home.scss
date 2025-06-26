@@ -211,7 +211,9 @@
             border: 1px solid $border-color;
             font-family: $font-secondary;
             font-size: 1rem;
-            flex-grow: 1;
+            flex-grow: 0; // prevent full width
+            width: 300px; // add fixed or max width
+            max-width: 90vw; // keeps it responsive
             min-width: 220px;
         }
 
@@ -237,6 +239,7 @@
             }
         }
     }
+
 }
 
 /* Responsive Adjustments */
@@ -336,17 +339,5 @@
     .left-image {
         max-width: 50%;
         /* Ensure images take full width on smaller screens */
-    }
-
-    #homeimage-1 {
-        max-width: 0%;
-    }
-
-    #homeimage-2 {
-        max-width: 50%;
-    }
-
-    #homeimage-3 {
-        max-width: 50%;
     }
 }
