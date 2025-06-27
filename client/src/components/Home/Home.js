@@ -259,7 +259,7 @@ function Home({ showAlert }) {
           </div>
         </motion.div>
       </div>
-      <motion.section
+      {/* <motion.section
         className="newsletter"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -279,7 +279,7 @@ function Home({ showAlert }) {
             {isSubmitting ? 'Submitting...' : 'Subscribe'}
           </button>
         </form>
-      </motion.section>
+      </motion.section> */}
     </div >
   );
 }
