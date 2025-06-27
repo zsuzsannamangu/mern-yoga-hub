@@ -178,7 +178,7 @@ function Home({ showAlert }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        <a href="/about" className="hero-link left" aria-label="Go to Yoga page"></a>
+        <a onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })} className="hero-link left" aria-label="Go to Yoga page"></a>
         <a href="/chocolates" className="hero-link right" aria-label="Go to Chocolate page"></a>
       </motion.div>
 
@@ -244,8 +244,7 @@ function Home({ showAlert }) {
         </motion.div>
       </div>
       <motion.section
-        className="right-section"
-        id="newsletter"
+        className="newsletter"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
