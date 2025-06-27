@@ -170,63 +170,6 @@
     background-color: $primary-button-hover-color;
 }
 
-.newsletter {
-    margin-top: 4rem;
-    width: 100%;
-    max-width: 800px;
-    border-radius: 8px;
-
-    p {
-        font-size: 1.1rem;
-        font-family: $font-main;
-        color: $text-color;
-        margin-bottom: 1.5rem;
-    }
-
-    form {
-        display: flex;
-        flex-direction: row;
-        align-items: stretch;
-        gap: 1rem;
-        flex-wrap: wrap;
-
-        input[type='email'] {
-            padding: 12px;
-            border-radius: 4px;
-            border: 1px solid $border-color;
-            font-family: $font-secondary;
-            font-size: 1rem;
-            flex-grow: 0; // prevent full width
-            width: 300px; // add fixed or max width
-            max-width: 90vw; // keeps it responsive
-            min-width: 220px;
-        }
-
-        button {
-            padding: 12px 24px;
-            font-size: 1.1rem;
-            font-family: $font-secondary;
-            background-color: $primary-button-color;
-            color: $button-text-color;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            min-width: 120px;
-            transition: background-color 0.3s ease;
-
-            &:hover {
-                background-color: $primary-button-hover-color;
-            }
-
-            &:disabled {
-                background-color: #ccc;
-                cursor: not-allowed;
-            }
-        }
-    }
-
-}
-
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .main-section {
@@ -280,28 +223,6 @@
         padding: 8px 16px;
         width: 100%;
         /* Full-width button */
-    }
-
-    .newsletter {
-
-        p {
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        form {
-            gap: 0.8rem;
-
-            input[type='email'] {
-                padding: 8px;
-                font-size: 0.95rem;
-            }
-
-            button {
-                font-size: 0.95rem;
-                padding: 8px;
-            }
-        }
     }
 }
 
