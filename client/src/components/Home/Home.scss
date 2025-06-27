@@ -36,19 +36,34 @@
 }
 
 .home-hero-banner {
-    background-image: url('/../public/images/YogaChocolateBanner.png');
-    background-size: cover;
-    background-position: center bottom;
-    background-repeat: no-repeat;
-    height: 90vh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-position: center;
-    padding-bottom: 60px;
+  position: relative;
+  height: 90vh;
+  background-image: url('/../public/images/YogaChocolateBanner.png');
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+
+  .hero-link {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    z-index: 2;
+
+    &.left {
+      left: 0;
+    }
+
+    &.right {
+      right: 0;
+    }
+  }
 }
 
+.hero-link:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.05); // subtle hover feedback
+}
 
 /* Book Consultation Button */
 .BookAFreeConsultation_Button button {
@@ -340,3 +355,4 @@
         /* Ensure images take full width on smaller screens */
     }
 }
+

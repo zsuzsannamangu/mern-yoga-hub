@@ -178,6 +178,8 @@ function Home({ showAlert }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
+        <a href="/about" className="hero-link left" aria-label="Go to Yoga page"></a>
+        <a href="/chocolates" className="hero-link right" aria-label="Go to Chocolate page"></a>
       </motion.div>
 
       <div className='main-section'>
