@@ -58,45 +58,46 @@
 }
 
 .footer .newsletter {
-    margin-top: 2rem;
-    padding: 1.5rem;
+    margin-top: 3rem;
+    margin-bottom: 4rem; // space between newsletter and footer bottom
+    padding: 1.25rem 1.5rem;
     border-radius: 6px;
-    background-color: #f8f5ee; // light, soft tone to separate visually
+    background-color: #f8f5ee;
     text-align: center;
-    max-width: 600px;
+    max-width: 500px;
     margin-left: auto;
     margin-right: auto;
+    font-size: 0.95rem;
 
     p {
         color: $text-color;
-        font-size: 1rem;
+        font-size: 0.95rem;
         margin-bottom: 1rem;
         font-family: $font-main;
     }
 
     form {
         display: flex;
-        flex-direction: row;
         justify-content: center;
         align-items: center;
-        gap: 0.5rem;
         flex-wrap: wrap;
+        gap: 0.5rem;
 
         input[type='email'] {
-            padding: 10px;
+            padding: 8px 10px;
             border-radius: 4px;
             border: 1px solid $border-color;
             font-family: $font-secondary;
-            font-size: 1rem;
-            flex: 1;
-            min-width: 220px;
-            max-width: 300px;
+            font-size: 0.9rem;
+            width: 240px;
+            max-width: 80vw;
         }
 
         button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-family: $font-secondary;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: $font-title;
             background-color: $primary-button-color;
             color: $button-text-color;
             border: none;

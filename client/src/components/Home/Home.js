@@ -240,22 +240,6 @@ function Home({ showAlert }) {
               <div id="recaptcha-container" className="g-recaptcha"></div>
               <button type="submit">Submit</button>
             </form>
-            {/* Newsletter here */}
-            <div className="newsletter">
-              <p>Get updates about yoga classes, workshops, events, and new chocolates.</p>
-              <form onSubmit={handleNewsletterSubmit}>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  required
-                />
-                <button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? 'Submitting...' : 'Subscribe'}
-                </button>
-              </form>
-            </div>
           </div>
         </motion.div>
       </div>
