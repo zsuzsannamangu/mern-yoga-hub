@@ -36,33 +36,33 @@
 }
 
 .home-hero-banner {
-  position: relative;
-  height: 90vh;
-  background-image: url('/../public/images/YogaChocolateBanner.png');
-  background-size: cover;
-  background-position: center bottom;
-  background-repeat: no-repeat;
+    position: relative;
+    height: 90vh;
+    background-image: url('/../public/images/YogaChocolateBanner.png');
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
 
-  .hero-link {
-    position: absolute;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    z-index: 2;
+    .hero-link {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        z-index: 2;
 
-    &.left {
-      left: 0;
+        &.left {
+            left: 0;
+        }
+
+        &.right {
+            right: 0;
+        }
     }
-
-    &.right {
-      right: 0;
-    }
-  }
 }
 
 .hero-link:hover {
-  cursor: pointer;
-  background-color: rgba(255, 255, 255, 0.05); // subtle hover feedback
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.05); // subtle hover feedback
 }
 
 /* Book Consultation Button */
@@ -194,7 +194,7 @@
     background-color: $primary-button-hover-color;
 }
 
-#newsletter {
+.newsletter {
     margin-top: 4rem;
     width: 100%;
     max-width: 800px;
@@ -205,8 +205,6 @@
     text-align: center;
 
     p {
-        font-size: 1.1rem;
-        font-family: $font-main;
         color: $text-color;
         margin-bottom: 1.5rem;
     }
@@ -282,6 +280,19 @@
         /* Remove padding for smaller screens */
         text-align: left;
         /* Align text to the left */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end; // this pushes inner content to the right
+    }
+
+    .newsletter {
+        width: 100%;
+        max-width: 400px;
+        text-align: left;
+
+        p {
+            text-align: left;
+        }
     }
 
     .booking-form {
@@ -355,4 +366,3 @@
         /* Ensure images take full width on smaller screens */
     }
 }
-
