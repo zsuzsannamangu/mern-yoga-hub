@@ -7,8 +7,8 @@
     text-align: center; // Center-align all text
     box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
     font-family: $font-main; // Use main font
-    margin-top: 150px; // Space above the footer
-    padding-bottom: 20px; // Extra padding for spacing
+    margin-top: 170px; // Space above the footer
+    padding-bottom: 10px; // Extra padding for spacing
 }
 
 /* Footer content wrapper */
@@ -58,7 +58,7 @@
 }
 
 .footer .newsletter {
-    margin-top: 3rem;
+    margin-top: 2rem;
     margin-bottom: 2rem; // space between newsletter and footer bottom
     padding: 1.25rem 1.5rem;
     border-radius: 6px;
