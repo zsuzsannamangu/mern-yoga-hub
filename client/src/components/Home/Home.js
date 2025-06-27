@@ -259,27 +259,6 @@ function Home({ showAlert }) {
           </div>
         </motion.div>
       </div>
-      {/* <motion.section
-        className="newsletter"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-      >
-        <p>Get updates about yoga classes, workshops, events, and new chocolates.</p>
-        <form onSubmit={handleNewsletterSubmit}>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-            required
-          />
-          <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Submitting...' : 'Subscribe'}
-          </button>
-        </form>
-      </motion.section> */}
     </div >
   );
 }
