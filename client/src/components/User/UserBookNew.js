@@ -417,7 +417,7 @@ function UserBookNew() {
                         />
                         <p>**Individual yoga sessions are $50-$110/hr sliding scale. Individualized therapeutic yoga sessions are $50-$130/hr sliding scale.</p>
                         <p> Your investment is a personal choice, aligning with your current financial circumstances.**</p>
-                        <p> Committing to at least 8 weeks of yoga therapy gives us time to build trust, personalize your practice, and support meaningful, lasting change in body, mind, and nervous system. </p>
+                        <p><strong> Committing to at least 8 weeks of yoga therapy gives us time to build trust, personalize your practice, and support meaningful, lasting change in body, mind, and nervous system. </strong></p>
                     </div>
 
                     {selectedDate && (
