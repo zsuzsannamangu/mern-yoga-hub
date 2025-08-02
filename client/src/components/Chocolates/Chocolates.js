@@ -34,6 +34,7 @@ function Chocolates() {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.5, duration: 1 }}
                     >
+                        <h1>ReTreat Chocolates</h1>
                         <p>Plant-based. Sustainably sourced. Low waste packaging.</p>
                         <p>Organic, local and seasonal ingredients.</p>
                         <p>I never use: gluten, soy, palm oil, and refined sugar.</p>
