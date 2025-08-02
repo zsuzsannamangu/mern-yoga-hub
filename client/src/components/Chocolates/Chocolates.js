@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import './Chocolates.scss';
 import Products from './Products';
 import AboutChocolates from './AboutChocolates';
@@ -21,6 +22,11 @@ function Chocolates() {
 
     return (
         <div className='chocolates-page'>
+            <Helmet>
+                <title>ReTreat Chocolates | Small-Batch, Sustainable, Plant-Based, Low-Waste</title>
+                <meta name="description" content="Handcrafted chocolate made with organic, fair-trade cacao or ceremonial cacao. Soy-free, vegan, palm-oil free and packaged in reusable tins." />
+                <link rel="canonical" href="https://www.yogaandchocolate.com/chocolates" />
+            </Helmet>
             <motion.div
                 className='chocolates-top'
                 initial={{ opacity: 0, y: 30 }}
