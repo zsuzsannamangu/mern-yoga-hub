@@ -52,6 +52,10 @@
     left: -28%; // Larger screens, offset
     top: -20%;
 
+    h1 {
+      font-family: $font-main;
+    }
+
     @media (min-width: 769px) and (max-width: 1024px) {
       width: 30%;
       left: -28%; // Larger screens, offset
