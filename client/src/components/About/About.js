@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import React, { useEffect, useRef } from 'react';
 //useEffect() is a React Hook that lets you perform side effects in function components, instead of class components. useRef is a React Hook that allows you to create a mutable reference to a DOM element.
 import { useLocation } from 'react-router-dom'; //useLocation is a hook provided by React Router that gives access to the current URL's location object.
@@ -28,9 +29,159 @@ function About() {
         }
     }, [location]); //'location' is a dependency, the dependencies array is an array of variables that the effect depends on. [location] ensures the effect runs only when the location object changes.
 
+    // return (
+    //     <div className='about-page'>
+    //         <Helmet>
+    //             <title>Yoga with Zsuzsanna | Accessible, Therapeutic, Trauma-Informed Yoga</title>
+    //             <meta name="description" content="Explore yoga therapy and accessible, trauma-informed yoga with Zsuzsanna, offering slow flow, restorative, chair, and wheelchair yoga in Portland and online." />
+    //             <link rel="canonical" href="https://www.yogaandchocolate.com/yoga" />
+    //         </Helmet>
+    //         {/* Top section with an introductory overlay about the instructor */}
+    //         <motion.div
+    //             className='about-top'
+    //             initial={{ opacity: 0, y: 30 }}
+    //             animate={{ opacity: 1, y: 0 }}
+    //             transition={{ duration: 1 }}
+    //         >
+    //             <div className="about-overlay">
+    //                 <div className="about-overlay-text">
+    //                     <p>I'm Zsuzsanna, a yoga teacher and yoga therapist-in-training, here to support you in finding alignment between body and mind.</p>
+    //                 </div>
+    //             </div>
+    //         </motion.div>
+
+
+    //         <motion.div
+    //             initial={{ opacity: 0 }}
+    //             whileInView={{ opacity: 1 }}
+    //             viewport={{ once: true }}
+    //             transition={{ duration: 1 }}
+    //         >
+    //             <Offerings />
+    //         </motion.div>
+
+    //         {/* Trainings Section */}
+    //         <motion.div
+    //             className="about-info-section"
+    //             initial={{ opacity: 0, y: 30 }}
+    //             whileInView={{ opacity: 1, y: 0 }}
+    //             viewport={{ once: true }}
+    //             transition={{ duration: 1 }}
+    //         >
+    //             <motion.h2 className="section-title" variants={fadeInUp}>Trainings</motion.h2>
+    //             <div className="title-line"></div>
+    //             <div className="info-category">
+    //                 <motion.h3 variants={fadeInUp}>Core Yoga Teacher Trainings</motion.h3>
+    //                 <div className="info-item">
+    //                     <h4>800hr Integrative Yoga Therapy Training</h4>
+    //                     <h4>Accredited with IAYT</h4>
+    //                     <p><em><a href="https://www.sarahjoyyoga.com/800-hour-yoga-therapy-training-curriculum-dates.html" target='_blank'>Institute for Living Yoga, Portland OR</a></em><br />
+    //                         June 2025 - exp. June 2026</p>
+    //                     <p>The Science of the Breath and the Art of Yoga Therapy; Internal Family Systems Model;<br />
+    //                         Chronic Pain and Brain-Based Approaches to Yoga Therapy; Yoga and Expressive Arts Therapy;<br />
+    //                         Endocrine, Digestive and Immune Health; Attachment Theory and Implicit Memory in Yoga Therapy;<br />
+    //                         Yoga for Cancer; Yoga, Biofeedback + Mind-Body Medicine; Kriya Yoga Model for Addiction Recovery.</p>
+    //                 </div>
+    //                 <div className="info-item">
+    //                     <h4>300hr Advanced Yoga Teacher Training</h4>
+    //                     <h4>(RYT-500)</h4>
+    //                     <p><em>Sarahjoy Yoga, Portland OR</em><br />
+    //                         May 2024 - February 2025</p>
+    //                     <p>Trauma-informed, neurobiologically grounded teacher training with <strong><a href="https://www.sarahjoyyoga.com/300-hour-advanced-yoga-teacher-training.html" target='_blank'>Sarahjoy Marsh</a></strong><br />
+    //                         Restorative Yoga, Slow Flow, Chair Yoga, Adaptive Yoga, Pranayama<br />
+    //                         Focus on neuroscience, mindfulness, psychology, physiology, and ayurvedic practices</p>
+    //                 </div>
+    //                 <div className="info-item">
+    //                     <h4>300hr Foundational Yoga Teacher Training</h4>
+    //                     <p><em>The People’s Yoga, Portland OR</em><br />
+    //                         October 2023 - April 2024</p>
+    //                     <p>Treasures of Engagement with <strong><a href="https://www.suniti.net/" target='_blank'>Suniti Dernovsek</a></strong><br />
+    //                         Hatha Yoga, Vinyasa Yoga, Restorative Yoga<br />
+    //                         Focus on somatic practices such as Body-Mind Centering and the Alexander Technique</p>
+    //                 </div>
+    //             </div>
+    //             <div className="info-category">
+    //                 <h3>Other Yoga Trainings</h3>
+    //                 <div className="info-item">
+    //                     <h4>10hr "Yoga for Disabled Folks" Training</h4>
+    //                     <p><em>with <strong><a href="https://www.allihopayoga.com/about" target='_blank'>Rodrigo Souza</a></strong>, live via Accessible Yoga</em><br />
+    //                         December 9-19, 2024</p>
+    //                     <p>Accessible & adaptive practices for those with limited mobility & wheelchair users</p>
+    //                 </div>
+    //                 <div className="info-item">
+    //                     <h4>50hr Yoga Anatomy and Physiology Training</h4>
+    //                     <p><em>with <strong><a href="https://joemilleryoga.com/" target='_blank'>Joe Miller</a></strong>, online</em><br />
+    //                         November 2024</p>
+    //                     <p>Applying anatomy to yoga practice and teachings, using anatomical terminology.</p>
+    //                 </div>
+    //                 <div className="info-item">
+    //                     <h4>8hr Kids Yoga Teacher Training</h4>
+    //                     <p><em>with Leslie Wilda, <strong><a href="https://www.yogaplaygrounds.com/" target='_blank'>Yoga Playgrounds</a></strong>, in-person in Portland, OR</em><br />
+    //                         August 2024</p>
+    //                     <p>Teaching yoga and mindfulness for kids ages 3-12.<br />
+    //                         Yoga games, breathing exercises, visualizations, mindfulness activities and relaxation techniques.</p>
+    //                 </div>
+    //             </div>
+    //             <div className="info-category">
+    //                 <h3>Other Programs</h3>
+    //                 <div className="info-item">
+    //                     <h4>Master of Arts in International Studies</h4>
+    //                     <p><em> <strong><a href="https://www.nccu.edu.tw/index.php?Lang=en" target='_blank'>National Chengchi University</a></strong>, Taipei, Taiwan</em><br />
+    //                         2009-2011</p>
+    //                     <p>Full scholarship recipient of the Ministry of Education, Taiwan</p>
+    //                 </div>
+    //                 <div className="info-item">
+    //                     <h4>Bachelor of Arts in International Studies</h4>
+    //                     <p><em> <strong><a href="https://english.nye.hu/" target='_blank'>University of Nyíregyháza</a></strong>, Nyíregyháza, Hungary</em><br />
+    //                         2003-2007</p>
+    //                     <p>Scholarship recipient of the Ministry of Education, Hungary</p>
+    //                 </div>
+    //             </div>
+    //         </motion.div>
+
+    //         {/* Class Descriptions Section */}
+    //         <motion.div
+    //             className="about-info-section"
+    //             ref={classDescriptionsRef}
+    //             initial={{ opacity: 0, y: 30 }}
+    //             whileInView={{ opacity: 1, y: 0 }}
+    //             viewport={{ once: true }}
+    //             transition={{ duration: 1 }}
+    //         >
+    //             <motion.h2 className="section-title" variants={fadeInUp}>Class Descriptions</motion.h2>
+    //             <div className="title-line"></div>
+    //             <div className="info-category">
+    //                 <motion.div className="info-item" variants={fadeInUp}>
+    //                     <h4>Yoga for Wheelchair Users</h4>
+    //                     <p>A yoga practice tailored for individuals who use wheelchairs, focusing on enhancing well-being through breath, gentle movement, and mindfulness.
+
+    //                         Through guided breathwork, we’ll cultivate a sense of calm, helping to lower stress, improve circulation, and support respiratory health. Gentle
+    //                         movements are designed to improve flexibility, build strength, and enhance range of motion, all while remaining seated.
+
+    //                         Mindfulness and meditation will be woven into the practice to foster mental clarity, emotional resilience, and a deeper connection to your body.
+    //                         All levels are welcome, and no prior experience is needed. Props will be offered.</p>
+    //                 </motion.div>
+    //                 <motion.div className="info-item" variants={fadeInUp}>
+    //                     <h4>Slow Flow</h4>
+    //                     <p>This class focuses on mindful movement, allowing you to ease into each posture with intention and awareness.
+    //                         Through gentle flows, we’ll explore balance and strength at a pace that honors your body.
+    //                         This practice is inclusive and adaptive, offering a welcoming space for all levels, whether you’re new to yoga or looking to refine your practice.</p>
+    //                 </motion.div>
+    //             </div>
+    //         </motion.div>
+    //         <Slideshow />
+    //     </div>
+    // );
     return (
         <div className='about-page'>
-            {/* Top section with an introductory overlay about the instructor */}
+            <Helmet>
+                <title>Yoga with Zsuzsanna | Accessible, Therapeutic, Trauma-Informed Yoga</title>
+                <meta name="description" content="Explore yoga therapy and accessible, trauma-informed yoga with Zsuzsanna, offering slow flow, restorative, chair, and wheelchair yoga in Portland and online." />
+                <link rel="canonical" href="https://www.yogaandchocolate.com/yoga" />
+            </Helmet>
+
+            <h1 className="page-title">Yoga with Zsuzsanna</h1>
+
             <motion.div
                 className='about-top'
                 initial={{ opacity: 0, y: 30 }}
@@ -44,6 +195,113 @@ function About() {
                 </div>
             </motion.div>
 
+            <motion.div
+                className="about-info-section"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <motion.h2 className="section-title" variants={fadeInUp}>Why Yoga with Zsuzsanna</motion.h2>
+                <div className="title-line"></div>
+                <p>My approach to yoga is rooted in presence and compassion.
+                    I offer trauma-informed and adaptive practices that meet you where you are. As an aspiring yoga therapist, I combine breath science, somatic awareness, and yoga psychology to support nervous system regulation, emotional resilience, and healing.</p>
+                <p>These classes are about discovering what it means to be in your body, right now, with curiosity and kindness.</p>
+            </motion.div>
+
+            <motion.div
+                className="about-info-section"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <motion.h2 className="section-title" variants={fadeInUp}>What Makes These Classes Unique</motion.h2>
+                <div className="title-line"></div>
+                <ul className="custom-bullet-list">
+                    <li>✔️ Trauma-informed and neurobiologically grounded</li>
+                    <li>✔️ Adaptive and accessible: chair and gentle floor options</li>
+                    <li>✔️ Rooted in yoga therapy principles and somatic movement</li>
+                    <li>✔️ Small-group or one-on-one settings for deeper connection</li>
+                    <li>✔️ Inclusive of all bodies, abilities, and backgrounds</li>
+                    <li>✔️ Practices designed to support the nervous system and emotional health</li>
+                </ul>
+            </motion.div>
+
+            <motion.div
+                className="about-info-section"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <motion.h2 className="section-title" variants={fadeInUp}>Benefits of Yoga for All Bodies</motion.h2>
+                <div className="title-line"></div>
+                <p>Yoga offers a space to reconnect with your body and your breath. In my classes, students often experience better sleep, reduced anxiety, increased mobility, and a greater sense of ease in their life.</p>
+            </motion.div>
+
+            <motion.div
+                className="about-info-section"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <motion.h2 className="section-title" variants={fadeInUp}>Who These Classes Are For</motion.h2>
+                <div className="title-line"></div>
+                <p>
+                    These classes are open to everyone, regardless of experience, background, or physical ability. I offer practices that honor the unique experiences we each carry.
+                </p>
+                <p>
+                    While all are welcome, I specialize in:
+                </p>
+                <ul className="custom-bullet-list">
+                    <li>✔️ Teens and adults in addiction recovery</li>
+                    <li>✔️ Pregnant and postpartum mothers</li>
+                    <li>✔️ Wheelchair users and those with spinal cord injuries</li>
+                    <li>✔️ Stay-at-home moms navigating identity shifts, overwhelm, and emotional labor</li>
+                    <li>✔️ Immigrants and those navigating cultural displacement or loss</li>
+                </ul>
+            </motion.div>
+
+            <motion.div
+                className="about-info-section"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <motion.h2 className="section-title" variants={fadeInUp}>Frequently Asked Questions</motion.h2>
+                <div className="title-line"></div>
+                <div className="faq">
+                    <h4>Do I need to have yoga experience?</h4>
+                    <p>No prior experience is necessary. My classes are designed to meet you where you are.</p>
+
+                    <h4>Do you offer online classes?</h4>
+                    <p>Yes! I offer select sessions via Google Meet so you can join from home.</p>
+
+                    <h4>What should I bring?</h4>
+                    <p>If you have a mat or props, great, but I always offer modifications and suggestions if you don’t. If you don't have yoga props specifically designed for yoga, you can use the following modifications: blocks - a stack of books,
+                        bolster - firm pillow, yoga strap - belt, and for blankets, any blankets you have will work.
+                    </p>
+
+                    <h4>Are your classes covered by insurance?</h4>
+                    <p>Yoga therapy sessions may be reimbursable through HSA or FSA accounts if it's recommended by a licensed healthcare provider. Please check with your provider.</p>
+                </div>
+            </motion.div>
+
+            <motion.div
+                className="about-info-section"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <motion.h2 className="section-title" variants={fadeInUp}>Ready to Begin?</motion.h2>
+                <div className="title-line"></div>
+                <p><a href="/calendar">View the calendar & sign up for group classes</a></p>
+                <p><a href="/register">Register for an account and book a yoga therapy or a private yoga class with me.</a></p>
+            </motion.div>
 
             <motion.div
                 initial={{ opacity: 0 }}
@@ -53,9 +311,9 @@ function About() {
             >
                 <Offerings />
             </motion.div>
-
+            
             {/* Trainings Section */}
-            <motion.div
+    //         <motion.div
                 className="about-info-section"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -163,8 +421,9 @@ function About() {
                     </motion.div>
                 </div>
             </motion.div>
+
             <Slideshow />
-        </div>
+        </div >
     );
 }
 

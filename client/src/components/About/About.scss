@@ -98,6 +98,80 @@
     }
   }
 
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 2rem auto 1rem;
+    color: $main-title-color;
+
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+  }
+
+  .title-line {
+    width: 60px;
+    height: 4px;
+    background-color: $accent-color;
+    margin: 0 auto 1.5rem;
+  }
+
+  .custom-bullet-list {
+    list-style: none;
+    padding-left: 1.5rem;
+    margin-top: 1rem;
+
+    li {
+      position: relative;
+      padding-left: 1.8rem;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+
+      &::before {
+        content: '✔️';
+        position: absolute;
+        left: 0;
+        top: 0.1rem;
+        font-size: 1rem;
+        color: $accent-color;
+      }
+    }
+  }
+
+  .faq {
+    h4 {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      color: $main-title-color;
+
+      @media (min-width: 768px) {
+        font-size: 1.25rem;
+      }
+    }
+
+    p {
+      font-size: 0.95rem;
+      margin-top: 0.4rem;
+      color: $text-color;
+      line-height: 1.6;
+
+      @media (min-width: 768px) {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  a {
+    color: $accent-color;
+    text-decoration: underline;
+
+    &:hover {
+      color: darken($accent-color, 10%);
+    }
+  }
+
   .about-info-section {
     width: 80%;
     margin: 0 auto;
@@ -105,7 +179,7 @@
     font-family: $font-main;
     color: $text-color;
     max-width: 1200px;
-    
+
     @media (min-width: 344px) and (max-width: 768px) {
       max-width: 800px;
       padding: 40px;
