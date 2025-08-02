@@ -41,7 +41,7 @@ function AboutChocolates() {
       </div>
       <div className="about-chocolates-content-2">
         <motion.div className="about-chocolates-image-2" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          <img src="/images/Zsuzsi/Zsuzsi_and_chocolates_sm_2.jpg" alt="Zsuzsi" />
+          <img src="/images/chocolates/Addtotin.jpg" alt="Zsuzsi" />
           <p className="photo-credit">Photo by Jason Quigley</p>
         </motion.div>
         <motion.div className="about-chocolates-text" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
