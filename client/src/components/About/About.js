@@ -216,7 +216,7 @@ function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
             >
-                <motion.h2 className="section-title" variants={fadeInUp}>What Makes These Classes Unique</motion.h2>
+                <motion.h2 className="section-title" variants={fadeInUp}>My sessions are</motion.h2>
                 <div className="title-line"></div>
                 <ul className="custom-bullet-list">
                     <li>✔️ Trauma-informed and neurobiologically grounded</li>
@@ -235,72 +235,21 @@ function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
             >
-                <motion.h2 className="section-title" variants={fadeInUp}>Benefits of Yoga for All Bodies</motion.h2>
-                <div className="title-line"></div>
-                <p>Yoga offers a space to reconnect with your body and your breath. In my classes, students often experience better sleep, reduced anxiety, increased mobility, and a greater sense of ease in their life.</p>
-            </motion.div>
-
-            <motion.div
-                className="about-info-section"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1 }}
-            >
-                <motion.h2 className="section-title" variants={fadeInUp}>Who These Classes Are For</motion.h2>
+                <motion.h2 className="section-title" variants={fadeInUp}>Who These Sessions Are For</motion.h2>
                 <div className="title-line"></div>
                 <p>
-                    These classes are open to everyone, regardless of experience, background, or physical ability. I offer practices that honor the unique experiences we each carry.
+                    These sessions are open to everyone, regardless of experience, background, or physical ability. I offer practices that honor the unique experiences we each carry.
                 </p>
                 <p>
                     While all are welcome, I specialize in:
                 </p>
                 <ul className="custom-bullet-list">
-                    <li>✔️ Teens and adults in addiction recovery</li>
-                    <li>✔️ Pregnant and postpartum mothers</li>
-                    <li>✔️ Wheelchair users and those with spinal cord injuries</li>
-                    <li>✔️ Stay-at-home moms navigating identity shifts, overwhelm, and emotional labor</li>
-                    <li>✔️ Immigrants and those navigating cultural displacement or loss</li>
+                    <li>Teens and adults in addiction recovery</li>
+                    <li>Pregnant and postpartum mothers</li>
+                    <li>Wheelchair users and those with spinal cord injuries</li>
+                    <li>Stay-at-home moms navigating identity shifts, overwhelm, and emotional labor</li>
+                    <li>Immigrants and those navigating cultural displacement or loss</li>
                 </ul>
-            </motion.div>
-
-            <motion.div
-                className="about-info-section"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1 }}
-            >
-                <motion.h2 className="section-title" variants={fadeInUp}>Frequently Asked Questions</motion.h2>
-                <div className="title-line"></div>
-                <div className="faq">
-                    <h4>Do I need to have yoga experience?</h4>
-                    <p>No prior experience is necessary. My classes are designed to meet you where you are.</p>
-
-                    <h4>Do you offer online classes?</h4>
-                    <p>Yes! I offer select sessions via Google Meet so you can join from home.</p>
-
-                    <h4>What should I bring?</h4>
-                    <p>If you have a mat or props, great, but I always offer modifications and suggestions if you don’t. If you don't have yoga props specifically designed for yoga, you can use the following modifications: blocks - a stack of books,
-                        bolster - firm pillow, yoga strap - belt, and for blankets, any blankets you have will work.
-                    </p>
-
-                    <h4>Are your classes covered by insurance?</h4>
-                    <p>Yoga therapy sessions may be reimbursable through HSA or FSA accounts if it's recommended by a licensed healthcare provider. Please check with your provider.</p>
-                </div>
-            </motion.div>
-
-            <motion.div
-                className="about-info-section"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1 }}
-            >
-                <motion.h2 className="section-title" variants={fadeInUp}>Ready to Begin?</motion.h2>
-                <div className="title-line"></div>
-                <p><a href="/calendar">View the calendar & sign up for group classes</a></p>
-                <p><a href="/register">Register for an account and book a yoga therapy or a private yoga class with me.</a></p>
             </motion.div>
 
             <motion.div
@@ -311,7 +260,7 @@ function About() {
             >
                 <Offerings />
             </motion.div>
-            
+
             {/* Trainings Section */}
     //         <motion.div
                 className="about-info-section"
@@ -420,6 +369,45 @@ function About() {
                             This practice is inclusive and adaptive, offering a welcoming space for all levels, whether you’re new to yoga or looking to refine your practice.</p>
                     </motion.div>
                 </div>
+            </motion.div>
+
+            <motion.div
+                className="about-info-section"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <motion.h2 className="section-title" variants={fadeInUp}>Frequently Asked Questions</motion.h2>
+                <div className="title-line"></div>
+                <div className="faq">
+                    <h4>Do I need to have yoga experience?</h4>
+                    <p>No prior experience is necessary. My classes are designed to meet you where you are.</p>
+
+                    <h4>Do you offer online classes?</h4>
+                    <p>Yes! I offer select sessions via Google Meet so you can join from home.</p>
+
+                    <h4>What should I bring?</h4>
+                    <p>If you have a mat or props, great, but I always offer modifications and suggestions if you don’t. If you don't have yoga props specifically designed for yoga, you can use the following modifications: blocks - a stack of books,
+                        bolster - firm pillow, yoga strap - belt, and for blankets, any blankets you have will work.
+                    </p>
+
+                    <h4>Are your classes covered by insurance?</h4>
+                    <p>Yoga therapy sessions may be reimbursable through HSA or FSA accounts if it's recommended by a licensed healthcare provider. Please check with your provider.</p>
+                </div>
+            </motion.div>
+
+            <motion.div
+                className="about-info-section"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <motion.h2 className="section-title" variants={fadeInUp}>Ready to Begin?</motion.h2>
+                <div className="title-line"></div>
+                <p><a href="/calendar">View the calendar & sign up for group classes</a></p>
+                <p><a href="/register">Register for an account and book a yoga therapy or a private yoga class with me.</a></p>
             </motion.div>
 
             <Slideshow />
