@@ -193,16 +193,15 @@ function Home({ showAlert }) {
           </div>
           <div className="right-section">
             <p>
-              I’m Zsuzsanna Mangu, a trauma-informed yoga teacher, yoga therapist-in-training, and chocolatier based in Portland, Oregon. I create space for gentle exploration and grounded presence through a 
+              I’m a trauma-informed yoga teacher, yoga therapist-in-training, and chocolatier based in Portland, Oregon. I create space for exploration of body and mind through a
               unique blend of yoga, mindfulness, and sensory experiences.
             </p>
             <p>
-              My offerings include therapeutic yoga, adaptive yoga, gentle slow flow, hatha, and restorative yoga—woven with somatic movement, breathwork, meditation, and Ayurvedic wisdom. I work with individuals and 
+              My offerings include therapeutic yoga, adaptive yoga, gentle slow flow, hatha, and restorative yoga, somatic movement, breathwork, meditation, and Ayurvedic wisdom. I work with individuals and
               groups, supporting each student in deepening their connection to body, breath, and self-compassion.
             </p>
             <p>
-              In addition to yoga, I handcraft plant-based, small-batch chocolates using organic, fair-trade ingredients and low-waste packaging. Whether through mindful movement or sustainable treats, my work is rooted 
-              in care, presence, and holistic well-being.
+              I also make plant-based, small-batch chocolates using organic, fair-trade ingredients and low-waste packaging.
             </p>
           </div>
 
@@ -220,7 +219,8 @@ function Home({ showAlert }) {
             <div className="title-line"></div>
           </div>
           <div className="right-section">
-            <p>Book a free 30-minute online session where we’ll take time to connect and talk about you and any goals you might have. </p>
+            <p>If you are interested in working with me through yoga therapy, individual yoga sessions or anything chocolate related, and want to learn more, book a free 30-minute online meeting with me to answer any questions you have.</p>
+
             <form className="booking-form" onSubmit={handleSubmit}>
               <label>
                 <input type="text" name="name" placeholder="Name" required />
