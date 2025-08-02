@@ -24,7 +24,7 @@ router.post('/request', async (req, res) => {
 
         // Check if reCAPTCHA was successful
         if (!captchaData.success) {
-            return res.status(400).json({ error: 'CAPTCHA verification failed. Please try again.' });
+            return res.status(400).json({ error: 'CAPTCHA verification failed. Refresh the page and please try again.' });
         }
 
         // Verify the score to block suspicious requests
@@ -56,11 +56,10 @@ router.post('/request', async (req, res) => {
         const userEmail = {
             to: email,
             from: process.env.EMAIL_USER,
-            subject: 'Booking Request Received',
+            subject: 'Request Received',
             html: `
-                <h2>Thank You for Your Booking Request</h2>
                 <p>Hi ${name},</p>
-                <p>Thank you for reaching out! I’ve received your request for a ${sessionType} session. I’ll review your message and get back to you within 24 hours.</p>
+                <p>Thank you for reaching out! I’ve received your request and I'll get back to you within 24 hours.</p>
                 <p>Warmly,</p>
                 <p>Zsuzsanna Mangu</p>
             `,
@@ -71,9 +70,9 @@ router.post('/request', async (req, res) => {
         await sgMail.send(userEmail);
 
         // Respond with success
-        res.status(200).json({ message: 'Booking request submitted successfully.' });
+        res.status(200).json({ message: 'Request submitted successfully.' });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to process booking request.' });
+        res.status(500).json({ error: 'Failed to process request. Please refresh the page and try again.' });
     }
 });
 
