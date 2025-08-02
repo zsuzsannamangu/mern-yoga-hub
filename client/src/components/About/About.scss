@@ -5,6 +5,33 @@
   max-width: 100%; // Remove any restrictions
   margin: 0 auto; // Ensure it's centered
 
+  .about-flex-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    gap: 2rem;
+
+    &.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .about-info-text {
+      flex: 1 1 50%;
+    }
+
+    .about-info-image {
+      flex: 1 1 45%;
+
+      img {
+        width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
   .about-top {
     margin: 0; // Ensure no margin
     padding: 0; // Ensure no padding
@@ -282,33 +309,6 @@
           }
         }
       }
-    }
-  }
-}
-
-.about-flex-section {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 3rem;
-  gap: 2rem;
-
-  &.reverse {
-    flex-direction: row-reverse;
-  }
-
-  .about-info-text {
-    flex: 1 1 50%;
-  }
-
-  .about-info-image {
-    flex: 1 1 45%;
-
-    img {
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
   }
 }
