@@ -1,5 +1,9 @@
 @use '../../styles/variables' as *;
 
+.slideshow {
+    margin-top: 2rem;
+}
+
 .slideshow img {
     width: 100%;
     height: auto;
