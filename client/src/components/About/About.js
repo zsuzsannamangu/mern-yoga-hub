@@ -140,35 +140,47 @@ function About() {
                         </ul>
                     </div>
                     <div className="about-info-image">
-                        <img src="/images/yoga/Zsuzsi_Home_111.jpg" alt="A peaceful yoga session" />
+                        <img src="/images/yoga/Zsuzsi_Home_111.jpg" alt="Zsuzsanna doing extended side angle pose with full bind next to the river" />
                     </div>
                 </motion.div>
             </div>
 
-            <motion.div
-                className="about-info-section"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1 }}
-            >
-                <motion.h2 className="section-title" variants={fadeInUp}>Who These Sessions Are For</motion.h2>
-                <div className="title-line"></div>
-                <p>
-                    These sessions are open to everyone, regardless of experience, background, or physical ability. I offer practices that honor the unique experiences we each carry.
-                </p>
-                <p>
-                    While all are welcome, I specialize in:
-                </p>
-                <ul className="custom-bullet-list">
-                    <li>Everyone!</li>
-                    <li>Teens and adults in addiction recovery</li>
-                    <li>Pregnant and postpartum mothers</li>
-                    <li>Wheelchair users and those with spinal cord injuries</li>
-                    <li>Stay-at-home moms navigating identity shifts, overwhelm, and emotional labor</li>
-                    <li>Immigrants and those navigating cultural displacement or loss</li>
-                </ul>
-            </motion.div>
+            <div className="about-info-section">
+                <motion.div
+                    className="about-flex-section"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1 }}
+                >
+                    <div className="about-info-text">
+                        <motion.h2 className="section-title" variants={fadeInUp}>
+                            Who These Sessions Are For
+                        </motion.h2>
+                        <div className="title-line"></div>
+                        <p>
+                            These sessions are open to everyone, regardless of experience, background, or physical ability.
+                            I offer practices that honor the unique experiences we each carry.
+                        </p>
+                        <p>
+                            While all are welcome, I specialize in:
+                        </p>
+                        <ul className="custom-bullet-list">
+                            <li>Everyone!</li>
+                            <li>Teens and adults in addiction recovery</li>
+                            <li>Pregnant and postpartum mothers</li>
+                            <li>Wheelchair users and those with spinal cord injuries</li>
+                            <li>Stay-at-home moms navigating identity shifts, overwhelm, and emotional labor</li>
+                            <li>Immigrants and those navigating cultural displacement or loss</li>
+                        </ul>
+                    </div>
+
+                    <div className="about-info-image">
+                        <img src="/images/yoga/Zsuzsi_chair.jpg" alt="Zsuzsanna doing chair yoga" />
+                    </div>
+                </motion.div>
+            </div>
+
 
             {/* Class Descriptions Section */}
             <motion.div
