@@ -218,6 +218,14 @@ function About() {
                     <h4>Do I need to have yoga experience?</h4>
                     <p>Not at all. My classes are designed to meet you exactly where you are.</p>
 
+                    <h4>What is trauma-informed yoga?</h4>
+                    <p>Trauma-informed yoga is an approach that prioritizes safety, choice, and empowerment. It’s designed to create a supportive environment where students can connect with their bodies at their own pace. 
+                        The focus is on invitation rather than instruction, offering space for each person to decide what feels right for them in the moment.</p>
+
+                    <h4>What is yoga therapy?</h4>
+                    <p>Yoga therapy is a personalized, holistic approach that supports physical, emotional, and mental well-being. It combines breath, movement, psychology, neurobiology, mindfulness, somatic practices and the ancient wisdom of yoga to address specific concerns 
+                        or conditions. Sessions are tailored to the individual, creating space for healing, resilience, and greater self-awareness.</p>
+
                     <h4>Are sessions in-person or online?</h4>
                     <p>I offer both. You’re welcome to join in person in Portland, Oregon, or online via Google Meet. If you're local, I recommend in-person sessions when possible for deeper support.</p>
 

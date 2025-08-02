@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Helmet } from 'react-helmet-async';
 import CalendarDays from './CalendarDays';
 import './Calendar.scss';
 import { Link } from 'react-router-dom';
