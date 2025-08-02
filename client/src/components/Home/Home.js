@@ -192,10 +192,20 @@ function Home({ showAlert }) {
             <div className="title-line"></div>
           </div>
           <div className="right-section">
-            <p>In my work, I create a space for gentle exploration and grounded presence. Together, we’ll journey through practices of movement and stillness, attuning to the wisdom within the body.</p>
-            <p>I weave together somatic practices, breathwork, Ayurvedic wisdom, meditation, sensory experiences, and movement to support holistic well-being. I teach gentle slow flow, hatha, restorative and adaptive yoga, and mindfulness practices, creating space for self-compassion
-              and a deeper connection to the present moment.</p>
+            <p>
+              I’m Zsuzsanna Mangu, a trauma-informed yoga teacher, yoga therapist-in-training, and chocolatier based in Portland, Oregon. I create space for gentle exploration and grounded presence through a 
+              unique blend of yoga, mindfulness, and sensory experiences.
+            </p>
+            <p>
+              My offerings include therapeutic yoga, adaptive yoga, gentle slow flow, hatha, and restorative yoga—woven with somatic movement, breathwork, meditation, and Ayurvedic wisdom. I work with individuals and 
+              groups, supporting each student in deepening their connection to body, breath, and self-compassion.
+            </p>
+            <p>
+              In addition to yoga, I handcraft plant-based, small-batch chocolates using organic, fair-trade ingredients and low-waste packaging. Whether through mindful movement or sustainable treats, my work is rooted 
+              in care, presence, and holistic well-being.
+            </p>
           </div>
+
         </motion.div>
         <motion.div
           className="main-row"
