@@ -65,7 +65,7 @@ function AboutChocolates() {
             <strong>To waive the shipping fee, be sure to check the “Local Pickup” option at checkout.</strong>
           </p>
           <h3>Instagram Discount</h3>
-          <p>If you loved your chocolates, please mention it on Instagram and tag me at <strong><a href="https://www.instagram.com/zsuzsannacreates/">@zsuzsannacreates</a></strong>, and receive 15% off your next order.</p>
+          <p>If you loved your chocolates, please mention it on Instagram and tag me at <strong><a href="https://www.instagram.com/zsuzsannacreates/">@zsuzsannacreates</a></strong>, and receive 15% off your next order. If I missed your story, please let me know!</p>
         </motion.div>
       </div>
       <div className="about-chocolates-content">
