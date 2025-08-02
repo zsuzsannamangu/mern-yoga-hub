@@ -384,8 +384,11 @@ function About() {
                     <h4>Do I need to have yoga experience?</h4>
                     <p>No prior experience is necessary. My classes are designed to meet you where you are.</p>
 
-                    <h4>Do you offer online classes?</h4>
-                    <p>Yes! I offer select sessions via Google Meet so you can join from home.</p>
+                    <h4>Do you offer in-person or online sessions?</h4>
+                    <p>I offer in-person sessions in Portland, Oregon. I also offer sessions via Google Meet so you can join from home. For those that are in or near Portland, in-person sessions are recommended when possible.</p>
+
+                    <h4>Do you offer hands-on assist, adjusments and touch during in-person sessions</h4>
+                    <p>Touch and adjustments are offered, and always with permission. Touch can be a powerful tool for transformation and I love using it .</p>
 
                     <h4>What should I bring?</h4>
                     <p>If you have a mat or props, great, but I always offer modifications and suggestions if you don’t. If you don't have yoga props specifically designed for yoga, you can use the following modifications: blocks - a stack of books,
@@ -408,10 +411,10 @@ function About() {
                 <div className="title-line"></div>
                 <div className="cta-links">
                     <a href="/calendar" className="cta-button">
-                        View the calendar & sign up for group classes
+                        Sign up for group classes
                     </a>
                     <a href="/register" className="cta-button outline">
-                        Register for an account and book a yoga therapy or a private yoga class with me.
+                        Book a private session
                     </a>
                 </div>
             </motion.div>
