@@ -50,7 +50,7 @@ function Navbar() {
                     <>
                         <Link to="/chocolates" className="nav-item nav-item-chocolates">Chocolates</Link>
                         <Link to="/contact" className="nav-item">Contact</Link>
-                        <Link to="/" className="nav-item">Back to Yoga</Link>
+                        <Link to="/yoga" className="nav-item">Back to Yoga</Link>
                     </>
                 ) : (
                     <>
