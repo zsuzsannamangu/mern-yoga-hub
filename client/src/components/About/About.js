@@ -60,99 +60,100 @@ function About() {
                 <Offerings />
             </motion.div>
 
-            {/* MY APPROACH SECTION WITH IMAGE */}
-            <div className="about-info-section">
-                <motion.div
-                    className="about-flex-section"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1 }}
-                >
-                    <div className="about-info-text">
-                        <motion.h2 className="section-title" variants={fadeInUp}>My approach</motion.h2>
-                        <div className="title-line"></div>
-                        <p>
-                            I offer weekly group classes and private 1:1 sessions in both general yoga and yoga therapy.
-                            Group classes follow a consistent theme and are open to all levels.
-                            Private sessions are tailored to your personal needs, whether physical, emotional, or spiritual.
-                        </p>
-                        <p>
-                            My approach to yoga is rooted in presence and compassion.
-                            I offer trauma-informed and adaptive practices that meet you where you are. As an aspiring yoga therapist,
-                            I combine breath science, somatic awareness, and yoga psychology to support nervous system regulation, emotional resilience, and healing.
-                        </p>
-                        <p>Sessions are about discovering what it means to be in your body, right now, with curiosity and kindness.</p>
-                    </div>
-                    <div className="about-info-image">
-                        <img src="/images/yoga/Zsuzsi_Home_4.jpg" alt="Zsuzsanna doing yoga next to river" />
-                    </div>
-                </motion.div>
+            <div className="three-sections-about-yoga">
+                {/* MY APPROACH SECTION WITH IMAGE */}
+                <div className="about-info-section">
+                    <motion.div
+                        className="about-flex-section"
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1 }}
+                    >
+                        <div className="about-info-text">
+                            <motion.h2 className="section-title" variants={fadeInUp}>My approach</motion.h2>
+                            <div className="title-line"></div>
+                            <p>
+                                I offer weekly group classes and private 1:1 sessions in both general yoga and yoga therapy.
+                                Group classes follow a consistent theme and are open to all levels.
+                                Private sessions are tailored to your personal needs, whether physical, emotional, or spiritual.
+                            </p>
+                            <p>
+                                My approach to yoga is rooted in presence and compassion.
+                                I offer trauma-informed and adaptive practices that meet you where you are. As an aspiring yoga therapist,
+                                I combine breath science, somatic awareness, and yoga psychology to support nervous system regulation, emotional resilience, and healing.
+                            </p>
+                            <p>Sessions are about discovering what it means to be in your body, right now, with curiosity and kindness.</p>
+                        </div>
+                        <div className="about-info-image">
+                            <img src="/images/yoga/Zsuzsi_Home_4.jpg" alt="Zsuzsanna doing yoga next to river" />
+                        </div>
+                    </motion.div>
+                </div>
+
+                {/* MY SESSIONS ARE SECTION WITH IMAGE (reverse layout) */}
+                <div className="about-info-section">
+                    <motion.div
+                        className="about-flex-section reverse"
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1 }}
+                    >
+                        <div className="about-info-text">
+                            <motion.h2 className="section-title" variants={fadeInUp}>My sessions are</motion.h2>
+                            <div className="title-line"></div>
+                            <ul className="custom-bullet-list">
+                                <li>Trauma-informed and neurobiologically grounded</li>
+                                <li>Adaptive and accessible: chair and gentle floor options</li>
+                                <li>Rooted in yoga therapy principles and somatic movement</li>
+                                <li>Small-group or one-on-one settings for deeper connection</li>
+                                <li>Inclusive of all bodies, abilities, and backgrounds</li>
+                                <li>Practices designed to support the nervous system and emotional health</li>
+                            </ul>
+                        </div>
+                        <div className="about-info-image">
+                            <img src="/images/yoga/Zsuzsi_Home_111.jpg" alt="Zsuzsanna doing extended side angle pose with full bind next to the river" />
+                        </div>
+                    </motion.div>
+                </div>
+
+                <div className="about-info-section">
+                    <motion.div
+                        className="about-flex-section"
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1 }}
+                    >
+                        <div className="about-info-text">
+                            <motion.h2 className="section-title" variants={fadeInUp}>
+                                Who I Work With
+                            </motion.h2>
+                            <div className="title-line"></div>
+                            <p>
+                                I offer one-on-one sessions in yoga and yoga therapy.
+                            </p>
+                            <p>
+                                These sessions are open to all, regardless of experience, background, or physical ability.
+                                I always strive to create a supportive, welcoming environment for everyone. While all are welcome, I specialize in supporting:
+                            </p>
+                            <ul className="custom-bullet-list">
+                                <li>Teens and adults in addiction recovery</li>
+                                <li>Pregnant and postpartum mothers</li>
+                                <li>Wheelchair users and those with spinal cord injuries</li>
+                                <li>Stay-at-home moms navigating identity shifts, overwhelm, and emotional labor</li>
+                                <li>Immigrants and those navigating cultural displacement or loss</li>
+                                <li>Everyone!</li>
+                            </ul>
+                        </div>
+
+                        <div className="about-info-image">
+                            <img src="/images/yoga/Zsuzsi_chair.jpg" alt="Zsuzsanna doing chair yoga" />
+                        </div>
+                    </motion.div>
+                </div>
             </div>
-
-            {/* MY SESSIONS ARE SECTION WITH IMAGE (reverse layout) */}
-            <div className="about-info-section">
-                <motion.div
-                    className="about-flex-section reverse"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1 }}
-                >
-                    <div className="about-info-text">
-                        <motion.h2 className="section-title" variants={fadeInUp}>My sessions are</motion.h2>
-                        <div className="title-line"></div>
-                        <ul className="custom-bullet-list">
-                            <li>Trauma-informed and neurobiologically grounded</li>
-                            <li>Adaptive and accessible: chair and gentle floor options</li>
-                            <li>Rooted in yoga therapy principles and somatic movement</li>
-                            <li>Small-group or one-on-one settings for deeper connection</li>
-                            <li>Inclusive of all bodies, abilities, and backgrounds</li>
-                            <li>Practices designed to support the nervous system and emotional health</li>
-                        </ul>
-                    </div>
-                    <div className="about-info-image">
-                        <img src="/images/yoga/Zsuzsi_Home_111.jpg" alt="Zsuzsanna doing extended side angle pose with full bind next to the river" />
-                    </div>
-                </motion.div>
-            </div>
-
-            <div className="about-info-section">
-                <motion.div
-                    className="about-flex-section"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1 }}
-                >
-                    <div className="about-info-text">
-                        <motion.h2 className="section-title" variants={fadeInUp}>
-                            Who I Work With
-                        </motion.h2>
-                        <div className="title-line"></div>
-                        <p>
-                            I offer one-on-one sessions in yoga and yoga therapy.
-                        </p>
-                        <p>
-                            These sessions are open to all, regardless of experience, background, or physical ability.
-                            I always strive to create a supportive, welcoming environment for everyone. While all are welcome, I specialize in supporting:
-                        </p>
-                        <ul className="custom-bullet-list">
-                            <li>Teens and adults in addiction recovery</li>
-                            <li>Pregnant and postpartum mothers</li>
-                            <li>Wheelchair users and those with spinal cord injuries</li>
-                            <li>Stay-at-home moms navigating identity shifts, overwhelm, and emotional labor</li>
-                            <li>Immigrants and those navigating cultural displacement or loss</li>
-                            <li>Everyone!</li>
-                        </ul>
-                    </div>
-
-                    <div className="about-info-image">
-                        <img src="/images/yoga/Zsuzsi_chair.jpg" alt="Zsuzsanna doing chair yoga" />
-                    </div>
-                </motion.div>
-            </div>
-
 
             {/* Class Descriptions Section */}
             <motion.div

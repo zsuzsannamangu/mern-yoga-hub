@@ -12,7 +12,6 @@
     justify-content: space-between;
     margin-bottom: 3rem;
     gap: 2rem;
-    background-color: $secondary-background-color;
 
     &.reverse {
       flex-direction: row-reverse;
@@ -36,6 +35,10 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
     }
+  }
+
+  .three-sections-about-yoga {
+    background-color: $secondary-background-color;
   }
 
   .about-top {
