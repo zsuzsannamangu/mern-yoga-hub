@@ -1,5 +1,6 @@
 /* global grecaptcha */
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import './Home.scss';
 import '../../App.scss';
 import Swal from 'sweetalert2';
@@ -159,19 +160,14 @@ function Home({ showAlert }) {
 
   return (
     <div className="homepage">
-      {/* <motion.div
-        className="topscreen"
-        initial={{ opacity: 0, y: 20 }}
-      >
-        <div className="hero-buttons">
-          <button onClick={() => document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' })}>
-            Book a Free Session
-          </button>
-          <button>
-            <a href="/chocolates">Buy Chocolate</a>
-          </button>
-        </div>
-      </motion.div> */}
+      <Helmet>
+        <title>Yoga and Chocolate | Mindful Movement & Sustainable Treats</title>
+        <meta
+          name="description"
+          content="Explore trauma-informed yoga, yoga therapy and handcrafted, plant-based chocolate by Zsuzsanna Mangu."
+        />
+        <link rel="canonical" href="https://www.yogaandchocolate.com/" />
+      </Helmet>
       <motion.div
         className="home-hero-banner"
         initial={{ opacity: 0, y: 30 }}
