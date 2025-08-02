@@ -83,6 +83,16 @@ function Offerings() {
             <h2 className="section-title">Offerings</h2>
             <div className="title-line"></div>
 
+            {/* SEO Hidden Content */}
+            <div className="seo-content">
+                {offeringsData.map((offering) => (
+                    <div key={offering.id}>
+                        <h3>{offering.title}</h3>
+                        <div dangerouslySetInnerHTML={{ __html: offering.description }} />
+                    </div>
+                ))}
+            </div>
+
             {/* Offerings List */}
             <div className="offerings-grid">
                 {offeringsData.map((offering) => (
