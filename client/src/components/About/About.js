@@ -189,10 +189,29 @@ function About() {
                             All levels are welcome, and no prior experience is needed. Props will be offered.</p>
                     </motion.div>
                     <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Slow Flow</h4>
+                        <h4>Gentle Flow</h4>
                         <p>This class focuses on mindful movement, allowing you to ease into each posture with intention and awareness.
                             Through gentle flows, we’ll explore balance and strength at a pace that honors your body.
                             This practice is inclusive and adaptive, offering a welcoming space for all levels, whether you’re new to yoga or looking to refine your practice.</p>
+                    </motion.div>
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <h4>Hatha Yoga</h4>
+                        <p>A grounding practice that blends breath awareness with intentional movement. Hatha Flow emphasizes steady postures and transitions, creating space for balance,
+                            strength, and inner stillness. This class is slower-paced than vinyasa, offering time to explore alignment and deepen into each pose. Ideal for those seeking a
+                            more meditative, breath-centered experience. Modifications and props are welcome.
+                        </p>
+                    </motion.div>
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <h4>Restorative Yoga</h4>
+                        <p>A deeply relaxing class designed to soothe the nervous system and restore balance. Using props to support the body in restful poses, this
+                            practice encourages deep release and stillness. Perfect for stress relief, recovery, and cultivating a sense of inner calm.
+                        </p>
+                    </motion.div>
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <h4>Vinyasa Flow</h4>
+                        <p>Vinyasa Flow builds strength, flexibility, and focus through creative sequences and mindful transitions. Expect to move, breathe, 
+                            and sweat while cultivating presence and resilience. Options will be offered to support a variety of experience levels.
+                        </p>
                     </motion.div>
                 </div>
             </motion.div>
