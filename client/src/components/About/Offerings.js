@@ -71,10 +71,10 @@ function Offerings() {
 
     //Navigates to the booking section on the homepage
     const handleBookClick = () => {
-        navigate('/'); // Navigate to homepage
-        setTimeout(() => { // Uses a timeout to ensure the section is scrolled into view after navigation
-            document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' });
-        }, 0); // Delay to ensure the page has loaded
+        navigate('/register'); // Navigate to register page
+        // setTimeout(() => { // Uses a timeout to ensure the section is scrolled into view after navigation
+        //     document.getElementById('book-section').scrollIntoView({ behavior: 'smooth' });
+        // }, 0); // Delay to ensure the page has loaded
     };
 
 
