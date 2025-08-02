@@ -219,7 +219,7 @@ function Home({ showAlert }) {
             <div className="title-line"></div>
           </div>
           <div className="right-section">
-            <p>If you are interested in working with me through yoga therapy, individual yoga sessions or anything chocolate related, and want to learn more, book a free 30-minute online meeting with me to answer any questions you have.</p>
+            <p>If you are interested in working with me through yoga therapy, yoga classes or anything chocolate related, and want to learn more, book a free 30-minute online meeting with me to answer any questions you have.</p>
 
             <form className="booking-form" onSubmit={handleSubmit}>
               <label>
@@ -236,7 +236,8 @@ function Home({ showAlert }) {
                 <select name="session-type" required>
                   <option value="private yoga">Individual Yoga Class</option>
                   <option value="group yoga">Group Yoga Class</option>
-                  <option value="yoga therapy">Therapeutic Yoga</option>
+                  <option value="yoga therapy">Yoga Therapy</option>
+                  <option value="chocolates">Chocolates</option>
                 </select>
               </label>
               <label>
