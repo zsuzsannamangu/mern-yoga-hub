@@ -175,31 +175,36 @@
     }
 
     .cta-links {
-      margin-top: 1.5rem;
+      margin-top: 2rem;
       display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 1rem;
-      align-items: center;
 
       .cta-button {
-        padding: 0.75rem 1.5rem;
+        padding: 0.75rem 1.25rem;
         font-size: 1rem;
         font-weight: 500;
         font-family: $font-main;
-        color: $button-text-color;
-        background-color: $primary-button-color;
+        text-align: center;
         text-decoration: none;
         border-radius: 6px;
-        text-align: center;
-        width: fit-content;
-        max-width: 90%;
-        transition: background-color 0.3s ease;
-        border: none;
+        transition: all 0.3s ease;
+        max-width: 360px;
+        width: 100%;
 
-        &:hover {
-          background-color: $primary-button-hover-color;
+        // Primary button
+        &.cta-button {
+          background-color: $primary-button-color;
+          color: $button-text-color;
+          border: none;
+
+          &:hover {
+            background-color: $primary-button-hover-color;
+          }
         }
 
+        // Outline button
         &.outline {
           background-color: transparent;
           color: $primary-button-color;
@@ -210,8 +215,14 @@
             color: white;
           }
         }
+
+        @media (min-width: $breakpoint-md) {
+          width: auto;
+          flex: 1 1 auto;
+        }
       }
     }
+
 
     h3 {
       font-size: 1.25rem; // Adjust for smaller screens

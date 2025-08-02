@@ -243,6 +243,7 @@ function About() {
                     While all are welcome, I specialize in:
                 </p>
                 <ul className="custom-bullet-list">
+                    <li>Everyone!</li>
                     <li>Teens and adults in addiction recovery</li>
                     <li>Pregnant and postpartum mothers</li>
                     <li>Wheelchair users and those with spinal cord injuries</li>
