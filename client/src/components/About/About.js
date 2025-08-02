@@ -190,6 +190,7 @@ function About() {
             >
                 <div className="about-overlay">
                     <div className="about-overlay-text">
+                        <h1>Yoga with Zsuzsanna</h1>
                         <p>I'm Zsuzsanna, a yoga teacher and yoga therapist-in-training, here to support you in finding alignment between body and mind.</p>
                     </div>
                 </div>
@@ -202,7 +203,7 @@ function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
             >
-                <motion.h2 className="section-title" variants={fadeInUp}>Why Yoga with Zsuzsanna</motion.h2>
+                <motion.h2 className="section-title" variants={fadeInUp}>My approach</motion.h2>
                 <div className="title-line"></div>
                 <p>My approach to yoga is rooted in presence and compassion.
                     I offer trauma-informed and adaptive practices that meet you where you are. As an aspiring yoga therapist, I combine breath science, somatic awareness, and yoga psychology to support nervous system regulation, emotional resilience, and healing.</p>
@@ -219,12 +220,12 @@ function About() {
                 <motion.h2 className="section-title" variants={fadeInUp}>My sessions are</motion.h2>
                 <div className="title-line"></div>
                 <ul className="custom-bullet-list">
-                    <li>✔️ Trauma-informed and neurobiologically grounded</li>
-                    <li>✔️ Adaptive and accessible: chair and gentle floor options</li>
-                    <li>✔️ Rooted in yoga therapy principles and somatic movement</li>
-                    <li>✔️ Small-group or one-on-one settings for deeper connection</li>
-                    <li>✔️ Inclusive of all bodies, abilities, and backgrounds</li>
-                    <li>✔️ Practices designed to support the nervous system and emotional health</li>
+                    <li>Trauma-informed and neurobiologically grounded</li>
+                    <li>Adaptive and accessible: chair and gentle floor options</li>
+                    <li>Rooted in yoga therapy principles and somatic movement</li>
+                    <li>Small-group or one-on-one settings for deeper connection</li>
+                    <li>Inclusive of all bodies, abilities, and backgrounds</li>
+                    <li>Practices designed to support the nervous system and emotional health</li>
                 </ul>
             </motion.div>
 
@@ -406,8 +407,14 @@ function About() {
             >
                 <motion.h2 className="section-title" variants={fadeInUp}>Ready to Begin?</motion.h2>
                 <div className="title-line"></div>
-                <p><a href="/calendar">View the calendar & sign up for group classes</a></p>
-                <p><a href="/register">Register for an account and book a yoga therapy or a private yoga class with me.</a></p>
+                <p>
+                    Whether you're stepping onto the mat for the first time or returning after a long journey, I’m here to support you. Explore upcoming classes or reach out to book a private session.
+                </p>
+
+                <div className="cta-links">
+                    <a href="/calendar" className="cta-button">View Calendar & Join a Group Class</a>
+                    <a href="/register" className="cta-button secondary">Book Yoga Therapy or a Private Class</a>
+                </div>
             </motion.div>
 
             <Slideshow />
