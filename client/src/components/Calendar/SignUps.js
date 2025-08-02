@@ -72,6 +72,14 @@ const Signup = () => {
   const handleSignatureSave = () => {
     const signature = sigPad.current.toDataURL(); // Save data to backend
     setSignatureData(signature);
+
+    // Show success popup
+    Swal.fire({
+      icon: 'success',
+      title: 'Signature Saved',
+      text: 'Click on "Sign Up" to complete your registration for the class.',
+      confirmButtonText: 'OK'
+    });
   };
 
   const handleInputChange = (e) => {
@@ -267,10 +275,10 @@ const Signup = () => {
             canvasProps={{ width: 500, height: 200, className: "sigCanvas" }}
           />
           <button type="button" onClick={clearSignature}>
-            Clear
+            Clear signature
           </button>
           <button type="button" onClick={handleSignatureSave}>
-            Save
+            Save signature
           </button>
         </div>
 
