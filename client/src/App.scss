@@ -23,6 +23,10 @@ a {
   color: rgb(42, 42, 176); // Default link color
 }
 
+h1 {
+  font-family: 'Caveat', 'Segoe Script', cursive;
+}
+
 .App {
   display: flex;
   flex-direction: column; // Ensure vertical stacking
