@@ -180,8 +180,6 @@ function About() {
                 <link rel="canonical" href="https://www.yogaandchocolate.com/yoga" />
             </Helmet>
 
-            <h1 className="page-title">Yoga with Zsuzsanna</h1>
-
             <motion.div
                 className='about-top'
                 initial={{ opacity: 0, y: 30 }}
@@ -407,13 +405,13 @@ function About() {
             >
                 <motion.h2 className="section-title" variants={fadeInUp}>Ready to Begin?</motion.h2>
                 <div className="title-line"></div>
-                <p>
-                    Whether you're stepping onto the mat for the first time or returning after a long journey, I’m here to support you. Explore upcoming classes or reach out to book a private session.
-                </p>
-
                 <div className="cta-links">
-                    <a href="/calendar" className="cta-button">View Calendar & Join a Group Class</a>
-                    <a href="/register" className="cta-button secondary">Book Yoga Therapy or a Private Class</a>
+                    <a href="/calendar" className="cta-button">
+                        View the calendar & sign up for group classes
+                    </a>
+                    <a href="/register" className="cta-button outline">
+                        Register for an account and book a yoga therapy or a private yoga class with me.
+                    </a>
                 </div>
             </motion.div>
 
