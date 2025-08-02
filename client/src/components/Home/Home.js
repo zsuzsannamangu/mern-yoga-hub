@@ -160,14 +160,14 @@ function Home({ showAlert }) {
 
   return (
     <div className="homepage">
-      <Helmet>
+      {/* <Helmet>
         <title>Yoga and Chocolate | Mindful Movement & Sustainable Treats</title>
         <meta
           name="description"
           content="Explore trauma-informed yoga, yoga therapy and handcrafted, plant-based chocolate by Zsuzsanna Mangu."
         />
         <link rel="canonical" href="https://www.yogaandchocolate.com/" />
-      </Helmet>
+      </Helmet> */}
       <motion.div
         className="home-hero-banner"
         initial={{ opacity: 0, y: 30 }}
