@@ -70,7 +70,7 @@ function App() {
               <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<Home showAlert={showAlert} />} /> {/* Passes the reusable showAlert function as a prop to the page for triggering alerts  */}
-                <Route path="/about" element={<About />} />
+                <Route path="/yoga" element={<About />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/chocolates" element={<Chocolates showAlert={showAlert} />} />
                 <Route path="/contact" element={<Contact showAlert={showAlert} />} />
