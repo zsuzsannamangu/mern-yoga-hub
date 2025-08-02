@@ -161,7 +161,7 @@ export default class Calendar extends Component {
           viewport={{ once: true }}
           transition={{ duration: 1 }}
         >
-          <h2 className="section-title">Upcoming Yoga Classes and Events</h2>
+          <h1 className="section-title">Upcoming Yoga Classes and Events</h1>
           <div className="title-line"></div>
         </motion.div>
         <motion.div
