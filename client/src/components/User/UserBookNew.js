@@ -32,7 +32,7 @@ function UserBookNew() {
 
     const sessionTypes = [
         "Individual Yoga Session (60 min)",
-        "Theraputic Yoga Session (60 min)",
+        "Yoga Therapy Session (60 min)",
     ];
 
     // Fetch user data and available slots when component mounts
@@ -169,7 +169,7 @@ function UserBookNew() {
             Swal.fire({
                 icon: 'error',
                 title: 'Invalid Payment Amount',
-                text: 'The amount must be at least $50. Please adjust your entry and try again.',
+                text: 'The amount must be at least $10. Please adjust your entry and try again.',
                 confirmButtonText: 'OK'
             });
             return;
@@ -415,7 +415,7 @@ function UserBookNew() {
                             }
                             highlightedSlots={availableSlots.map((slot) => slot.date)}
                         />
-                        <p>**Individual yoga sessions are $50-$110/hr sliding scale. Individualized therapeutic yoga sessions are $50-$130/hr sliding scale.</p>
+                        <p>**Individual yoga sessions are $80-$110/hr sliding scale. Individualized yoga therapy sessions are $10-$80/hr sliding scale.</p>
                         <p> Your investment is a personal choice, aligning with your current financial circumstances.**</p>
                         <p><strong> Committing to at least 8 weeks of yoga therapy gives us time to build trust, personalize your practice, and support meaningful, lasting change in body, mind, and nervous system. </strong></p>
                     </div>
@@ -488,7 +488,7 @@ function UserBookNew() {
 
                                 {couponCode.trim().toUpperCase() !== 'YOURJOURNEY' && (
                                     <label>
-                                        Payment Amount (sliding scale: $50–$130):
+                                        Payment Amount (sliding scale: $10–$110):
                                         <input
                                             type="number"
                                             value={paymentAmount || ''}

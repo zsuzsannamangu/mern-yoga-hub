@@ -59,7 +59,7 @@ router.post("/orders", async (req, res) => {
                 <p><b>Total amount paid including shipping:</b> $${transactionAmount}</p>
                 <p>Your chocolates are being lovingly prepared and will ship within 4–6 days. You'll receive an email when your order is on its way.</p>
                 <p>I appreciate your support!</p>
-                <p>As a small gift, you're invited to book a <b>free 60-minute therapeutic yoga session</b> with me. 
+                <p>As a gift, you're invited to book a <b>free 60-minute yoga therapy session</b> with me. 
                 Just use the code <b>YOURJOURNEY</b> when scheduling, after registering for an account.</p>
 
                 <p>Feel free to email me with any questions.</p>
