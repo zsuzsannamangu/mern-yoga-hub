@@ -57,8 +57,8 @@ function Navbar() {
                         <Link to="/" className="nav-item">Home</Link>
                         <Link to="/yoga" className="nav-item">Yoga</Link>
                         <Link to="/calendar" className="nav-item">Calendar</Link>
-                        <Link to="/contact" className="nav-item">Contact</Link>
                         <Link to="/chocolates" className="nav-item nav-item-chocolates">Chocolates</Link>
+                        <Link to="/contact" className="nav-item">Contact</Link>
                     </>
                 )}
             </div>
