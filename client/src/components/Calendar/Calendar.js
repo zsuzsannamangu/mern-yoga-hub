@@ -152,7 +152,7 @@ export default class Calendar extends Component {
             <div className="calendar-overlay-text">
               <h1>Where to find me</h1>
               <p>Join me in these practices!</p>
-              <p>Let’s move, breathe, and be present together, creating space for growth and connection.</p>
+              <p>Let’s move, breathe, and be present together.</p>
             </div>
           </div>
         </motion.div>
