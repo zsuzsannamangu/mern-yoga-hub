@@ -54,6 +54,7 @@
 
     h1 {
       font-family: $font-main;
+      font-style: italic;
     }
 
     @media (min-width: 769px) and (max-width: 1024px) {
@@ -180,7 +181,6 @@
 
     .cta-links {
       margin-top: 2rem;
-      margin-bottom: 2.5rem;
       display: flex;
       flex-wrap: wrap;
       justify-content: left;
@@ -197,6 +197,7 @@
         transition: all 0.3s ease;
         max-width: 280px;
         width: 100%;
+        margin-bottom: 3rem;
 
         // Primary button
         &.cta-button {
