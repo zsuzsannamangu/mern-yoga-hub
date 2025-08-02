@@ -261,6 +261,64 @@ function About() {
                 <Offerings />
             </motion.div>
 
+            {/* Class Descriptions Section */}
+            <motion.div
+                className="about-info-section"
+                ref={classDescriptionsRef}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <motion.h2 className="section-title" variants={fadeInUp}>Class Descriptions</motion.h2>
+                <div className="title-line"></div>
+                <div className="info-category">
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <h4>Yoga for Wheelchair Users</h4>
+                        <p>A yoga practice tailored for individuals who use wheelchairs, focusing on enhancing well-being through breath, gentle movement, and mindfulness.
+
+                            Through guided breathwork, we’ll cultivate a sense of calm, helping to lower stress, improve circulation, and support respiratory health. Gentle
+                            movements are designed to improve flexibility, build strength, and enhance range of motion, all while remaining seated.
+
+                            Mindfulness and meditation will be woven into the practice to foster mental clarity, emotional resilience, and a deeper connection to your body.
+                            All levels are welcome, and no prior experience is needed. Props will be offered.</p>
+                    </motion.div>
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <h4>Slow Flow</h4>
+                        <p>This class focuses on mindful movement, allowing you to ease into each posture with intention and awareness.
+                            Through gentle flows, we’ll explore balance and strength at a pace that honors your body.
+                            This practice is inclusive and adaptive, offering a welcoming space for all levels, whether you’re new to yoga or looking to refine your practice.</p>
+                    </motion.div>
+                </div>
+            </motion.div>
+
+            <motion.div
+                className="about-info-section"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <motion.h2 className="section-title" variants={fadeInUp}>Frequently Asked Questions</motion.h2>
+                <div className="title-line"></div>
+                <div className="faq">
+                    <h4>Do I need to have yoga experience?</h4>
+                    <p>Not at all. My classes are designed to meet you exactly where you are.</p>
+
+                    <h4>Are sessions in-person or online?</h4>
+                    <p>I offer both. You’re welcome to join in person in Portland, Oregon, or online via Google Meet. If you're local, I recommend in-person sessions when possible for deeper support.</p>
+
+                    <h4>Do you offer hands-on assists or touch during in-person sessions?</h4>
+                    <p>Yes, only with consent. I offer gentle, intentional touch and hands-on support when appropriate and always with your clear permission. Touch can be a beautiful tool for grounding, connection, and transformation.</p>
+
+                    <h4>What props do I need for online sessions?</h4>
+                    <p>If you have yoga props, great! But you can easily use everyday items too: a stack of books for blocks, a firm pillow for a bolster, a belt as a strap, and any cozy blanket you have on hand. I always offer modifications so you can make the most of what you have.</p>
+
+                    <h4>Are yoga therapy sessions covered by insurance?</h4>
+                    <p>Yoga therapy may be reimbursable through HSA or FSA accounts if recommended by a licensed healthcare provider. Please check with your provider to confirm eligibility.</p>
+                </div>
+            </motion.div>
+
             {/* Trainings Section */}
     //         <motion.div
                 className="about-info-section"
@@ -337,66 +395,6 @@ function About() {
                             2003-2007</p>
                         <p>Scholarship recipient of the Ministry of Education, Hungary</p>
                     </div>
-                </div>
-            </motion.div>
-
-            {/* Class Descriptions Section */}
-            <motion.div
-                className="about-info-section"
-                ref={classDescriptionsRef}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1 }}
-            >
-                <motion.h2 className="section-title" variants={fadeInUp}>Class Descriptions</motion.h2>
-                <div className="title-line"></div>
-                <div className="info-category">
-                    <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Yoga for Wheelchair Users</h4>
-                        <p>A yoga practice tailored for individuals who use wheelchairs, focusing on enhancing well-being through breath, gentle movement, and mindfulness.
-
-                            Through guided breathwork, we’ll cultivate a sense of calm, helping to lower stress, improve circulation, and support respiratory health. Gentle
-                            movements are designed to improve flexibility, build strength, and enhance range of motion, all while remaining seated.
-
-                            Mindfulness and meditation will be woven into the practice to foster mental clarity, emotional resilience, and a deeper connection to your body.
-                            All levels are welcome, and no prior experience is needed. Props will be offered.</p>
-                    </motion.div>
-                    <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Slow Flow</h4>
-                        <p>This class focuses on mindful movement, allowing you to ease into each posture with intention and awareness.
-                            Through gentle flows, we’ll explore balance and strength at a pace that honors your body.
-                            This practice is inclusive and adaptive, offering a welcoming space for all levels, whether you’re new to yoga or looking to refine your practice.</p>
-                    </motion.div>
-                </div>
-            </motion.div>
-
-            <motion.div
-                className="about-info-section"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1 }}
-            >
-                <motion.h2 className="section-title" variants={fadeInUp}>Frequently Asked Questions</motion.h2>
-                <div className="title-line"></div>
-                <div className="faq">
-                    <h4>Do I need to have yoga experience?</h4>
-                    <p>No prior experience is necessary. My classes are designed to meet you where you are.</p>
-
-                    <h4>Do you offer in-person or online sessions?</h4>
-                    <p>I offer in-person sessions in Portland, Oregon. I also offer sessions via Google Meet so you can join from home. For those that are in or near Portland, in-person sessions are recommended when possible.</p>
-
-                    <h4>Do you offer hands-on assist, adjusments and touch during in-person sessions</h4>
-                    <p>Touch and adjustments are offered, and always with permission. Touch can be a powerful tool for transformation and I love using it .</p>
-
-                    <h4>What should I bring?</h4>
-                    <p>If you have a mat or props, great, but I always offer modifications and suggestions if you don’t. If you don't have yoga props specifically designed for yoga, you can use the following modifications: blocks - a stack of books,
-                        bolster - firm pillow, yoga strap - belt, and for blankets, any blankets you have will work.
-                    </p>
-
-                    <h4>Are your classes covered by insurance?</h4>
-                    <p>Yoga therapy sessions may be reimbursable through HSA or FSA accounts if it's recommended by a licensed healthcare provider. Please check with your provider.</p>
                 </div>
             </motion.div>
 
