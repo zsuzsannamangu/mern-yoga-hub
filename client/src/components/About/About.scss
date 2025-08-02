@@ -12,6 +12,7 @@
     justify-content: space-between;
     margin-bottom: 3rem;
     gap: 2rem;
+    background-color: $secondary-background-color;
 
     &.reverse {
       flex-direction: row-reverse;
@@ -83,11 +84,6 @@
     width: 30%;
     left: -28%; // Larger screens, offset
     top: -20%;
-
-    h1 {
-      font-family: $font-main;
-      font-style: italic;
-    }
 
     @media (min-width: 769px) and (max-width: 1024px) {
       width: 30%;
