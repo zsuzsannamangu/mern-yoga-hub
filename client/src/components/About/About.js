@@ -131,10 +131,10 @@ function About() {
                         </motion.h2>
                         <div className="title-line"></div>
                         <p>
-                            I offer both group yoga classes and one-on-one sessions in yoga and yoga therapy.
+                            I offer one-on-one sessions in yoga and yoga therapy.
                         </p>
                         <p>
-                            These offerings are open to all, regardless of experience, background, or physical ability.
+                            These sessions are open to all, regardless of experience, background, or physical ability.
                             I always strive to create a supportive, welcoming environment for everyone. While all are welcome, I specialize in supporting:
                         </p>
                         <ul className="custom-bullet-list">
@@ -163,7 +163,7 @@ function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
             >
-                <motion.h2 className="section-title" variants={fadeInUp}>Class Descriptions</motion.h2>
+                <motion.h2 className="section-title" variants={fadeInUp}>Group Class Descriptions</motion.h2>
                 <div className="title-line"></div>
                 <div className="info-category">
                     <motion.div className="info-item" variants={fadeInUp}>
@@ -228,6 +228,9 @@ function About() {
 
                     <h4>Are yoga therapy sessions covered by insurance?</h4>
                     <p>Yoga therapy may be reimbursable through HSA or FSA accounts if recommended by a licensed healthcare provider. Please check with your provider to confirm eligibility.</p>
+
+                    <h4>How much are individual sessions?</h4>
+                    <p>Private yoga therapy sessions are $10-$80 sliding scale through June 2026, while I'm in training. Individual yoga sessions are $80-$110 sliding scale.</p>
                 </div>
             </motion.div>
 
@@ -320,11 +323,11 @@ function About() {
                 <motion.h2 className="section-title" variants={fadeInUp}>Ready to Begin?</motion.h2>
                 <div className="title-line"></div>
                 <div className="cta-links">
-                    <a href="/calendar" className="cta-button">
-                        Sign up for group classes
-                    </a>
                     <a href="/register" className="cta-button outline">
                         Book a private session
+                    </a>
+                    <a href="/calendar" className="cta-button">
+                        Sign up for group classes
                     </a>
                 </div>
             </motion.div>
