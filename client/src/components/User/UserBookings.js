@@ -89,7 +89,7 @@ function UserBookings() {
                                 rel="noopener noreferrer"
                                 className={booking.isPast ? 'disabled-link' : ''}
                             >
-                                <FaLocationArrow className="icon" /> {booking.link || '1526 N Holman St.'}
+                                <FaLocationArrow className="icon" /> {booking.link || 'Link is emailed'}
                             </a>
                             <a href="/contact">
                                 <FaEnvelope className="icon" /> Need to cancel? Email me!
