@@ -13,8 +13,8 @@ const AboutWebsite = () => {
                 <section className="app-intro">
                     <h2>Hey there!</h2>
                     <p>
-                        I built this website from scratch using the MERN stack—which means no Wix,
-                        no templates, just real code. <p>As a yoga teacher and chocolatier, I wanted a custom platform that
+                        I built this website from scratch using the MERN Stack: MongoDB, Express, React and Node.
+                        <p>As a yoga teacher and chocolatier, I wanted a custom platform that
                             reflects my work and allows students to book sessions, sign up for classes & workshops, buy chocolates and stay connected.</p>
                     </p>
                 </section>
@@ -60,7 +60,7 @@ const AboutWebsite = () => {
                     <h2>Let’s Work Together</h2>
                     <p>
                         If you're looking for a developer to build a website like this for your business
-                        or if you're a company looking for a full-stack developer, I’d love to chat.
+                        or if you're a company looking for a full-stack developer, contact me!
                         <Link to="/contact" className="contact-link"> Message me! </Link>
                     </p>
                 </section>
