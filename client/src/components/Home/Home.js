@@ -201,7 +201,7 @@ function Home({ showAlert }) {
               groups, supporting each student in deepening their connection to body, breath, and self-compassion.
             </p>
             <p>
-              I also make plant-based, small-batch chocolates using organic, fair-trade ingredients and low-waste packaging.
+              Alongside my yoga practice, I create handcrafted, plant-based chocolates made fresh with organic, fair-trade ingredients. Each batch is intentionally made in small quantities and packaged in low-waste, reusable tins.
             </p>
           </div>
 

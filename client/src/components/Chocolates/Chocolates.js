@@ -7,6 +7,7 @@ import AboutChocolates from './AboutChocolates';
 import '../../App.scss';
 import Slideshow from './Slideshow';
 import { motion } from 'framer-motion';
+import Testimonials from './Testimonials';
 
 function Chocolates() {
     const scrollToProductsSection = () => {
@@ -73,6 +74,14 @@ function Chocolates() {
                 transition={{ duration: 1 }}
             >
                 <AboutChocolates />
+            </motion.div>
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <Testimonials />
             </motion.div>
             <motion.div
                 initial={{ opacity: 0 }}
