@@ -15,6 +15,18 @@ const testimonials = [
     name: "Renee M.",
     quote: "Such a beautiful presentation in cute, reusable tins. Handwritten note on thoughtful seeded paper. Not to mention the delicious chocolates with obviously quality ingredients. Excellent product and experience!",
   },
+    {
+    name: "Ben R.",
+    quote: "These are my favorite chocolates ever! They are so delicious and they are hand-made with the best ingredients. So good!!",
+  },
+  {
+    name: "Heather V.",
+    quote: "Zsuzsanna's chocolates are amazing! They are sustainably packaged and thoughtfully prepared. Her chocolate feels like something extra special to share with friends and family after a meal or at a gathering. I love that they are vegan and how much thought she puts into sourcing her ingredients. Highly recommend!",
+  },
+  {
+    name: "Patricia",
+    quote: "These chocolates are unique and delectable. And I appreciate the environmentally conscious packaging. The personal note is so touching. You are sun bursts, star shine and stardust.",
+  },
 ];
 
 export default function Testimonials() {
