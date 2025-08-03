@@ -219,11 +219,11 @@ function About() {
                     <p>Not at all. Sessions are designed to meet you exactly where you are.</p>
 
                     <h4>What is trauma-informed yoga?</h4>
-                    <p>Trauma-informed yoga is an approach that prioritizes safety, choice, and empowerment. It’s designed to create a supportive environment where students can connect with their bodies at their own pace. 
+                    <p>Trauma-informed yoga is an approach that prioritizes safety, choice, and empowerment. It’s designed to create a supportive environment where students can connect with their bodies at their own pace.
                         The focus is on invitation rather than instruction, offering space for each person to decide what feels right for them in the moment.</p>
 
                     <h4>What is yoga therapy?</h4>
-                    <p>Yoga therapy is a personalized, holistic approach that supports physical, emotional, and mental well-being. It combines breath, movement, psychology, neurobiology, mindfulness, somatic practices and the ancient wisdom of yoga to address specific concerns 
+                    <p>Yoga therapy is a personalized, holistic approach that supports physical, emotional, and mental well-being. It combines breath, movement, psychology, neurobiology, mindfulness, somatic practices and the ancient wisdom of yoga to address specific concerns
                         or conditions. Sessions are tailored to the individual, creating space for healing, resilience, and greater self-awareness.</p>
 
                     <h4>Are sessions in-person or online?</h4>
@@ -244,7 +244,7 @@ function About() {
             </motion.div>
 
             {/* Trainings Section */}
-    //         <motion.div
+            <motion.div
                 className="about-info-section"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
