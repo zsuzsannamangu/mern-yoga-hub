@@ -215,8 +215,8 @@ function About() {
                 <motion.h2 className="section-title" variants={fadeInUp}>Frequently Asked Questions</motion.h2>
                 <div className="title-line"></div>
                 <div className="faq">
-                    <h4>Do I need to have yoga experience?</h4>
-                    <p>Not at all. My classes are designed to meet you exactly where you are.</p>
+                    <h4>Do I need to have yoga experience to do yoga therapy?</h4>
+                    <p>Not at all. Sessions are designed to meet you exactly where you are.</p>
 
                     <h4>What is trauma-informed yoga?</h4>
                     <p>Trauma-informed yoga is an approach that prioritizes safety, choice, and empowerment. It’s designed to create a supportive environment where students can connect with their bodies at their own pace. 
