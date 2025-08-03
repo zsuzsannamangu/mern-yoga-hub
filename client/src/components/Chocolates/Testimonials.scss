@@ -27,6 +27,8 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         font-style: italic;
         text-align: justify;
+        font-size: 1.1rem;
+        line-height: 1.6;
 
         &:hover {
             background-color: $content-background-color-hover;
