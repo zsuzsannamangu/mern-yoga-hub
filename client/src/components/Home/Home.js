@@ -248,6 +248,25 @@ function Home({ showAlert }) {
               <button type="submit">Submit</button>
             </form>
           </div>
+          <div className="main-left">
+            <h1 className="section-title">Sample Class</h1>
+            <div className="title-line"></div>
+          </div>
+          <div className="right-section">
+            <p>
+              This 60-minute Level 1 Slow Flow class focuses on hip mobility and gentle strength building. It includes a few playful challenges, like Warrior III, to help you explore balance and stability.
+            </p>
+            <div className="video-container">
+              <iframe
+                width="100%"
+                height="315"
+                src="https://www.youtube.com/embed/IEjzJZVx9g8?start=4086"
+                title="Sample Slow Flow Class"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
         </motion.div>
       </div>
     </div >
