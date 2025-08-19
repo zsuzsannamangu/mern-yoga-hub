@@ -11,7 +11,7 @@ import { motion } from 'framer-motion';
 function Home({ showAlert }) {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   useEffect(() => {
     // Dynamically add reCAPTCHA script
     const siteKey = process.env.REACT_APP_CAPTCHA_SITE_KEY;
@@ -161,71 +161,32 @@ function Home({ showAlert }) {
 
   return (
     <div className="homepage">
-      <Helmet>
-        <title>Yoga and Chocolate | Mindful Movement & Sustainable Treats</title>
-        <meta
-          name="description"
-          content="Explore trauma-informed yoga, yoga therapy and handcrafted, plant-based chocolate by Zsuzsanna Mangu."
-        />
-        <link rel="canonical" href="https://www.yogaandchocolate.com/" />
-      </Helmet>
-      
-      {/* Main Hero Section with Three Columns */}
       <motion.div
-        className="hero-section"
+        className="split-banner"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        {/* Left Section - Yoga */}
-        <div className="hero-left">
-          <div className="hero-image-container">
-            <img 
-              src="/images/yoga/Zsuzsi_yoga_37.jpg" 
-              alt="Yoga practice outdoors" 
-              className="hero-image"
-            />
-            <div className="hero-overlay">
-              <a href="/yoga" className="hero-button">YOGA</a>
-            </div>
-          </div>
-        </div>
+        <img
+          src="/images/home/Zsuzsi_homepage.jpg"
+          alt="Yoga and Chocolate"
+          className="split-banner__image"
+        />
 
-        {/* Center Section - Logo */}
-        <div className="hero-center">
-          <div className="logo-container">
-            <div className="vertical-text">CHOCOLATE</div>
-            <div className="yoga-script">yoga</div>
-            <div className="chakra-symbol"></div>
-          </div>
-        </div>
+        {/* Left half → Yoga */}
+        <a
+          href="/yoga"
+          aria-label="Go to Yoga"
+          className="split-banner__link split-banner__link--left"
+        />
 
-        {/* Right Section - Chocolate */}
-        <div className="hero-right">
-          <div className="hero-image-container">
-            <img 
-              src="/images/chocolates/Zsuzsi_with_hearts.jpg" 
-              alt="Handcrafted chocolates" 
-              className="hero-image"
-            />
-            <div className="hero-overlay">
-              <a href="/chocolates" className="hero-button">CHOCOLATE</a>
-            </div>
-          </div>
-        </div>
+        {/* Right half → Chocolates */}
+        <a
+          href="/chocolates"
+          aria-label="Go to Chocolates"
+          className="split-banner__link split-banner__link--right"
+        />
       </motion.div>
-
-      {/* Bottom Buttons Section */}
-      <motion.div
-        className="bottom-buttons"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
-      >
-        <a href="/register" className="register-btn">Register</a>
-        <a href="/login" className="login-btn">Log in</a>
-      </motion.div>
-
       {/* Rest of the content sections */}
       <div className='main-section'>
         <motion.div
@@ -328,7 +289,7 @@ function Home({ showAlert }) {
           </div>
         </motion.div>
       </div>
-    </div>
+    </div >
   );
 }
 
