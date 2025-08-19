@@ -93,7 +93,7 @@ function Products({ showAlert }) {
         <h2 className="section-title" id="products-section">Products</h2>
         <div className="title-line"></div>
         <div className="vacationtext">
-          Currently on vacation, orders will be fulfilled on September 3rd!
+          Currently away, all orders will be lovingly fulfilled on September 3rd. Thank you for your patience!
         </div>
       </div>
 
