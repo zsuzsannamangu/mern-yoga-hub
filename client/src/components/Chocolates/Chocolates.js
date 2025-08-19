@@ -65,9 +65,6 @@ function Chocolates() {
                 transition={{ duration: 1 }}
             >
                 <Products />
-                <p className="text-red-600">
-                    Currently on vacation, orders will be fulfilled on September 3rd!
-                </p>
             </motion.div>
 
             <motion.div
