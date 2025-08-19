@@ -168,7 +168,7 @@ function Home({ showAlert }) {
         transition={{ duration: 1 }}
       >
         <img
-          src="/images/home/Zsuzsi_homepage.jpg"
+          src="/images/Zsuzsi_homepage.jpg"
           alt="Yoga and Chocolate"
           className="split-banner__image"
         />
