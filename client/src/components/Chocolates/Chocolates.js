@@ -64,7 +64,12 @@ function Chocolates() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
             >
-                <Products />
+                <div className="flex items-center gap-2">
+                    <span className="font-semibold">Products</span>
+                    <span className="text-red-600">
+                        – Currently on vacation, orders will be fulfilled on September 3rd!
+                    </span>
+                </div>
             </motion.div>
 
             <motion.div
