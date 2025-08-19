@@ -92,6 +92,9 @@ function Products({ showAlert }) {
       <div className="products-header">
         <h2 className="section-title" id="products-section">Products</h2>
         <div className="title-line"></div>
+        <p className="text-red-600">
+          Currently on vacation, orders will be fulfilled on September 3rd!
+        </p>
       </div>
 
       <div className="filter-buttons">
