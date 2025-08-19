@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 function Home({ showAlert }) {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
   useEffect(() => {
     // Dynamically add reCAPTCHA script
     const siteKey = process.env.REACT_APP_CAPTCHA_SITE_KEY;
@@ -51,7 +52,7 @@ function Home({ showAlert }) {
     if (!captchaToken) {
       Swal.fire({
         title: 'Verification Failed',
-        text: 'We couldn’t verify that you’re human. Please try again.',
+        text: 'We couldn\'t verify that you\'re human. Please try again.',
         icon: 'warning',
         confirmButtonText: 'Retry'
       });
@@ -87,7 +88,7 @@ function Home({ showAlert }) {
     } catch (error) {
       Swal.fire({
         title: 'Oops! Something went wrong!',
-        text: 'We couldn’t submit your form. Please try again later.',
+        text: 'We couldn\'t submit your form. Please try again later.',
         icon: 'error',
         confirmButtonText: 'OK'
       });
@@ -148,7 +149,7 @@ function Home({ showAlert }) {
     } catch (error) {
       Swal.fire({
         title: 'Oops!',
-        text: 'We couldn’t process your subscription.',
+        text: 'We couldn\'t process your subscription.',
         icon: 'error',
         confirmButtonText: 'OK'
       });
@@ -160,24 +161,72 @@ function Home({ showAlert }) {
 
   return (
     <div className="homepage">
-      {/* <Helmet>
+      <Helmet>
         <title>Yoga and Chocolate | Mindful Movement & Sustainable Treats</title>
         <meta
           name="description"
           content="Explore trauma-informed yoga, yoga therapy and handcrafted, plant-based chocolate by Zsuzsanna Mangu."
         />
         <link rel="canonical" href="https://www.yogaandchocolate.com/" />
-      </Helmet> */}
+      </Helmet>
+      
+      {/* Main Hero Section with Three Columns */}
       <motion.div
-        className="home-hero-banner"
+        className="hero-section"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        <a href="/yoga" className="hero-link left" aria-label="Go to Yoga page"></a>
-        <a href="/chocolates" className="hero-link right" aria-label="Go to Chocolate page"></a>
+        {/* Left Section - Yoga */}
+        <div className="hero-left">
+          <div className="hero-image-container">
+            <img 
+              src="/images/yoga/Zsuzsi_yoga_37.jpg" 
+              alt="Yoga practice outdoors" 
+              className="hero-image"
+            />
+            <div className="hero-overlay">
+              <a href="/yoga" className="hero-button">YOGA</a>
+            </div>
+          </div>
+        </div>
+
+        {/* Center Section - Logo */}
+        <div className="hero-center">
+          <div className="logo-container">
+            <div className="vertical-text">CHOCOLATE</div>
+            <div className="yoga-script">yoga</div>
+            <div className="chakra-symbol"></div>
+          </div>
+        </div>
+
+        {/* Right Section - Chocolate */}
+        <div className="hero-right">
+          <div className="hero-image-container">
+            <img 
+              src="/images/chocolates/Zsuzsi_with_hearts.jpg" 
+              alt="Handcrafted chocolates" 
+              className="hero-image"
+            />
+            <div className="hero-overlay">
+              <a href="/chocolates" className="hero-button">CHOCOLATE</a>
+            </div>
+          </div>
+        </div>
       </motion.div>
 
+      {/* Bottom Buttons Section */}
+      <motion.div
+        className="bottom-buttons"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.5 }}
+      >
+        <a href="/register" className="register-btn">Register</a>
+        <a href="/login" className="login-btn">Log in</a>
+      </motion.div>
+
+      {/* Rest of the content sections */}
       <div className='main-section'>
         <motion.div
           className="main-row"
@@ -193,7 +242,7 @@ function Home({ showAlert }) {
           </div>
           <div className="right-section">
             <p>
-              I’m a trauma-informed yoga teacher, yoga therapist-in-training, and chocolatier based in Portland, Oregon. I create space for exploration of body and mind through a
+              I'm a trauma-informed yoga teacher, yoga therapist-in-training, and chocolatier based in Portland, Oregon. I create space for exploration of body and mind through a
               unique blend of yoga, mindfulness, and sensory experiences.
             </p>
             <p>
@@ -204,8 +253,8 @@ function Home({ showAlert }) {
               Alongside my yoga practice, I create handcrafted, plant-based chocolates made fresh with organic, fair-trade ingredients. Each batch is intentionally made in small quantities and packaged in low-waste, reusable tins.
             </p>
           </div>
-
         </motion.div>
+
         <motion.div
           className="main-row"
           id="book-section"
@@ -248,6 +297,16 @@ function Home({ showAlert }) {
               <button type="submit">Submit</button>
             </form>
           </div>
+        </motion.div>
+
+        <motion.div
+          className="main-row"
+          id="sample-class-section"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+        >
           <div className="main-left">
             <h1 className="section-title">Sample Class</h1>
             <div className="title-line"></div>
@@ -269,7 +328,7 @@ function Home({ showAlert }) {
           </div>
         </motion.div>
       </div>
-    </div >
+    </div>
   );
 }
 
