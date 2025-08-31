@@ -29,24 +29,11 @@ function Chocolates() {
                 <link rel="canonical" href="https://www.yogaandchocolate.com/chocolates" />
             </Helmet>
             <motion.div
-                className="chocolates-top"
+                className='chocolates-top'
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1 }}
             >
-                {/* Background video */}
-                <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="background-video"
-                >
-                    <source src="/videos/chocolates-bg.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
-
-                {/* Dark overlay to make text readable */}
                 <div className="overlay">
                     <motion.div
                         className="overlay-text"
@@ -71,7 +58,6 @@ function Chocolates() {
                     </motion.div>
                 </div>
             </motion.div>
-
             <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
