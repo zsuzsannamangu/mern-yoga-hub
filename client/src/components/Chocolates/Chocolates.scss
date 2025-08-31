@@ -1,46 +1,80 @@
 @use '../../styles/variables' as *;
 
+// .chocolates-top {
+//     position: relative;
+//     background-image: url('/../public/images/chocolates/Truffles_1.jpg');
+//     background-size: cover;
+//     height: 80vh;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     background-position: center;
+//     padding-bottom: 60px;
+//     /* Adds spacing before the products section */
+// }
+
+// .overlay {
+//     background-color: rgba(255, 255, 255, 0.826);
+//     /* White overlay with transparency */
+//     padding: 30px 10px;
+//     /* Adds more padding for height */
+//     border-radius: 8px;
+//     width: 50%;
+//     /* Adjust width to be narrower */
+//     max-width: 500px;
+//     /* Restricts maximum width */
+//     text-align: left;
+//     color: $text-color;
+//     /* Dark brown text color */
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//     /* Centered and slightly offset */
+//     position: relative;
+//     left: -25%;
+//     /* Offset to the left (adjustable for centering over image) */
+//     transform: translateY(-10%);
+//     /* Vertically adjust to keep centered with the image */
+
+//     @media (max-width: 768px) {
+//         bottom: -7%;
+//     }
+// }
+
 .chocolates-top {
     position: relative;
-    background-image: url('/../public/images/chocolates/Truffles_1.jpg');
-    background-size: cover;
     height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-position: center;
+    overflow: hidden;
+    /* keep video clipped */
     padding-bottom: 60px;
-    /* Adds spacing before the products section */
+}
+
+.background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* behaves like background-size: cover */
+    z-index: -1;
+    /* sit behind overlay/text */
 }
 
 .overlay {
-    background-color: rgba(255, 255, 255, 0.826);
-    /* White overlay with transparency */
-    padding: 30px 10px;
-    /* Adds more padding for height */
-    border-radius: 8px;
-    width: 50%;
-    /* Adjust width to be narrower */
-    max-width: 500px;
-    /* Restricts maximum width */
-    text-align: left;
-    color: $text-color;
-    /* Dark brown text color */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* Centered and slightly offset */
     position: relative;
-    left: -25%;
-    /* Offset to the left (adjustable for centering over image) */
-    transform: translateY(-10%);
-    /* Vertically adjust to keep centered with the image */
-
-    @media (max-width: 768px) {
-        bottom: -7%;
-    }
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.4);
+    /* optional dark overlay for readability */
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
 }
+
 
 .overlay-text p {
     margin: 0 0 1rem;
@@ -73,12 +107,18 @@
 /* Responsive adjustments for small screens */
 @media (max-width: 1024px) {
     .overlay {
-        width: 80%; /* Maximize width on very small screens */
-        left: 0; /* Center horizontally */
-        padding: 10px; /* Reduce padding for smaller screens */
-        font-size: 0.9rem; /* Slightly smaller text size */
+        width: 80%;
+        /* Maximize width on very small screens */
+        left: 0;
+        /* Center horizontally */
+        padding: 10px;
+        /* Reduce padding for smaller screens */
+        font-size: 0.9rem;
+        /* Slightly smaller text size */
     }
+
     .products-section {
-        padding: 20px; /* Ensure consistent spacing for products */
+        padding: 20px;
+        /* Ensure consistent spacing for products */
     }
 }
