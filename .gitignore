@@ -9,3 +9,4 @@ infra/terraform.tfstate
 infra/terraform.tfstate.backup
 infra/.terraform.lock.hcl
 client/public/images/*.mp4
+client/public/images/*.mp4
