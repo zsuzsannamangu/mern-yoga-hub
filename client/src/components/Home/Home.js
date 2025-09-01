@@ -280,9 +280,10 @@ function Home({ showAlert }) {
               <iframe
                 width="100%"
                 height="315"
-                src="https://www.youtube.com/embed/IEjzJZVx9g8?start=4086"
+                src="https://www.youtube.com/embed/IEjzJZVx9g8?start=4086&autoplay=1&mute=1&loop=1&playlist=IEjzJZVx9g8&controls=0&modestbranding=1&rel=0"
                 title="Sample Slow Flow Class"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
             </div>
