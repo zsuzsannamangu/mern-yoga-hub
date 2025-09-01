@@ -1,19 +1,19 @@
 @use '../../styles/variables' as *;
 
+
 .video-section {
   max-width: 1200px;
   margin: 3rem auto;
   padding: 0 1rem;
 
-  /* Force consistent spacing between title and video */
-  display: grid;
-  grid-template-rows: auto 1fr;
-  row-gap: 2.5rem;            /* space between title and video */
+  display: flex;              /* stack title + video */
+  flex-direction: column;
+  gap: 3rem;                  /* ← space between title and video */
   text-align: center;
 }
 
 .video-title {
-  margin: 0;                  /* prevent margin-collapse surprises */
+  margin: 0 !important;       /* neutralize any global h2 rules */
   font-family: $font-title, sans-serif;
   color: $main-title-color;
   font-size: clamp(1.5rem, 2.5vw, 2rem);
@@ -34,4 +34,5 @@
     border: 0;
   }
 }
+
 
