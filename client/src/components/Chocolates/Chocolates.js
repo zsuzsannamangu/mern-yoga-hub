@@ -81,6 +81,14 @@ function Chocolates() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
             >
+                <VideoBlock videoId="IEjzJZVx9g8" start={4086} />
+            </motion.div>
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
                 <Testimonials />
             </motion.div>
             <motion.div
