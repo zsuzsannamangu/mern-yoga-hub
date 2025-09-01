@@ -16,7 +16,7 @@ export default function VideoBlock({
         "Fill the molds with the chocolate.",
         "Add toppings.",
         "Let the chocolates harden naturally.",
-        "Remove them from the molds, clean the tins, and place the chocolates inside.",
+        "Clean the tins, and place the chocolates inside.",
     ],
     videoDescription = "A behind-the-scenes video of my small-batch, plant-based chocolate process—slow and intentional.",
 }) {

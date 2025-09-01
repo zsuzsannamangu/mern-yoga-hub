@@ -84,7 +84,7 @@ function Chocolates() {
             >
                 <VideoBlock
                     videoId="BNDjHWsjHI4"
-                    title="How I Make ReTreat Chocolates"
+                    title="How I Make My Chocolates"
                     videoDescription="A peek into my small-batch process—slow and intentional."
                     process={[
                         "Grind pure cacao paste from cacao beans.",
@@ -98,7 +98,7 @@ function Chocolates() {
                         "Fill the molds with the chocolate.",
                         "Add toppings.",
                         "Let the chocolates harden naturally.",
-                        "Remove them from the molds, clean the tins, and place the chocolates inside.",
+                        "Clean the tins, and place the chocolates inside.",
                     ]}
                 />
             </motion.div>

@@ -17,9 +17,7 @@
 .video-col .video-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
   background: $tertiary-background-color; // fallback before load
-  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
@@ -55,7 +53,7 @@
 
   li {
     line-height: 1.4;
-    font-family: $font-secondary, serif;
+    font-family: $font-title, serif;
     color: $text-color;
 
     &::marker {
