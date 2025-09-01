@@ -85,13 +85,20 @@ function Chocolates() {
                 <VideoBlock
                     videoId="BNDjHWsjHI4"
                     title="How I Make ReTreat Chocolates"
-                    videoDescription="A peek into my small-batch process—mindful, low-waste, and delicious."
+                    videoDescription="A peek into my small-batch process—slow and intentional."
                     process={[
-                        "Ethically sourced, organic cacao & local ingredients",
-                        "Stone-ground for smoothness",
-                        "Low-heat to protect flavor & nutrients",
-                        "Hand-tempered for shine & snap",
-                        "Reusable tins + compostable wraps",
+                        "Grind pure cacao paste from cacao beans.",
+                        "Gently melt the cacao butter.",
+                        "Add farm-sourced organic maple sugar.",
+                        "Incorporate organic Madagascar Bourbon vanilla powder.",
+                        "Sprinkle in Oregon sea salt.",
+                        "Slowly combine the cacao paste with the melted cacao butter and sugar.",
+                        "Carefully monitor the temperature by hand.",
+                        "Polish the molds and prepare the toppings.",
+                        "Fill the molds with the chocolate.",
+                        "Add toppings.",
+                        "Let the chocolates harden naturally.",
+                        "Remove them from the molds, clean the tins, and place the chocolates inside.",
                     ]}
                 />
             </motion.div>
