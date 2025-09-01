@@ -82,26 +82,9 @@ function Chocolates() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
             >
-                <VideoBlock
-                    videoId="BNDjHWsjHI4"
-                    title="How I Make My Chocolates"
-                    videoDescription="A peek into my small-batch process—slow and intentional."
-                    process={[
-                        "Grind pure cacao paste from cacao beans.",
-                        "Gently melt the cacao butter.",
-                        "Add farm-sourced organic maple sugar.",
-                        "Incorporate organic Madagascar Bourbon vanilla powder.",
-                        "Sprinkle in Oregon sea salt.",
-                        "Slowly combine the cacao paste with the melted cacao butter and sugar.",
-                        "Carefully monitor the temperature by hand.",
-                        "Polish the molds and prepare the toppings.",
-                        "Fill the molds with the chocolate.",
-                        "Add toppings.",
-                        "Let the chocolates harden naturally.",
-                        "Clean the tins, and place the chocolates inside.",
-                    ]}
-                />
+                <VideoBlock videoId="BNDjHWsjHI4" title="How I Make My Chocolates" />
             </motion.div>
+
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
