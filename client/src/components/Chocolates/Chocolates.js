@@ -82,7 +82,18 @@ function Chocolates() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
             >
-                <VideoBlock videoId="BNDjHWsjHI4" />
+                <VideoBlock
+                    videoId="BNDjHWsjHI4"
+                    title="How I Make ReTreat Chocolates"
+                    videoDescription="A peek into my small-batch process—mindful, low-waste, and delicious."
+                    process={[
+                        "Ethically sourced, organic cacao & local ingredients",
+                        "Stone-ground for smoothness",
+                        "Low-heat to protect flavor & nutrients",
+                        "Hand-tempered for shine & snap",
+                        "Reusable tins + compostable wraps",
+                    ]}
+                />
             </motion.div>
             <motion.div
                 initial={{ opacity: 0, y: 30 }}

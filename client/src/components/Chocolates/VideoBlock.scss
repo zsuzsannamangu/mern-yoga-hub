@@ -1,17 +1,66 @@
-.video-block {
+@use '../../styles/variables' as *;
+
+.video-with-details {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr; // video a bit wider
+  gap: 2rem;
+  align-items: center;
+  margin: 3rem auto;
+  max-width: 1100px;
+  padding: 0 1rem;
+  background-color: $secondary-background-color;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.video-col .video-frame {
   position: relative;
   width: 100%;
-  max-width: 900px;
-  margin: 3rem auto;
   aspect-ratio: 16 / 9;
+  background: $tertiary-background-color; // fallback before load
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
 
-  iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    border-radius: 12px;   
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+.video-col iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.details-col h2 {
+  margin: 0 0 0.75rem;
+  font-family: $font-title, sans-serif;
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  line-height: 1.2;
+  color: $main-title-color;
+}
+
+.details-col .lead {
+  margin: 0 0 1rem;
+  font-family: $font-main, sans-serif;
+  font-size: 1rem;
+  color: $secondary-text-color;
+}
+
+.process-list {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.4rem;
+
+  li {
+    line-height: 1.4;
+    font-family: $font-secondary, serif;
+    color: $text-color;
+
+    &::marker {
+      color: $accent-color;
+    }
   }
 }
