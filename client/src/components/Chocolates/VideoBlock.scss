@@ -21,7 +21,7 @@
     background: $tertiary-background-color; // fallback before load
     overflow: hidden;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 3;
 }
 
 .video-col iframe {
