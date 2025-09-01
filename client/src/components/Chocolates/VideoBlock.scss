@@ -18,7 +18,7 @@
 .video-col .video-frame {
     position: relative;
     width: 100%;
-    aspect-ratio: 16/9;
+    aspect-ratio: 16 / 9;
     overflow: hidden;
 }
 
@@ -26,11 +26,11 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 110%;
-    /* was 120% — crop less */
-    height: 110%;
-    transform: translate(var(--x, -50%), var(--y, -50%));
+    width: 120%; // oversize to fill
+    height: 120%;
+    transform: translate(-50%, -50%);
     border: 0;
+    object-fit: cover; // not always respected by iframe, but the width/height trick forces it
 }
 
 .details-col h2 {

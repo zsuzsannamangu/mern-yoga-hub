@@ -26,7 +26,6 @@ export default function VideoBlock({
         <section className="video-with-details" aria-labelledby="video-with-details-title">
             <div className="video-col">
                 <div className="video-frame">
-                    style={{ "--x": "-50%", "--y": "-48%" }}
                     <iframe
                         src={src}
                         title="Chocolate Making Process"
