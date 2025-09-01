@@ -8,6 +8,7 @@ import '../../App.scss';
 import Slideshow from './Slideshow';
 import { motion } from 'framer-motion';
 import Testimonials from './Testimonials';
+import VideoBlock from './VideoBlock';
 
 function Chocolates() {
     const scrollToProductsSection = () => {
@@ -81,7 +82,7 @@ function Chocolates() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
             >
-                <VideoBlock videoId="IEjzJZVx9g8" start={4086} />
+                <VideoBlock videoId="BNDjHWsjHI4" />
             </motion.div>
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
