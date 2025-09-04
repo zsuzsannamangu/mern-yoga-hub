@@ -211,7 +211,7 @@ button:disabled:hover {
 }
 
 .etsy-cta {
-  margin: 2rem auto 2rem;
+  margin: 2.75rem auto 0.75rem;
   max-width: 900px;
   padding: 1.25rem 1rem;
   display: flex;
@@ -251,5 +251,6 @@ button:disabled:hover {
 @media (max-width: 560px) {
   .etsy-cta {
     flex-direction: column;
+    margin: 2rem auto 0.5rem;
   }
 }
