@@ -160,6 +160,7 @@ function Products({ showAlert }) {
               </button>
             )}
           </div>
+          <p>Prefer using Etsy? Use this link!</p>
         </div>
       )}
     </div>
