@@ -213,13 +213,11 @@ button:disabled:hover {
   margin: 3rem auto 2rem;
   max-width: 900px;
   padding: 1.25rem 1rem;
-  border-radius: 14px;
-  background: #faf7f2;
   display: flex;
   gap: 1rem;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  align-items: left;
+  justify-content: left;
+  text-align: left;
 
   p {
     margin: 0;
