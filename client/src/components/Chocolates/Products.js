@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 
 function Products({ showAlert }) {
   const [products, setProducts] = useState([]);
+  const ETSY_URL = "https://www.etsy.com/shop/ReTreatCreations";
   const [isSortedAZ, setIsSortedAZ] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const { addToCart } = useCart();
@@ -142,6 +143,19 @@ function Products({ showAlert }) {
         ))}
       </motion.div>
 
+      {/* Etsy CTA */}
+      <div className="etsy-cta" role="complementary" aria-label="Alternate store link">
+        <p>Prefer using Etsy?</p>
+        <a
+          className="etsy-button"
+          href={ETSY_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Shop on Etsy
+        </a>
+      </div>
+
       {/* Product Modal */}
       {selectedProduct && (
         <div className="modal-overlay" onClick={closeModal}>
@@ -160,7 +174,6 @@ function Products({ showAlert }) {
               </button>
             )}
           </div>
-          <p>Prefer using Etsy? Use this link!</p>
         </div>
       )}
     </div>
