@@ -206,11 +206,12 @@ button:disabled:hover {
 }
 
 .swal-gotocart-button {
-    background-color: rgb(110, 110, 237) !important; /* Ensures the text is white */
-  }
+  background-color: rgb(110, 110, 237) !important;
+  /* Ensures the text is white */
+}
 
-  .etsy-cta {
-  margin: 3rem auto 2rem;
+.etsy-cta {
+  margin: 2rem auto 2rem;
   max-width: 900px;
   padding: 1.25rem 1rem;
   display: flex;
@@ -237,8 +238,13 @@ button:disabled:hover {
     color: #fff;
     white-space: nowrap;
 
-    &:hover { transform: translateY(-1px); }
-    &:active { transform: translateY(0); }
+    &:hover {
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
   }
 }
 
