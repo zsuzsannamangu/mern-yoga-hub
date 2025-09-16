@@ -17,12 +17,28 @@ const AdminDashboard = () => {
     const [signups, setSignups] = useState([]); // State for storing event signups
     const alertShown = useRef(false);
 
+    const toDateTime = (e) => {
+        // ensure time is always "HH:MM"
+        const time = (e.time || "00:00").padStart(5, "0");
+        // build an ISO-ish string so Date parses reliably
+        return new Date(`${e.date}T${time}:00`);
+    };
+
+    const sortEvents = (list) =>
+        [...list].sort((a, b) => toDateTime(a) - toDateTime(b));
+
+    const orderedEvents = sortEvents(events);
+
     // Fetch events from the backend
     const fetchEvents = async () => {
         setLoading(true);
         try {
             const res = await adminAxiosInstance.get('/api/events');
-            const sortedEvents = res.data.sort((a, b) => new Date(a.date) - new Date(b.date));
+            const sortedEvents = res.data.sort((a, b) => {
+                const dateTimeA = new Date(`${a.date}T${a.time}`);
+                const dateTimeB = new Date(`${b.date}T${b.time}`);
+                return dateTimeA - dateTimeB;
+            });
             setEvents(sortedEvents);
         } catch (error) {
             if (!alertShown.current) {
@@ -237,30 +253,6 @@ const AdminDashboard = () => {
         }
     };
 
-    // // Check authentication and fetch data when component mounts
-    // useEffect(() => {
-    //     alertShown.current = false;
-    //     const checkAuth = async () => {
-    //         try {
-    //             const token = localStorage.getItem('adminToken');
-    //             if (!token) throw new Error('No token found');
-    //             await adminAxiosInstance.get('/api/admin/verify', {
-    //                 headers: { Authorization: `Bearer ${token}` },
-    //             });
-    //         } catch (error) {
-    //             if (!alertShown.current) {
-    //                 alertShown.current = true;
-    //                 Swal.fire({
-    //                     icon: 'error',
-    //                     title: 'You are not authorized to access this page. Redirecting to login.',
-    //                     text: error.message,
-    //                     confirmButtonText: 'OK'
-    //                 });
-    //                 navigate('/admin');
-    //             }
-    //         }
-    //     };
-
     useEffect(() => {
         let isMounted = true;
         const checkAuth = async () => {
@@ -373,7 +365,7 @@ const AdminDashboard = () => {
                             <FaTrash className="icon" />
                         </button>
                         <ul>
-                            {events.map((event) => (
+                            {orderedEvents.map((event) => (
                                 <li key={event._id} className="event-card">
                                     <div className="event-details">
                                         <input

@@ -30,7 +30,7 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
 // GET: Fetch all events (any authenticated user)
 router.get('/', async (req, res) => {
     try {
-        const events = await Event.find(); // Fetch all events from MongoDB
+        const events = await Event.find().sort({ date: 1, time: 1 }); // Fetch all events from MongoDB
         res.status(200).json(events);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch events', details: error.message });
