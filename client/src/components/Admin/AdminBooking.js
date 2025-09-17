@@ -303,25 +303,50 @@ const AdminBooking = () => {
                     <button type="submit" className="add-slot-button">Add Slot</button>
                 </form>
 
-                <div className="slots-list">
+                <div className="slots-table-container">
                     <h3>Available Slots</h3>
 
                     {loading ? (
                         <p>Loading...</p>
                     ) : availableSlots.length > 0 ? (
-                        <ul>
-                            {availableSlots.map((slot) => (
-                                <li key={slot._id} className="slot-item">
-                                    <p>{slot.date} at {formatTime(slot.time)}</p>
-                                    <button
-                                        onClick={() => deleteSlot(slot._id)}
-                                        className="delete-slot-button"
-                                    >
-                                        Delete
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
+                        <div className="available-slots-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {availableSlots
+                                        .sort((a, b) => {
+                                            const dateTimeA = new Date(`${a.date} ${a.time}`);
+                                            const dateTimeB = new Date(`${b.date} ${b.time}`);
+                                            return dateTimeA - dateTimeB;
+                                        })
+                                        .map((slot) => (
+                                            <tr key={slot._id}>
+                                                <td>{new Date(slot.date).toLocaleDateString('en-US', { 
+                                                    weekday: 'short', 
+                                                    year: 'numeric', 
+                                                    month: 'short', 
+                                                    day: 'numeric' 
+                                                })}</td>
+                                                <td>{formatTime(slot.time)}</td>
+                                                <td>
+                                                    <button
+                                                        onClick={() => deleteSlot(slot._id)}
+                                                        className="delete-slot-button"
+                                                    >
+                                                        🗑️ Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                </tbody>
+                            </table>
+                        </div>
                     ) : (
                         <p>No slots available</p>
                     )}
