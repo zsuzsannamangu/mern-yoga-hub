@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { adminAxiosInstance } from '../../config/axiosConfig';
 import AdminNavbar from './AdminNavbar';
 import './AdminFinances.scss';
 import '../../App.scss';
+import Swal from 'sweetalert2';
+import '@sweetalert2/theme-material-ui/material-ui.css';
 
 const AdminFinances = () => {
     const [classData, setClassData] = useState([]);
@@ -29,66 +32,36 @@ const AdminFinances = () => {
 
     const fetchClassData = async () => {
         try {
-            // TODO: Replace with actual API call
-            const sampleData = [
-                {
-                    id: 1,
-                    date: '2024-01-15',
-                    time: '15:00',
-                    class: 'Hatha Yoga',
-                    location: 'Studio A',
-                    rate: 75,
-                    paymentFrequency: 'per-class',
-                    paymentMethod: 'venmo',
-                    paymentRequestSent: 'yes',
-                    paid: 'yes',
-                    taxed: 'yes'
-                },
-                {
-                    id: 2,
-                    date: '2024-01-15',
-                    time: '10:00',
-                    class: 'Gentle Flow',
-                    location: 'Online',
-                    rate: 60,
-                    paymentFrequency: 'per-class',
-                    paymentMethod: 'paypal',
-                    paymentRequestSent: 'yes',
-                    paid: 'no',
-                    taxed: 'no'
-                },
-                {
-                    id: 3,
-                    date: '2024-02-10',
-                    time: '14:00',
-                    class: 'Yoga Therapy',
-                    location: 'Private Home',
-                    rate: 100,
-                    paymentFrequency: 'monthly',
-                    paymentMethod: 'check',
-                    paymentRequestSent: 'no',
-                    paid: 'no',
-                    taxed: 'yes'
-                },
-                {
-                    id: 4,
-                    date: '2024-02-12',
-                    time: '09:00',
-                    class: 'Restorative Yoga',
-                    location: 'Studio B',
-                    rate: 80,
-                    paymentFrequency: 'per-class',
-                    paymentMethod: 'cash',
-                    paymentRequestSent: 'n/a',
-                    paid: 'yes',
-                    taxed: 'yes'
-                }
-            ];
-            
-            setClassData(sortClassData(sampleData));
+            const token = localStorage.getItem('adminToken');
+            const response = await adminAxiosInstance.get('/api/finances', {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (response.data.success) {
+                // Convert MongoDB _id to id for frontend compatibility
+                const formattedData = response.data.finances.map(entry => ({
+                    ...entry,
+                    id: entry._id
+                }));
+                setClassData(sortClassData(formattedData));
+            } else {
+                console.error('Error fetching finances:', response.data.message);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to fetch finance data',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
             setLoading(false);
         } catch (error) {
             console.error('Error fetching class data:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Failed to connect to server',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
             setLoading(false);
         }
     };
@@ -138,32 +111,58 @@ const AdminFinances = () => {
         }));
     };
 
-    const handleAddEntry = (e) => {
+    const handleAddEntry = async (e) => {
         e.preventDefault();
-        const newId = Math.max(...classData.map(item => item.id), 0) + 1;
-        const entryWithId = {
-            ...newEntry,
-            id: newId,
-            rate: parseFloat(newEntry.rate) || 0
-        };
         
-        const updatedData = [...classData, entryWithId];
-        setClassData(sortClassData(updatedData));
-        
-        // Reset form
-        setNewEntry({
-            date: '',
-            time: '',
-            class: '',
-            location: '',
-            rate: '',
-            paymentFrequency: 'per-class',
-            paymentMethod: 'cash',
-            paymentRequestSent: 'no',
-            paid: 'no',
-            taxed: 'no'
-        });
-        setShowAddForm(false);
+        try {
+            const token = localStorage.getItem('adminToken');
+            const response = await adminAxiosInstance.post('/api/finances', newEntry, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (response.data.success) {
+                // Add the new entry to the local state with proper id
+                const newEntryWithId = {
+                    ...response.data.finance,
+                    id: response.data.finance._id
+                };
+                
+                const updatedData = [...classData, newEntryWithId];
+                setClassData(sortClassData(updatedData));
+                
+                // Reset form
+                setNewEntry({
+                    date: '',
+                    time: '',
+                    class: '',
+                    location: '',
+                    rate: '',
+                    paymentFrequency: 'per-class',
+                    paymentMethod: 'cash',
+                    paymentRequestSent: 'no',
+                    paid: 'no',
+                    taxed: 'no'
+                });
+                setShowAddForm(false);
+
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Finance entry added successfully',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                throw new Error(response.data.message);
+            }
+        } catch (error) {
+            console.error('Error adding finance entry:', error);
+            Swal.fire({
+                title: 'Error',
+                text: error.response?.data?.message || 'Failed to add finance entry',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
     };
 
     const formatCurrency = (amount) => {
@@ -191,13 +190,40 @@ const AdminFinances = () => {
         setEditingData({ ...entry });
     };
 
-    const handleSaveEdit = () => {
-        const updatedData = classData.map(item => 
-            item.id === editingId ? { ...editingData, rate: parseFloat(editingData.rate) || 0 } : item
-        );
-        setClassData(sortClassData(updatedData));
-        setEditingId(null);
-        setEditingData({});
+    const handleSaveEdit = async () => {
+        try {
+            const token = localStorage.getItem('adminToken');
+            const response = await adminAxiosInstance.put(`/api/finances/${editingId}`, editingData, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (response.data.success) {
+                // Update the local state
+                const updatedData = classData.map(item => 
+                    item.id === editingId ? { ...response.data.finance, id: response.data.finance._id } : item
+                );
+                setClassData(sortClassData(updatedData));
+                setEditingId(null);
+                setEditingData({});
+
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Finance entry updated successfully',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                throw new Error(response.data.message);
+            }
+        } catch (error) {
+            console.error('Error updating finance entry:', error);
+            Swal.fire({
+                title: 'Error',
+                text: error.response?.data?.message || 'Failed to update finance entry',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
     };
 
     const handleCancelEdit = () => {
@@ -205,10 +231,47 @@ const AdminFinances = () => {
         setEditingData({});
     };
 
-    const handleDelete = (id) => {
-        if (window.confirm('Are you sure you want to delete this class entry?')) {
-            const updatedData = classData.filter(item => item.id !== id);
-            setClassData(updatedData);
+    const handleDelete = async (id) => {
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                const token = localStorage.getItem('adminToken');
+                const response = await adminAxiosInstance.delete(`/api/finances/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                if (response.data.success) {
+                    // Remove from local state
+                    const updatedData = classData.filter(item => item.id !== id);
+                    setClassData(updatedData);
+
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Finance entry has been deleted.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    throw new Error(response.data.message);
+                }
+            } catch (error) {
+                console.error('Error deleting finance entry:', error);
+                Swal.fire({
+                    title: 'Error',
+                    text: error.response?.data?.message || 'Failed to delete finance entry',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
         }
     };
 

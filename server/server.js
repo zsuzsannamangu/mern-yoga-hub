@@ -17,6 +17,7 @@ const publicBookingsRoutes = require('./routes/publicBookings');
 const orderRoutes = require("./routes/orders");
 const passport = require('passport');
 const subscriberRoutes = require('./routes/subscribers');
+const financeRoutes = require('./routes/finances');
 require('./config/passport'); // load passport strategies
 
 const cookieParser = require('cookie-parser');
@@ -109,6 +110,7 @@ app.use("/api", signupRoutes);
 app.use('/api/publicBookings', publicBookingsRoutes);
 app.use("/api", orderRoutes);
 app.use('/api/subscribers', subscriberRoutes);
+app.use('/api/finances', financeRoutes);
 app.use(passport.initialize());
 
 io.on('connection', (socket) => {
