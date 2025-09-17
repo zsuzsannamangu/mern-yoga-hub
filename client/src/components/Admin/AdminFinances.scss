@@ -123,6 +123,19 @@
         }
     }
 
+    .repeat-section {
+        background: rgba(170, 157, 18, 0.05);
+        padding: 20px;
+        border-radius: 6px;
+        border: 1px solid rgba(170, 157, 18, 0.2);
+        margin-top: 10px;
+
+        .form-group:first-child label {
+            color: $primary-button-color;
+            font-weight: 600;
+        }
+    }
+
     .form-actions {
         display: flex;
         gap: 15px;

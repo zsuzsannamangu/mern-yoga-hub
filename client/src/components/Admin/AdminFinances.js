@@ -23,7 +23,10 @@ const AdminFinances = () => {
         paymentMethod: 'cash',
         paymentRequestSent: 'no',
         paid: 'no',
-        taxed: 'no'
+        taxed: 'no',
+        repeat: 'no',
+        repeatCount: 1,
+        repeatFrequency: 'weekly'
     });
 
     useEffect(() => {
@@ -111,49 +114,133 @@ const AdminFinances = () => {
         }));
     };
 
+    const generateRepeatDates = (startDate, frequency, count) => {
+        const dates = [];
+        const start = new Date(startDate);
+        
+        for (let i = 0; i < count; i++) {
+            const newDate = new Date(start);
+            
+            switch (frequency) {
+                case 'daily':
+                    newDate.setDate(start.getDate() + (i * 1));
+                    break;
+                case 'weekly':
+                    newDate.setDate(start.getDate() + (i * 7));
+                    break;
+                case 'biweekly':
+                    newDate.setDate(start.getDate() + (i * 14));
+                    break;
+                case 'monthly':
+                    newDate.setMonth(start.getMonth() + i);
+                    break;
+                default:
+                    newDate.setDate(start.getDate() + (i * 7)); // Default to weekly
+            }
+            
+            // Format as YYYY-MM-DD
+            const formattedDate = newDate.toISOString().split('T')[0];
+            dates.push(formattedDate);
+        }
+        
+        return dates;
+    };
+
     const handleAddEntry = async (e) => {
         e.preventDefault();
         
         try {
             const token = localStorage.getItem('adminToken');
-            const response = await adminAxiosInstance.post('/api/finances', newEntry, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-
-            if (response.data.success) {
-                // Add the new entry to the local state with proper id
-                const newEntryWithId = {
-                    ...response.data.finance,
-                    id: response.data.finance._id
-                };
+            
+            // Prepare entries to create
+            const entriesToCreate = [];
+            
+            if (newEntry.repeat === 'yes') {
+                // Generate multiple dates
+                const dates = generateRepeatDates(
+                    newEntry.date, 
+                    newEntry.repeatFrequency, 
+                    parseInt(newEntry.repeatCount)
+                );
                 
-                const updatedData = [...classData, newEntryWithId];
-                setClassData(sortClassData(updatedData));
-                
-                // Reset form
-                setNewEntry({
-                    date: '',
-                    time: '',
-                    class: '',
-                    location: '',
-                    rate: '',
-                    paymentFrequency: 'per-class',
-                    paymentMethod: 'cash',
-                    paymentRequestSent: 'no',
-                    paid: 'no',
-                    taxed: 'no'
-                });
-                setShowAddForm(false);
-
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Finance entry added successfully',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
+                // Create entry for each date
+                dates.forEach(date => {
+                    entriesToCreate.push({
+                        date,
+                        time: newEntry.time,
+                        class: newEntry.class,
+                        location: newEntry.location,
+                        rate: newEntry.rate,
+                        paymentFrequency: newEntry.paymentFrequency,
+                        paymentMethod: newEntry.paymentMethod,
+                        paymentRequestSent: newEntry.paymentRequestSent,
+                        paid: newEntry.paid,
+                        taxed: newEntry.taxed
+                    });
                 });
             } else {
-                throw new Error(response.data.message);
+                // Single entry
+                entriesToCreate.push({
+                    date: newEntry.date,
+                    time: newEntry.time,
+                    class: newEntry.class,
+                    location: newEntry.location,
+                    rate: newEntry.rate,
+                    paymentFrequency: newEntry.paymentFrequency,
+                    paymentMethod: newEntry.paymentMethod,
+                    paymentRequestSent: newEntry.paymentRequestSent,
+                    paid: newEntry.paid,
+                    taxed: newEntry.taxed
+                });
             }
+
+            // Create all entries
+            const createdEntries = [];
+            for (const entryData of entriesToCreate) {
+                const response = await adminAxiosInstance.post('/api/finances', entryData, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                if (response.data.success) {
+                    createdEntries.push({
+                        ...response.data.finance,
+                        id: response.data.finance._id
+                    });
+                } else {
+                    throw new Error(response.data.message);
+                }
+            }
+
+            // Update local state with all new entries
+            const updatedData = [...classData, ...createdEntries];
+            setClassData(sortClassData(updatedData));
+            
+            // Reset form
+            setNewEntry({
+                date: '',
+                time: '',
+                class: '',
+                location: '',
+                rate: '',
+                paymentFrequency: 'per-class',
+                paymentMethod: 'cash',
+                paymentRequestSent: 'no',
+                paid: 'no',
+                taxed: 'no',
+                repeat: 'no',
+                repeatCount: 1,
+                repeatFrequency: 'weekly'
+            });
+            setShowAddForm(false);
+
+            const entryCount = createdEntries.length;
+            Swal.fire({
+                title: 'Success!',
+                text: `${entryCount} finance ${entryCount === 1 ? 'entry' : 'entries'} added successfully`,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+
         } catch (error) {
             console.error('Error adding finance entry:', error);
             Swal.fire({
@@ -450,6 +537,49 @@ const AdminFinances = () => {
                                     <option value="yes">Yes</option>
                                 </select>
                             </div>
+                        </div>
+
+                        <div className="form-row repeat-section">
+                            <div className="form-group">
+                                <label>Repeat Class</label>
+                                <select
+                                    name="repeat"
+                                    value={newEntry.repeat}
+                                    onChange={handleInputChange}
+                                >
+                                    <option value="no">No</option>
+                                    <option value="yes">Yes</option>
+                                </select>
+                            </div>
+                            {newEntry.repeat === 'yes' && (
+                                <>
+                                    <div className="form-group">
+                                        <label>How Many Times</label>
+                                        <input
+                                            type="number"
+                                            name="repeatCount"
+                                            value={newEntry.repeatCount}
+                                            onChange={handleInputChange}
+                                            min="1"
+                                            max="52"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Repeat Every</label>
+                                        <select
+                                            name="repeatFrequency"
+                                            value={newEntry.repeatFrequency}
+                                            onChange={handleInputChange}
+                                        >
+                                            <option value="daily">Daily</option>
+                                            <option value="weekly">Weekly</option>
+                                            <option value="biweekly">Biweekly</option>
+                                            <option value="monthly">Monthly</option>
+                                        </select>
+                                    </div>
+                                </>
+                            )}
                         </div>
 
                         <div className="form-actions">
