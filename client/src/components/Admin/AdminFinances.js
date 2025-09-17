@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AdminNavbar from './AdminNavbar';
 import './AdminFinances.scss';
 import '../../App.scss';
 
@@ -48,6 +49,7 @@ const AdminFinances = () => {
 
     return (
         <div className="admin-finances">
+            <AdminNavbar />
             <div className="finances-header">
                 <h1>Financial Overview</h1>
             </div>
