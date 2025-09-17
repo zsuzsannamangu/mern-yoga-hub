@@ -52,6 +52,7 @@
         border-radius: 8px;
         text-align: center;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
 
         h3 {
             color: $text-color;
@@ -68,6 +69,43 @@
             margin: 0;
             font-family: $font-title;
         }
+
+        .month-list {
+            color: $secondary-text-color;
+            font-size: 0.85rem;
+            margin: 10px 0 0 0;
+            font-family: $font-secondary;
+            font-style: italic;
+        }
+
+        &.yearly {
+            border-left: 4px solid $primary-button-color;
+        }
+
+        &.monthly {
+            background: rgba(170, 157, 18, 0.08);
+            border-left: 4px solid #28a745;
+            animation: slideIn 0.3s ease-out;
+
+            h3 {
+                color: #28a745;
+            }
+
+            .revenue-amount {
+                color: #28a745;
+            }
+        }
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -124,16 +162,7 @@
     }
 
     .repeat-section {
-        background: rgba(170, 157, 18, 0.05);
-        padding: 20px;
-        border-radius: 6px;
-        border: 1px solid rgba(170, 157, 18, 0.2);
-        margin-top: 10px;
-
-        .form-group:first-child label {
-            color: $primary-button-color;
-            font-weight: 600;
-        }
+        // No special styling - looks like regular form rows
     }
 
     .form-actions {

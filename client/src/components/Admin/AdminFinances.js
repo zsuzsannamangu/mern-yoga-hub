@@ -96,6 +96,29 @@ const AdminFinances = () => {
         return grouped;
     };
 
+    const calculateMonthlyTotals = (groupedData, expandedMonths) => {
+        let totalRevenue = 0;
+        let totalClasses = 0;
+        const monthNames = [];
+
+        expandedMonths.forEach(monthKey => {
+            if (groupedData[monthKey]) {
+                const monthData = groupedData[monthKey];
+                const monthRevenue = monthData.entries.reduce((sum, entry) => sum + entry.rate, 0);
+                totalRevenue += monthRevenue;
+                totalClasses += monthData.entries.length;
+                monthNames.push(monthData.name);
+            }
+        });
+
+        return {
+            totalRevenue,
+            totalClasses,
+            monthNames,
+            hasExpandedMonths: expandedMonths.size > 0
+        };
+    };
+
     const toggleMonth = (monthKey) => {
         const newExpanded = new Set(expandedMonths);
         if (newExpanded.has(monthKey)) {
@@ -381,6 +404,7 @@ const AdminFinances = () => {
 
     const groupedData = groupDataByMonth(classData);
     const totalRevenue = classData.reduce((sum, entry) => sum + entry.rate, 0);
+    const monthlyTotals = calculateMonthlyTotals(groupedData, expandedMonths);
 
     return (
         <div className="admin-finances">
@@ -396,14 +420,45 @@ const AdminFinances = () => {
             </div>
 
             <div className="finances-summary">
-                <div className="summary-card">
-                    <h3>Total Revenue</h3>
+                {/* Yearly Totals */}
+                <div className="summary-card yearly">
+                    <h3>Total Revenue (All Time)</h3>
                     <p className="revenue-amount">{formatCurrency(totalRevenue)}</p>
                 </div>
-                <div className="summary-card">
-                    <h3>Total Classes</h3>
+                <div className="summary-card yearly">
+                    <h3>Total Classes (All Time)</h3>
                     <p className="revenue-amount">{classData.length}</p>
                 </div>
+                
+                {/* Monthly Totals - Only show when months are expanded */}
+                {monthlyTotals.hasExpandedMonths && (
+                    <>
+                        <div className="summary-card monthly">
+                            <h3>
+                                {monthlyTotals.monthNames.length === 1 
+                                    ? `${monthlyTotals.monthNames[0]} Revenue`
+                                    : `Selected Months Revenue`
+                                }
+                            </h3>
+                            <p className="revenue-amount">{formatCurrency(monthlyTotals.totalRevenue)}</p>
+                            {monthlyTotals.monthNames.length > 1 && (
+                                <p className="month-list">{monthlyTotals.monthNames.join(', ')}</p>
+                            )}
+                        </div>
+                        <div className="summary-card monthly">
+                            <h3>
+                                {monthlyTotals.monthNames.length === 1 
+                                    ? `${monthlyTotals.monthNames[0]} Classes`
+                                    : `Selected Months Classes`
+                                }
+                            </h3>
+                            <p className="revenue-amount">{monthlyTotals.totalClasses}</p>
+                            {monthlyTotals.monthNames.length > 1 && (
+                                <p className="month-list">{monthlyTotals.monthNames.join(', ')}</p>
+                            )}
+                        </div>
+                    </>
+                )}
             </div>
 
             {showAddForm && (
