@@ -42,7 +42,7 @@ const AdminSignups = () => {
             confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'Cancel',
             customClass: {
-                confirmButton: 'swal-confirm-button', // Custom class for fixing button text color
+                confirmButton: 'swal-confirm-button',
             }
         }).then(async (result) => {
             if (!result.isConfirmed) {

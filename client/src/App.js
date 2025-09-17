@@ -35,6 +35,7 @@ import AdminUsers from './components/Admin/AdminUsers';
 import AboutWebsite from "./components/AboutWebsite/AboutWebsite";
 import UserOAuthHandler from './components/User/UserOAuthHandler';
 import AdminSubscribers from './components/Admin/AdminSubscribers';
+import AdminFinances from './components/Admin/AdminFinances';
 import Unsubscribe from './components/Home/Unsubscribe';
 
 // Protected routes for guarding user and admin routes
@@ -160,6 +161,14 @@ function App() {
                   element={
                     <AdminProtectedRoute>
                       <AdminSubscribers showAlert={showAlert} />
+                    </AdminProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/finances"
+                  element={
+                    <AdminProtectedRoute>
+                      <AdminFinances showAlert={showAlert} />
                     </AdminProtectedRoute>
                   }
                 />

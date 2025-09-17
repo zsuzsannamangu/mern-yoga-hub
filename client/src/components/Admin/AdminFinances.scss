@@ -1,0 +1,181 @@
+@use '../../styles/variables' as *;
+
+.admin-finances {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        font-size: 18px;
+        color: $secondary-text-color;
+    }
+}
+
+.finances-header {
+    margin-bottom: 30px;
+
+    h1 {
+        color: $main-title-color;
+        font-family: $font-title;
+        font-size: 2rem;
+        margin: 0;
+    }
+}
+
+.finances-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+
+    .summary-card {
+        background: $secondary-background-color;
+        padding: 25px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        h3 {
+            color: $text-color;
+            font-family: $font-main;
+            font-size: 1.1rem;
+            margin: 0 0 15px 0;
+            font-weight: 500;
+        }
+
+        .revenue-amount {
+            color: $primary-button-color;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0;
+            font-family: $font-title;
+        }
+    }
+}
+
+.finances-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.finances-section {
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    h2 {
+        color: $main-title-color;
+        font-family: $font-title;
+        font-size: 1.3rem;
+        margin: 0 0 20px 0;
+        border-bottom: 2px solid $line-color;
+        padding-bottom: 10px;
+    }
+}
+
+.finances-table {
+    overflow-x: auto;
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: $font-secondary;
+
+        thead {
+            background: $content-background-color;
+
+            th {
+                padding: 12px 8px;
+                text-align: left;
+                font-weight: bold;
+                color: $text-color;
+                border-bottom: 2px solid $border-color;
+                font-size: 0.9rem;
+            }
+        }
+
+        tbody {
+            tr {
+                border-bottom: 1px solid $border-color;
+                transition: background-color 0.2s ease;
+
+                &:hover {
+                    background-color: $secondary-background-color;
+                }
+
+                td {
+                    padding: 12px 8px;
+                    color: $text-color;
+                    font-size: 0.9rem;
+
+                    &:last-child {
+                        font-weight: bold;
+                        color: $primary-button-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Responsive Design */
+@media (max-width: $breakpoint-md) {
+    .admin-finances {
+        padding: 15px;
+    }
+
+    .finances-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .finances-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .finances-section {
+        padding: 20px;
+
+        h2 {
+            font-size: 1.2rem;
+        }
+    }
+
+    .finances-table {
+        table {
+            thead th,
+            tbody td {
+                padding: 8px 6px;
+                font-size: 0.8rem;
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-sm) {
+    .finances-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .summary-card {
+        .revenue-amount {
+            font-size: 1.5rem;
+        }
+    }
+
+    .finances-table {
+        table {
+            thead th,
+            tbody td {
+                padding: 6px 4px;
+                font-size: 0.75rem;
+            }
+        }
+    }
+}

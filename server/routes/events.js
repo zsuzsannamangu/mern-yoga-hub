@@ -37,21 +37,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// DELETE: Delete an event (admin-only)
-/*router.delete('/:id', authMiddleware, adminMiddleware, async (req, res) => {
-    const { id } = req.params;
-
-    try {
-        const event = await Event.findByIdAndDelete(id);
-        if (!event) {
-            return res.status(404).json({ error: 'Event not found' });
-        }
-        res.status(200).json({ message: 'Event deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to delete event', details: error.message });
-    }
-});*/
-
 // DELETE: Bulk delete events (admin-only)
 router.delete('/bulk', authMiddleware, adminMiddleware, async (req, res) => {
     const { eventIds } = req.body; // Extract event IDs from the request body
