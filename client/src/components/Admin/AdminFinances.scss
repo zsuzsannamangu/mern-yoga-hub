@@ -20,6 +20,7 @@
     justify-content: flex-end;
     align-items: center;
     margin-bottom: 30px;
+    margin-top: 20px;
 
     .add-entry-btn {
         background: $primary-button-color;
@@ -173,11 +174,11 @@
 
 .class-table {
     width: 100%;
-    min-width: 1200px;
+    min-width: 1100px;
 
     .table-header {
         display: grid;
-        grid-template-columns: 150px 100px 80px 120px 120px 200px 80px 100px 100px 100px 80px 80px;
+        grid-template-columns: 150px 100px 80px 120px 120px 80px 100px 100px 100px 80px 80px 100px;
         background: $content-background-color;
         border-radius: 6px 6px 0 0;
         font-weight: bold;
@@ -248,7 +249,7 @@
     .month-entries {
         .table-row {
             display: grid;
-            grid-template-columns: 150px 100px 80px 120px 120px 200px 80px 100px 100px 100px 80px 80px;
+            grid-template-columns: 150px 100px 80px 120px 120px 80px 100px 100px 100px 80px 80px 100px;
             border-bottom: 1px solid rgba(204, 204, 204, 0.3);
             transition: background-color 0.2s ease;
 
@@ -285,6 +286,67 @@
                 &.status-n-a {
                     color: $secondary-text-color;
                     font-style: italic;
+                }
+            }
+
+            .actions-cell {
+                display: flex;
+                gap: 5px;
+                justify-content: center;
+                align-items: center;
+
+                .edit-btn, .delete-btn, .save-btn, .cancel-btn {
+                    border: none;
+                    background: transparent;
+                    cursor: pointer;
+                    font-size: 16px;
+                    padding: 4px 6px;
+                    border-radius: 3px;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        background: rgba(0, 0, 0, 0.1);
+                    }
+                }
+
+                .save-btn {
+                    color: #28a745;
+                    font-weight: bold;
+
+                    &:hover {
+                        background: rgba(40, 167, 69, 0.1);
+                    }
+                }
+
+                .cancel-btn {
+                    color: #dc3545;
+                    font-weight: bold;
+
+                    &:hover {
+                        background: rgba(220, 53, 69, 0.1);
+                    }
+                }
+
+                .delete-btn {
+                    &:hover {
+                        background: rgba(220, 53, 69, 0.1);
+                    }
+                }
+            }
+
+            .edit-input, .edit-select {
+                width: 100%;
+                padding: 4px 6px;
+                border: 1px solid $primary-button-color;
+                border-radius: 3px;
+                font-size: 0.75rem;
+                font-family: $font-secondary;
+                background: white;
+
+                &:focus {
+                    outline: none;
+                    border-color: $primary-button-hover-color;
+                    box-shadow: 0 0 0 1px rgba(170, 157, 18, 0.3);
                 }
             }
         }
@@ -334,10 +396,10 @@
     }
 
     .class-table {
-        min-width: 900px;
+        min-width: 800px;
 
         .table-header {
-            grid-template-columns: 120px 90px 70px 100px 100px 150px 70px 80px 80px 80px 70px 70px;
+            grid-template-columns: 120px 90px 70px 100px 100px 70px 80px 80px 80px 70px 70px 90px;
             font-size: 0.75rem;
 
             .header-cell {
@@ -359,7 +421,7 @@
         }
 
         .month-entries .table-row {
-            grid-template-columns: 120px 90px 70px 100px 100px 150px 70px 80px 80px 80px 70px 70px;
+            grid-template-columns: 120px 90px 70px 100px 100px 70px 80px 80px 80px 70px 70px 90px;
 
             .table-cell {
                 padding: 10px 8px;
@@ -381,10 +443,10 @@
     }
 
     .class-table {
-        min-width: 800px;
+        min-width: 700px;
 
         .table-header {
-            grid-template-columns: 100px 80px 60px 90px 90px 120px 60px 70px 70px 70px 60px 60px;
+            grid-template-columns: 100px 80px 60px 90px 90px 60px 70px 70px 70px 60px 60px 80px;
             font-size: 0.7rem;
 
             .header-cell {
@@ -406,7 +468,7 @@
         }
 
         .month-entries .table-row {
-            grid-template-columns: 100px 80px 60px 90px 90px 120px 60px 70px 70px 70px 60px 60px;
+            grid-template-columns: 100px 80px 60px 90px 90px 60px 70px 70px 70px 60px 60px 80px;
 
             .table-cell {
                 padding: 8px 6px;

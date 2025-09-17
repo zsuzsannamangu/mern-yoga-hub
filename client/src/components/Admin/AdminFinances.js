@@ -8,12 +8,13 @@ const AdminFinances = () => {
     const [expandedMonths, setExpandedMonths] = useState(new Set());
     const [showAddForm, setShowAddForm] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [editingId, setEditingId] = useState(null);
+    const [editingData, setEditingData] = useState({});
     const [newEntry, setNewEntry] = useState({
         date: '',
         time: '',
         class: '',
         location: '',
-        address: '',
         rate: '',
         paymentFrequency: 'per-class',
         paymentMethod: 'cash',
@@ -36,7 +37,6 @@ const AdminFinances = () => {
                     time: '15:00',
                     class: 'Hatha Yoga',
                     location: 'Studio A',
-                    address: '123 Main St, Portland, OR',
                     rate: 75,
                     paymentFrequency: 'per-class',
                     paymentMethod: 'venmo',
@@ -50,7 +50,6 @@ const AdminFinances = () => {
                     time: '10:00',
                     class: 'Gentle Flow',
                     location: 'Online',
-                    address: 'Zoom',
                     rate: 60,
                     paymentFrequency: 'per-class',
                     paymentMethod: 'paypal',
@@ -64,7 +63,6 @@ const AdminFinances = () => {
                     time: '14:00',
                     class: 'Yoga Therapy',
                     location: 'Private Home',
-                    address: '456 Oak Ave, Portland, OR',
                     rate: 100,
                     paymentFrequency: 'monthly',
                     paymentMethod: 'check',
@@ -78,7 +76,6 @@ const AdminFinances = () => {
                     time: '09:00',
                     class: 'Restorative Yoga',
                     location: 'Studio B',
-                    address: '789 Pine St, Portland, OR',
                     rate: 80,
                     paymentFrequency: 'per-class',
                     paymentMethod: 'cash',
@@ -159,7 +156,6 @@ const AdminFinances = () => {
             time: '',
             class: '',
             location: '',
-            address: '',
             rate: '',
             paymentFrequency: 'per-class',
             paymentMethod: 'cash',
@@ -188,6 +184,40 @@ const AdminFinances = () => {
             minute: '2-digit',
             hour12: true
         });
+    };
+
+    const handleEdit = (entry) => {
+        setEditingId(entry.id);
+        setEditingData({ ...entry });
+    };
+
+    const handleSaveEdit = () => {
+        const updatedData = classData.map(item => 
+            item.id === editingId ? { ...editingData, rate: parseFloat(editingData.rate) || 0 } : item
+        );
+        setClassData(sortClassData(updatedData));
+        setEditingId(null);
+        setEditingData({});
+    };
+
+    const handleCancelEdit = () => {
+        setEditingId(null);
+        setEditingData({});
+    };
+
+    const handleDelete = (id) => {
+        if (window.confirm('Are you sure you want to delete this class entry?')) {
+            const updatedData = classData.filter(item => item.id !== id);
+            setClassData(updatedData);
+        }
+    };
+
+    const handleEditInputChange = (e) => {
+        const { name, value } = e.target;
+        setEditingData(prev => ({
+            ...prev,
+            [name]: value
+        }));
     };
 
     if (loading) {
@@ -272,18 +302,7 @@ const AdminFinances = () => {
                                     name="location"
                                     value={newEntry.location}
                                     onChange={handleInputChange}
-                                    placeholder="e.g., Studio A"
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Address</label>
-                                <input
-                                    type="text"
-                                    name="address"
-                                    value={newEntry.address}
-                                    onChange={handleInputChange}
-                                    placeholder="Full address or 'Online'"
+                                    placeholder="e.g., Studio A, Online, Private Home"
                                     required
                                 />
                             </div>
@@ -388,13 +407,13 @@ const AdminFinances = () => {
                         <div className="header-cell">Time</div>
                         <div className="header-cell">Class</div>
                         <div className="header-cell">Location</div>
-                        <div className="header-cell">Address</div>
                         <div className="header-cell">Rate</div>
                         <div className="header-cell">Payment Freq.</div>
                         <div className="header-cell">Payment Method</div>
                         <div className="header-cell">Request Sent</div>
                         <div className="header-cell">Paid</div>
                         <div className="header-cell">Taxed</div>
+                        <div className="header-cell">Actions</div>
                     </div>
 
                     {Object.entries(groupedData).map(([monthKey, monthData]) => (
@@ -415,23 +434,148 @@ const AdminFinances = () => {
                                     {monthData.entries.map(entry => (
                                         <div key={entry.id} className="table-row">
                                             <div className="table-cell"></div>
-                                            <div className="table-cell">{formatDate(entry.date)}</div>
-                                            <div className="table-cell">{formatTime(entry.time)}</div>
-                                            <div className="table-cell">{entry.class}</div>
-                                            <div className="table-cell">{entry.location}</div>
-                                            <div className="table-cell">{entry.address}</div>
-                                            <div className="table-cell">{formatCurrency(entry.rate)}</div>
-                                            <div className="table-cell">{entry.paymentFrequency}</div>
-                                            <div className="table-cell">{entry.paymentMethod}</div>
-                                            <div className={`table-cell status-${entry.paymentRequestSent}`}>
-                                                {entry.paymentRequestSent}
-                                            </div>
-                                            <div className={`table-cell status-${entry.paid}`}>
-                                                {entry.paid}
-                                            </div>
-                                            <div className={`table-cell status-${entry.taxed}`}>
-                                                {entry.taxed}
-                                            </div>
+                                            {editingId === entry.id ? (
+                                                // Edit mode
+                                                <>
+                                                    <div className="table-cell">
+                                                        <input
+                                                            type="date"
+                                                            name="date"
+                                                            value={editingData.date}
+                                                            onChange={handleEditInputChange}
+                                                            className="edit-input"
+                                                        />
+                                                    </div>
+                                                    <div className="table-cell">
+                                                        <input
+                                                            type="time"
+                                                            name="time"
+                                                            value={editingData.time}
+                                                            onChange={handleEditInputChange}
+                                                            className="edit-input"
+                                                        />
+                                                    </div>
+                                                    <div className="table-cell">
+                                                        <input
+                                                            type="text"
+                                                            name="class"
+                                                            value={editingData.class}
+                                                            onChange={handleEditInputChange}
+                                                            className="edit-input"
+                                                        />
+                                                    </div>
+                                                    <div className="table-cell">
+                                                        <input
+                                                            type="text"
+                                                            name="location"
+                                                            value={editingData.location}
+                                                            onChange={handleEditInputChange}
+                                                            className="edit-input"
+                                                        />
+                                                    </div>
+                                                    <div className="table-cell">
+                                                        <input
+                                                            type="number"
+                                                            name="rate"
+                                                            value={editingData.rate}
+                                                            onChange={handleEditInputChange}
+                                                            className="edit-input"
+                                                            step="0.01"
+                                                            min="0"
+                                                        />
+                                                    </div>
+                                                    <div className="table-cell">
+                                                        <select
+                                                            name="paymentFrequency"
+                                                            value={editingData.paymentFrequency}
+                                                            onChange={handleEditInputChange}
+                                                            className="edit-select"
+                                                        >
+                                                            <option value="per-class">Per Class</option>
+                                                            <option value="weekly">Weekly</option>
+                                                            <option value="monthly">Monthly</option>
+                                                            <option value="package">Package</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="table-cell">
+                                                        <select
+                                                            name="paymentMethod"
+                                                            value={editingData.paymentMethod}
+                                                            onChange={handleEditInputChange}
+                                                            className="edit-select"
+                                                        >
+                                                            <option value="cash">Cash</option>
+                                                            <option value="check">Check</option>
+                                                            <option value="venmo">Venmo</option>
+                                                            <option value="paypal">PayPal</option>
+                                                            <option value="zelle">Zelle</option>
+                                                            <option value="card">Card</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="table-cell">
+                                                        <select
+                                                            name="paymentRequestSent"
+                                                            value={editingData.paymentRequestSent}
+                                                            onChange={handleEditInputChange}
+                                                            className="edit-select"
+                                                        >
+                                                            <option value="no">No</option>
+                                                            <option value="yes">Yes</option>
+                                                            <option value="n/a">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="table-cell">
+                                                        <select
+                                                            name="paid"
+                                                            value={editingData.paid}
+                                                            onChange={handleEditInputChange}
+                                                            className="edit-select"
+                                                        >
+                                                            <option value="no">No</option>
+                                                            <option value="yes">Yes</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="table-cell">
+                                                        <select
+                                                            name="taxed"
+                                                            value={editingData.taxed}
+                                                            onChange={handleEditInputChange}
+                                                            className="edit-select"
+                                                        >
+                                                            <option value="no">No</option>
+                                                            <option value="yes">Yes</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="table-cell actions-cell">
+                                                        <button className="save-btn" onClick={handleSaveEdit}>✓</button>
+                                                        <button className="cancel-btn" onClick={handleCancelEdit}>✕</button>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                // View mode
+                                                <>
+                                                    <div className="table-cell">{formatDate(entry.date)}</div>
+                                                    <div className="table-cell">{formatTime(entry.time)}</div>
+                                                    <div className="table-cell">{entry.class}</div>
+                                                    <div className="table-cell">{entry.location}</div>
+                                                    <div className="table-cell">{formatCurrency(entry.rate)}</div>
+                                                    <div className="table-cell">{entry.paymentFrequency}</div>
+                                                    <div className="table-cell">{entry.paymentMethod}</div>
+                                                    <div className={`table-cell status-${entry.paymentRequestSent}`}>
+                                                        {entry.paymentRequestSent}
+                                                    </div>
+                                                    <div className={`table-cell status-${entry.paid}`}>
+                                                        {entry.paid}
+                                                    </div>
+                                                    <div className={`table-cell status-${entry.taxed}`}>
+                                                        {entry.taxed}
+                                                    </div>
+                                                    <div className="table-cell actions-cell">
+                                                        <button className="edit-btn" onClick={() => handleEdit(entry)}>✏️</button>
+                                                        <button className="delete-btn" onClick={() => handleDelete(entry.id)}>🗑️</button>
+                                                    </div>
+                                                </>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
