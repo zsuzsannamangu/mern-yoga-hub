@@ -553,6 +553,7 @@ const AdminFinances = () => {
                                     <option value="paypal">PayPal</option>
                                     <option value="zelle">Zelle</option>
                                     <option value="deposit">Deposit</option>
+                                    <option value="card">Card</option>
                                 </select>
                             </div>
                         </div>
@@ -758,6 +759,7 @@ const AdminFinances = () => {
                                                             <option value="paypal">PayPal</option>
                                                             <option value="zelle">Zelle</option>
                                                             <option value="deposit">Deposit</option>
+                                                            <option value="card">Card</option>
                                                         </select>
                                                     </div>
                                                     <div className="table-cell">

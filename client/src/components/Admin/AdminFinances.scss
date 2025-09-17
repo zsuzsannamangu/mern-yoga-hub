@@ -84,15 +84,15 @@
 
         &.monthly {
             background: rgba(170, 157, 18, 0.08);
-            border-left: 4px solid #28a745;
+            border-left: 4px solid $green-color;
             animation: slideIn 0.3s ease-out;
 
             h3 {
-                color: #28a745;
+                color: $green-color;
             }
 
             .revenue-amount {
-                color: #28a745;
+                color: $green-color;
             }
         }
     }
@@ -316,12 +316,12 @@
                 }
 
                 &.status-yes {
-                    color: #28a745;
+                    color: $green-color;
                     font-weight: 500;
                 }
 
                 &.status-no {
-                    color: #dc3545;
+                    color: $delete-button;
                     font-weight: 500;
                 }
 
@@ -352,7 +352,7 @@
                 }
 
                 .save-btn {
-                    color: #28a745;
+                    color: $green-color;
                     font-weight: bold;
 
                     &:hover {
@@ -361,7 +361,7 @@
                 }
 
                 .cancel-btn {
-                    color: #dc3545;
+                    color: $delete-button;
                     font-weight: bold;
 
                     &:hover {

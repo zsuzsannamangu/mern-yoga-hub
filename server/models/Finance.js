@@ -15,7 +15,7 @@ const financeSchema = new mongoose.Schema({
     paymentMethod: { 
         type: String, 
         required: true,
-        enum: ['cash', 'check', 'venmo', 'paypal', 'zelle', 'card'],
+        enum: ['cash', 'check', 'venmo', 'paypal', 'zelle', 'deposit', 'card'],
         default: 'cash'
     },
     paymentRequestSent: { 
