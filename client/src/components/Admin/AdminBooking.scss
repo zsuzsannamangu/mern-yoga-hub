@@ -132,12 +132,16 @@
             background-color: $delete-button;
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 8px 10px;
             border-radius: 4px;
-            font-size: 0.85rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: background-color 0.3s ease;
             font-family: $font-main;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
 
             &:hover {
                 background-color: $delete-button-hover;

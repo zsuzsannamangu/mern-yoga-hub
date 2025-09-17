@@ -338,8 +338,9 @@ const AdminBooking = () => {
                                                     <button
                                                         onClick={() => deleteSlot(slot._id)}
                                                         className="delete-slot-button"
+                                                        title="Delete slot"
                                                     >
-                                                        🗑️ Delete
+                                                        🗑️
                                                     </button>
                                                 </td>
                                             </tr>
