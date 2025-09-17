@@ -80,7 +80,9 @@ const AdminFinances = () => {
     const groupDataByMonth = (data) => {
         const grouped = {};
         data.forEach(entry => {
-            const date = new Date(entry.date);
+            // Parse date string as local date to avoid timezone shifts
+            const [year, month, day] = entry.date.split('-');
+            const date = new Date(year, month - 1, day); // month is 0-indexed
             const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
             const monthName = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
             
@@ -139,7 +141,9 @@ const AdminFinances = () => {
 
     const generateRepeatDates = (startDate, frequency, count) => {
         const dates = [];
-        const start = new Date(startDate);
+        // Parse date string as local date to avoid timezone shifts
+        const [year, month, day] = startDate.split('-');
+        const start = new Date(year, month - 1, day); // month is 0-indexed
         
         for (let i = 0; i < count; i++) {
             const newDate = new Date(start);
@@ -161,8 +165,8 @@ const AdminFinances = () => {
                     newDate.setDate(start.getDate() + (i * 7)); // Default to weekly
             }
             
-            // Format as YYYY-MM-DD
-            const formattedDate = newDate.toISOString().split('T')[0];
+            // Format as YYYY-MM-DD using local date
+            const formattedDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1).padStart(2, '0')}-${String(newDate.getDate()).padStart(2, '0')}`;
             dates.push(formattedDate);
         }
         
@@ -280,7 +284,10 @@ const AdminFinances = () => {
     };
 
     const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
+        // Parse date string as local date to avoid timezone shifts
+        const [year, month, day] = dateString.split('-');
+        const date = new Date(year, month - 1, day); // month is 0-indexed
+        return date.toLocaleDateString('en-US', {
             weekday: 'short',
             month: 'short',
             day: 'numeric'
