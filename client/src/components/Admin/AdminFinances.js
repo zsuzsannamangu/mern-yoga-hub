@@ -395,7 +395,7 @@ const AdminFinances = () => {
                                     <option value="per-class">Per Class</option>
                                     <option value="weekly">Weekly</option>
                                     <option value="monthly">Monthly</option>
-                                    <option value="package">Package</option>
+                                    <option value="biweekly">Biweekly</option>
                                 </select>
                             </div>
                             <div className="form-group">
@@ -410,7 +410,7 @@ const AdminFinances = () => {
                                     <option value="venmo">Venmo</option>
                                     <option value="paypal">PayPal</option>
                                     <option value="zelle">Zelle</option>
-                                    <option value="card">Card</option>
+                                    <option value="deposit">Deposit</option>
                                 </select>
                             </div>
                         </div>
@@ -557,7 +557,7 @@ const AdminFinances = () => {
                                                             <option value="per-class">Per Class</option>
                                                             <option value="weekly">Weekly</option>
                                                             <option value="monthly">Monthly</option>
-                                                            <option value="package">Package</option>
+                                                            <option value="biweekly">Biweekly</option>
                                                         </select>
                                                     </div>
                                                     <div className="table-cell">
@@ -572,7 +572,7 @@ const AdminFinances = () => {
                                                             <option value="venmo">Venmo</option>
                                                             <option value="paypal">PayPal</option>
                                                             <option value="zelle">Zelle</option>
-                                                            <option value="card">Card</option>
+                                                            <option value="deposit">Deposit</option>
                                                         </select>
                                                     </div>
                                                     <div className="table-cell">

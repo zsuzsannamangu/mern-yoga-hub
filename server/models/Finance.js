@@ -9,7 +9,7 @@ const financeSchema = new mongoose.Schema({
     paymentFrequency: { 
         type: String, 
         required: true,
-        enum: ['per-class', 'weekly', 'monthly', 'package'],
+        enum: ['per-class', 'weekly', 'monthly', 'biweekly'],
         default: 'per-class'
     },
     paymentMethod: { 
