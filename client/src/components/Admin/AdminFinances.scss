@@ -17,16 +17,9 @@
 
 .finances-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     margin-bottom: 30px;
-
-    h1 {
-        color: $main-title-color;
-        font-family: $font-title;
-        font-size: 2rem;
-        margin: 0;
-    }
 
     .add-entry-btn {
         background: $primary-button-color;
@@ -305,9 +298,7 @@
     }
 
     .finances-header {
-        flex-direction: column;
-        gap: 15px;
-        align-items: stretch;
+        justify-content: stretch;
 
         .add-entry-btn {
             width: 100%;

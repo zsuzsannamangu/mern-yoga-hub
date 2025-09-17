@@ -205,8 +205,8 @@ const AdminFinances = () => {
     return (
         <div className="admin-finances">
             <AdminNavbar />
+            <h3 className="section-title">Class & Financial Tracking</h3>
             <div className="finances-header">
-                <h1>Class & Financial Tracking</h1>
                 <button 
                     className="add-entry-btn"
                     onClick={() => setShowAddForm(!showAddForm)}
