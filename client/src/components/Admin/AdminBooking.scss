@@ -94,6 +94,10 @@
                     border-bottom: 2px solid $border-color;
                     font-size: 0.95rem;
                     font-family: $font-main;
+
+                    &:last-child {
+                        text-align: center;
+                    }
                 }
             }
 
@@ -132,19 +136,23 @@
             background-color: $delete-button;
             color: white;
             border: none;
-            padding: 8px 10px;
+            padding: 6px 8px;
             border-radius: 4px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
             font-family: $font-main;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto;
+            min-width: 32px;
+            height: 32px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
             &:hover {
                 background-color: $delete-button-hover;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             }
         }
     }
