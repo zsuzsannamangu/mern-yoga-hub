@@ -3,13 +3,14 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { 
     FaCalendarAlt, 
     FaBookOpen, 
-    FaBox, 
+    FaCookieBite, 
     FaUsers, 
     FaEnvelope, 
     FaChartLine, 
     FaSignOutAlt,
     FaBars,
-    FaTimes
+    FaTimes,
+    FaChalkboardTeacher
 } from 'react-icons/fa';
 import './AdminNavbar.scss';
 import '../../App.scss';
@@ -31,8 +32,8 @@ const AdminNavbar = () => {
     const menuItems = [
         { path: '/admin/dashboard', icon: FaCalendarAlt, label: 'Events' },
         { path: '/admin/bookings', icon: FaBookOpen, label: 'Bookings' },
-        { path: '/admin/chocolates', icon: FaBox, label: 'Chocolates' },
-        { path: '/admin/signups', icon: FaCalendarAlt, label: 'Classes' },
+        { path: '/admin/chocolates', icon: FaCookieBite, label: 'Chocolates' },
+        { path: '/admin/signups', icon: FaChalkboardTeacher, label: 'Classes' },
         { path: '/admin/users', icon: FaUsers, label: 'Clients' },
         { path: '/admin/subscribers', icon: FaEnvelope, label: 'Subscribers' },
         { path: '/admin/finances', icon: FaChartLine, label: 'Finances' }
