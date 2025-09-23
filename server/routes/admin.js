@@ -9,7 +9,10 @@ const dotenv = require('dotenv');
 const User = require('../models/User');
 const fetch = require('node-fetch'); // For reCAPTCHA validation
 const Subscriber = require('../models/Subscriber');
+const sgMail = require('@sendgrid/mail');
 dotenv.config();
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Admin Login
 router.post('/login', async (req, res) => {
@@ -144,6 +147,81 @@ router.get('/users', authMiddleware, adminMiddleware, async (req, res) => {
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch users." });
+  }
+});
+
+// POST create new client (Admin only)
+router.post('/users', authMiddleware, adminMiddleware, async (req, res) => {
+  const { firstName, lastName, email, phone, preferredName, pronoun, city, zipcode } = req.body;
+
+  try {
+    // Validate required fields
+    if (!firstName || !lastName || !email) {
+      return res.status(400).json({ message: 'First name, last name, and email are required.' });
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'A user with this email already exists.' });
+    }
+
+    // Create new user
+    const newUser = new User({
+      firstName,
+      lastName,
+      email,
+      phone: phone || null,
+      preferredName: preferredName || null,
+      pronoun: pronoun || null,
+      city: city || null,
+      zipcode: zipcode || null,
+      isVerified: true, // Mark as verified so they can log in immediately
+    });
+
+    await newUser.save();
+
+    // Send welcome email
+    const loginUrl = `${process.env.FRONTEND_URL}/login`;
+    const emailContent = {
+      to: email,
+      from: process.env.EMAIL_USER,
+      subject: 'Welcome to Yoga Savor - Your Account is Ready!',
+      text: `Dear ${firstName}, \n\nYour account has been created for Yoga Savor. You can now log in to view upcoming sessions and book appointments.\n\nTo log in, visit: ${loginUrl}\n\nSimply enter your email address and request a login link.\n\nWarm regards,\nZsuzsanna`,
+      html: `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+          <p>Dear ${firstName},</p>
+          <p>Your account has been created for Yoga Savor! You can now log in to view upcoming sessions and book appointments.</p>
+          <p>To log in, click the button below:</p>
+          <p>
+            <a href="${loginUrl}" style="
+              display: inline-block;
+              color: #ffffff;
+              background-color: #007BFF;
+              padding: 12px 24px;
+              text-decoration: none;
+              border-radius: 5px;
+              font-size: 16px;
+              font-weight: bold;
+            ">
+              Log In to Your Account
+            </a>
+          </p>
+          <p>Simply enter your email address (${email}) and request a login link.</p>
+          <p>Warm regards,<br>Zsuzsanna</p>
+        </div>
+      `,
+    };
+
+    await sgMail.send(emailContent);
+
+    res.status(201).json({ 
+      message: 'Client created successfully and welcome email sent.', 
+      user: newUser 
+    });
+  } catch (error) {
+    console.error('Error creating client:', error);
+    res.status(500).json({ message: 'Server error occurred while creating client.' });
   }
 });
 
