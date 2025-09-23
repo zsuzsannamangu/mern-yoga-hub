@@ -325,11 +325,11 @@ router.post('/appointments', authMiddleware, adminMiddleware, async (req, res) =
       to: user.email,
       from: process.env.EMAIL_USER,
       subject: 'New Appointment Scheduled with Zsuzsanna',
-      text: `Dear ${user.firstName}, \n\nYour session with Zsuzsanna Mangu at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedTime} (${length}) has been scheduled.\n\nLocation / Link: ${location || 'TBD'}\n\nPlease log in to your account or email me to make changes.\n\nWarm regards,\nZsuzsanna`,
+      text: `Dear ${user.firstName}, \n\nYour "${title}" session with Zsuzsanna Mangu at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedTime} (${length}) has been scheduled.\n\nLocation / Link: ${location || 'TBD'}\n\nPlease log in to your account or email me to make changes.\n\nWarm regards,\nZsuzsanna`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <p>Dear ${user.firstName},</p>
-          <p>Your session with Zsuzsanna Mangu at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedTime} (${length}) has been scheduled.</p>
+          <p>Your "${title}" session with Zsuzsanna Mangu at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedTime} (${length}) has been scheduled.</p>
           <p><strong>Location / Link:</strong> ${location || 'TBD'}</p>
           <p>Please log in to your account or email me to make changes.</p>
           <p>Warm regards,<br>Zsuzsanna</p>

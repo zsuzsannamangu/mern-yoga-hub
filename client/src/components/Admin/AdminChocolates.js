@@ -79,45 +79,45 @@ const AdminChocolates = () => {
     return (
         <AdminLayout>
             <div className="admin-chocolates">
-      <h3 className="section-title">Manage Chocolates</h3>
-      <div className="products-grid">
-        {products.map((product, index) => (
-          <div key={product._id} className="admin-product-card">
-            <img src={product.image} alt={product.name} className="product-image" />
-            <div>
-              <textarea
-                value={product.name}
-                onChange={(e) => handleEdit(index, 'name', e.target.value)}
-              />
-              <textarea
-                value={product.description}
-                onChange={(e) => handleEdit(index, 'description', e.target.value)}
-              />
-              <textarea
-                value={product.details}
-                onChange={(e) => handleEdit(index, 'details', e.target.value)}
-              />
-              <p>
-                Price:
-                <input
-                  value={product.price}
-                  onChange={(e) => handleEdit(index, 'price', e.target.value)}
-                />
-              </p>
-              <p>
-                Inventory:
-                <input
-                  type="number"
-                  value={product.inventory}
-                  onChange={(e) => handleEdit(index, 'inventory', parseInt(e.target.value))}
-                />
-              </p>
-              <button onClick={() => saveChanges(index)}>Save Changes</button>
-              <button className="deletebutton" onClick={() => deleteProduct(index)}>Delete</button>
-            </div>
-          </div>
-        ))}
-      </div>
+                <h3 className="section-title">Manage Chocolates</h3>
+                <div className="products-grid">
+                    {products.map((product, index) => (
+                        <div key={product._id} className="admin-product-card">
+                            <img src={product.image} alt={product.name} className="product-image" />
+                            <div>
+                                <textarea
+                                    value={product.name}
+                                    onChange={(e) => handleEdit(index, 'name', e.target.value)}
+                                />
+                                <textarea
+                                    value={product.description}
+                                    onChange={(e) => handleEdit(index, 'description', e.target.value)}
+                                />
+                                <textarea
+                                    value={product.details}
+                                    onChange={(e) => handleEdit(index, 'details', e.target.value)}
+                                />
+                                <p>
+                                    Price:
+                                    <input
+                                        value={product.price}
+                                        onChange={(e) => handleEdit(index, 'price', e.target.value)}
+                                    />
+                                </p>
+                                <p>
+                                    Inventory:
+                                    <input
+                                        type="number"
+                                        value={product.inventory}
+                                        onChange={(e) => handleEdit(index, 'inventory', parseInt(e.target.value))}
+                                    />
+                                </p>
+                                <button onClick={() => saveChanges(index)}>Save Changes</button>
+                                <button className="deletebutton" onClick={() => deleteProduct(index)}>Delete</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </AdminLayout>
     );

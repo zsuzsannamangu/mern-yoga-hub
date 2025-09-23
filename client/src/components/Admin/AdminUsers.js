@@ -578,7 +578,7 @@ const AdminUsers = () => {
                                 >
                                     <option value="">Select appointment type</option>
                                     <option value="Yoga Therapy">Yoga Therapy</option>
-                                    <option value="Private Yoga Class">Private Yoga Class</option>
+                                    <option value="Private Yoga">Private Yoga</option>
                                 </select>
                             </div>
                             <div className="form-row">
