@@ -9,7 +9,7 @@
 
     .users-header {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
         margin-bottom: 30px;
         margin-top: 0;
@@ -17,6 +17,7 @@
         h3 {
             color: $secondary-text-color;
             margin: 0;
+            margin-right: auto;
         }
 
         .add-client-btn {
