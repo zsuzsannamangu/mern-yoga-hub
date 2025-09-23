@@ -338,7 +338,6 @@ const AdminUsers = () => {
                             <th>Location</th>
                             <th>Zip</th>
                             <th>User Since</th>
-                            <th>Appointments</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -361,30 +360,34 @@ const AdminUsers = () => {
                                         timeStyle: 'short',
                                     })}</td>
                                     <td>
-                                        <button 
-                                            className="add-appointment-btn" 
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setSelectedUserId(user._id);
-                                                setShowAppointmentForm(true);
-                                            }}
-                                            title="Add Appointment"
-                                        >
-                                            <FaPlus />
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button className="delete-button" onClick={(e) => {
-                                            e.stopPropagation();
-                                            deleteUser(user._id);
-                                        }}>
-                                            <FaTrash />
-                                        </button>
+                                        <div className="action-buttons">
+                                            <button 
+                                                className="add-appointment-btn" 
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setSelectedUserId(user._id);
+                                                    setShowAppointmentForm(true);
+                                                }}
+                                                title="Add Appointment"
+                                            >
+                                                <FaPlus />
+                                            </button>
+                                            <button 
+                                                className="delete-button" 
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    deleteUser(user._id);
+                                                }}
+                                                title="Delete User"
+                                            >
+                                                <FaTrash />
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                                 {expandedUsers.has(user._id) && (
                                     <tr className="appointments-row">
-                                        <td colSpan="12">
+                                        <td colSpan="11">
                                             <div className="appointments-container">
                                                 <h4>Appointments for {user.firstName} {user.lastName}</h4>
                                                 {appointments[user._id] && appointments[user._id].length > 0 ? (

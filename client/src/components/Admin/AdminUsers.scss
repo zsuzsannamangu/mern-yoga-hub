@@ -48,6 +48,23 @@
             padding: 10px;
             border: 1px solid $border-color;
 
+            &:nth-child(10) { // User Since column
+                min-width: 140px;
+                width: 140px;
+            }
+
+            &:last-child { // Actions column
+                width: 100px;
+                text-align: center;
+            }
+
+            .action-buttons {
+                display: flex;
+                gap: 8px;
+                justify-content: center;
+                align-items: center;
+            }
+
             .delete-button {
                 background-color: $delete-button;
                 color: $button-text-color;
