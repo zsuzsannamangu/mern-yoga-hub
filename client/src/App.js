@@ -7,7 +7,7 @@ import { AdminAuthProvider } from './components/Admin/AdminAuthContext';
 import './App.scss'; // Main stylesheet
 
 // Components
-import Navbar from './components/Navbar';
+import ConditionalNavbar from './components/ConditionalNavbar';
 import Footer from './components/Footer/Footer';
 
 // Pages
@@ -65,8 +65,8 @@ function App() {
       <AdminAuthProvider>
         <Router>
           <div className="App">
-            {/* Navbar remains consistent across all pages */}
-            <Navbar />
+            {/* Navbar is hidden on admin routes */}
+            <ConditionalNavbar />
             <div className="content">
               <Routes>
                 {/* Public Routes */}

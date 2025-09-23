@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { adminAxiosInstance } from '../../config/axiosConfig';
 import './AdminChocolates.scss';
-import AdminNavbar from './AdminNavbar';
+import AdminLayout from './AdminLayout';
 import '../../App.scss';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
@@ -76,9 +76,9 @@ const AdminChocolates = () => {
       }
     };
 
-  return (
-    <div className="admin-chocolates">
-      <AdminNavbar />
+    return (
+        <AdminLayout>
+            <div className="admin-chocolates">
       <h3 className="section-title">Manage Chocolates</h3>
       <div className="products-grid">
         {products.map((product, index) => (
@@ -117,9 +117,9 @@ const AdminChocolates = () => {
             </div>
           </div>
         ))}
-      </div>
-    </div>
-  );
+            </div>
+        </AdminLayout>
+    );
 };
 
 export default AdminChocolates;

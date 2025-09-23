@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { adminAxiosInstance } from '../../config/axiosConfig';
-import AdminNavbar from './AdminNavbar';
+import AdminLayout from './AdminLayout';
 import './AdminFinances.scss';
 import '../../App.scss';
 import Swal from 'sweetalert2';
@@ -414,8 +414,8 @@ const AdminFinances = () => {
     const monthlyTotals = calculateMonthlyTotals(groupedData, expandedMonths);
 
     return (
-        <div className="admin-finances">
-            <AdminNavbar />
+        <AdminLayout>
+            <div className="admin-finances">
             <h3 className="section-title">Class & Financial Tracking</h3>
             <div className="finances-header">
                 <button 
@@ -841,7 +841,8 @@ const AdminFinances = () => {
                     ))}
                 </div>
             </div>
-        </div>
+            </div>
+        </AdminLayout>
     );
 };
 

@@ -1,52 +1,206 @@
 @use '../../styles/variables' as *;
 
-.admin-navbar {
-    display: flex;
-    align-items: center; /* Vertically align items */
-    justify-content: space-between; /* Spread out items */
-    padding: 16px 32px;
+.admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
     background-color: $tertiary-background-color;
-    font-family: $font-main;
+    transition: width 0.3s ease;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 
-    .admin-title {
-        font-size: 1.5em;
-        color: $button-text-color;
-        font-family: $font-main;
+    &.collapsed {
+        width: 60px;
     }
 
-    nav {
+    &.expanded {
+        width: 250px;
+    }
+
+    .sidebar-header {
+        display: flex;
+        align-items: center;
+        padding: 20px 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        min-height: 70px;
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: $button-text-color;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        .admin-title {
+            color: $button-text-color;
+            font-size: 1.2rem;
+            font-family: $font-main;
+            margin: 0 0 0 15px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+
+            .expanded & {
+                opacity: 1;
+            }
+        }
+    }
+
+    .sidebar-nav {
+        flex: 1;
+        padding: 20px 0;
+
         ul {
-            display: flex;
-            align-items: center; /* Vertically align menu items */
-            gap: 24px;
             list-style: none;
             margin: 0;
             padding: 0;
 
-            @media (max-width: 768px) {
-                display: block;
-            }
-
             li {
-                a {
+                margin: 0;
+
+                .nav-link {
+                    display: flex;
+                    align-items: center;
+                    padding: 15px 20px;
                     color: $button-text-color;
-                    font-family: $font-main;
-                    font-size: 1rem;
-                    padding: 8px 16px; /* Add some padding for spacing */
-                    transition: color 0.3s;
+                    text-decoration: none;
+                    transition: all 0.3s ease;
+                    border-left: 3px solid transparent;
+                    position: relative;
 
                     &:hover {
-                        color: $secondary-content-background-color;
+                        background-color: rgba(255, 255, 255, 0.1);
+                        border-left-color: $primary-button-color;
                     }
 
-                    &.active-link {
+                    &.active {
+                        background-color: rgba(170, 157, 18, 0.2);
+                        border-left-color: $primary-button-color;
                         color: $primary-button-color;
-                        font-weight: bold;
-                        border-bottom: 2px solid $line-color;
+                    }
+
+                    .nav-icon {
+                        font-size: 18px;
+                        min-width: 20px;
+                        text-align: center;
+                    }
+
+                    .nav-text {
+                        margin-left: 15px;
+                        font-family: $font-main;
+                        font-size: 14px;
+                        white-space: nowrap;
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+
+                        .expanded & {
+                            opacity: 1;
+                        }
                     }
                 }
             }
+        }
+    }
+
+    .sidebar-footer {
+        padding: 20px 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            color: $button-text-color;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            border-left: 3px solid transparent;
+
+            &:hover {
+                background-color: rgba(255, 107, 107, 0.2);
+                border-left-color: $delete-button;
+                color: $delete-button;
+            }
+
+            .nav-icon {
+                font-size: 18px;
+                min-width: 20px;
+                text-align: center;
+            }
+
+            .nav-text {
+                margin-left: 15px;
+                font-family: $font-main;
+                font-size: 14px;
+                white-space: nowrap;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+
+                .expanded & {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+
+// Main content area adjustment
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+
+    .admin-content {
+        flex: 1;
+        margin-left: 60px; // Default collapsed width
+        transition: margin-left 0.3s ease;
+        background-color: $background-color;
+        min-height: 100vh;
+        padding: 20px;
+    }
+}
+
+// When sidebar is expanded
+.admin-layout .admin-sidebar.expanded ~ .admin-content {
+    margin-left: 250px; // Expanded width
+}
+
+// Responsive design
+@media (max-width: $breakpoint-md) {
+    .admin-sidebar {
+        &.expanded {
+            width: 100vw;
+            z-index: 9999;
+        }
+
+        .sidebar-header .admin-title {
+            opacity: 1;
+        }
+
+        .sidebar-nav ul li .nav-link .nav-text,
+        .sidebar-footer .logout-btn .nav-text {
+            opacity: 1;
+        }
+    }
+
+    .admin-layout .admin-content {
+        margin-left: 0;
+
+        .admin-sidebar.expanded ~ & {
+            margin-left: 0;
         }
     }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { adminAxiosInstance } from '../../config/axiosConfig'; //using named exports ({}), not default export
-import AdminNavbar from './AdminNavbar';
+import AdminLayout from './AdminLayout';
 import './AdminBooking.scss';
 import '../../App.scss';
 import Swal from 'sweetalert2';
@@ -258,8 +258,8 @@ const AdminBooking = () => {
     }, [fetchSlots]);
 
     return (
-        <div className="admin-booking">
-            <AdminNavbar />
+        <AdminLayout>
+            <div className="admin-booking">
             <div className="admin-booking-container">
                 <h3 className="section-title">Manage Bookable Slots</h3>
                 <form className="admin-booking-form" onSubmit={addSlot}>
@@ -402,7 +402,8 @@ const AdminBooking = () => {
                 </div>
 
             </div>
-        </div>
+            </div>
+        </AdminLayout>
     );
 };
 

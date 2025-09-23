@@ -3,7 +3,7 @@ import { adminAxiosInstance } from '../../config/axiosConfig';
 import { FaTrash } from 'react-icons/fa'; // Trash icon for delete button
 import './AdminSignups.scss';
 import '../../App.scss';
-import AdminNavbar from './AdminNavbar';
+import AdminLayout from './AdminLayout';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 
@@ -77,8 +77,8 @@ const AdminSignups = () => {
     }, []);
 
     return (
-        <div className="admin-signups">
-            <AdminNavbar />
+        <AdminLayout>
+            <div className="admin-signups">
             <h3 className="section-title">Manage Class Registrations</h3>
             {loading ? (
                 <p>Loading signups...</p>
@@ -117,7 +117,8 @@ const AdminSignups = () => {
             ) : (
                 <p>No signups found.</p>
             )}
-        </div>
+            </div>
+        </AdminLayout>
     );
 };
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './AdminSubscribers.scss';
 import { FaTrash } from 'react-icons/fa';
 import '../../App.scss';
-import AdminNavbar from './AdminNavbar';
+import AdminLayout from './AdminLayout';
 import Swal from 'sweetalert2';
 
 const AdminSubscribers = () => {
@@ -61,8 +61,8 @@ const AdminSubscribers = () => {
   };
 
   return (
-    <div className="admin-subscribers">
-      <AdminNavbar />
+    <AdminLayout>
+      <div className="admin-subscribers">
       <h3 className="section-title">Newsletter Subscribers</h3>
       {subscribers.length === 0 ? (
         <div className="no-subscribers">No subscribers yet.</div>
@@ -92,7 +92,8 @@ const AdminSubscribers = () => {
           </tbody>
         </table>
       )}
-    </div>
+      </div>
+    </AdminLayout>
   );
 };
 

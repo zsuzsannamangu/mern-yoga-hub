@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { adminAxiosInstance } from '../../config/axiosConfig';
 import './AdminUsers.scss';
 import '../../App.scss';
-import AdminNavbar from './AdminNavbar';
+import AdminLayout from './AdminLayout';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 import { FaTrash, FaPlus, FaEdit, FaTimes } from 'react-icons/fa'; // Icons for buttons
@@ -311,8 +311,8 @@ const AdminUsers = () => {
     }, []);
 
     return (
-        <div className="admin-users">
-            <AdminNavbar />
+        <AdminLayout>
+            <div className="admin-users">
             <div className="users-header">
                 <h3 className="section-title">Manage Users/Clients</h3>
                 <button 
@@ -645,7 +645,8 @@ const AdminUsers = () => {
                     </div>
                 </div>
             )}
-        </div>
+            </div>
+        </AdminLayout>
     );
 };
 

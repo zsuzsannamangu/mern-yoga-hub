@@ -1,12 +1,10 @@
 @use '../../styles/variables' as *;
 
 .admin-users {
-    padding: 20px;
     font-family: $font-main;
     background-color: $background-color;
     max-width: 1200px; // Make the page wider
     margin: 0 auto; // Center the entire dashboard
-    padding: 20px;
 
     .users-header {
         display: flex;

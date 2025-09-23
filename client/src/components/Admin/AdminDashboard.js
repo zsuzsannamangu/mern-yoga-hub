@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { adminAxiosInstance } from '../../config/axiosConfig';
 import { useNavigate } from 'react-router-dom';
-import AdminNavbar from './AdminNavbar';
+import AdminLayout from './AdminLayout';
 import './AdminDashboard.scss';
 import '../../App.scss';
 import { FaTrash } from 'react-icons/fa'; //Trash icon for delete button
@@ -289,8 +289,8 @@ const AdminDashboard = () => {
     }, [navigate]);
 
     return (
-        <div className="admin-dashboard">
-            <AdminNavbar />
+        <AdminLayout>
+            <div className="admin-dashboard">
             <h3 className="section-title">Manage Classes and Events</h3>
             <form className="event-form" onSubmit={addEvent}>
                 <h3>Add New Event</h3>
@@ -405,7 +405,8 @@ const AdminDashboard = () => {
                     <p>No events added yet.</p>
                 )}
             </div>
-        </div>
+            </div>
+        </AdminLayout>
     );
 };
 
