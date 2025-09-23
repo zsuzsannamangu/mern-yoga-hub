@@ -71,7 +71,7 @@ function UserBookings() {
                     >
                         <div className="booking-details">
                             <div className="session-type">
-                                <strong>{booking.sessionType || 'General Session'}</strong>
+                                <strong>{booking.title || booking.sessionType || 'General Session'}</strong>
                             </div>
                             <div className="booking-info">
                                 <FaCalendarAlt className="icon" />
@@ -79,17 +79,17 @@ function UserBookings() {
                             </div>
                             <div className="booking-info">
                                 <FaClock className="icon" />
-                                <span>{booking.duration || '60 mins'}</span>
+                                <span>{booking.length || booking.duration || '60 mins'}</span>
                             </div>
                         </div>
                         <div className="booking-footer">
                             <a
-                                href={booking.link || '#'}
+                                href={booking.location || booking.link || '#'}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className={booking.isPast ? 'disabled-link' : ''}
                             >
-                                <FaLocationArrow className="icon" /> {booking.link || 'Link is emailed'}
+                                <FaLocationArrow className="icon" /> {booking.location || booking.link || 'Location TBD'}
                             </a>
                             <a href="/contact">
                                 <FaEnvelope className="icon" /> Need to cancel? Email me!
