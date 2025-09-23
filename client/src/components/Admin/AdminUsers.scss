@@ -67,6 +67,34 @@
                 align-items: center;
             }
 
+            .edit-button {
+                background-color: $primary-button-color;
+                color: $button-text-color;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: $primary-button-hover-color;
+                }
+            }
+
+            .add-appointment-btn {
+                background-color: $green-color;
+                color: $button-text-color;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: darken($green-color, 10%);
+                }
+            }
+
             .delete-button {
                 background-color: $delete-button;
                 color: $button-text-color;

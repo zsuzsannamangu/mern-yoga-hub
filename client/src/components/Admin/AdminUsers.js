@@ -33,6 +33,19 @@ const AdminUsers = () => {
         length: '',
         location: ''
     });
+    // Edit user states
+    const [showEditForm, setShowEditForm] = useState(false);
+    const [editingUser, setEditingUser] = useState(null);
+    const [editUserData, setEditUserData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        preferredName: '',
+        pronoun: '',
+        city: '',
+        zipcode: ''
+    });
 
     // Fetch all users from the database
     const fetchUsers = async () => {
@@ -240,6 +253,79 @@ const AdminUsers = () => {
         setExpandedUsers(newExpanded);
     };
 
+    // Handle edit user button click
+    const handleEditUser = (user) => {
+        setEditingUser(user);
+        setEditUserData({
+            firstName: user.firstName || '',
+            lastName: user.lastName || '',
+            email: user.email || '',
+            phone: user.phone || '',
+            preferredName: user.preferredName || '',
+            pronoun: user.pronoun || '',
+            city: user.city || '',
+            zipcode: user.zipcode || ''
+        });
+        setShowEditForm(true);
+    };
+
+    // Handle edit user form input changes
+    const handleEditUserInputChange = (e) => {
+        const { name, value } = e.target;
+        setEditUserData({ ...editUserData, [name]: value });
+    };
+
+    // Handle edit user form submission
+    const handleUpdateUser = async (e) => {
+        e.preventDefault();
+        
+        if (!editUserData.firstName || !editUserData.lastName || !editUserData.email) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Missing Required Fields',
+                text: 'Please fill in first name, last name, and email.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('adminToken');
+            await adminAxiosInstance.put(`/api/admin/users/${editingUser._id}`, editUserData, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            Swal.fire({
+                icon: 'success',
+                title: 'User Updated',
+                text: 'The user information has been successfully updated.',
+                confirmButtonText: 'OK'
+            });
+
+            // Reset form and close modal
+            setEditUserData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                phone: '',
+                preferredName: '',
+                pronoun: '',
+                city: '',
+                zipcode: ''
+            });
+            setShowEditForm(false);
+            setEditingUser(null);
+            fetchUsers(); // Refresh the list
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to Update User',
+                text: error.response?.data?.message || 'Please try again later.',
+                confirmButtonText: 'OK'
+            });
+        }
+    };
+
     // Handle reschedule appointment
     const handleRescheduleAppointment = async (appointmentId) => {
         // For now, just show a placeholder - we'll implement this next
@@ -361,6 +447,16 @@ const AdminUsers = () => {
                                     })}</td>
                                     <td>
                                         <div className="action-buttons">
+                                            <button 
+                                                className="edit-button" 
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleEditUser(user);
+                                                }}
+                                                title="Edit User"
+                                            >
+                                                <FaEdit />
+                                            </button>
                                             <button 
                                                 className="add-appointment-btn" 
                                                 onClick={(e) => {
@@ -659,6 +755,129 @@ const AdminUsers = () => {
                                 </button>
                                 <button type="submit" className="submit-btn">
                                     Create Appointment
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Edit User Modal */}
+            {showEditForm && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h3>Edit User</h3>
+                            <button 
+                                className="close-btn" 
+                                onClick={() => setShowEditForm(false)}
+                            >
+                                ×
+                            </button>
+                        </div>
+                        <form onSubmit={handleUpdateUser} className="add-client-form">
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label htmlFor="editFirstName">First Name *</label>
+                                    <input
+                                        type="text"
+                                        id="editFirstName"
+                                        name="firstName"
+                                        value={editUserData.firstName}
+                                        onChange={handleEditUserInputChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="editLastName">Last Name *</label>
+                                    <input
+                                        type="text"
+                                        id="editLastName"
+                                        name="lastName"
+                                        value={editUserData.lastName}
+                                        onChange={handleEditUserInputChange}
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label htmlFor="editEmail">Email *</label>
+                                    <input
+                                        type="email"
+                                        id="editEmail"
+                                        name="email"
+                                        value={editUserData.email}
+                                        onChange={handleEditUserInputChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="editPhone">Phone</label>
+                                    <input
+                                        type="tel"
+                                        id="editPhone"
+                                        name="phone"
+                                        value={editUserData.phone}
+                                        onChange={handleEditUserInputChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label htmlFor="editPreferredName">Preferred Name</label>
+                                    <input
+                                        type="text"
+                                        id="editPreferredName"
+                                        name="preferredName"
+                                        value={editUserData.preferredName}
+                                        onChange={handleEditUserInputChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="editPronoun">Pronoun</label>
+                                    <select
+                                        id="editPronoun"
+                                        name="pronoun"
+                                        value={editUserData.pronoun}
+                                        onChange={handleEditUserInputChange}
+                                    >
+                                        <option value="">Select pronoun</option>
+                                        <option value="he/him">he/him</option>
+                                        <option value="she/her">she/her</option>
+                                        <option value="they/them">they/them</option>
+                                        <option value="other">other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label htmlFor="editCity">City</label>
+                                    <input
+                                        type="text"
+                                        id="editCity"
+                                        name="city"
+                                        value={editUserData.city}
+                                        onChange={handleEditUserInputChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="editZipcode">Zip Code</label>
+                                    <input
+                                        type="text"
+                                        id="editZipcode"
+                                        name="zipcode"
+                                        value={editUserData.zipcode}
+                                        onChange={handleEditUserInputChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-actions">
+                                <button type="button" onClick={() => setShowEditForm(false)} className="cancel-btn">
+                                    Cancel
+                                </button>
+                                <button type="submit" className="submit-btn">
+                                    Update User
                                 </button>
                             </div>
                         </form>

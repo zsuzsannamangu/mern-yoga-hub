@@ -227,6 +227,43 @@ router.post('/users', authMiddleware, adminMiddleware, async (req, res) => {
   }
 });
 
+// PUT update a specific user by ID (Admin only)
+router.put('/users/:id', authMiddleware, adminMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const { firstName, lastName, email, phone, preferredName, pronoun, city, zipcode } = req.body;
+
+  try {
+    // Validate required fields
+    if (!firstName || !lastName || !email) {
+      return res.status(400).json({ message: 'First name, last name, and email are required.' });
+    }
+
+    // Check if email is already taken by another user
+    const existingUser = await User.findOne({ email, _id: { $ne: id } });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email is already taken by another user.' });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { firstName, lastName, email, phone, preferredName, pronoun, city, zipcode },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    res.status(200).json({ 
+      message: 'User updated successfully.', 
+      user: updatedUser 
+    });
+  } catch (error) {
+    console.error('Error updating user:', error);
+    res.status(500).json({ message: 'Server error occurred while updating user.' });
+  }
+});
+
 // DELETE a specific user by ID (Admin only)
 router.delete('/users/:id', authMiddleware, adminMiddleware, async (req, res) => {
   const { id } = req.params;
