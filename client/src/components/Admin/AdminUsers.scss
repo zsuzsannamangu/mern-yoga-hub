@@ -605,3 +605,23 @@
         }
     }
 }
+
+// Meeting link and location styles
+.meeting-link {
+    color: $primary-button-color;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: $primary-button-hover-color;
+        text-decoration: underline;
+    }
+}
+
+.location-info {
+    color: $text-color;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

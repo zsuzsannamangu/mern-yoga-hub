@@ -83,14 +83,35 @@ function UserBookings() {
                             </div>
                         </div>
                         <div className="booking-footer">
-                            <a
-                                href={booking.location || booking.link || '#'}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={booking.isPast ? 'disabled-link' : ''}
-                            >
-                                <FaLocationArrow className="icon" /> {booking.location || booking.link || 'Location TBD'}
-                            </a>
+                            {booking.location ? (
+                                booking.location.startsWith('http') ? (
+                                    <a
+                                        href={booking.location}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={booking.isPast ? 'disabled-link' : 'meeting-link'}
+                                    >
+                                        <FaLocationArrow className="icon" /> Join Meeting
+                                    </a>
+                                ) : (
+                                    <div className="location-info">
+                                        <FaLocationArrow className="icon" /> {booking.location}
+                                    </div>
+                                )
+                            ) : booking.link ? (
+                                <a
+                                    href={booking.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={booking.isPast ? 'disabled-link' : 'meeting-link'}
+                                >
+                                    <FaLocationArrow className="icon" /> Join Meeting
+                                </a>
+                            ) : (
+                                <div className="location-info">
+                                    <FaLocationArrow className="icon" /> Location TBD
+                                </div>
+                            )}
                             <a href="/contact">
                                 <FaEnvelope className="icon" /> Need to cancel? Email me!
                             </a>

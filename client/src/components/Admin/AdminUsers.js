@@ -399,7 +399,24 @@ const AdminUsers = () => {
                                                                     <span>{new Date(appointment.date).toLocaleDateString()}</span>
                                                                     <span>{formatTimeWithZone(appointment.date, appointment.time)}</span>
                                                                     <span>{appointment.length}</span>
-                                                                    <span>{appointment.location || 'TBD'}</span>
+                                                                    <span>
+                                                                        {appointment.location ? (
+                                                                            appointment.location.startsWith('http') ? (
+                                                                                <a 
+                                                                                    href={appointment.location} 
+                                                                                    target="_blank" 
+                                                                                    rel="noopener noreferrer"
+                                                                                    className="meeting-link"
+                                                                                >
+                                                                                    Join Meeting
+                                                                                </a>
+                                                                            ) : (
+                                                                                appointment.location
+                                                                            )
+                                                                        ) : (
+                                                                            'TBD'
+                                                                        )}
+                                                                    </span>
                                                                     <span className={`status ${appointment.status}`}>
                                                                         {appointment.status}
                                                                     </span>
