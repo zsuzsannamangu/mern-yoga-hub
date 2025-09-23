@@ -359,15 +359,21 @@ router.post('/appointments', authMiddleware, adminMiddleware, async (req, res) =
     const formattedTime = formatTimeWithZone(date, time);
 
     // Prepare location/link information for email
-    let locationInfo = '';
+    let locationInfoText = '';
+    let locationInfoHtml = '';
+    
     if (location && link) {
-      locationInfo = `Location: ${location}\nMeeting Link: ${link}`;
+      locationInfoText = `Location: ${location}\nJoin Meeting: ${link}`;
+      locationInfoHtml = `Location: ${location}<br><a href="${link}" style="color: #007BFF; text-decoration: none; font-weight: bold;">Join Meeting</a>`;
     } else if (location) {
-      locationInfo = `Location: ${location}`;
+      locationInfoText = `Location: ${location}`;
+      locationInfoHtml = `Location: ${location}`;
     } else if (link) {
-      locationInfo = `Meeting Link: ${link}`;
+      locationInfoText = `Join Meeting: ${link}`;
+      locationInfoHtml = `<a href="${link}" style="color: #007BFF; text-decoration: none; font-weight: bold;">Join Meeting</a>`;
     } else {
-      locationInfo = 'Location: TBD';
+      locationInfoText = 'Location: TBD';
+      locationInfoHtml = 'Location: TBD';
     }
 
     // Send appointment confirmation email
@@ -375,12 +381,12 @@ router.post('/appointments', authMiddleware, adminMiddleware, async (req, res) =
       to: user.email,
       from: process.env.EMAIL_USER,
       subject: 'New Appointment Scheduled with Zsuzsanna',
-      text: `Dear ${user.firstName}, \n\nYour "${title}" session with Zsuzsanna Mangu at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedTime} (${length}) has been scheduled.\n\n${locationInfo}\n\nPlease log in to your account or email me to make changes.\n\nWarm regards,\nZsuzsanna`,
+      text: `Dear ${user.firstName}, \n\nYour "${title}" session with Zsuzsanna Mangu at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedTime} (${length}) has been scheduled.\n\n${locationInfoText}\n\nPlease log in to your account or email me to make changes.\n\nWarm regards,\nZsuzsanna`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <p>Dear ${user.firstName},</p>
           <p>Your "${title}" session with Zsuzsanna Mangu at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedTime} (${length}) has been scheduled.</p>
-          <p><strong>${locationInfo.replace(/\n/g, '<br>')}</strong></p>
+          <p><strong>${locationInfoHtml}</strong></p>
           <p>Please log in to your account or email me to make changes.</p>
           <p>Warm regards,<br>Zsuzsanna</p>
         </div>
