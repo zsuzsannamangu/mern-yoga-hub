@@ -325,19 +325,13 @@ router.post('/appointments', authMiddleware, adminMiddleware, async (req, res) =
       to: user.email,
       from: process.env.EMAIL_USER,
       subject: 'New Appointment Scheduled with Zsuzsanna',
-      text: `Dear ${user.firstName}, \n\nYour appointment with Zsuzsanna Mangu has been scheduled:\n\nTitle: ${title}\nDate: ${new Date(date).toLocaleDateString()}\nTime: ${formattedTime} (${length} min.)\nLocation/Link: ${location || 'TBD'}\n\nPlease log in to your account or email me to make changes.\n\nWarm regards,\nZsuzsanna`,
+      text: `Dear ${user.firstName}, \n\nYour session with Zsuzsanna Mangu at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedTime} (${length}) has been scheduled.\n\nLocation / Link: ${location || 'TBD'}\n\nPlease log in to your account or email me to make changes.\n\nWarm regards,\nZsuzsanna`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <p>Dear ${user.firstName},</p>
-          <p>Your appointment has been scheduled:</p>
-          <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0;">
-            <p><strong>Title:</strong> ${title}</p>
-            <p><strong>Date:</strong> ${new Date(date).toLocaleDateString()}</p>
-            <p><strong>Time:</strong> ${formattedTime}</p>
-            <p><strong>Length:</strong> ${length}</p>
-            <p><strong>Location/Link:</strong> ${location || 'TBD'}</p>
-          </div>
-          <p>Please log in to your account to view more details.</p>
+          <p>Your session with Zsuzsanna Mangu at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedTime} (${length}) has been scheduled.</p>
+          <p><strong>Location / Link:</strong> ${location || 'TBD'}</p>
+          <p>Please log in to your account or email me to make changes.</p>
           <p>Warm regards,<br>Zsuzsanna</p>
         </div>
       `,
