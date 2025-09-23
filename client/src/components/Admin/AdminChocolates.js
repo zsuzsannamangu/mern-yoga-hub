@@ -117,6 +117,7 @@ const AdminChocolates = () => {
             </div>
           </div>
         ))}
+      </div>
             </div>
         </AdminLayout>
     );

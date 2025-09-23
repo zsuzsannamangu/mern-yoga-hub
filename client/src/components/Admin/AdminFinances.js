@@ -402,10 +402,11 @@ const AdminFinances = () => {
 
     if (loading) {
         return (
-            <div className="admin-finances">
-                <AdminNavbar />
-                <div className="loading">Loading class data...</div>
-            </div>
+            <AdminLayout>
+                <div className="admin-finances">
+                    <div className="loading">Loading class data...</div>
+                </div>
+            </AdminLayout>
         );
     }
 
