@@ -50,10 +50,6 @@
             white-space: nowrap;
             opacity: 0;
             transition: opacity 0.3s ease;
-
-            .expanded & {
-                opacity: 1;
-            }
         }
     }
 
@@ -103,13 +99,17 @@
                         white-space: nowrap;
                         opacity: 0;
                         transition: opacity 0.3s ease;
-
-                        .expanded & {
-                            opacity: 1;
-                        }
                     }
                 }
             }
+        }
+    }
+
+    &.expanded {
+        .sidebar-header .admin-title,
+        .sidebar-nav ul li .nav-link .nav-text,
+        .sidebar-footer .logout-btn .nav-text {
+            opacity: 1;
         }
     }
 
@@ -149,10 +149,6 @@
                 white-space: nowrap;
                 opacity: 0;
                 transition: opacity 0.3s ease;
-
-                .expanded & {
-                    opacity: 1;
-                }
             }
         }
     }
