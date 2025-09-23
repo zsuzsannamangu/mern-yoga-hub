@@ -5,7 +5,7 @@ import '../../App.scss';
 import AdminNavbar from './AdminNavbar';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
-import { FaTrash } from 'react-icons/fa'; // Trash icon for delete button
+import { FaTrash, FaPlus, FaEdit, FaTimes } from 'react-icons/fa'; // Icons for buttons
 
 const AdminUsers = () => {
     const [users, setUsers] = useState([]); // State to store users
@@ -20,6 +20,18 @@ const AdminUsers = () => {
         pronoun: '',
         city: '',
         zipcode: ''
+    });
+    // Appointment states
+    const [showAppointmentForm, setShowAppointmentForm] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState(null);
+    const [appointments, setAppointments] = useState({}); // userId -> appointments array
+    const [expandedUsers, setExpandedUsers] = useState(new Set()); // Track which users are expanded
+    const [newAppointment, setNewAppointment] = useState({
+        title: '',
+        date: '',
+        time: '',
+        length: '',
+        location: ''
     });
 
     // Fetch all users from the database
@@ -139,6 +151,160 @@ const AdminUsers = () => {
         }
     };
 
+    // Fetch appointments for a specific user
+    const fetchAppointments = async (userId) => {
+        try {
+            const token = localStorage.getItem('adminToken');
+            const response = await adminAxiosInstance.get(`/api/admin/users/${userId}/appointments`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            setAppointments(prev => ({
+                ...prev,
+                [userId]: response.data
+            }));
+        } catch (error) {
+            console.error('Error fetching appointments:', error);
+        }
+    };
+
+    // Handle appointment form input changes
+    const handleAppointmentInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewAppointment({ ...newAppointment, [name]: value });
+    };
+
+    // Handle appointment form submission
+    const handleAddAppointment = async (e) => {
+        e.preventDefault();
+        
+        if (!newAppointment.title || !newAppointment.date || !newAppointment.time || !newAppointment.length) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Missing Required Fields',
+                text: 'Please fill in title, date, time, and length.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('adminToken');
+            const response = await adminAxiosInstance.post('/api/admin/appointments', {
+                userId: selectedUserId,
+                ...newAppointment
+            }, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Appointment Created Successfully!',
+                text: 'The appointment has been created and a confirmation email has been sent.',
+                confirmButtonText: 'OK'
+            });
+
+            // Reset form and close modal
+            setNewAppointment({
+                title: '',
+                date: '',
+                time: '',
+                length: '',
+                location: ''
+            });
+            setShowAppointmentForm(false);
+            
+            // Refresh appointments for this user
+            if (selectedUserId) {
+                fetchAppointments(selectedUserId);
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to Create Appointment',
+                text: error.response?.data?.message || 'Please try again later.',
+                confirmButtonText: 'OK'
+            });
+        }
+    };
+
+    // Toggle user expansion
+    const toggleUserExpansion = (userId) => {
+        const newExpanded = new Set(expandedUsers);
+        if (newExpanded.has(userId)) {
+            newExpanded.delete(userId);
+        } else {
+            newExpanded.add(userId);
+            // Fetch appointments when expanding
+            fetchAppointments(userId);
+        }
+        setExpandedUsers(newExpanded);
+    };
+
+    // Handle reschedule appointment
+    const handleRescheduleAppointment = async (appointmentId) => {
+        // For now, just show a placeholder - we'll implement this next
+        Swal.fire({
+            icon: 'info',
+            title: 'Reschedule Function',
+            text: 'Reschedule functionality will be implemented next.',
+            confirmButtonText: 'OK'
+        });
+    };
+
+    // Handle cancel appointment
+    const handleCancelAppointment = async (appointmentId) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This will cancel the appointment.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ff6b6b',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, cancel it!',
+            cancelButtonText: 'Cancel'
+        }).then(async (result) => {
+            if (!result.isConfirmed) return;
+
+            try {
+                const token = localStorage.getItem('adminToken');
+                await adminAxiosInstance.put(`/api/admin/appointments/${appointmentId}/cancel`, {}, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Appointment Cancelled!',
+                    text: 'The appointment has been cancelled successfully.',
+                    confirmButtonText: 'OK'
+                });
+
+                // Refresh appointments
+                if (selectedUserId) {
+                    fetchAppointments(selectedUserId);
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to Cancel Appointment',
+                    text: error.response?.data?.message || 'Please try again later.',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    };
+
+    // Format time with timezone
+    const formatTimeWithZone = (dateStr, timeStr) => {
+        const [hour, minute] = timeStr.split(':');
+        const date = new Date(`${dateStr}T${timeStr}`);
+        return date.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+            timeZoneName: 'short'
+        });
+    };
+
     // Fetch users when the component mounts
     useEffect(() => {
         fetchUsers();
@@ -172,33 +338,96 @@ const AdminUsers = () => {
                             <th>Location</th>
                             <th>Zip</th>
                             <th>User Since</th>
+                            <th>Appointments</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {users.map((user, index) => (
-                            <tr key={user._id}>
-                                <td>{index + 1}</td> {/* Display row number */}
-                                <td>{user.firstName}</td>
-                                <td>{user.lastName}</td>
-                                <td>{user.preferredName}</td>
-                                <td>{user.pronoun}</td>
-                                <td>{user.email}</td>
-                                <td>{user.phone}</td>
-                                <td>{user.city}</td>
-                                <td>{user.zipcode}</td>
-                                <td>{new Date(user.createdAt).toLocaleString('en-US', {
-                                    timeZone: 'America/Los_Angeles',
-                                    dateStyle: 'medium',
-                                    timeStyle: 'short',
-                                })}</td>
-                                <td>
-                                    <button className="delete-button" onClick={() => deleteUser(user._id)}>
-                                        <FaTrash />
-                                    </button>
-                                </td>
-
-                            </tr>
+                            <React.Fragment key={user._id}>
+                                <tr className="user-row" onClick={() => toggleUserExpansion(user._id)}>
+                                    <td>{index + 1}</td>
+                                    <td>{user.firstName}</td>
+                                    <td>{user.lastName}</td>
+                                    <td>{user.preferredName}</td>
+                                    <td>{user.pronoun}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.phone}</td>
+                                    <td>{user.city}</td>
+                                    <td>{user.zipcode}</td>
+                                    <td>{new Date(user.createdAt).toLocaleString('en-US', {
+                                        timeZone: 'America/Los_Angeles',
+                                        dateStyle: 'medium',
+                                        timeStyle: 'short',
+                                    })}</td>
+                                    <td>
+                                        <button 
+                                            className="add-appointment-btn" 
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setSelectedUserId(user._id);
+                                                setShowAppointmentForm(true);
+                                            }}
+                                            title="Add Appointment"
+                                        >
+                                            <FaPlus />
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button className="delete-button" onClick={(e) => {
+                                            e.stopPropagation();
+                                            deleteUser(user._id);
+                                        }}>
+                                            <FaTrash />
+                                        </button>
+                                    </td>
+                                </tr>
+                                {expandedUsers.has(user._id) && (
+                                    <tr className="appointments-row">
+                                        <td colSpan="12">
+                                            <div className="appointments-container">
+                                                <h4>Appointments for {user.firstName} {user.lastName}</h4>
+                                                {appointments[user._id] && appointments[user._id].length > 0 ? (
+                                                    <div className="appointments-list">
+                                                        {appointments[user._id].map((appointment) => (
+                                                            <div key={appointment._id} className="appointment-item">
+                                                                <div className="appointment-details">
+                                                                    <strong>{appointment.title}</strong>
+                                                                    <span>{new Date(appointment.date).toLocaleDateString()}</span>
+                                                                    <span>{formatTimeWithZone(appointment.date, appointment.time)}</span>
+                                                                    <span>{appointment.length}</span>
+                                                                    <span>{appointment.location || 'TBD'}</span>
+                                                                    <span className={`status ${appointment.status}`}>
+                                                                        {appointment.status}
+                                                                    </span>
+                                                                </div>
+                                                                <div className="appointment-actions">
+                                                                    <button 
+                                                                        className="reschedule-btn"
+                                                                        onClick={() => handleRescheduleAppointment(appointment._id)}
+                                                                        title="Reschedule"
+                                                                    >
+                                                                        <FaEdit />
+                                                                    </button>
+                                                                    <button 
+                                                                        className="cancel-btn"
+                                                                        onClick={() => handleCancelAppointment(appointment._id)}
+                                                                        title="Cancel"
+                                                                    >
+                                                                        <FaTimes />
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                ) : (
+                                                    <p>No appointments scheduled.</p>
+                                                )}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )}
+                            </React.Fragment>
                         ))}
                     </tbody>
                 </table>
@@ -317,6 +546,99 @@ const AdminUsers = () => {
                                 </button>
                                 <button type="submit" className="submit-btn">
                                     Create Client
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Add Appointment Modal */}
+            {showAppointmentForm && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h3>Add New Appointment</h3>
+                            <button 
+                                className="close-btn" 
+                                onClick={() => setShowAppointmentForm(false)}
+                            >
+                                ×
+                            </button>
+                        </div>
+                        <form onSubmit={handleAddAppointment} className="add-appointment-form">
+                            <div className="form-group">
+                                <label htmlFor="title">Title *</label>
+                                <select
+                                    id="title"
+                                    name="title"
+                                    value={newAppointment.title}
+                                    onChange={handleAppointmentInputChange}
+                                    required
+                                >
+                                    <option value="">Select appointment type</option>
+                                    <option value="Yoga Therapy">Yoga Therapy</option>
+                                    <option value="Private Yoga Class">Private Yoga Class</option>
+                                </select>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label htmlFor="date">Date *</label>
+                                    <input
+                                        type="date"
+                                        id="date"
+                                        name="date"
+                                        value={newAppointment.date}
+                                        onChange={handleAppointmentInputChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="time">Time *</label>
+                                    <input
+                                        type="time"
+                                        id="time"
+                                        name="time"
+                                        value={newAppointment.time}
+                                        onChange={handleAppointmentInputChange}
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label htmlFor="length">Length *</label>
+                                    <select
+                                        id="length"
+                                        name="length"
+                                        value={newAppointment.length}
+                                        onChange={handleAppointmentInputChange}
+                                        required
+                                    >
+                                        <option value="">Select duration</option>
+                                        <option value="60 min">60 min</option>
+                                        <option value="75 min">75 min</option>
+                                        <option value="90 min">90 min</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="location">Location</label>
+                                    <input
+                                        type="text"
+                                        id="location"
+                                        name="location"
+                                        value={newAppointment.location}
+                                        onChange={handleAppointmentInputChange}
+                                        placeholder="Physical address or meeting link"
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-actions">
+                                <button type="button" onClick={() => setShowAppointmentForm(false)} className="cancel-btn">
+                                    Cancel
+                                </button>
+                                <button type="submit" className="submit-btn">
+                                    Create Appointment
                                 </button>
                             </div>
                         </form>

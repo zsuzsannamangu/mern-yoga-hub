@@ -10,6 +10,12 @@ const bookingSchema = new mongoose.Schema({
     email: { type: String }, // Add user email for booked slots
     sessionType: { type: String }, // Add session type
     message: { type: String }, // Message from the user
+    // New fields for admin-created appointments
+    title: { type: String }, // Yoga therapy or private yoga class
+    length: { type: String }, // 60 min, 75 min, etc.
+    location: { type: String }, // Location or meeting link
+    isAdminCreated: { type: Boolean, default: false }, // Flag for admin-created appointments
+    status: { type: String, enum: ['scheduled', 'rescheduled', 'cancelled'], default: 'scheduled' }
 });
 
 module.exports = mongoose.model('Booking', bookingSchema);

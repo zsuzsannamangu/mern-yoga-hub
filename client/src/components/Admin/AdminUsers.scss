@@ -336,3 +336,159 @@
         }
     }
 }
+
+// Appointment Styles
+.user-row {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: $content-background-color-hover;
+    }
+}
+
+.add-appointment-btn {
+    background-color: $primary-button-color;
+    color: $button-text-color;
+    border: none;
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: $primary-button-hover-color;
+    }
+}
+
+.appointments-row {
+    background-color: $content-background-color;
+
+    td {
+        padding: 0;
+        border: none;
+    }
+}
+
+.appointments-container {
+    padding: 20px;
+    background-color: $content-background-color;
+
+    h4 {
+        margin: 0 0 15px 0;
+        color: $text-color;
+        font-family: $font-main;
+    }
+}
+
+.appointments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.appointment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: $secondary-background-color;
+    border-radius: 5px;
+    border: 1px solid $border-color;
+}
+
+.appointment-details {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+
+    strong {
+        color: $text-color;
+        font-family: $font-main;
+    }
+
+    span {
+        color: $secondary-text-color;
+        font-size: 14px;
+    }
+
+    .status {
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+
+        &.scheduled {
+            background-color: $green-color;
+            color: white;
+        }
+
+        &.rescheduled {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        &.cancelled {
+            background-color: $delete-button;
+            color: white;
+        }
+    }
+}
+
+.appointment-actions {
+    display: flex;
+    gap: 8px;
+
+    .reschedule-btn {
+        background-color: #ffc107;
+        color: #000;
+        border: none;
+        padding: 6px 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #e0a800;
+        }
+    }
+
+    .cancel-btn {
+        background-color: $delete-button;
+        color: white;
+        border: none;
+        padding: 6px 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: $delete-button-hover;
+        }
+    }
+}
+
+.add-appointment-form {
+    .form-group {
+        select {
+            padding: 10px;
+            border: 1px solid $border-color;
+            border-radius: 4px;
+            font-family: $font-main;
+            font-size: 14px;
+            background-color: $content-background-color;
+            color: $text-color;
+
+            &:focus {
+                outline: none;
+                border-color: $primary-button-color;
+                box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+            }
+        }
+    }
+}

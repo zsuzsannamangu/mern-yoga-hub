@@ -9,7 +9,9 @@ const dotenv = require('dotenv');
 const User = require('../models/User');
 const fetch = require('node-fetch'); // For reCAPTCHA validation
 const Subscriber = require('../models/Subscriber');
+const Booking = require('../models/Booking');
 const sgMail = require('@sendgrid/mail');
+const { DateTime } = require('luxon');
 dotenv.config();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -186,23 +188,23 @@ router.post('/users', authMiddleware, adminMiddleware, async (req, res) => {
     const emailContent = {
       to: email,
       from: process.env.EMAIL_USER,
-      subject: 'Welcome to Yoga Savor - Your Account is Ready!',
-      text: `Dear ${firstName}, \n\nYour account has been created for Yoga Savor. You can now log in to view upcoming sessions and book appointments.\n\nTo log in, visit: ${loginUrl}\n\nSimply enter your email address and request a login link.\n\nWarm regards,\nZsuzsanna`,
+      subject: 'Welcome to Yoga with Zsuzsanna - Your Account is Ready!',
+      text: `Dear ${firstName}, \n\nYour account has been created to work with Zsuzsanna Mangu. You can now log in to view upcoming sessions and book appointments.\n\nTo log in, visit: ${loginUrl}\n\nSimply enter your email address and request a login link.\n\nWarm regards,\nZsuzsanna`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <p>Dear ${firstName},</p>
-          <p>Your account has been created for Yoga Savor! You can now log in to view upcoming sessions and book appointments.</p>
+          <p>Your account has been created to work with Zsuzsanna Mangu! You can now log in to view upcoming sessions and book appointments.</p>
           <p>To log in, click the button below:</p>
           <p>
             <a href="${loginUrl}" style="
               display: inline-block;
               color: #ffffff;
               background-color: #007BFF;
-              padding: 12px 24px;
+              padding: 8px 16px;
               text-decoration: none;
-              border-radius: 5px;
-              font-size: 16px;
-              font-weight: bold;
+              border-radius: 4px;
+              font-size: 14px;
+              font-weight: normal;
             ">
               Log In to Your Account
             </a>
@@ -263,6 +265,154 @@ router.delete('/subscribers/:id', authMiddleware, adminMiddleware, async (req, r
   } catch (error) {
     console.error('Error deleting subscriber:', error);
     res.status(500).json({ message: 'Failed to delete subscriber.' });
+  }
+});
+
+// POST create appointment for client (Admin only)
+router.post('/appointments', authMiddleware, adminMiddleware, async (req, res) => {
+  const { userId, title, date, time, length, location } = req.body;
+
+  try {
+    // Validate required fields
+    if (!userId || !title || !date || !time || !length) {
+      return res.status(400).json({ message: 'User ID, title, date, time, and length are required.' });
+    }
+
+    // Get user details
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    // Create new appointment
+    const newAppointment = new Booking({
+      userId,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      date,
+      time,
+      title,
+      length,
+      location: location || '',
+      isBooked: true,
+      isAdminCreated: true,
+      status: 'scheduled'
+    });
+
+    await newAppointment.save();
+
+    // Format time with timezone
+    const formatTimeWithZone = (dateStr, timeStr) => {
+      const [hour, minute] = timeStr.split(':');
+      const dateTime = DateTime.fromObject(
+        {
+          year: Number(dateStr.split('-')[0]),
+          month: Number(dateStr.split('-')[1]),
+          day: Number(dateStr.split('-')[2]),
+          hour: Number(hour),
+          minute: Number(minute),
+        },
+        { zone: 'America/Los_Angeles' }
+      );
+      return dateTime.toLocaleString(DateTime.TIME_SIMPLE) + ' ' + dateTime.offsetNameShort;
+    };
+
+    const formattedTime = formatTimeWithZone(date, time);
+
+    // Send appointment confirmation email
+    const emailContent = {
+      to: user.email,
+      from: process.env.EMAIL_USER,
+      subject: 'New Appointment Scheduled - Yoga Savor',
+      text: `Dear ${user.firstName}, \n\nYour appointment has been scheduled:\n\nTitle: ${title}\nDate: ${new Date(date).toLocaleDateString()}\nTime: ${formattedTime}\nLength: ${length}\nLocation: ${location || 'TBD'}\n\nPlease log in to your account to view more details.\n\nWarm regards,\nZsuzsanna`,
+      html: `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+          <p>Dear ${user.firstName},</p>
+          <p>Your appointment has been scheduled:</p>
+          <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0;">
+            <p><strong>Title:</strong> ${title}</p>
+            <p><strong>Date:</strong> ${new Date(date).toLocaleDateString()}</p>
+            <p><strong>Time:</strong> ${formattedTime}</p>
+            <p><strong>Length:</strong> ${length}</p>
+            <p><strong>Location:</strong> ${location || 'TBD'}</p>
+          </div>
+          <p>Please log in to your account to view more details.</p>
+          <p>Warm regards,<br>Zsuzsanna</p>
+        </div>
+      `,
+    };
+
+    await sgMail.send(emailContent);
+
+    res.status(201).json({ 
+      message: 'Appointment created successfully and confirmation email sent.', 
+      appointment: newAppointment 
+    });
+  } catch (error) {
+    console.error('Error creating appointment:', error);
+    res.status(500).json({ message: 'Server error occurred while creating appointment.' });
+  }
+});
+
+// GET appointments for a specific user (Admin only)
+router.get('/users/:userId/appointments', authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const appointments = await Booking.find({ 
+      userId, 
+      isAdminCreated: true 
+    }).sort({ date: 1, time: 1 });
+    
+    res.status(200).json(appointments);
+  } catch (error) {
+    console.error('Error fetching appointments:', error);
+    res.status(500).json({ message: 'Failed to fetch appointments.' });
+  }
+});
+
+// PUT reschedule appointment (Admin only)
+router.put('/appointments/:id/reschedule', authMiddleware, adminMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const { date, time, location } = req.body;
+
+  try {
+    const appointment = await Booking.findById(id);
+    if (!appointment) {
+      return res.status(404).json({ message: 'Appointment not found.' });
+    }
+
+    appointment.date = date || appointment.date;
+    appointment.time = time || appointment.time;
+    appointment.location = location !== undefined ? location : appointment.location;
+    appointment.status = 'rescheduled';
+
+    await appointment.save();
+
+    res.status(200).json({ message: 'Appointment rescheduled successfully.', appointment });
+  } catch (error) {
+    console.error('Error rescheduling appointment:', error);
+    res.status(500).json({ message: 'Failed to reschedule appointment.' });
+  }
+});
+
+// PUT cancel appointment (Admin only)
+router.put('/appointments/:id/cancel', authMiddleware, adminMiddleware, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const appointment = await Booking.findById(id);
+    if (!appointment) {
+      return res.status(404).json({ message: 'Appointment not found.' });
+    }
+
+    appointment.status = 'cancelled';
+    await appointment.save();
+
+    res.status(200).json({ message: 'Appointment cancelled successfully.', appointment });
+  } catch (error) {
+    console.error('Error cancelling appointment:', error);
+    res.status(500).json({ message: 'Failed to cancel appointment.' });
   }
 });
 
