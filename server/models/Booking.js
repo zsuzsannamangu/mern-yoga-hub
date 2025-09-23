@@ -13,7 +13,8 @@ const bookingSchema = new mongoose.Schema({
     // New fields for admin-created appointments
     title: { type: String }, // Yoga therapy or private yoga class
     length: { type: String }, // 60 min, 75 min, etc.
-    location: { type: String }, // Location or meeting link
+    location: { type: String }, // Physical address
+    link: { type: String }, // Online meeting link
     isAdminCreated: { type: Boolean, default: false }, // Flag for admin-created appointments
     status: { type: String, enum: ['scheduled', 'rescheduled', 'cancelled'], default: 'scheduled' }
 });

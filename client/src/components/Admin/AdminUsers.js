@@ -31,7 +31,8 @@ const AdminUsers = () => {
         date: '',
         time: '',
         length: '',
-        location: ''
+        location: '',
+        link: ''
     });
     // Edit user states
     const [showEditForm, setShowEditForm] = useState(false);
@@ -222,7 +223,8 @@ const AdminUsers = () => {
                 date: '',
                 time: '',
                 length: '',
-                location: ''
+                location: '',
+                link: ''
             });
             setShowAppointmentForm(false);
             
@@ -496,19 +498,17 @@ const AdminUsers = () => {
                                                                     <span>{formatTimeWithZone(appointment.date, appointment.time)}</span>
                                                                     <span>{appointment.length}</span>
                                                                     <span>
-                                                                        {appointment.location ? (
-                                                                            appointment.location.startsWith('http') ? (
-                                                                                <a 
-                                                                                    href={appointment.location} 
-                                                                                    target="_blank" 
-                                                                                    rel="noopener noreferrer"
-                                                                                    className="meeting-link"
-                                                                                >
-                                                                                    Join Meeting
-                                                                                </a>
-                                                                            ) : (
-                                                                                appointment.location
-                                                                            )
+                                                                        {appointment.link ? (
+                                                                            <a 
+                                                                                href={appointment.link} 
+                                                                                target="_blank" 
+                                                                                rel="noopener noreferrer"
+                                                                                className="meeting-link"
+                                                                            >
+                                                                                Join Meeting
+                                                                            </a>
+                                                                        ) : appointment.location ? (
+                                                                            appointment.location
                                                                         ) : (
                                                                             'TBD'
                                                                         )}
@@ -721,33 +721,42 @@ const AdminUsers = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="form-row">
-                                <div className="form-group">
-                                    <label htmlFor="length">Length *</label>
-                                    <select
-                                        id="length"
-                                        name="length"
-                                        value={newAppointment.length}
-                                        onChange={handleAppointmentInputChange}
-                                        required
-                                    >
-                                        <option value="">Select duration</option>
-                                        <option value="60 min">60 min</option>
-                                        <option value="75 min">75 min</option>
-                                        <option value="90 min">90 min</option>
-                                    </select>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="location">Location</label>
-                                    <input
-                                        type="text"
-                                        id="location"
-                                        name="location"
-                                        value={newAppointment.location}
-                                        onChange={handleAppointmentInputChange}
-                                        placeholder="Physical address or meeting link"
-                                    />
-                                </div>
+                            <div className="form-group">
+                                <label htmlFor="length">Length *</label>
+                                <select
+                                    id="length"
+                                    name="length"
+                                    value={newAppointment.length}
+                                    onChange={handleAppointmentInputChange}
+                                    required
+                                >
+                                    <option value="">Select duration</option>
+                                    <option value="60 min">60 min</option>
+                                    <option value="75 min">75 min</option>
+                                    <option value="90 min">90 min</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="location">Location</label>
+                                <input
+                                    type="text"
+                                    id="location"
+                                    name="location"
+                                    value={newAppointment.location}
+                                    onChange={handleAppointmentInputChange}
+                                    placeholder="Physical address (e.g., 123 Main St, San Francisco)"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="link">Meeting Link</label>
+                                <input
+                                    type="url"
+                                    id="link"
+                                    name="link"
+                                    value={newAppointment.link}
+                                    onChange={handleAppointmentInputChange}
+                                    placeholder="Online meeting link (e.g., https://zoom.us/j/123456789)"
+                                />
                             </div>
                             <div className="form-actions">
                                 <button type="button" onClick={() => setShowAppointmentForm(false)} className="cancel-btn">

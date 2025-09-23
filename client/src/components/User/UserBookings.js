@@ -83,22 +83,7 @@ function UserBookings() {
                             </div>
                         </div>
                         <div className="booking-footer">
-                            {booking.location ? (
-                                booking.location.startsWith('http') ? (
-                                    <a
-                                        href={booking.location}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className={booking.isPast ? 'disabled-link' : 'meeting-link'}
-                                    >
-                                        <FaLocationArrow className="icon" /> Join Meeting
-                                    </a>
-                                ) : (
-                                    <div className="location-info">
-                                        <FaLocationArrow className="icon" /> {booking.location}
-                                    </div>
-                                )
-                            ) : booking.link ? (
+                            {booking.link ? (
                                 <a
                                     href={booking.link}
                                     target="_blank"
@@ -107,6 +92,10 @@ function UserBookings() {
                                 >
                                     <FaLocationArrow className="icon" /> Join Meeting
                                 </a>
+                            ) : booking.location ? (
+                                <div className="location-info">
+                                    <FaLocationArrow className="icon" /> {booking.location}
+                                </div>
                             ) : (
                                 <div className="location-info">
                                     <FaLocationArrow className="icon" /> Location TBD
