@@ -1,6 +1,7 @@
 import React from 'react';
 import { useUserAuth } from './UserAuthContext';
 import './UserForms.scss';
+import '../../App.scss';
 
 function UserForms() {
     const { user } = useUserAuth();
@@ -28,8 +29,7 @@ function UserForms() {
             <h3 className="section-title">Forms</h3>
             <div className="title-line"></div>
             <p className="forms-description">
-                Please complete the following forms before your first session. 
-                All forms are required for your safety and to provide the best possible care.
+                Please complete the following forms before your first session.
             </p>
             
             <div className="forms-table-container">
