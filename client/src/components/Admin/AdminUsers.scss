@@ -456,6 +456,12 @@
             &.cancelled {
                 opacity: 0.7;
                 background-color: #f8f9fa;
+                
+                .appointment-date,
+                .appointment-time,
+                .appointment-length {
+                    color: #6c757d;
+                }
             }
         }
 
@@ -474,17 +480,17 @@
 }
 
 .appointment-date {
-    color: #6c757d;
+    color: #495057;
     font-size: 13px;
 }
 
 .appointment-time {
-    color: #6c757d;
+    color: #495057;
     font-size: 13px;
 }
 
 .appointment-length {
-    color: #6c757d;
+    color: #495057;
     font-size: 13px;
 }
 
@@ -522,7 +528,7 @@
 
 .appointment-actions {
     display: flex;
-    gap: 8px;
+    gap: 12px;
 
     .reschedule-btn {
         background-color: #ffc107;
