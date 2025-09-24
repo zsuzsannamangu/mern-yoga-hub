@@ -418,6 +418,11 @@
     display: table;
     table-layout: fixed;
 
+    // Force all table cells to have dark text unless cancelled
+    td {
+        color: #212529 !important;
+    }
+
     thead {
         display: table-header-group;
         background-color: #f8f9fa;
@@ -470,6 +475,7 @@
             padding: 12px 8px;
             font-size: 14px;
             vertical-align: middle;
+            color: #212529 !important;
         }
     }
 }
@@ -480,19 +486,19 @@
 }
 
 .appointment-date {
-    color: #212529;
+    color: #212529 !important;
     font-size: 13px;
     font-weight: 500;
 }
 
 .appointment-time {
-    color: #212529;
+    color: #212529 !important;
     font-size: 13px;
     font-weight: 500;
 }
 
 .appointment-length {
-    color: #212529;
+    color: #212529 !important;
     font-size: 13px;
     font-weight: 500;
 }
