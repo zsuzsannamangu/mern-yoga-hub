@@ -415,8 +415,11 @@
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: table;
+    table-layout: fixed;
 
     thead {
+        display: table-header-group;
         background-color: #f8f9fa;
         
         th {
@@ -426,6 +429,7 @@
             font-size: 14px;
             color: #495057;
             border-bottom: 2px solid #dee2e6;
+            display: table-cell;
             
             &:nth-child(1) { width: 20%; } // Title
             &:nth-child(2) { width: 10%; } // Date
@@ -438,7 +442,10 @@
     }
 
     tbody {
+        display: table-row-group;
+        
         tr {
+            display: table-row;
             border-bottom: 1px solid #e9ecef;
             transition: background-color 0.2s ease;
 
@@ -453,6 +460,7 @@
         }
 
         td {
+            display: table-cell;
             padding: 12px 8px;
             font-size: 14px;
             vertical-align: middle;
