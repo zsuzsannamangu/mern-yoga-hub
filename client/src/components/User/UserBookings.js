@@ -5,37 +5,25 @@ import { FaClock, FaCalendarAlt, FaLink, FaLocationArrow, FaEnvelope } from 'rea
 import './UserBookings.scss';
 
 function UserBookings() {
-    console.log('UserBookings component is rendering');
     const { user } = useUserAuth();
     const [bookings, setBookings] = useState([]);
 
     useEffect(() => {
-        console.log('UserBookings useEffect running, user:', user);
-        if (!user) {
-            console.log('No user found, returning early');
-            return;
-        }
+        if (!user) return;
         
         const fetchBookings = async () => {
-            console.log('Fetching bookings for user ID:', user.id);
             try {
                 const response = await axios.get(`${process.env.REACT_APP_API}/api/bookings`, {
                     params: { userId: user.id },
                 });
 
-                console.log('API Response:', response);
-                console.log('Raw booking data:', response.data.bookedSlots);
-
                 const now = new Date();
 
-                // Add the isPast flag to each booking
+                // Filter out past sessions and sort upcoming bookings
                 const sortedBookings = (response.data.bookedSlots || [])
-                    .map((slot) => {
+                    .filter((slot) => {
                         const slotDateTime = new Date(`${slot.date}T${slot.time}`);
-                        return {
-                            ...slot,
-                            isPast: slotDateTime < now,
-                        };
+                        return slotDateTime >= now; // Only show future/current sessions
                     })
                     .sort((a, b) => {
                         const dateA = new Date(`${a.date}T${a.time}`);
@@ -43,7 +31,6 @@ function UserBookings() {
                         return dateA - dateB;
                     });
                 
-                console.log('Processed booking data:', sortedBookings);
                 setBookings(sortedBookings);
             } catch (error) {
                 console.error('Error fetching bookings:', error);
@@ -79,7 +66,7 @@ function UserBookings() {
                 bookings.map((booking) => (
                     <div
                         key={booking._id}
-                        className={`booking-card ${booking.isPast ? 'past-booking' : ''}`}
+                        className="booking-card"
                     >
                         <div className="booking-details">
                             <div className="session-type">
@@ -100,7 +87,7 @@ function UserBookings() {
                                     href={booking.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className={booking.isPast ? 'disabled-link' : 'meeting-link'}
+                                    className="meeting-link"
                                 >
                                     <FaLocationArrow className="icon" /> Join Meeting
                                 </a>
