@@ -347,6 +347,11 @@ module.exports = (io) => {
                 userId: currentBooking.userId
             });
 
+            // Emit additional event to refresh user bookings
+            io.emit('bookingUpdated', {
+                userId: currentBooking.userId
+            });
+
             return res.status(200).json({
                 success: true,
                 message: 'Appointment rescheduled successfully',

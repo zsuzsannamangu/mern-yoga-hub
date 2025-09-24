@@ -79,13 +79,63 @@ function UserBookings() {
             );
         });
 
-        socket.on('slotRescheduled', ({ oldSlotId, newSlotId }) => {
-            // Remove the old slot and add the new slot
+        socket.on('slotRescheduled', ({ oldSlotId, newSlotId, userId: rescheduledUserId }) => {
+            // If this reschedule affects the current user, refresh their bookings
+            if (rescheduledUserId === user.id) {
+                fetchBookings();
+            }
+            
+            // Remove the old slot and add the new slot from available slots
             setAvailableSlots((prevSlots) => {
                 const filtered = prevSlots.filter((slot) => slot._id !== oldSlotId);
                 // Note: The new slot will be added when the reschedule is complete
                 return filtered;
             });
+        });
+
+        // Listen for any booking updates that might affect this user
+        socket.on('bookingUpdated', ({ userId: updatedUserId }) => {
+            if (updatedUserId === user.id) {
+                // Refresh bookings by calling the API directly
+                const refreshBookings = async () => {
+                    try {
+                        const response = await axios.get(`${process.env.REACT_APP_API}/api/bookings`, {
+                            params: { userId: user.id },
+                            headers: {
+                                'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+                            }
+                        });
+
+                        const now = new Date();
+                        const allBookings = response.data.bookedSlots || [];
+                        
+                        // Remove duplicates based on booking ID
+                        const uniqueBookings = allBookings.filter((booking, index, self) => 
+                            index === self.findIndex(b => b._id === booking._id)
+                        );
+                        
+                        const sortedBookings = uniqueBookings
+                            .filter((slot) => {
+                                const slotDateTime = new Date(`${slot.date}T${slot.time}`);
+                                const isFuture = slotDateTime >= now;
+                                const notCancelled = slot.status !== 'cancelled';
+                                const notRescheduled = slot.status !== 'rescheduled';
+                                return isFuture && notCancelled && notRescheduled;
+                            })
+                            .sort((a, b) => {
+                                const dateA = new Date(`${a.date}T${a.time}`);
+                                const dateB = new Date(`${b.date}T${b.time}`);
+                                return dateA - dateB;
+                            });
+                        
+                        setBookings(sortedBookings);
+                    } catch (error) {
+                        console.error('Error refreshing bookings:', error);
+                    }
+                };
+                
+                refreshBookings();
+            }
         });
 
         return () => {
@@ -223,18 +273,29 @@ function UserBookings() {
                     confirmButtonText: 'OK'
                 });
 
-                // Refresh bookings
-                const bookingsResponse = await axios.get(`${process.env.REACT_APP_API}/api/bookings`, {
+                // Refresh bookings with proper filtering
+                const refreshResponse = await axios.get(`${process.env.REACT_APP_API}/api/bookings`, {
                     params: { userId: user.id },
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+                    }
                 });
 
                 const now = new Date();
-                const sortedBookings = (bookingsResponse.data.bookedSlots || [])
+                const allBookings = refreshResponse.data.bookedSlots || [];
+                
+                // Remove duplicates based on booking ID
+                const uniqueBookings = allBookings.filter((booking, index, self) => 
+                    index === self.findIndex(b => b._id === booking._id)
+                );
+                
+                const sortedBookings = uniqueBookings
                     .filter((slot) => {
                         const slotDateTime = new Date(`${slot.date}T${slot.time}`);
                         const isFuture = slotDateTime >= now;
                         const notCancelled = slot.status !== 'cancelled';
-                        return isFuture && notCancelled;
+                        const notRescheduled = slot.status !== 'rescheduled';
+                        return isFuture && notCancelled && notRescheduled;
                     })
                     .sort((a, b) => {
                         const dateA = new Date(`${a.date}T${a.time}`);
