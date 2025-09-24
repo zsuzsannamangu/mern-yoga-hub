@@ -181,10 +181,21 @@ function UserBookings() {
         }
 
         try {
+            console.log('Rescheduling with data:', {
+                bookingId: reschedulingBooking._id,
+                newSlotId: selectedSlot._id,
+                newDate: selectedSlot.date,
+                newTime: selectedSlot.time
+            });
+
             const response = await axios.put(`${process.env.REACT_APP_API}/api/bookings/${reschedulingBooking._id}/reschedule`, {
                 newSlotId: selectedSlot._id,
                 newDate: selectedSlot.date,
                 newTime: selectedSlot.time
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
             });
 
             if (response.data.success) {
@@ -224,10 +235,11 @@ function UserBookings() {
             }
         } catch (error) {
             console.error('Error rescheduling appointment:', error);
+            console.error('Error response:', error.response?.data);
             Swal.fire({
                 icon: 'error',
                 title: 'Reschedule Failed',
-                text: error.response?.data?.message || 'Failed to reschedule appointment. Please try again.',
+                text: error.response?.data?.message || error.message || 'Failed to reschedule appointment. Please try again.',
                 confirmButtonText: 'OK'
             });
         }
@@ -352,24 +364,26 @@ function UserBookings() {
                                 <div className="time-selection">
                                     <h4>Available Times for {selectedDate.toLocaleDateString()}:</h4>
                                     <div className="time-slots">
-                                        {availableSlots.filter(
-                                            (slot) => slot.date === selectedDate?.toISOString().split('T')[0]
-                                        ).length > 0 ? (
-                                            availableSlots
-                                                .filter((slot) => slot.date === selectedDate?.toISOString().split('T')[0])
-                                                .sort((a, b) => a.time.localeCompare(b.time))
-                                                .map((slot) => (
-                                                    <button
-                                                        key={slot._id}
-                                                        className={`time-slot ${selectedSlot?._id === slot._id ? 'selected' : ''}`}
-                                                        onClick={() => setSelectedSlot(slot)}
-                                                    >
-                                                        {formatTime(slot.date, slot.time)}
-                                                    </button>
-                                                ))
-                                        ) : (
-                                            <p className="no-slots-message">No available slots this day.</p>
-                                        )}
+                                        {(() => {
+                                            const selectedDateStr = selectedDate.toISOString().split('T')[0];
+                                            const slotsForDate = availableSlots.filter(slot => slot.date === selectedDateStr);
+                                            
+                                            return slotsForDate.length > 0 ? (
+                                                slotsForDate
+                                                    .sort((a, b) => a.time.localeCompare(b.time))
+                                                    .map((slot) => (
+                                                        <button
+                                                            key={slot._id}
+                                                            className={`time-slot ${selectedSlot?._id === slot._id ? 'selected' : ''}`}
+                                                            onClick={() => setSelectedSlot(slot)}
+                                                        >
+                                                            {formatTime(slot.date, slot.time)}
+                                                        </button>
+                                                    ))
+                                            ) : (
+                                                <p className="no-slots-message">No available slots this day.</p>
+                                            );
+                                        })()}
                                     </div>
                                 </div>
                             )}
