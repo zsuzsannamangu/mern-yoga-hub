@@ -180,12 +180,27 @@ const AdminUsers = () => {
     const fetchAppointments = async (userId) => {
         try {
             const token = localStorage.getItem('adminToken');
-            const response = await adminAxiosInstance.get(`/api/admin/users/${userId}/appointments`, {
+            // Fetch ALL appointments for this user (both admin-created and user-created)
+            const response = await adminAxiosInstance.get(`/api/bookings?userId=${userId}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
+            
+            // Filter out past sessions and sort upcoming bookings (same logic as user page)
+            const now = new Date();
+            const sortedBookings = (response.data.bookedSlots || [])
+                .filter((slot) => {
+                    const slotDateTime = new Date(`${slot.date}T${slot.time}`);
+                    return slotDateTime >= now; // Only show future/current sessions
+                })
+                .sort((a, b) => {
+                    const dateA = new Date(`${a.date}T${a.time}`);
+                    const dateB = new Date(`${b.date}T${b.time}`);
+                    return dateA - dateB;
+                });
+            
             setAppointments(prev => ({
                 ...prev,
-                [userId]: response.data
+                [userId]: sortedBookings
             }));
         } catch (error) {
             console.error('Error fetching appointments:', error);
@@ -576,10 +591,10 @@ const AdminUsers = () => {
                                                         {appointments[user._id].map((appointment) => (
                                                             <div key={appointment._id} className={`appointment-item ${appointment.status === 'cancelled' ? 'cancelled' : ''}`}>
                                                                 <div className="appointment-details">
-                                                                    <strong>{appointment.title}</strong>
+                                                                    <strong>{appointment.title || appointment.sessionType || 'General Session'}</strong>
                                                                     <span>{formatDate(appointment.date)}</span>
                                                                     <span>{formatTimeWithZone(appointment.date, appointment.time)}</span>
-                                                                    <span>{appointment.length}</span>
+                                                                    <span>{appointment.length || appointment.duration || '60 mins'}</span>
                                                                     <span>
                                                                         {appointment.link ? (
                                                                             <a 
@@ -598,20 +613,27 @@ const AdminUsers = () => {
                                                                     </span>
                                                                 </div>
                                                                 <div className="appointment-actions">
-                                                                    <button 
-                                                                        className="reschedule-btn"
-                                                                        onClick={() => handleEditAppointment(appointment)}
-                                                                        title="Edit Appointment"
-                                                                    >
-                                                                        <FaEdit />
-                                                                    </button>
-                                                                    <button 
-                                                                        className="cancel-btn"
-                                                                        onClick={() => handleCancelAppointment(appointment._id)}
-                                                                        title="Cancel"
-                                                                    >
-                                                                        <FaTimes />
-                                                                    </button>
+                                                                    {appointment.isAdminCreated && (
+                                                                        <>
+                                                                            <button 
+                                                                                className="reschedule-btn"
+                                                                                onClick={() => handleEditAppointment(appointment)}
+                                                                                title="Edit Appointment"
+                                                                            >
+                                                                                <FaEdit />
+                                                                            </button>
+                                                                            <button 
+                                                                                className="cancel-btn"
+                                                                                onClick={() => handleCancelAppointment(appointment._id)}
+                                                                                title="Cancel"
+                                                                            >
+                                                                                <FaTimes />
+                                                                            </button>
+                                                                        </>
+                                                                    )}
+                                                                    {!appointment.isAdminCreated && (
+                                                                        <span className="user-created-label">User Booked</span>
+                                                                    )}
                                                                 </div>
                                                             </div>
                                                         ))}
