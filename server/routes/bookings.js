@@ -293,8 +293,8 @@ module.exports = (io) => {
 
             // Send reschedule confirmation email to user
             const userEmail = {
-                to: currentBooking.email,
-                from: process.env.SENDGRID_FROM_EMAIL,
+                to: currentBooking.email || 'mzsuzsanna10@gmail.com', // Fallback email
+                from: process.env.SENDGRID_FROM_EMAIL || 'mzsuzsanna10@gmail.com',
                 subject: 'Appointment Rescheduled - Yoga with Zsuzsanna',
                 text: `Dear ${currentBooking.firstName},\n\nYour appointment has been rescheduled to ${newDate} at ${formattedTime}.\n\nIf you have any questions, please don't hesitate to contact me.\n\nWarm regards,\nZsuzsanna`,
                 html: `
@@ -309,8 +309,8 @@ module.exports = (io) => {
 
             // Send reschedule notification email to admin
             const adminEmail = {
-                to: process.env.SENDGRID_FROM_EMAIL,
-                from: process.env.SENDGRID_FROM_EMAIL,
+                to: process.env.SENDGRID_FROM_EMAIL || 'mzsuzsanna10@gmail.com',
+                from: process.env.SENDGRID_FROM_EMAIL || 'mzsuzsanna10@gmail.com',
                 subject: 'Appointment Rescheduled - Yoga with Zsuzsanna',
                 text: `Appointment rescheduled:\n\nClient: ${currentBooking.firstName} ${currentBooking.lastName}\nEmail: ${currentBooking.email}\nSession Type: ${currentBooking.title || currentBooking.sessionType}\nNew Date: ${newDate}\nNew Time: ${formattedTime}\n\nPrevious Date: ${currentBooking.date}\nPrevious Time: ${currentBooking.time}`,
                 html: `
@@ -327,15 +327,27 @@ module.exports = (io) => {
                 `
             };
 
-            // Send emails
+            // Send emails with validation
             try {
-                await sgMail.send(userEmail);
+                // Validate user email before sending
+                if (currentBooking.email && currentBooking.email.includes('@')) {
+                    await sgMail.send(userEmail);
+                    console.log('User reschedule email sent successfully');
+                } else {
+                    console.log('Skipping user email - invalid email address:', currentBooking.email);
+                }
             } catch (error) {
                 console.error('Error sending user reschedule email:', error.message);
             }
 
             try {
-                await sgMail.send(adminEmail);
+                // Validate admin email before sending
+                if (process.env.SENDGRID_FROM_EMAIL && process.env.SENDGRID_FROM_EMAIL.includes('@')) {
+                    await sgMail.send(adminEmail);
+                    console.log('Admin reschedule email sent successfully');
+                } else {
+                    console.log('Skipping admin email - invalid SENDGRID_FROM_EMAIL:', process.env.SENDGRID_FROM_EMAIL);
+                }
             } catch (error) {
                 console.error('Error sending admin reschedule email:', error.message);
             }

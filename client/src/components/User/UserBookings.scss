@@ -170,7 +170,7 @@
 .reschedule-modal {
     background: white;
     border-radius: 8px;
-    max-width: 800px;
+    max-width: 1000px;
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
@@ -234,6 +234,7 @@
         .calendar-section {
             width: 100%;
             margin-bottom: 20px;
+            justify-content: left;
 
             .section-header {
                 margin-bottom: 15px;
