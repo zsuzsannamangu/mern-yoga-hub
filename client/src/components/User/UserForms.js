@@ -25,7 +25,7 @@ function UserForms() {
 
     return (
         <div className="user-forms">
-            <h3 className="section-title">Required Forms</h3>
+            <h3 className="section-title">Forms</h3>
             <div className="title-line"></div>
             <p className="forms-description">
                 Please complete the following forms before your first session. 

@@ -8,11 +8,10 @@
     padding: 20px;
 
     .section-title {
-        color: $secondary-text-color;
-        margin: 0 0 10px 0;
+        color: $text-color;
+        margin: 20px 0 10px 0;
         font-size: 24px;
         font-weight: bold;
-        margin-top: 20px;
     }
 
     .title-line {
@@ -37,21 +36,21 @@
     .forms-table {
         width: 100%;
         border-collapse: collapse;
-        background-color: $secondary-background-color;
+        background-color: white;
+        border: 1px solid $border-color;
         border-radius: 8px;
         overflow: hidden;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
         thead {
-            background-color: $line-color;
+            background-color: #f8f9fa;
             
             th {
-                color: white;
+                color: $text-color;
                 padding: 15px 12px;
                 text-align: left;
                 font-weight: 600;
                 font-size: 14px;
-                border-bottom: 2px solid $tertiary-text-color;
+                border-bottom: 1px solid $border-color;
                 
                 &:first-child {
                     width: 25%;
@@ -71,10 +70,9 @@
         tbody {
             tr {
                 border-bottom: 1px solid $border-color;
-                transition: background-color 0.2s ease;
 
                 &:hover {
-                    background-color: $content-background-color-hover;
+                    background-color: #f8f9fa;
                 }
 
                 &:last-child {
@@ -97,7 +95,7 @@
     }
 
     .form-description {
-        color: $secondary-text-color;
+        color: $text-color;
         font-size: 13px;
         line-height: 1.4;
     }
@@ -108,33 +106,25 @@
 
     .form-link {
         display: inline-block;
-        background-color: $primary-button-color;
-        color: $button-text-color;
+        background-color: $line-color;
+        color: white;
         text-decoration: none;
         padding: 8px 16px;
         border-radius: 4px;
         font-size: 13px;
         font-weight: 500;
-        transition: all 0.3s ease;
-        border: none;
-        cursor: pointer;
+        transition: background-color 0.3s ease;
 
         &:hover {
             background-color: $primary-button-hover-color;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        &:active {
-            transform: translateY(0);
         }
     }
 
     .forms-note {
-        background-color: $content-background-color;
+        background-color: #f8f9fa;
         padding: 15px;
         border-radius: 6px;
-        border-left: 4px solid $line-color;
+        border: 1px solid $border-color;
 
         p {
             margin: 0;
@@ -143,7 +133,7 @@
             line-height: 1.5;
 
             strong {
-                color: $secondary-text-color;
+                color: $text-color;
             }
         }
     }
