@@ -218,8 +218,9 @@ const AdminUsers = () => {
                 .filter((slot) => {
                     const slotDateTime = new Date(`${slot.date}T${slot.time}`);
                     const isFuture = slotDateTime >= now;
-                    console.log('Slot:', slot.date, slot.time, 'isFuture:', isFuture, 'status:', slot.status);
-                    return isFuture; // Show future/current sessions (including cancelled ones for admin to delete)
+                    const notRescheduled = slot.status !== 'rescheduled'; // Hide rescheduled bookings (old appointments)
+                    console.log('Slot:', slot.date, slot.time, 'isFuture:', isFuture, 'status:', slot.status, 'notRescheduled:', notRescheduled);
+                    return isFuture && notRescheduled; // Show future/current sessions (excluding rescheduled ones)
                 })
                 .sort((a, b) => {
                     const dateA = new Date(`${a.date}T${a.time}`);

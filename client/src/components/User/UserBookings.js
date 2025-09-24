@@ -50,8 +50,9 @@ function UserBookings() {
                         const slotDateTime = new Date(`${slot.date}T${slot.time}`);
                         const isFuture = slotDateTime >= now;
                         const notCancelled = slot.status !== 'cancelled';
-                        console.log('User slot:', slot.date, slot.time, 'isFuture:', isFuture, 'notCancelled:', notCancelled, 'status:', slot.status);
-                        return isFuture && notCancelled; // Only show future/current sessions that aren't cancelled
+                        const notRescheduled = slot.status !== 'rescheduled'; // Hide rescheduled bookings (old appointments)
+                        console.log('User slot:', slot.date, slot.time, 'isFuture:', isFuture, 'notCancelled:', notCancelled, 'notRescheduled:', notRescheduled, 'status:', slot.status);
+                        return isFuture && notCancelled && notRescheduled; // Only show future/current sessions that aren't cancelled or rescheduled
                     })
                     .sort((a, b) => {
                         const dateA = new Date(`${a.date}T${a.time}`);
