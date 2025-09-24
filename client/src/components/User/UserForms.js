@@ -16,11 +16,6 @@ function UserForms() {
             name: 'Health History Form',
             link: 'https://docs.google.com/forms/d/e/1FAIpQLScvgtnQnBdWWTJqwQbqo98X_vNYpjuH9x-YpsAlced_xKjbSA/viewform?usp=header',
             description: 'Share your health history and any concerns'
-        },
-        {
-            name: 'Consent Form',
-            link: 'https://docs.google.com/forms/d/e/1FAIpQLScvgtnQnBdWWTJqwQbqo98X_vNYpjuH9x-YpsAlced_xKjbSA/viewform?usp=header',
-            description: 'Required consent and liability waiver'
         }
     ];
 
