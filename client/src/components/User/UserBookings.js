@@ -332,7 +332,10 @@ function UserBookings() {
                             </div>
                             
                             <div className="calendar-section">
-                                <h4>Select New Date & Time:</h4>
+                                <div className="section-header">
+                                    <h4>Select New Date & Time:</h4>
+                                </div>
+                                
                                 <div className="calendar-container">
                                     <div className="calendar-header">
                                         <button className="month-nav-button" onClick={handlePrevMonth}>
@@ -358,35 +361,35 @@ function UserBookings() {
                                         highlightedSlots={availableSlots.map((slot) => slot.date)}
                                     />
                                 </div>
-                            </div>
 
-                            {selectedDate && (
-                                <div className="time-selection">
-                                    <h4>Available Times for {selectedDate.toLocaleDateString()}:</h4>
-                                    <div className="time-slots">
-                                        {(() => {
-                                            const selectedDateStr = selectedDate.toISOString().split('T')[0];
-                                            const slotsForDate = availableSlots.filter(slot => slot.date === selectedDateStr);
-                                            
-                                            return slotsForDate.length > 0 ? (
-                                                slotsForDate
-                                                    .sort((a, b) => a.time.localeCompare(b.time))
-                                                    .map((slot) => (
-                                                        <button
-                                                            key={slot._id}
-                                                            className={`time-slot ${selectedSlot?._id === slot._id ? 'selected' : ''}`}
-                                                            onClick={() => setSelectedSlot(slot)}
-                                                        >
-                                                            {formatTime(slot.date, slot.time)}
-                                                        </button>
-                                                    ))
-                                            ) : (
-                                                <p className="no-slots-message">No available slots this day.</p>
-                                            );
-                                        })()}
+                                {selectedDate && (
+                                    <div className="time-selection">
+                                        <h4>Available Times for {selectedDate.toLocaleDateString()}:</h4>
+                                        <div className="time-slots">
+                                            {(() => {
+                                                const selectedDateStr = selectedDate.toISOString().split('T')[0];
+                                                const slotsForDate = availableSlots.filter(slot => slot.date === selectedDateStr);
+                                                
+                                                return slotsForDate.length > 0 ? (
+                                                    slotsForDate
+                                                        .sort((a, b) => a.time.localeCompare(b.time))
+                                                        .map((slot) => (
+                                                            <button
+                                                                key={slot._id}
+                                                                className={`time-slot ${selectedSlot?._id === slot._id ? 'selected' : ''}`}
+                                                                onClick={() => setSelectedSlot(slot)}
+                                                            >
+                                                                {formatTime(slot.date, slot.time)}
+                                                            </button>
+                                                        ))
+                                                ) : (
+                                                    <p className="no-slots-message">No available slots this day.</p>
+                                                );
+                                            })()}
+                                        </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
+                            </div>
 
                             <div className="reschedule-actions">
                                 <button className="cancel-btn" onClick={closeRescheduleModal}>

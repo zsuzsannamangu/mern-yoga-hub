@@ -231,12 +231,16 @@
         .calendar-section {
             margin-bottom: 20px;
 
-            h4 {
-                margin: 0 0 15px 0;
-                color: $text-color;
-                text-align: center;
-                font-size: 16px;
-                font-weight: 600;
+            .section-header {
+                margin-bottom: 20px;
+                
+                h4 {
+                    margin: 0;
+                    color: $text-color;
+                    font-size: 16px;
+                    font-weight: 600;
+                    text-align: left;
+                }
             }
 
             .calendar-container {
@@ -244,6 +248,7 @@
                 flex-direction: column;
                 align-items: center;
                 width: 100%;
+                margin-bottom: 20px;
 
                 .calendar-header {
                     display: flex;
@@ -278,53 +283,57 @@
                     }
                 }
             }
-        }
 
-        .time-selection {
-            margin-bottom: 20px;
+            .time-selection {
+                width: 100%;
+                text-align: left;
 
-            h4 {
-                margin: 0 0 15px 0;
-                color: $text-color;
-                text-align: center;
-            }
-
-            .time-slots {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-                justify-content: center;
-
-                .time-slot {
-                    background: #f8f9fa;
-                    border: 1px solid $border-color;
-                    padding: 8px 16px;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    font-size: 14px;
-
-                    &:hover {
-                        background: $primary-button-color;
-                        color: white;
-                        border-color: $primary-button-color;
-                    }
-
-                    &.selected {
-                        background: $primary-button-color;
-                        color: white;
-                        border-color: $primary-button-color;
-                    }
-                }
-
-                .no-slots-message {
+                h4 {
+                    margin: 0 0 15px 0;
                     color: $text-color;
-                    font-style: italic;
-                    text-align: center;
-                    width: 100%;
+                    font-size: 16px;
+                    font-weight: 600;
+                    text-align: left;
+                }
+
+                .time-slots {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    justify-content: flex-start;
+
+                    .time-slot {
+                        background: #f8f9fa;
+                        border: 1px solid $border-color;
+                        padding: 8px 16px;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        font-size: 14px;
+
+                        &:hover {
+                            background: $primary-button-color;
+                            color: white;
+                            border-color: $primary-button-color;
+                        }
+
+                        &.selected {
+                            background: $primary-button-color;
+                            color: white;
+                            border-color: $primary-button-color;
+                        }
+                    }
+
+                    .no-slots-message {
+                        color: $text-color;
+                        font-style: italic;
+                        text-align: left;
+                        width: 100%;
+                    }
                 }
             }
         }
+
 
         .reschedule-actions {
             display: flex;
