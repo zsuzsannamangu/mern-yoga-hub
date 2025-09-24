@@ -82,14 +82,16 @@ function UserForms() {
                                     </span>
                                 </td>
                                 <td className="form-action">
-                                    <a
-                                        href={form.link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className={`form-link ${form.isCompleted ? 'completed-link' : ''}`}
-                                    >
-                                        {form.isCompleted ? 'View Form' : 'Fill Out Form'}
-                                    </a>
+                                    {!form.isCompleted && (
+                                        <a
+                                            href={form.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="form-link"
+                                        >
+                                            Fill Out Form
+                                        </a>
+                                    )}
                                 </td>
                             </tr>
                         ))}
