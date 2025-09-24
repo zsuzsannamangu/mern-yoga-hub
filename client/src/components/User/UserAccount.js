@@ -12,7 +12,6 @@ function UserAccount() {
         lastName: user?.lastName || '',
         email: user?.email || '',
         phone: user?.phone || '',
-        preferredName: user?.preferredName || '',
         pronoun: user?.pronoun || '',
         city: user?.city || '',
         zipcode: user?.zipcode || '',
@@ -34,7 +33,6 @@ function UserAccount() {
             lastName: user?.lastName || '',
             email: user?.email || '',
             phone: user?.phone || '',
-            preferredName: user?.preferredName || '',
             pronoun: user?.pronoun || '',
             city: user?.city || '',
             zipcode: user?.zipcode || '',
@@ -51,7 +49,6 @@ function UserAccount() {
                     firstName: userData.firstName,
                     lastName: userData.lastName,
                     phone: userData.phone,
-                    preferredName: userData.preferredName || '',
                     pronoun: userData.pronoun || '',
                     city: userData.city || '',
                     zipcode: userData.zipcode || '',
@@ -128,17 +125,6 @@ function UserAccount() {
                             id="lastName"
                             name="lastName"
                             value={userData.lastName}
-                            onChange={handleChange}
-                            disabled={!isEditing}
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="preferredName">Preferred Name</label>
-                        <input
-                            type="text"
-                            id="preferredName"
-                            name="preferredName"
-                            value={userData.preferredName}
                             onChange={handleChange}
                             disabled={!isEditing}
                         />

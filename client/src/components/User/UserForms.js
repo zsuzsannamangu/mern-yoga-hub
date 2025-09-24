@@ -13,9 +13,9 @@ function UserForms() {
             description: 'Please fill out this form before your first session'
         },
         {
-            name: 'Health History Form',
-            link: 'https://docs.google.com/forms/d/e/1FAIpQLScvgtnQnBdWWTJqwQbqo98X_vNYpjuH9x-YpsAlced_xKjbSA/viewform?usp=header',
-            description: 'Share your health history and any concerns'
+            name: 'Ayurvedic Dosha Quiz',
+            link: 'https://www.banyanbotanicals.com/pages/dosha-quiz',
+            description: 'Optional quiz to help me understand your Ayurvedic dosha, please share the results with me'
         }
     ];
 
@@ -64,13 +64,6 @@ function UserForms() {
                         ))}
                     </tbody>
                 </table>
-            </div>
-            
-            <div className="forms-note">
-                <p>
-                    <strong>Note:</strong> All forms open in a new tab. 
-                    Please complete them before your scheduled session.
-                </p>
             </div>
         </div>
     );
