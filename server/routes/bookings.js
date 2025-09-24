@@ -293,7 +293,7 @@ module.exports = (io) => {
 
             // Send reschedule confirmation email to user
             const userEmailAddress = currentBooking.email || 'mzsuzsanna10@gmail.com';
-            const fromEmailAddress = process.env.SENDGRID_FROM_EMAIL || 'mzsuzsanna10@gmail.com';
+            const fromEmailAddress = process.env.EMAIL_USER || 'mzsuzsanna10@gmail.com';
             
             console.log('User email address:', userEmailAddress);
             console.log('From email address:', fromEmailAddress);
@@ -314,13 +314,15 @@ module.exports = (io) => {
             };
 
             // Send reschedule notification email to admin
-            const adminEmailAddress = process.env.SENDGRID_FROM_EMAIL || 'mzsuzsanna10@gmail.com';
+            const adminEmailAddress = process.env.EMAIL_RECEIVER || 'mzsuzsanna10@gmail.com';
+            const adminFromAddress = process.env.EMAIL_USER || 'mzsuzsanna10@gmail.com';
             
             console.log('Admin email address:', adminEmailAddress);
+            console.log('Admin from address:', adminFromAddress);
             
             const adminEmail = {
                 to: adminEmailAddress,
-                from: adminEmailAddress,
+                from: adminFromAddress,
                 subject: 'Appointment Rescheduled - Yoga with Zsuzsanna',
                 text: `Appointment rescheduled:\n\nClient: ${currentBooking.firstName} ${currentBooking.lastName}\nEmail: ${currentBooking.email}\nSession Type: ${currentBooking.title || currentBooking.sessionType}\nNew Date: ${newDate}\nNew Time: ${formattedTime}\n\nPrevious Date: ${currentBooking.date}\nPrevious Time: ${currentBooking.time}`,
                 html: `
@@ -345,6 +347,9 @@ module.exports = (io) => {
             } catch (error) {
                 console.error('Error sending user reschedule email:', error.message);
                 console.error('Full error:', error);
+                if (error.response && error.response.body) {
+                    console.error('SendGrid error details:', JSON.stringify(error.response.body, null, 2));
+                }
             }
 
             try {
@@ -354,6 +359,9 @@ module.exports = (io) => {
             } catch (error) {
                 console.error('Error sending admin reschedule email:', error.message);
                 console.error('Full error:', error);
+                if (error.response && error.response.body) {
+                    console.error('SendGrid error details:', JSON.stringify(error.response.body, null, 2));
+                }
             }
 
             // Emit socket event for real-time updates
