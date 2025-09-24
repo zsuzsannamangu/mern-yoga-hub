@@ -560,8 +560,8 @@ const AdminUsers = () => {
                 ));
 
                 Swal.fire({
-                    title: 'Success!',
-                    text: `Intake form marked as ${completed ? 'completed' : 'incomplete'}.`,
+                    title: 'Intake form',
+                    text: `marked as ${completed ? 'completed' : 'incomplete'}.`,
                     icon: 'success',
                     timer: 2000,
                     showConfirmButton: false

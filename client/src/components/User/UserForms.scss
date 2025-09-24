@@ -53,11 +53,16 @@
                 border-bottom: 1px solid $border-color;
                 
                 &:first-child {
-                    width: 25%;
+                    width: 20%;
                 }
                 
                 &:nth-child(2) {
-                    width: 50%;
+                    width: 40%;
+                }
+                
+                &:nth-child(3) {
+                    width: 15%;
+                    text-align: center;
                 }
                 
                 &:last-child {
@@ -100,6 +105,31 @@
         line-height: 1.4;
     }
 
+    .form-completed {
+        text-align: center;
+        width: 120px;
+        
+        .completion-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            
+            &.completed {
+                background-color: #28a745;
+                color: white;
+            }
+            
+            &.pending {
+                background-color: #f8f9fa;
+                color: #6c757d;
+                border: 1px solid #dee2e6;
+            }
+        }
+    }
+
     .form-action {
         text-align: center;
     }
@@ -117,6 +147,14 @@
 
         &:hover {
             background-color: $primary-button-hover-color;
+        }
+        
+        &.completed-link {
+            background-color: #6c757d;
+            
+            &:hover {
+                background-color: #5a6268;
+            }
         }
     }
 
