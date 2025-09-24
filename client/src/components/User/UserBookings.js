@@ -4,6 +4,7 @@ import axios from 'axios';
 import { FaClock, FaCalendarAlt, FaLink, FaLocationArrow, FaEnvelope, FaEdit } from 'react-icons/fa';
 import CalendarDays from '../Calendar/CalendarDays';
 import Swal from 'sweetalert2';
+import io from 'socket.io-client';
 import './UserBookings.scss';
 
 function UserBookings() {
@@ -53,6 +54,31 @@ function UserBookings() {
         };
 
         fetchBookings();
+
+        // Initialize Socket.IO connection for real-time updates
+        const socket = io(`${process.env.REACT_APP_API}`);
+        
+        socket.on('slotBooked', ({ slotId }) => {
+            // Remove the booked slot from available slots
+            setAvailableSlots((prevSlots) =>
+                prevSlots.filter((slot) => slot._id !== slotId)
+            );
+        });
+
+        socket.on('slotRescheduled', ({ oldSlotId, newSlotId }) => {
+            // Remove the old slot and add the new slot
+            setAvailableSlots((prevSlots) => {
+                const filtered = prevSlots.filter((slot) => slot._id !== oldSlotId);
+                // Note: The new slot will be added when the reschedule is complete
+                return filtered;
+            });
+        });
+
+        return () => {
+            if (socket && typeof socket.disconnect === 'function') {
+                socket.disconnect();
+            }
+        };
     }, [user]);
 
     if (!user) {
@@ -107,8 +133,17 @@ function UserBookings() {
     // Fetch available slots for rescheduling
     const fetchAvailableSlots = async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_API}/api/bookings/available`);
-            setAvailableSlots(response.data.availableSlots || []);
+            const response = await axios.get(`${process.env.REACT_APP_API}/api/bookings`);
+            const { availableSlots } = response.data;
+            const now = new Date();
+
+            // Filter out past slots, same as UserBookNew
+            const filteredSlots = availableSlots.filter((slot) => {
+                const slotDateTime = new Date(`${slot.date}T${slot.time}`);
+                return slotDateTime > now;
+            });
+
+            setAvailableSlots(filteredSlots);
         } catch (error) {
             console.error('Error fetching available slots:', error);
         }
@@ -180,6 +215,10 @@ function UserBookings() {
                     });
                 
                 setBookings(sortedBookings);
+                
+                // Refresh available slots
+                await fetchAvailableSlots();
+                
                 setShowRescheduleModal(false);
                 setReschedulingBooking(null);
             }

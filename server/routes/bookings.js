@@ -340,6 +340,13 @@ module.exports = (io) => {
                 console.error('Error sending admin reschedule email:', error.message);
             }
 
+            // Emit socket event for real-time updates
+            io.emit('slotRescheduled', {
+                oldSlotId: currentBooking._id,
+                newSlotId: newSlot._id,
+                userId: currentBooking.userId
+            });
+
             return res.status(200).json({
                 success: true,
                 message: 'Appointment rescheduled successfully',
