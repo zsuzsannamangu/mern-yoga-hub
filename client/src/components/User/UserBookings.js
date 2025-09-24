@@ -212,10 +212,19 @@ function UserBookings() {
                         key={booking._id}
                         className="booking-card"
                     >
-                        <div className="booking-details">
+                        <div className="booking-header">
                             <div className="session-type">
                                 <strong>{normalizeSessionType(booking.title || booking.sessionType)}</strong>
                             </div>
+                            <button 
+                                className="reschedule-btn"
+                                onClick={() => handleReschedule(booking)}
+                                title="Reschedule Appointment"
+                            >
+                                <FaEdit className="icon" /> Reschedule
+                            </button>
+                        </div>
+                        <div className="booking-details">
                             <div className="booking-info">
                                 <FaCalendarAlt className="icon" />
                                 <span>{`${formatDate(booking.date)} at ${formatTime(booking.time, booking.date)}`}</span>
@@ -244,18 +253,9 @@ function UserBookings() {
                                     <FaLocationArrow className="icon" /> Location/link TBD
                                 </div>
                             )}
-                            <div className="booking-actions">
-                                <button 
-                                    className="reschedule-btn"
-                                    onClick={() => handleReschedule(booking)}
-                                    title="Reschedule Appointment"
-                                >
-                                    <FaEdit className="icon" /> Reschedule
-                                </button>
-                                <a href="/contact">
-                                    <FaEnvelope className="icon" /> Need to cancel? Email me!
-                                </a>
-                            </div>
+                            <a href="/contact">
+                                <FaEnvelope className="icon" /> Need to cancel? Email me!
+                            </a>
                         </div>
                     </div>
                 ))

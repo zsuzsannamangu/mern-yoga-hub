@@ -35,11 +35,33 @@
             align-items: center;
             margin-bottom: 10px;
 
-            h4 {
+            .session-type {
                 margin: 0;
                 font-size: 1.2rem;
                 color: $main-title-color;
                 font-weight: bold;
+            }
+
+            .reschedule-btn {
+                background-color: $tertiary-text-color;
+                color: white;
+                border: none;
+                padding: 6px 10px;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: $primary-button-hover-color;
+                }
+
+                .icon {
+                    font-size: 0.7rem;
+                }
             }
 
             .link-icon {
@@ -75,75 +97,46 @@
 
         .booking-footer {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
             margin-top: 10px;
             border-top: 1px solid $border-color;
             padding-top: 10px;
 
-            .booking-actions {
+            a {
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
-                gap: 10px;
+                text-decoration: none;
+                font-size: 0.9rem;
+                color: $text-color;
 
-                .reschedule-btn {
-                    background-color: $tertiary-text-color;
-                    color: white;
-                    border: none;
-                    padding: 8px 12px;
-                    border-radius: 4px;
-                    font-size: 0.9rem;
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
-                    transition: background-color 0.3s ease;
-
-                    &:hover {
-                        background-color: $primary-button-hover-color;
-                    }
-
-                    .icon {
-                        font-size: 0.8rem;
-                    }
+                @media (max-width: 480px) {
+                    font-size: 0.8rem;
                 }
 
-                a {
-                    display: flex;
-                    align-items: center;
-                    text-decoration: none;
-                    font-size: 0.9rem;
-                    color: $text-color;
+                &:hover {
+                    text-decoration: underline;
+                }
 
-                    @media (max-width: 480px) {
-                        font-size: 0.8rem;
-                    }
+                .icon {
+                    margin-right: 5px;
+                    color: $primary-button-color;
+                }
+
+                &.disabled-link {
+                    color: grey;
+                    pointer-events: none;
+                }
+
+                &.meeting-link {
+                    color: $primary-button-color;
+                    text-decoration: none;
+                    font-weight: bold;
+                    transition: color 0.3s ease;
 
                     &:hover {
+                        color: $primary-button-hover-color;
                         text-decoration: underline;
-                    }
-
-                    .icon {
-                        margin-right: 5px;
-                        color: $primary-button-color;
-                    }
-
-                    &.disabled-link {
-                        color: grey;
-                        pointer-events: none;
-                    }
-
-                    &.meeting-link {
-                        color: $primary-button-color;
-                        text-decoration: none;
-                        font-weight: bold;
-                        transition: color 0.3s ease;
-
-                        &:hover {
-                            color: $primary-button-hover-color;
-                            text-decoration: underline;
-                        }
                     }
                 }
             }
