@@ -163,16 +163,19 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-    .reschedule-modal {
-        background: white;
-        border-radius: 8px;
-        max-width: 600px;
-        width: 90%;
-        max-height: 90vh;
-        overflow-y: auto;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+.reschedule-modal {
+    background: white;
+    border-radius: 8px;
+    max-width: 700px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
 
     .reschedule-modal-header {
         display: flex;
@@ -232,11 +235,14 @@
                 margin: 0 0 15px 0;
                 color: $text-color;
                 text-align: center;
+                font-size: 16px;
+                font-weight: 600;
             }
 
             .calendar-container {
                 display: flex;
-                justify-content: center;
+                flex-direction: column;
+                align-items: center;
                 width: 100%;
 
                 .calendar-header {
@@ -245,7 +251,7 @@
                     align-items: center;
                     margin-bottom: 15px;
                     width: 100%;
-                    max-width: 300px;
+                    max-width: 400px;
 
                     .month-nav-button {
                         background: $tertiary-text-color;
@@ -255,6 +261,7 @@
                         border-radius: 4px;
                         cursor: pointer;
                         font-size: 16px;
+                        min-width: 40px;
 
                         &:hover {
                             background: $primary-button-hover-color;
@@ -267,6 +274,7 @@
                         font-size: 18px;
                         text-align: center;
                         flex: 1;
+                        padding: 0 10px;
                     }
                 }
             }
@@ -362,17 +370,45 @@
     }
 }
 
+@media (max-width: 768px) {
+    .reschedule-modal-overlay {
+        padding: 10px;
+    }
+
+    .reschedule-modal {
+        max-width: 100%;
+        width: 100%;
+        max-height: 95vh;
+    }
+}
+
 @media (max-width: 480px) {
     .booking-footer a{
         font-size: 0.7rem;
     }
 
+    .reschedule-modal-overlay {
+        padding: 5px;
+    }
+
     .reschedule-modal {
-        width: 95%;
-        margin: 10px;
+        width: 100%;
+        max-height: 98vh;
 
         .reschedule-modal-content {
             padding: 15px;
+
+            .calendar-section {
+                .calendar-container {
+                    .calendar-header {
+                        max-width: 100%;
+                        
+                        h2 {
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
 
             .time-slots {
                 .time-slot {
