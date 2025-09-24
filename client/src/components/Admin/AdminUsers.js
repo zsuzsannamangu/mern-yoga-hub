@@ -564,7 +564,7 @@ const AdminUsers = () => {
                                                 {appointments[user._id] && appointments[user._id].length > 0 ? (
                                                     <div className="appointments-list">
                                                         {appointments[user._id].map((appointment) => (
-                                                            <div key={appointment._id} className="appointment-item">
+                                                            <div key={appointment._id} className={`appointment-item ${appointment.status === 'cancelled' ? 'cancelled' : ''}`}>
                                                                 <div className="appointment-details">
                                                                     <strong>{appointment.title}</strong>
                                                                     <span>{new Date(appointment.date).toLocaleDateString()}</span>
@@ -585,9 +585,6 @@ const AdminUsers = () => {
                                                                         ) : (
                                                                             'TBD'
                                                                         )}
-                                                                    </span>
-                                                                    <span className={`status ${appointment.status}`}>
-                                                                        {appointment.status}
                                                                     </span>
                                                                 </div>
                                                                 <div className="appointment-actions">
