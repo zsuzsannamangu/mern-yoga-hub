@@ -17,13 +17,18 @@ function UserBookings() {
                     params: { userId: user.id },
                 });
 
+                console.log('User bookings raw response:', response.data);
+
                 const now = new Date();
 
                 // Filter out past sessions and cancelled appointments, then sort upcoming bookings
                 const sortedBookings = (response.data.bookedSlots || [])
                     .filter((slot) => {
                         const slotDateTime = new Date(`${slot.date}T${slot.time}`);
-                        return slotDateTime >= now && slot.status !== 'cancelled'; // Only show future/current sessions that aren't cancelled
+                        const isFuture = slotDateTime >= now;
+                        const notCancelled = slot.status !== 'cancelled';
+                        console.log('User slot:', slot.date, slot.time, 'isFuture:', isFuture, 'notCancelled:', notCancelled, 'status:', slot.status);
+                        return isFuture && notCancelled; // Only show future/current sessions that aren't cancelled
                     })
                     .sort((a, b) => {
                         const dateA = new Date(`${a.date}T${a.time}`);
@@ -31,6 +36,7 @@ function UserBookings() {
                         return dateA - dateB;
                     });
                 
+                console.log('User filtered bookings:', sortedBookings);
                 setBookings(sortedBookings);
             } catch (error) {
                 console.error('Error fetching bookings:', error);

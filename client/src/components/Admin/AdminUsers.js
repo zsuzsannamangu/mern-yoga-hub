@@ -185,18 +185,24 @@ const AdminUsers = () => {
                 headers: { Authorization: `Bearer ${token}` },
             });
             
+            console.log('Raw response for userId', userId, ':', response.data);
+            
             // Filter out past sessions but keep cancelled appointments for admin to delete, then sort upcoming bookings
             const now = new Date();
             const sortedBookings = (response.data.bookedSlots || [])
                 .filter((slot) => {
                     const slotDateTime = new Date(`${slot.date}T${slot.time}`);
-                    return slotDateTime >= now; // Show future/current sessions (including cancelled ones for admin to delete)
+                    const isFuture = slotDateTime >= now;
+                    console.log('Slot:', slot.date, slot.time, 'isFuture:', isFuture, 'status:', slot.status);
+                    return isFuture; // Show future/current sessions (including cancelled ones for admin to delete)
                 })
                 .sort((a, b) => {
                     const dateA = new Date(`${a.date}T${a.time}`);
                     const dateB = new Date(`${b.date}T${b.time}`);
                     return dateA - dateB;
                 });
+            
+            console.log('Filtered appointments for userId', userId, ':', sortedBookings);
             
             setAppointments(prev => ({
                 ...prev,
@@ -229,12 +235,19 @@ const AdminUsers = () => {
 
         try {
             const token = localStorage.getItem('adminToken');
+            console.log('Creating appointment with data:', {
+                userId: selectedUserId,
+                ...newAppointment
+            });
+            
             const response = await adminAxiosInstance.post('/api/admin/appointments', {
                 userId: selectedUserId,
                 ...newAppointment
             }, {
                 headers: { Authorization: `Bearer ${token}` },
             });
+
+            console.log('Appointment creation response:', response.data);
 
             Swal.fire({
                 icon: 'success',
@@ -256,9 +269,11 @@ const AdminUsers = () => {
             
             // Refresh appointments for this user
             if (selectedUserId) {
+                console.log('Refreshing appointments for userId:', selectedUserId);
                 fetchAppointments(selectedUserId);
             }
         } catch (error) {
+            console.error('Error creating appointment:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Failed to Create Appointment',
