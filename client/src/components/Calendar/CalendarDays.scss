@@ -46,18 +46,20 @@
   }
 
   &.has-slot {
-    background-color: $content-background-color; // Light yellow-green background for days with available slots
-    border: 1px solid $tertiary-text-color; // Tertiary text color for slot days
+    background-color: $primary-button-color; // Primary button color for days with available slots
+    color: $button-text-color; // White text for better contrast
+    font-weight: bold; // Make text bold
+    border: 1px solid $primary-button-color; // Primary button color border
 
     &:hover {
-      background-color: $content-background-color-hover; // Slightly darker on hover
+      background-color: $primary-button-hover-color; // Darker on hover
     }
   }
 
   .slot-indicator {
     width: 4px;
     height: 4px;
-    background-color: $tertiary-text-color; // Dot color for available slots
+    background-color: $button-text-color; // White dot for better contrast on primary color
     border-radius: 50%;
     position: absolute;
     bottom: 5px;
