@@ -18,7 +18,6 @@ const AdminUsers = () => {
         lastName: '',
         email: '',
         phone: '',
-        preferredName: '',
         pronoun: '',
         city: '',
         zipcode: ''
@@ -44,7 +43,6 @@ const AdminUsers = () => {
         lastName: '',
         email: '',
         phone: '',
-        preferredName: '',
         pronoun: '',
         city: '',
         zipcode: ''
@@ -178,7 +176,6 @@ const AdminUsers = () => {
                 lastName: '',
                 email: '',
                 phone: '',
-                preferredName: '',
                 pronoun: '',
                 city: '',
                 zipcode: ''
@@ -323,7 +320,6 @@ const AdminUsers = () => {
             lastName: user.lastName || '',
             email: user.email || '',
             phone: user.phone || '',
-            preferredName: user.preferredName || '',
             pronoun: user.pronoun || '',
             city: user.city || '',
             zipcode: user.zipcode || ''
@@ -370,7 +366,6 @@ const AdminUsers = () => {
                 lastName: '',
                 email: '',
                 phone: '',
-                preferredName: '',
                 pronoun: '',
                 city: '',
                 zipcode: ''
@@ -617,7 +612,6 @@ const AdminUsers = () => {
                             >
                                 Name {sortBy === 'name' && (sortOrder === 'asc' ? '↑' : '↓')}
                             </th>
-                            <th>Preferred Name</th>
                             <th>Pronoun</th>
                             <th>Email</th>
                             <th>Phone</th>
@@ -638,7 +632,6 @@ const AdminUsers = () => {
                                 <tr className="user-row" onClick={() => toggleUserExpansion(user._id)}>
                                     <td>{index + 1}</td>
                                     <td>{user.firstName} {user.lastName}</td>
-                                    <td>{user.preferredName}</td>
                                     <td>{user.pronoun}</td>
                                     <td>{user.email}</td>
                                     <td>{user.phone}</td>
@@ -847,16 +840,6 @@ const AdminUsers = () => {
                             </div>
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label htmlFor="preferredName">Preferred Name</label>
-                                    <input
-                                        type="text"
-                                        id="preferredName"
-                                        name="preferredName"
-                                        value={newClient.preferredName}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                                <div className="form-group">
                                     <label htmlFor="pronoun">Pronoun</label>
                                     <input
                                         type="text"
@@ -866,8 +849,6 @@ const AdminUsers = () => {
                                         onChange={handleInputChange}
                                     />
                                 </div>
-                            </div>
-                            <div className="form-row">
                                 <div className="form-group">
                                     <label htmlFor="city">City</label>
                                     <input
@@ -878,6 +859,8 @@ const AdminUsers = () => {
                                         onChange={handleInputChange}
                                     />
                                 </div>
+                            </div>
+                            <div className="form-row">
                                 <div className="form-group">
                                     <label htmlFor="zipcode">Zip Code</label>
                                     <input
@@ -887,6 +870,9 @@ const AdminUsers = () => {
                                         value={newClient.zipcode}
                                         onChange={handleInputChange}
                                     />
+                                </div>
+                                <div className="form-group">
+                                    {/* Empty div for layout balance */}
                                 </div>
                             </div>
                             <div className="form-actions">
@@ -1067,16 +1053,6 @@ const AdminUsers = () => {
                             </div>
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label htmlFor="editPreferredName">Preferred Name</label>
-                                    <input
-                                        type="text"
-                                        id="editPreferredName"
-                                        name="preferredName"
-                                        value={editUserData.preferredName}
-                                        onChange={handleEditUserInputChange}
-                                    />
-                                </div>
-                                <div className="form-group">
                                     <label htmlFor="editPronoun">Pronoun</label>
                                     <select
                                         id="editPronoun"
@@ -1091,8 +1067,6 @@ const AdminUsers = () => {
                                         <option value="other">other</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div className="form-row">
                                 <div className="form-group">
                                     <label htmlFor="editCity">City</label>
                                     <input
@@ -1103,6 +1077,8 @@ const AdminUsers = () => {
                                         onChange={handleEditUserInputChange}
                                     />
                                 </div>
+                            </div>
+                            <div className="form-row">
                                 <div className="form-group">
                                     <label htmlFor="editZipcode">Zip Code</label>
                                     <input
@@ -1112,6 +1088,9 @@ const AdminUsers = () => {
                                         value={editUserData.zipcode}
                                         onChange={handleEditUserInputChange}
                                     />
+                                </div>
+                                <div className="form-group">
+                                    {/* Empty div for layout balance */}
                                 </div>
                             </div>
                             <div className="form-actions">

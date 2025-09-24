@@ -154,7 +154,7 @@ router.get('/users', authMiddleware, adminMiddleware, async (req, res) => {
 
 // POST create new client (Admin only)
 router.post('/users', authMiddleware, adminMiddleware, async (req, res) => {
-  const { firstName, lastName, email, phone, preferredName, pronoun, city, zipcode } = req.body;
+  const { firstName, lastName, email, phone, pronoun, city, zipcode } = req.body;
 
   try {
     // Validate required fields
@@ -174,7 +174,6 @@ router.post('/users', authMiddleware, adminMiddleware, async (req, res) => {
       lastName,
       email,
       phone: phone || null,
-      preferredName: preferredName || null,
       pronoun: pronoun || null,
       city: city || null,
       zipcode: zipcode || null,
@@ -230,7 +229,7 @@ router.post('/users', authMiddleware, adminMiddleware, async (req, res) => {
 // PUT update a specific user by ID (Admin only)
 router.put('/users/:id', authMiddleware, adminMiddleware, async (req, res) => {
   const { id } = req.params;
-  const { firstName, lastName, email, phone, preferredName, pronoun, city, zipcode } = req.body;
+  const { firstName, lastName, email, phone, pronoun, city, zipcode } = req.body;
 
   try {
     // Validate required fields
@@ -246,7 +245,7 @@ router.put('/users/:id', authMiddleware, adminMiddleware, async (req, res) => {
 
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { firstName, lastName, email, phone, preferredName, pronoun, city, zipcode },
+      { firstName, lastName, email, phone, pronoun, city, zipcode },
       { new: true, runValidators: true }
     );
 
