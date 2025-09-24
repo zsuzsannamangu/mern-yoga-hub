@@ -104,6 +104,19 @@
       font-size: 12px;
     }
 
+    @media (max-width: 480px) {
+      font-size: 11px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 6px;
+    font-size: 11px;
   }
 
   &.selected {
@@ -127,11 +140,13 @@
   border-radius: 8px;
 
   @media (max-width: $breakpoint-md) {
-    gap: 1px; // Adjust gap for smaller screens
+    gap: 2px; // Adjust gap for smaller screens
+    padding: 5px; // Reduce padding for mobile
   }
 
   @media (max-width: $breakpoint-sm) {
-    padding: 1px; // Adjust padding for very small screens
+    gap: 1px; // Minimal gap for very small screens
+    padding: 2px; // Minimal padding for very small screens
   }
 }
 

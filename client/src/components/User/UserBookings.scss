@@ -508,32 +508,137 @@
 
 // Responsive design for reschedule modal
 @media (max-width: 768px) {
+    .reschedule-modal-overlay {
+        padding: 10px;
+    }
+    
     .reschedule-modal {
-        max-width: 95%;
-        margin: 10px;
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+        max-height: 95vh;
         
-        .reschedule-modal-content {
+        .reschedule-modal-header {
             padding: 15px;
-        }
-        
-        .calendar-container {
-            .calendar-header {
-                flex-direction: column;
-                gap: 10px;
-                
-                h2 {
-                    order: -1;
-                    margin-bottom: 10px;
-                }
+            
+            h3 {
+                font-size: 18px;
             }
         }
         
-        .time-selection {
-            margin-top: 20px;
-            padding-top: 15px;
+        .reschedule-modal-content {
+            padding: 15px;
             
-            .time-slots {
-                justify-content: center;
+            .current-appointment {
+                padding: 12px;
+                margin-bottom: 15px;
+                
+                h4 {
+                    font-size: 14px;
+                }
+                
+                p {
+                    font-size: 13px;
+                }
+            }
+            
+            .calendar-section {
+                .section-header h4 {
+                    font-size: 14px;
+                }
+                
+                .calendar-container {
+                    .calendar-header {
+                        gap: 15px;
+                        
+                        .month-nav-button {
+                            padding: 6px 10px;
+                            font-size: 14px;
+                            min-width: 35px;
+                        }
+                        
+                        h2 {
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+            
+            .time-selection {
+                margin-top: 20px;
+                padding-top: 15px;
+                
+                h4 {
+                    font-size: 14px;
+                }
+                
+                .time-slots {
+                    justify-content: center;
+                    gap: 8px;
+                    
+                    .time-slot {
+                        padding: 6px 12px;
+                        font-size: 13px;
+                        min-width: 80px;
+                        text-align: center;
+                    }
+                }
+            }
+            
+            .reschedule-actions {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 20px;
+                padding-top: 15px;
+                
+                .cancel-btn,
+                .reschedule-submit-btn {
+                    width: 100%;
+                    padding: 12px;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .reschedule-modal-overlay {
+        padding: 5px;
+    }
+    
+    .reschedule-modal {
+        .reschedule-modal-content {
+            padding: 10px;
+            
+            .calendar-section {
+                .calendar-container {
+                    .calendar-header {
+                        gap: 10px;
+                        
+                        .month-nav-button {
+                            padding: 5px 8px;
+                            font-size: 12px;
+                            min-width: 30px;
+                        }
+                        
+                        h2 {
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+            
+            .time-selection {
+                .time-slots {
+                    gap: 6px;
+                    
+                    .time-slot {
+                        padding: 5px 10px;
+                        font-size: 12px;
+                        min-width: 70px;
+                    }
+                }
             }
         }
     }
