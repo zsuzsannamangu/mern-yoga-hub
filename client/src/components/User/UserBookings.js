@@ -36,7 +36,16 @@ function UserBookings() {
                 const now = new Date();
 
                 // Filter out past sessions and cancelled appointments, then sort upcoming bookings
-                const sortedBookings = (response.data.bookedSlots || [])
+                const allBookings = response.data.bookedSlots || [];
+                console.log('All bookings for user:', allBookings);
+                
+                // Remove duplicates based on booking ID
+                const uniqueBookings = allBookings.filter((booking, index, self) => 
+                    index === self.findIndex(b => b._id === booking._id)
+                );
+                console.log('Unique bookings after deduplication:', uniqueBookings);
+                
+                const sortedBookings = uniqueBookings
                     .filter((slot) => {
                         const slotDateTime = new Date(`${slot.date}T${slot.time}`);
                         const isFuture = slotDateTime >= now;

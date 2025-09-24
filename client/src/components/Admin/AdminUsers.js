@@ -205,7 +205,16 @@ const AdminUsers = () => {
             
             // Filter out past sessions but keep cancelled appointments for admin to delete, then sort upcoming bookings
             const now = new Date();
-            const sortedBookings = (response.data.bookedSlots || [])
+            const allBookings = response.data.bookedSlots || [];
+            console.log('All bookings for admin userId', userId, ':', allBookings);
+            
+            // Remove duplicates based on booking ID
+            const uniqueBookings = allBookings.filter((booking, index, self) => 
+                index === self.findIndex(b => b._id === booking._id)
+            );
+            console.log('Unique bookings after deduplication for admin:', uniqueBookings);
+            
+            const sortedBookings = uniqueBookings
                 .filter((slot) => {
                     const slotDateTime = new Date(`${slot.date}T${slot.time}`);
                     const isFuture = slotDateTime >= now;
