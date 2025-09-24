@@ -234,10 +234,12 @@
         .calendar-section {
             width: 100%;
             margin-bottom: 20px;
+            display: block;
 
             .section-header {
                 margin-bottom: 15px;
                 width: 100%;
+                display: block;
                 
                 h4 {
                     margin: 0;
@@ -350,6 +352,8 @@
                 margin-top: 30px;
                 padding-top: 20px;
                 border-top: 1px solid $border-color;
+                display: block;
+                clear: both;
 
                 h4 {
                     margin: 0 0 15px 0;

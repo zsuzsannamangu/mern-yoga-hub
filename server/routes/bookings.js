@@ -182,7 +182,7 @@ module.exports = (io) => {
                   Date: ${slot.date}<br/>
                   Time: ${formattedTime}<br/>
                   Session Type: ${slot.sessionType}<br/>
-                  Location: We can meet at my home in North Portland, Arbor Lodge area or use Google Meets. I'll email you to confirm.</p>
+                  Location: We can meet in North Portland or use Google Meet. I'll email you to confirm.</p>
               
                   <p>Before your first session, please fill out this form:<br/>
                   <a href="https://docs.google.com/forms/d/e/1FAIpQLScvgtnQnBdWWTJqwQbqo98X_vNYpjuH9x-YpsAlced_xKjbSA/viewform?usp=header" target="_blank">New Client Form</a></p>
