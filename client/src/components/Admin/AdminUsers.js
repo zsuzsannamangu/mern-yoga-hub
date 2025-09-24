@@ -470,6 +470,12 @@ const AdminUsers = () => {
         });
     };
 
+    // Format date consistently
+    const formatDate = (dateStr) => {
+        const [year, month, day] = dateStr.split('-');
+        return `${month}/${day}`;
+    };
+
     // Fetch users when the component mounts
     useEffect(() => {
         fetchUsers();
@@ -571,7 +577,7 @@ const AdminUsers = () => {
                                                             <div key={appointment._id} className={`appointment-item ${appointment.status === 'cancelled' ? 'cancelled' : ''}`}>
                                                                 <div className="appointment-details">
                                                                     <strong>{appointment.title}</strong>
-                                                                    <span>{new Date(appointment.date).toLocaleDateString()}</span>
+                                                                    <span>{formatDate(appointment.date)}</span>
                                                                     <span>{formatTimeWithZone(appointment.date, appointment.time)}</span>
                                                                     <span>{appointment.length}</span>
                                                                     <span>

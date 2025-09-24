@@ -58,6 +58,12 @@ function UserBookings() {
         });
     };
 
+    // Format date consistently
+    const formatDate = (dateStr) => {
+        const [year, month, day] = dateStr.split('-');
+        return `${month}/${day}`;
+    };
+
     return (
         <div className="user-bookings">
             <h3 className="section-title">Booked Sessions</h3>
@@ -74,7 +80,7 @@ function UserBookings() {
                             </div>
                             <div className="booking-info">
                                 <FaCalendarAlt className="icon" />
-                                <span>{`${booking.date} at ${formatTime(booking.time, booking.date)}`}</span>
+                                <span>{`${formatDate(booking.date)} at ${formatTime(booking.time, booking.date)}`}</span>
                             </div>
                             <div className="booking-info">
                                 <FaClock className="icon" />
