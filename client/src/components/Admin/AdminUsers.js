@@ -10,6 +10,8 @@ import { FaTrash, FaPlus, FaEdit, FaTimes } from 'react-icons/fa'; // Icons for 
 const AdminUsers = () => {
     const [users, setUsers] = useState([]); // State to store users
     const [loading, setLoading] = useState(false); // State to track loading status
+    const [sortBy, setSortBy] = useState('date'); // State to track sorting: 'name' or 'date'
+    const [sortOrder, setSortOrder] = useState('asc'); // State to track sort order: 'asc' or 'desc'
     const [showAddForm, setShowAddForm] = useState(false); // State to control form visibility
     const [newClient, setNewClient] = useState({
         firstName: '',
@@ -59,12 +61,29 @@ const AdminUsers = () => {
         link: ''
     });
 
+    // Sort users based on current sort settings
+    const sortUsers = (userList) => {
+        return [...userList].sort((a, b) => {
+            let comparison = 0;
+            
+            if (sortBy === 'name') {
+                const nameA = `${a.firstName} ${a.lastName}`.toLowerCase();
+                const nameB = `${b.firstName} ${b.lastName}`.toLowerCase();
+                comparison = nameA.localeCompare(nameB);
+            } else if (sortBy === 'date') {
+                comparison = new Date(a.createdAt) - new Date(b.createdAt);
+            }
+            
+            return sortOrder === 'asc' ? comparison : -comparison;
+        });
+    };
+
     // Fetch all users from the database
     const fetchUsers = async () => {
         setLoading(true);
         try {
             const res = await adminAxiosInstance.get('/api/admin/users'); // API request to get users
-            const sortedUsers = res.data.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort users by creation date
+            const sortedUsers = sortUsers(res.data); // Sort users based on current settings
             setUsers(sortedUsers);
         } catch (error) {
             Swal.fire({
@@ -548,6 +567,26 @@ const AdminUsers = () => {
         return `${month}/${day}`;
     };
 
+    // Handle sort change
+    const handleSortChange = (newSortBy) => {
+        if (sortBy === newSortBy) {
+            // If clicking the same column, toggle sort order
+            setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+        } else {
+            // If clicking a different column, set new sort and default to ascending
+            setSortBy(newSortBy);
+            setSortOrder('asc');
+        }
+    };
+
+    // Re-sort users when sort settings change
+    useEffect(() => {
+        if (users.length > 0) {
+            const sortedUsers = sortUsers(users);
+            setUsers(sortedUsers);
+        }
+    }, [sortBy, sortOrder]);
+
     // Fetch users when the component mounts
     useEffect(() => {
         fetchUsers();
@@ -572,15 +611,24 @@ const AdminUsers = () => {
                     <thead>
                         <tr>
                             <th>#</th> {/* Number column */}
-                            <th>First Name</th>
-                            <th>Last Name</th>
+                            <th 
+                                className={`sortable ${sortBy === 'name' ? 'active' : ''}`}
+                                onClick={() => handleSortChange('name')}
+                            >
+                                Name {sortBy === 'name' && (sortOrder === 'asc' ? '↑' : '↓')}
+                            </th>
                             <th>Preferred Name</th>
                             <th>Pronoun</th>
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Location</th>
                             <th>Zip</th>
-                            <th>User Since</th>
+                            <th 
+                                className={`sortable ${sortBy === 'date' ? 'active' : ''}`}
+                                onClick={() => handleSortChange('date')}
+                            >
+                                User Since {sortBy === 'date' && (sortOrder === 'asc' ? '↑' : '↓')}
+                            </th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -589,8 +637,7 @@ const AdminUsers = () => {
                             <React.Fragment key={user._id}>
                                 <tr className="user-row" onClick={() => toggleUserExpansion(user._id)}>
                                     <td>{index + 1}</td>
-                                    <td>{user.firstName}</td>
-                                    <td>{user.lastName}</td>
+                                    <td>{user.firstName} {user.lastName}</td>
                                     <td>{user.preferredName}</td>
                                     <td>{user.pronoun}</td>
                                     <td>{user.email}</td>
