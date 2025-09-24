@@ -170,7 +170,7 @@
 .reschedule-modal {
     background: white;
     border-radius: 8px;
-    max-width: 1000px;
+    max-width: 700px;
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
@@ -234,7 +234,6 @@
         .calendar-section {
             width: 100%;
             margin-bottom: 20px;
-            justify-content: left;
 
             .section-header {
                 margin-bottom: 15px;
@@ -246,7 +245,6 @@
                     font-size: 16px;
                     font-weight: 600;
                     text-align: left;
-                    white-space: nowrap;
                 }
             }
 
@@ -349,7 +347,9 @@
 
             .time-selection {
                 width: 100%;
-                margin-top: 20px;
+                margin-top: 30px;
+                padding-top: 20px;
+                border-top: 1px solid $border-color;
 
                 h4 {
                     margin: 0 0 15px 0;
@@ -364,6 +364,7 @@
                     flex-wrap: wrap;
                     gap: 10px;
                     justify-content: flex-start;
+                    margin-top: 10px;
 
                     .time-slot {
                         background: $secondary-background-color;
@@ -497,6 +498,39 @@
                 .reschedule-submit-btn {
                     width: 100%;
                 }
+            }
+        }
+    }
+}
+
+// Responsive design for reschedule modal
+@media (max-width: 768px) {
+    .reschedule-modal {
+        max-width: 95%;
+        margin: 10px;
+        
+        .reschedule-modal-content {
+            padding: 15px;
+        }
+        
+        .calendar-container {
+            .calendar-header {
+                flex-direction: column;
+                gap: 10px;
+                
+                h2 {
+                    order: -1;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+        
+        .time-selection {
+            margin-top: 20px;
+            padding-top: 15px;
+            
+            .time-slots {
+                justify-content: center;
             }
         }
     }
