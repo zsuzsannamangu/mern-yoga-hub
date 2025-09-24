@@ -5,16 +5,26 @@ import { FaClock, FaCalendarAlt, FaLink, FaLocationArrow, FaEnvelope } from 'rea
 import './UserBookings.scss';
 
 function UserBookings() {
+    console.log('UserBookings component is rendering');
     const { user } = useUserAuth();
     const [bookings, setBookings] = useState([]);
 
     useEffect(() => {
-        if (!user) return;
+        console.log('UserBookings useEffect running, user:', user);
+        if (!user) {
+            console.log('No user found, returning early');
+            return;
+        }
+        
         const fetchBookings = async () => {
+            console.log('Fetching bookings for user ID:', user.id);
             try {
                 const response = await axios.get(`${process.env.REACT_APP_API}/api/bookings`, {
                     params: { userId: user.id },
                 });
+
+                console.log('API Response:', response);
+                console.log('Raw booking data:', response.data.bookedSlots);
 
                 const now = new Date();
 
@@ -32,9 +42,11 @@ function UserBookings() {
                         const dateB = new Date(`${b.date}T${b.time}`);
                         return dateA - dateB;
                     });
+                
+                console.log('Processed booking data:', sortedBookings);
                 setBookings(sortedBookings);
             } catch (error) {
-                console.error('Error fetching bookings:', error.message);
+                console.error('Error fetching bookings:', error);
             }
         };
 
