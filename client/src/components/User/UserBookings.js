@@ -406,7 +406,7 @@ function UserBookings() {
                             <div className="current-appointment">
                                 <h4>Current Appointment:</h4>
                                 <p><strong>{normalizeSessionType(reschedulingBooking?.title || reschedulingBooking?.sessionType)}</strong></p>
-                                <p>{formatDate(reschedulingBooking?.date)} at {formatTime(reschedulingBooking?.time, reschedulingBooking?.date)}</p>
+                                <p>{formatDate(reschedulingBooking?.date)} at {formatTime(reschedulingBooking?.date, reschedulingBooking?.time)}</p>
                             </div>
                             
                             <div className="calendar-section">
