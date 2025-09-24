@@ -256,11 +256,11 @@
 
                 .calendar-header {
                     display: flex;
-                    justify-content: space-between;
+                    justify-content: center;
                     align-items: center;
                     margin-bottom: 15px;
                     width: 100%;
-                    gap: 10px;
+                    gap: 20px;
 
                     .month-nav-button {
                         background: $tertiary-text-color;
@@ -283,7 +283,6 @@
                         color: $text-color;
                         font-size: 18px;
                         text-align: center;
-                        flex: 1;
                         min-width: 0; // Allow text to wrap if needed
                     }
                 }
