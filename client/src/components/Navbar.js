@@ -106,6 +106,14 @@ function Navbar() {
                                         </Link>
                                     </li>
                                     <li>
+                                        <Link
+                                            to={user?.id ? `/user/${user.id}/forms` : "/login"}
+                                            onClick={() => setIsMenuOpen(false)}
+                                        >
+                                            Forms
+                                        </Link>
+                                    </li>
+                                    <li>
                                         <button
                                             className="user-logout-button"
                                             onClick={handleLogout}

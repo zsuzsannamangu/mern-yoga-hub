@@ -23,6 +23,7 @@ import Signups from './components/Calendar/SignUps';
 import UserPage from './components/User/UserPage';
 import UserBookNew from './components/User/UserBookNew';
 import UserAccount from './components/User/UserAccount';
+import UserForms from './components/User/UserForms';
 import VerifyEmail from './pages/auth/VerifyEmail';
 import VerifyLogin from './pages/auth/VerifyLogin';
 import AdminLogin from './components/Admin/AdminLogin';
@@ -110,6 +111,14 @@ function App() {
                   element={
                     <UserProtectedRoute>
                       <UserAccount />
+                    </UserProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/user/:userId/forms"
+                  element={
+                    <UserProtectedRoute>
+                      <UserForms />
                     </UserProtectedRoute>
                   }
                 />
