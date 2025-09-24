@@ -519,13 +519,13 @@
 
 .appointment-location {
     .meeting-link {
-        color: $primary-button-color;
+        color: $text-color;
         text-decoration: none;
         font-weight: 500;
         font-size: 13px;
         
         &:hover {
-            color: $primary-button-hover-color;
+            color: $primary-button-color;
             text-decoration: underline;
         }
     }
