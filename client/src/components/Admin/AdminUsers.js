@@ -375,9 +375,13 @@ const AdminUsers = () => {
 
         try {
             const token = localStorage.getItem('adminToken');
-            await adminAxiosInstance.put(`/api/admin/appointments/${editingAppointment._id}`, editAppointmentData, {
+            console.log('Updating appointment:', editingAppointment._id, editAppointmentData);
+            
+            const response = await adminAxiosInstance.put(`/api/admin/appointments/${editingAppointment._id}`, editAppointmentData, {
                 headers: { Authorization: `Bearer ${token}` },
             });
+
+            console.log('Update response:', response.data);
 
             Swal.fire({
                 icon: 'success',
