@@ -480,18 +480,21 @@
 }
 
 .appointment-date {
-    color: #495057;
+    color: #212529;
     font-size: 13px;
+    font-weight: 500;
 }
 
 .appointment-time {
-    color: #495057;
+    color: #212529;
     font-size: 13px;
+    font-weight: 500;
 }
 
 .appointment-length {
-    color: #495057;
+    color: #212529;
     font-size: 13px;
+    font-weight: 500;
 }
 
 .appointment-location {
@@ -528,7 +531,8 @@
 
 .appointment-actions {
     display: flex;
-    gap: 12px;
+    gap: 16px;
+    justify-content: center;
 
     .reschedule-btn {
         background-color: #ffc107;
