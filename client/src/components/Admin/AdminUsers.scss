@@ -403,82 +403,112 @@
     }
 }
 
-.appointments-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.appointments-table-container {
+    margin-top: 15px;
+    overflow-x: auto;
 }
 
-.appointment-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background-color: $secondary-background-color;
-    border-radius: 5px;
-    border: 1px solid $border-color;
+.appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-    &.cancelled {
-        opacity: 0.6;
+    thead {
         background-color: #f8f9fa;
-        border-color: #e9ecef;
-        position: relative;
+        
+        th {
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            color: #495057;
+            border-bottom: 2px solid #dee2e6;
+            
+            &:nth-child(1) { width: 20%; } // Title
+            &:nth-child(2) { width: 10%; } // Date
+            &:nth-child(3) { width: 12%; } // Time
+            &:nth-child(4) { width: 8%; }  // Length
+            &:nth-child(5) { width: 25%; } // Location/Link
+            &:nth-child(6) { width: 10%; } // Status
+            &:nth-child(7) { width: 15%; } // Actions
+        }
+    }
 
-        &::after {
-            content: "CANCELLED";
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: #dc3545;
-            color: white;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 2px 6px;
-            border-radius: 3px;
-            text-transform: uppercase;
+    tbody {
+        tr {
+            border-bottom: 1px solid #e9ecef;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+                background-color: #f8f9fa;
+            }
+
+            &.cancelled {
+                opacity: 0.7;
+                background-color: #f8f9fa;
+            }
+        }
+
+        td {
+            padding: 12px 8px;
+            font-size: 14px;
+            vertical-align: middle;
         }
     }
 }
 
-.appointment-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 15px;
-    align-items: center;
-    flex: 1;
+.appointment-title {
+    font-weight: 600;
+    color: #212529;
+}
 
-    strong {
-        color: $text-color;
-        font-family: $font-main;
+.appointment-date {
+    color: #6c757d;
+    font-size: 13px;
+}
+
+.appointment-time {
+    color: #6c757d;
+    font-size: 13px;
+}
+
+.appointment-length {
+    color: #6c757d;
+    font-size: 13px;
+}
+
+.appointment-location {
+    .meeting-link {
+        color: $primary-button-color;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 13px;
+        
+        &:hover {
+            color: $primary-button-hover-color;
+            text-decoration: underline;
+        }
+    }
+}
+
+.appointment-status {
+    .cancelled-badge {
+        background-color: #dc3545;
+        color: white;
+        font-size: 10px;
         font-weight: bold;
-    }
-
-    span {
-        color: $secondary-text-color;
-        font-size: 14px;
-    }
-
-    .status {
         padding: 4px 8px;
         border-radius: 12px;
-        font-size: 12px;
-        font-weight: bold;
         text-transform: uppercase;
-
-        &.scheduled {
-            background-color: $green-color;
-            color: white;
-        }
-
-        &.rescheduled {
-            background-color: #ffc107;
-            color: #000;
-        }
-
-        &.cancelled {
-            background-color: $delete-button;
-            color: white;
-        }
+    }
+    
+    .active-status {
+        color: #28a745;
+        font-size: 12px;
+        font-weight: 500;
     }
 }
 
@@ -502,6 +532,21 @@
     }
 
     .cancel-btn {
+        background-color: $delete-button;
+        color: white;
+        border: none;
+        padding: 6px 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: $delete-button-hover;
+        }
+    }
+
+    .delete-btn {
         background-color: $delete-button;
         color: white;
         border: none;
@@ -661,4 +706,5 @@
     display: flex;
     align-items: center;
     gap: 5px;
+}
 }

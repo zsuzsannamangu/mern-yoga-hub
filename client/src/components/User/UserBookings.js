@@ -64,6 +64,22 @@ function UserBookings() {
         return `${month}/${day}`;
     };
 
+    // Normalize session type to match admin terminology
+    const normalizeSessionType = (sessionType) => {
+        if (!sessionType) return 'General Session';
+        
+        // Convert user booking terminology to admin terminology
+        if (sessionType.includes('Individual Yoga Session')) {
+            return 'Private Yoga';
+        }
+        if (sessionType.includes('Yoga Therapy Session')) {
+            return 'Yoga Therapy';
+        }
+        
+        // Return as-is if it's already in admin format or unknown
+        return sessionType;
+    };
+
     return (
         <div className="user-bookings">
             <h3 className="section-title">Booked Sessions</h3>
@@ -76,7 +92,7 @@ function UserBookings() {
                     >
                         <div className="booking-details">
                             <div className="session-type">
-                                <strong>{booking.title || booking.sessionType || 'General Session'}</strong>
+                                <strong>{normalizeSessionType(booking.title || booking.sessionType)}</strong>
                             </div>
                             <div className="booking-info">
                                 <FaCalendarAlt className="icon" />

@@ -629,64 +629,83 @@ const AdminUsers = () => {
                                             <div className="appointments-container">
                                                 <h4>Appointments for {user.firstName} {user.lastName}</h4>
                                                 {appointments[user._id] && appointments[user._id].length > 0 ? (
-                                                    <div className="appointments-list">
-                                                        {appointments[user._id].map((appointment) => (
-                                                            <div key={appointment._id} className={`appointment-item ${appointment.status === 'cancelled' ? 'cancelled' : ''}`}>
-                                                                <div className="appointment-details">
-                                                                    <strong>{appointment.title || appointment.sessionType || 'General Session'}</strong>
-                                                                    <span>{formatDate(appointment.date)}</span>
-                                                                    <span>{formatTimeWithZone(appointment.date, appointment.time)}</span>
-                                                                    <span>{appointment.length || appointment.duration || '60 mins'}</span>
-                                                                    <span>
-                                                                        {appointment.link ? (
-                                                                            <a 
-                                                                                href={appointment.link} 
-                                                                                target="_blank" 
-                                                                                rel="noopener noreferrer"
-                                                                                className="meeting-link"
-                                                                            >
-                                                                                Join Meeting
-                                                                            </a>
-                                                                        ) : appointment.location ? (
-                                                                            appointment.location
-                                                                        ) : (
-                                                                            'TBD'
-                                                                        )}
-                                                                    </span>
-                                                                </div>
-                                                                <div className="appointment-actions">
-                                                                    {appointment.status === 'cancelled' ? (
-                                                                        <button 
-                                                                            className="delete-btn"
-                                                                            onClick={() => handleDeleteAppointment(appointment._id)}
-                                                                            title="Delete Appointment"
-                                                                        >
-                                                                            <FaTrash />
-                                                                        </button>
-                                                                    ) : (
-                                                                        <>
-                                                                            <button 
-                                                                                className="reschedule-btn"
-                                                                                onClick={() => handleEditAppointment(appointment)}
-                                                                                title="Edit Appointment"
-                                                                            >
-                                                                                <FaEdit />
-                                                                            </button>
-                                                                            <button 
-                                                                                className="cancel-btn"
-                                                                                onClick={() => handleCancelAppointment(appointment._id)}
-                                                                                title="Cancel"
-                                                                            >
-                                                                                <FaTimes />
-                                                                            </button>
-                                                                        </>
-                                                                    )}
-                                                                    {!appointment.isAdminCreated && (
-                                                                        <span className="user-created-label">User Booked</span>
-                                                                    )}
-                                                                </div>
-                                                            </div>
-                                                        ))}
+                                                    <div className="appointments-table-container">
+                                                        <table className="appointments-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Title</th>
+                                                                    <th>Date</th>
+                                                                    <th>Time</th>
+                                                                    <th>Length</th>
+                                                                    <th>Location/Link</th>
+                                                                    <th>Status</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {appointments[user._id].map((appointment) => (
+                                                                    <tr key={appointment._id} className={`appointment-row ${appointment.status === 'cancelled' ? 'cancelled' : ''}`}>
+                                                                        <td className="appointment-title">
+                                                                            <strong>{appointment.title || appointment.sessionType || 'General Session'}</strong>
+                                                                        </td>
+                                                                        <td className="appointment-date">{formatDate(appointment.date)}</td>
+                                                                        <td className="appointment-time">{formatTimeWithZone(appointment.date, appointment.time)}</td>
+                                                                        <td className="appointment-length">{appointment.length || appointment.duration || '60 mins'}</td>
+                                                                        <td className="appointment-location">
+                                                                            {appointment.link ? (
+                                                                                <a 
+                                                                                    href={appointment.link} 
+                                                                                    target="_blank" 
+                                                                                    rel="noopener noreferrer"
+                                                                                    className="meeting-link"
+                                                                                >
+                                                                                    Join Meeting
+                                                                                </a>
+                                                                            ) : appointment.location ? (
+                                                                                appointment.location
+                                                                            ) : (
+                                                                                'TBD'
+                                                                            )}
+                                                                        </td>
+                                                                        <td className="appointment-status">
+                                                                            {appointment.status === 'cancelled' ? (
+                                                                                <span className="cancelled-badge">CANCELLED</span>
+                                                                            ) : (
+                                                                                <span className="active-status">Active</span>
+                                                                            )}
+                                                                        </td>
+                                                                        <td className="appointment-actions">
+                                                                            {appointment.status === 'cancelled' ? (
+                                                                                <button 
+                                                                                    className="delete-btn"
+                                                                                    onClick={() => handleDeleteAppointment(appointment._id)}
+                                                                                    title="Delete Appointment"
+                                                                                >
+                                                                                    <FaTrash />
+                                                                                </button>
+                                                                            ) : (
+                                                                                <>
+                                                                                    <button 
+                                                                                        className="reschedule-btn"
+                                                                                        onClick={() => handleEditAppointment(appointment)}
+                                                                                        title="Edit Appointment"
+                                                                                    >
+                                                                                        <FaEdit />
+                                                                                    </button>
+                                                                                    <button 
+                                                                                        className="cancel-btn"
+                                                                                        onClick={() => handleCancelAppointment(appointment._id)}
+                                                                                        title="Cancel"
+                                                                                    >
+                                                                                        <FaTimes />
+                                                                                    </button>
+                                                                                </>
+                                                                            )}
+                                                                        </td>
+                                                                    </tr>
+                                                                ))}
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 ) : (
                                                     <p>No appointments scheduled.</p>
