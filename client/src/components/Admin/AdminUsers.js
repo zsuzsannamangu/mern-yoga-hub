@@ -185,12 +185,12 @@ const AdminUsers = () => {
                 headers: { Authorization: `Bearer ${token}` },
             });
             
-            // Filter out past sessions and cancelled appointments, then sort upcoming bookings (same logic as user page)
+            // Filter out past sessions but keep cancelled appointments for admin to delete, then sort upcoming bookings
             const now = new Date();
             const sortedBookings = (response.data.bookedSlots || [])
                 .filter((slot) => {
                     const slotDateTime = new Date(`${slot.date}T${slot.time}`);
-                    return slotDateTime >= now && slot.status !== 'cancelled'; // Only show future/current sessions that aren't cancelled
+                    return slotDateTime >= now; // Show future/current sessions (including cancelled ones for admin to delete)
                 })
                 .sort((a, b) => {
                     const dateA = new Date(`${a.date}T${a.time}`);
@@ -473,6 +473,48 @@ const AdminUsers = () => {
         });
     };
 
+    // Handle delete appointment (permanently remove from database)
+    const handleDeleteAppointment = async (appointmentId) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This will permanently delete the appointment from the database. This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, keep it'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const token = localStorage.getItem('adminToken');
+                    await adminAxiosInstance.delete(`/api/admin/appointments/${appointmentId}`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Appointment Deleted',
+                        text: 'The appointment has been permanently deleted.',
+                        confirmButtonText: 'OK'
+                    });
+
+                    // Refresh appointments
+                    if (selectedUserId) {
+                        fetchAppointments(selectedUserId);
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to Delete Appointment',
+                        text: error.response?.data?.message || 'Please try again later.',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            }
+        });
+    };
+
     // Format time with timezone
     const formatTimeWithZone = (dateStr, timeStr) => {
         const [hour, minute] = timeStr.split(':');
@@ -613,20 +655,32 @@ const AdminUsers = () => {
                                                                     </span>
                                                                 </div>
                                                                 <div className="appointment-actions">
-                                                                    <button 
-                                                                        className="reschedule-btn"
-                                                                        onClick={() => handleEditAppointment(appointment)}
-                                                                        title="Edit Appointment"
-                                                                    >
-                                                                        <FaEdit />
-                                                                    </button>
-                                                                    <button 
-                                                                        className="cancel-btn"
-                                                                        onClick={() => handleCancelAppointment(appointment._id)}
-                                                                        title="Cancel"
-                                                                    >
-                                                                        <FaTimes />
-                                                                    </button>
+                                                                    {appointment.status === 'cancelled' ? (
+                                                                        <button 
+                                                                            className="delete-btn"
+                                                                            onClick={() => handleDeleteAppointment(appointment._id)}
+                                                                            title="Delete Appointment"
+                                                                        >
+                                                                            <FaTrash />
+                                                                        </button>
+                                                                    ) : (
+                                                                        <>
+                                                                            <button 
+                                                                                className="reschedule-btn"
+                                                                                onClick={() => handleEditAppointment(appointment)}
+                                                                                title="Edit Appointment"
+                                                                            >
+                                                                                <FaEdit />
+                                                                            </button>
+                                                                            <button 
+                                                                                className="cancel-btn"
+                                                                                onClick={() => handleCancelAppointment(appointment._id)}
+                                                                                title="Cancel"
+                                                                            >
+                                                                                <FaTimes />
+                                                                            </button>
+                                                                        </>
+                                                                    )}
                                                                     {!appointment.isAdminCreated && (
                                                                         <span className="user-created-label">User Booked</span>
                                                                     )}

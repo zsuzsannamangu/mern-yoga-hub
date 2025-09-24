@@ -505,4 +505,23 @@ router.put('/appointments/:id/cancel', authMiddleware, adminMiddleware, async (r
   }
 });
 
+// DELETE appointment (Admin only) - permanently remove from database
+router.delete('/appointments/:id', authMiddleware, adminMiddleware, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const appointment = await Booking.findById(id);
+    if (!appointment) {
+      return res.status(404).json({ message: 'Appointment not found.' });
+    }
+
+    await Booking.findByIdAndDelete(id);
+
+    res.status(200).json({ message: 'Appointment deleted successfully.' });
+  } catch (error) {
+    console.error('Error deleting appointment:', error);
+    res.status(500).json({ message: 'Failed to delete appointment.' });
+  }
+});
+
 module.exports = router;
