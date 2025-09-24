@@ -47,6 +47,17 @@ const AdminUsers = () => {
         city: '',
         zipcode: ''
     });
+    // Edit appointment states
+    const [showEditAppointmentForm, setShowEditAppointmentForm] = useState(false);
+    const [editingAppointment, setEditingAppointment] = useState(null);
+    const [editAppointmentData, setEditAppointmentData] = useState({
+        title: '',
+        date: '',
+        time: '',
+        length: '',
+        location: '',
+        link: ''
+    });
 
     // Fetch all users from the database
     const fetchUsers = async () => {
@@ -328,15 +339,77 @@ const AdminUsers = () => {
         }
     };
 
-    // Handle reschedule appointment
-    const handleRescheduleAppointment = async (appointmentId) => {
-        // For now, just show a placeholder - we'll implement this next
-        Swal.fire({
-            icon: 'info',
-            title: 'Reschedule Function',
-            text: 'Reschedule functionality will be implemented next.',
-            confirmButtonText: 'OK'
+    // Handle edit appointment button click
+    const handleEditAppointment = (appointment) => {
+        setEditingAppointment(appointment);
+        setEditAppointmentData({
+            title: appointment.title || '',
+            date: appointment.date || '',
+            time: appointment.time || '',
+            length: appointment.length || '',
+            location: appointment.location || '',
+            link: appointment.link || ''
         });
+        setShowEditAppointmentForm(true);
+    };
+
+    // Handle edit appointment form input changes
+    const handleEditAppointmentInputChange = (e) => {
+        const { name, value } = e.target;
+        setEditAppointmentData({ ...editAppointmentData, [name]: value });
+    };
+
+    // Handle edit appointment form submission
+    const handleUpdateAppointment = async (e) => {
+        e.preventDefault();
+        
+        if (!editAppointmentData.title || !editAppointmentData.date || !editAppointmentData.time || !editAppointmentData.length) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Missing Required Fields',
+                text: 'Please fill in title, date, time, and length.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('adminToken');
+            await adminAxiosInstance.put(`/api/admin/appointments/${editingAppointment._id}`, editAppointmentData, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Appointment Updated',
+                text: 'The appointment has been successfully updated.',
+                confirmButtonText: 'OK'
+            });
+
+            // Reset form and close modal
+            setEditAppointmentData({
+                title: '',
+                date: '',
+                time: '',
+                length: '',
+                location: '',
+                link: ''
+            });
+            setShowEditAppointmentForm(false);
+            setEditingAppointment(null);
+
+            // Refresh appointments for this user
+            if (editingAppointment && editingAppointment.userId) {
+                fetchAppointments(editingAppointment.userId);
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to Update Appointment',
+                text: error.response?.data?.message || 'Please try again later.',
+                confirmButtonText: 'OK'
+            });
+        }
     };
 
     // Handle cancel appointment
@@ -520,8 +593,8 @@ const AdminUsers = () => {
                                                                 <div className="appointment-actions">
                                                                     <button 
                                                                         className="reschedule-btn"
-                                                                        onClick={() => handleRescheduleAppointment(appointment._id)}
-                                                                        title="Reschedule"
+                                                                        onClick={() => handleEditAppointment(appointment)}
+                                                                        title="Edit Appointment"
                                                                     >
                                                                         <FaEdit />
                                                                     </button>
@@ -887,6 +960,108 @@ const AdminUsers = () => {
                                 </button>
                                 <button type="submit" className="submit-btn">
                                     Update User
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Edit Appointment Modal */}
+            {showEditAppointmentForm && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h3>Edit Appointment</h3>
+                            <button 
+                                className="close-btn" 
+                                onClick={() => setShowEditAppointmentForm(false)}
+                            >
+                                ×
+                            </button>
+                        </div>
+                        <form onSubmit={handleUpdateAppointment} className="add-appointment-form">
+                            <div className="form-group">
+                                <label htmlFor="editTitle">Title *</label>
+                                <select
+                                    id="editTitle"
+                                    name="title"
+                                    value={editAppointmentData.title}
+                                    onChange={handleEditAppointmentInputChange}
+                                    required
+                                >
+                                    <option value="">Select appointment type</option>
+                                    <option value="Yoga Therapy">Yoga Therapy</option>
+                                    <option value="Private Yoga">Private Yoga</option>
+                                </select>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label htmlFor="editDate">Date *</label>
+                                    <input
+                                        type="date"
+                                        id="editDate"
+                                        name="date"
+                                        value={editAppointmentData.date}
+                                        onChange={handleEditAppointmentInputChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="editTime">Time *</label>
+                                    <input
+                                        type="time"
+                                        id="editTime"
+                                        name="time"
+                                        value={editAppointmentData.time}
+                                        onChange={handleEditAppointmentInputChange}
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="editLength">Length *</label>
+                                <select
+                                    id="editLength"
+                                    name="length"
+                                    value={editAppointmentData.length}
+                                    onChange={handleEditAppointmentInputChange}
+                                    required
+                                >
+                                    <option value="">Select duration</option>
+                                    <option value="60 min">60 min</option>
+                                    <option value="75 min">75 min</option>
+                                    <option value="90 min">90 min</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="editLocation">Location</label>
+                                <input
+                                    type="text"
+                                    id="editLocation"
+                                    name="location"
+                                    value={editAppointmentData.location}
+                                    onChange={handleEditAppointmentInputChange}
+                                    placeholder="Physical address (e.g., 123 Main St, San Francisco)"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="editLink">Meeting Link</label>
+                                <input
+                                    type="url"
+                                    id="editLink"
+                                    name="link"
+                                    value={editAppointmentData.link}
+                                    onChange={handleEditAppointmentInputChange}
+                                    placeholder="Online meeting link (e.g., https://zoom.us/j/123456789)"
+                                />
+                            </div>
+                            <div className="form-actions">
+                                <button type="button" onClick={() => setShowEditAppointmentForm(false)} className="cancel-btn">
+                                    Cancel
+                                </button>
+                                <button type="submit" className="submit-btn">
+                                    Update Appointment
                                 </button>
                             </div>
                         </form>

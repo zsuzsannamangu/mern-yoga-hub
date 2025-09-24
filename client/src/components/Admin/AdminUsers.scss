@@ -71,7 +71,7 @@
             .edit-button,
             .add-appointment-btn,
             .delete-button {
-                background-color: $secondary-text-color;
+                background-color: $content-background-color;
                 color: $button-text-color;
                 border: none;
                 border-radius: 5px;
@@ -420,14 +420,16 @@
 }
 
 .appointment-details {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     gap: 15px;
     align-items: center;
-    flex-wrap: wrap;
+    flex: 1;
 
     strong {
         color: $text-color;
         font-family: $font-main;
+        font-weight: bold;
     }
 
     span {

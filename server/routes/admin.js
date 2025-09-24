@@ -446,6 +446,43 @@ router.put('/appointments/:id/reschedule', authMiddleware, adminMiddleware, asyn
   }
 });
 
+// PUT update appointment (Admin only)
+router.put('/appointments/:id', authMiddleware, adminMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const { title, date, time, length, location, link } = req.body;
+
+  try {
+    // Validate required fields
+    if (!title || !date || !time || !length) {
+      return res.status(400).json({ message: 'Title, date, time, and length are required.' });
+    }
+
+    const appointment = await Booking.findById(id);
+    if (!appointment) {
+      return res.status(404).json({ message: 'Appointment not found.' });
+    }
+
+    // Update appointment fields
+    appointment.title = title;
+    appointment.date = date;
+    appointment.time = time;
+    appointment.length = length;
+    appointment.location = location || '';
+    appointment.link = link || '';
+    appointment.status = 'rescheduled'; // Mark as rescheduled when edited
+
+    await appointment.save();
+
+    res.status(200).json({ 
+      message: 'Appointment updated successfully.', 
+      appointment 
+    });
+  } catch (error) {
+    console.error('Error updating appointment:', error);
+    res.status(500).json({ message: 'Failed to update appointment.' });
+  }
+});
+
 // PUT cancel appointment (Admin only)
 router.put('/appointments/:id/cancel', authMiddleware, adminMiddleware, async (req, res) => {
   const { id } = req.params;
