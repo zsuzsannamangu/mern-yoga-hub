@@ -85,7 +85,7 @@ function UserBookings() {
         return <div>Loading your bookings...</div>; // ✅ moved below the hook
     }
 
-    const formatTime = (time, date) => {
+    const formatTime = (date, time) => {
         if (!time || !date) return '';
         const [hour, minute] = time.split(':').map(Number);
         const [year, month, day] = date.split('-').map(Number);
@@ -137,12 +137,15 @@ function UserBookings() {
             const { availableSlots } = response.data;
             const now = new Date();
 
+            console.log('Raw available slots:', availableSlots);
+
             // Filter out past slots, same as UserBookNew
             const filteredSlots = availableSlots.filter((slot) => {
                 const slotDateTime = new Date(`${slot.date}T${slot.time}`);
                 return slotDateTime > now;
             });
 
+            console.log('Filtered available slots:', filteredSlots);
             setAvailableSlots(filteredSlots);
         } catch (error) {
             console.error('Error fetching available slots:', error);
@@ -366,26 +369,34 @@ function UserBookings() {
                                     <div className="time-selection">
                                         <h4>Available Times for {selectedDate.toLocaleDateString()}:</h4>
                                         <div className="time-slots">
-                                            {(() => {
-                                                const selectedDateStr = selectedDate.toISOString().split('T')[0];
-                                                const slotsForDate = availableSlots.filter(slot => slot.date === selectedDateStr);
-                                                
-                                                return slotsForDate.length > 0 ? (
-                                                    slotsForDate
-                                                        .sort((a, b) => a.time.localeCompare(b.time))
-                                                        .map((slot) => (
+                                        {(() => {
+                                            const selectedDateStr = selectedDate.toISOString().split('T')[0];
+                                            const slotsForDate = availableSlots.filter(slot => slot.date === selectedDateStr);
+                                            
+                                            console.log('Selected date string:', selectedDateStr);
+                                            console.log('Slots for date:', slotsForDate);
+                                            
+                                            return slotsForDate.length > 0 ? (
+                                                slotsForDate
+                                                    .sort((a, b) => a.time.localeCompare(b.time))
+                                                    .map((slot) => {
+                                                        console.log('Rendering slot:', slot);
+                                                        const formattedTime = formatTime(slot.date, slot.time);
+                                                        console.log('Formatted time:', formattedTime);
+                                                        return (
                                                             <button
                                                                 key={slot._id}
                                                                 className={`time-slot ${selectedSlot?._id === slot._id ? 'selected' : ''}`}
                                                                 onClick={() => setSelectedSlot(slot)}
                                                             >
-                                                                {formatTime(slot.date, slot.time)}
+                                                                {formattedTime}
                                                             </button>
-                                                        ))
-                                                ) : (
-                                                    <p className="no-slots-message">No available slots this day.</p>
-                                                );
-                                            })()}
+                                                        );
+                                                    })
+                                            ) : (
+                                                <p className="no-slots-message">No available slots this day.</p>
+                                            );
+                                        })()}
                                         </div>
                                     </div>
                                 )}
