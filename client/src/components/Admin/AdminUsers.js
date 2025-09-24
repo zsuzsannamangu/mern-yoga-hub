@@ -544,6 +544,40 @@ const AdminUsers = () => {
         });
     };
 
+    // Handle toggle intake form completion status
+    const handleToggleIntakeForm = async (userId, completed) => {
+        try {
+            const response = await adminAxiosInstance.put(`/api/admin/users/${userId}/intake-form`, {
+                intakeFormCompleted: completed
+            });
+
+            if (response.data.message) {
+                // Update the user in the local state
+                setUsers(users.map(user => 
+                    user._id === userId 
+                        ? { ...user, intakeFormCompleted: completed }
+                        : user
+                ));
+
+                Swal.fire({
+                    title: 'Success!',
+                    text: `Intake form marked as ${completed ? 'completed' : 'incomplete'}.`,
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            }
+        } catch (error) {
+            console.error('Error updating intake form status:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to update intake form status. Please try again.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    };
+
     // Format time with timezone
     const formatTimeWithZone = (dateStr, timeStr) => {
         const [hour, minute] = timeStr.split(':');
@@ -617,6 +651,7 @@ const AdminUsers = () => {
                             <th>Phone</th>
                             <th>Location</th>
                             <th>Zip</th>
+                            <th>Intake Form</th>
                             <th 
                                 className={`sortable ${sortBy === 'date' ? 'active' : ''}`}
                                 onClick={() => handleSortChange('date')}
@@ -637,6 +672,18 @@ const AdminUsers = () => {
                                     <td>{user.phone}</td>
                                     <td>{user.city}</td>
                                     <td>{user.zipcode}</td>
+                                    <td className="intake-form-status">
+                                        <button
+                                            className={`intake-form-toggle ${user.intakeFormCompleted ? 'completed' : 'pending'}`}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleToggleIntakeForm(user._id, !user.intakeFormCompleted);
+                                            }}
+                                            title={user.intakeFormCompleted ? 'Mark as incomplete' : 'Mark as complete'}
+                                        >
+                                            {user.intakeFormCompleted ? '✓' : '○'}
+                                        </button>
+                                    </td>
                                     <td>{new Date(user.createdAt).toLocaleString('en-US', {
                                         timeZone: 'America/Los_Angeles',
                                         dateStyle: 'medium',

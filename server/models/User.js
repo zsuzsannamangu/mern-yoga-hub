@@ -53,6 +53,10 @@ const UserSchema = new mongoose.Schema(
         tokenExpires: {
             type: Date, // Expiration date for the verification token
         },
+        intakeFormCompleted: {
+            type: Boolean,
+            default: false, // Track if user has completed the intake form
+        },
     },
     {
         timestamps: true, // Automatically add createdAt and updatedAt fields

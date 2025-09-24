@@ -767,3 +767,51 @@
     align-items: center;
     gap: 5px;
 }
+
+// Intake form toggle button
+.intake-form-status {
+    text-align: center;
+    
+    .intake-form-toggle {
+        background: none;
+        border: 2px solid $border-color;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        
+        &.completed {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: white;
+            
+            &:hover {
+                background-color: #218838;
+                border-color: #218838;
+            }
+        }
+        
+        &.pending {
+            background-color: #f8f9fa;
+            border-color: #6c757d;
+            color: #6c757d;
+            
+            &:hover {
+                background-color: #e9ecef;
+                border-color: #495057;
+                color: #495057;
+            }
+        }
+        
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+    }
+}

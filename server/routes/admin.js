@@ -278,6 +278,38 @@ router.delete('/users/:id', authMiddleware, adminMiddleware, async (req, res) =>
   }
 });
 
+// PUT update intake form completion status for a user (Admin only)
+router.put('/users/:id/intake-form', authMiddleware, adminMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const { intakeFormCompleted } = req.body;
+  
+  try {
+    const user = await User.findByIdAndUpdate(
+      id,
+      { intakeFormCompleted },
+      { new: true }
+    );
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+    
+    res.status(200).json({ 
+      message: 'Intake form status updated successfully.',
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        intakeFormCompleted: user.intakeFormCompleted
+      }
+    });
+  } catch (error) {
+    console.error('Error updating intake form status:', error);
+    res.status(500).json({ message: 'Server error while updating intake form status.' });
+  }
+});
+
 // GET all newsletter subscribers (Admin only)
 router.get('/subscribers', authMiddleware, adminMiddleware, async (req, res) => {
   try {
