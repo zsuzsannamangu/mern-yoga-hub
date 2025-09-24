@@ -138,6 +138,9 @@
   padding: 10px;
   background-color: $secondary-background-color;
   border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: visible;
 
   @media (max-width: $breakpoint-md) {
     gap: 2px; // Adjust gap for smaller screens
