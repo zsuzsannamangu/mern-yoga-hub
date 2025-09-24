@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useUserAuth } from './UserAuthContext';
 import axios from 'axios';
+import { userAxiosInstance } from '../../config/axiosConfig';
 import { FaClock, FaCalendarAlt, FaLink, FaLocationArrow, FaEnvelope, FaEdit } from 'react-icons/fa';
 import CalendarDays from '../Calendar/CalendarDays';
 import Swal from 'sweetalert2';
@@ -23,7 +24,7 @@ function UserBookings() {
         
         const fetchBookings = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API}/api/bookings`, {
+                const response = await userAxiosInstance.get('/api/bookings', {
                     params: { userId: user.id },
                 });
 
@@ -191,14 +192,10 @@ function UserBookings() {
                 newTime: selectedSlot.time
             });
 
-            const response = await axios.put(`${process.env.REACT_APP_API}/api/bookings/${reschedulingBooking._id}/reschedule`, {
+            const response = await userAxiosInstance.put(`/api/bookings/${reschedulingBooking._id}/reschedule`, {
                 newSlotId: selectedSlot._id,
                 newDate: selectedSlot.date,
                 newTime: selectedSlot.time
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
             });
 
             if (response.data.success) {
@@ -281,7 +278,7 @@ function UserBookings() {
                         <div className="booking-details">
                             <div className="booking-info">
                                 <FaCalendarAlt className="icon" />
-                                <span>{`${formatDate(booking.date)} at ${formatTime(booking.time, booking.date)}`}</span>
+                                <span>{`${formatDate(booking.date)} at ${formatTime(booking.date, booking.time)}`}</span>
                             </div>
                             <div className="booking-info">
                                 <FaClock className="icon" />
