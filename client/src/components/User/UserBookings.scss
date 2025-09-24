@@ -165,14 +165,14 @@
     z-index: 1000;
 }
 
-.reschedule-modal {
-    background: white;
-    border-radius: 8px;
-    max-width: 800px;
-    width: 90%;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    .reschedule-modal {
+        background: white;
+        border-radius: 8px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 
     .reschedule-modal-header {
         display: flex;
@@ -231,14 +231,21 @@
             h4 {
                 margin: 0 0 15px 0;
                 color: $text-color;
+                text-align: center;
             }
 
             .calendar-container {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+
                 .calendar-header {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
                     margin-bottom: 15px;
+                    width: 100%;
+                    max-width: 300px;
 
                     .month-nav-button {
                         background: $tertiary-text-color;
@@ -258,6 +265,8 @@
                         margin: 0;
                         color: $text-color;
                         font-size: 18px;
+                        text-align: center;
+                        flex: 1;
                     }
                 }
             }
@@ -269,12 +278,14 @@
             h4 {
                 margin: 0 0 15px 0;
                 color: $text-color;
+                text-align: center;
             }
 
             .time-slots {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 10px;
+                justify-content: center;
 
                 .time-slot {
                     background: #f8f9fa;
@@ -301,6 +312,8 @@
                 .no-slots-message {
                     color: $text-color;
                     font-style: italic;
+                    text-align: center;
+                    width: 100%;
                 }
             }
         }
