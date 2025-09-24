@@ -185,12 +185,12 @@ const AdminUsers = () => {
                 headers: { Authorization: `Bearer ${token}` },
             });
             
-            // Filter out past sessions and sort upcoming bookings (same logic as user page)
+            // Filter out past sessions and cancelled appointments, then sort upcoming bookings (same logic as user page)
             const now = new Date();
             const sortedBookings = (response.data.bookedSlots || [])
                 .filter((slot) => {
                     const slotDateTime = new Date(`${slot.date}T${slot.time}`);
-                    return slotDateTime >= now; // Only show future/current sessions
+                    return slotDateTime >= now && slot.status !== 'cancelled'; // Only show future/current sessions that aren't cancelled
                 })
                 .sort((a, b) => {
                     const dateA = new Date(`${a.date}T${a.time}`);

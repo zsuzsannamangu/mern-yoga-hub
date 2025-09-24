@@ -19,11 +19,11 @@ function UserBookings() {
 
                 const now = new Date();
 
-                // Filter out past sessions and sort upcoming bookings
+                // Filter out past sessions and cancelled appointments, then sort upcoming bookings
                 const sortedBookings = (response.data.bookedSlots || [])
                     .filter((slot) => {
                         const slotDateTime = new Date(`${slot.date}T${slot.time}`);
-                        return slotDateTime >= now; // Only show future/current sessions
+                        return slotDateTime >= now && slot.status !== 'cancelled'; // Only show future/current sessions that aren't cancelled
                     })
                     .sort((a, b) => {
                         const dateA = new Date(`${a.date}T${a.time}`);
