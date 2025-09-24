@@ -24,8 +24,11 @@ function UserBookings() {
         
         const fetchBookings = async () => {
             try {
-                const response = await userAxiosInstance.get('/api/bookings', {
-                    params: { userId: user.id }
+                const response = await axios.get(`${process.env.REACT_APP_API}/api/bookings`, {
+                    params: { userId: user.id },
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+                    }
                 });
 
                 console.log('User bookings raw response:', response.data);
@@ -192,10 +195,14 @@ function UserBookings() {
                 newTime: selectedSlot.time
             });
 
-            const response = await userAxiosInstance.put(`/api/bookings/${reschedulingBooking._id}/reschedule`, {
+            const response = await axios.put(`${process.env.REACT_APP_API}/api/bookings/${reschedulingBooking._id}/reschedule`, {
                 newSlotId: selectedSlot._id,
                 newDate: selectedSlot.date,
                 newTime: selectedSlot.time
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+                }
             });
 
             if (response.data.success) {
