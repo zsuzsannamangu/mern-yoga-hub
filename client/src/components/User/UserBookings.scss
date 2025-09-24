@@ -75,46 +75,75 @@
 
         .booking-footer {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 10px;
             margin-top: 10px;
             border-top: 1px solid $border-color;
             padding-top: 10px;
 
-            a {
+            .booking-actions {
                 display: flex;
+                justify-content: space-between;
                 align-items: center;
-                text-decoration: none;
-                font-size: 0.9rem;
-                color: $text-color;
+                gap: 10px;
 
-                @media (max-width: 480px) {
-                    font-size: 0.8rem;
-                }
-
-                &:hover {
-                    text-decoration: underline;
-                }
-
-                .icon {
-                    margin-right: 5px;
-                    color: $primary-button-color;
-                }
-
-                &.disabled-link {
-                    color: grey;
-                    pointer-events: none;
-                }
-
-                &.meeting-link {
-                    color: $primary-button-color;
-                    text-decoration: none;
-                    font-weight: bold;
-                    transition: color 0.3s ease;
+                .reschedule-btn {
+                    background-color: $tertiary-text-color;
+                    color: white;
+                    border: none;
+                    padding: 8px 12px;
+                    border-radius: 4px;
+                    font-size: 0.9rem;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    transition: background-color 0.3s ease;
 
                     &:hover {
-                        color: $primary-button-hover-color;
+                        background-color: $primary-button-hover-color;
+                    }
+
+                    .icon {
+                        font-size: 0.8rem;
+                    }
+                }
+
+                a {
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    font-size: 0.9rem;
+                    color: $text-color;
+
+                    @media (max-width: 480px) {
+                        font-size: 0.8rem;
+                    }
+
+                    &:hover {
                         text-decoration: underline;
+                    }
+
+                    .icon {
+                        margin-right: 5px;
+                        color: $primary-button-color;
+                    }
+
+                    &.disabled-link {
+                        color: grey;
+                        pointer-events: none;
+                    }
+
+                    &.meeting-link {
+                        color: $primary-button-color;
+                        text-decoration: none;
+                        font-weight: bold;
+                        transition: color 0.3s ease;
+
+                        &:hover {
+                            color: $primary-button-hover-color;
+                            text-decoration: underline;
+                        }
                     }
                 }
             }
@@ -129,8 +158,231 @@
     }
 }
 
+// Reschedule Modal Styles
+.reschedule-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.reschedule-modal {
+    background: white;
+    border-radius: 8px;
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+    .reschedule-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid $border-color;
+
+        h3 {
+            margin: 0;
+            color: $text-color;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: $text-color;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                color: $primary-button-color;
+            }
+        }
+    }
+
+    .reschedule-modal-content {
+        padding: 20px;
+
+        .current-appointment {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+
+            h4 {
+                margin: 0 0 10px 0;
+                color: $text-color;
+            }
+
+            p {
+                margin: 5px 0;
+                color: $text-color;
+            }
+        }
+
+        .calendar-section {
+            margin-bottom: 20px;
+
+            h4 {
+                margin: 0 0 15px 0;
+                color: $text-color;
+            }
+
+            .calendar-container {
+                .calendar-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 15px;
+
+                    .month-nav-button {
+                        background: $tertiary-text-color;
+                        color: white;
+                        border: none;
+                        padding: 8px 12px;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        font-size: 16px;
+
+                        &:hover {
+                            background: $primary-button-hover-color;
+                        }
+                    }
+
+                    h2 {
+                        margin: 0;
+                        color: $text-color;
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+
+        .time-selection {
+            margin-bottom: 20px;
+
+            h4 {
+                margin: 0 0 15px 0;
+                color: $text-color;
+            }
+
+            .time-slots {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+
+                .time-slot {
+                    background: #f8f9fa;
+                    border: 1px solid $border-color;
+                    padding: 8px 16px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    font-size: 14px;
+
+                    &:hover {
+                        background: $primary-button-color;
+                        color: white;
+                        border-color: $primary-button-color;
+                    }
+
+                    &.selected {
+                        background: $primary-button-color;
+                        color: white;
+                        border-color: $primary-button-color;
+                    }
+                }
+
+                .no-slots-message {
+                    color: $text-color;
+                    font-style: italic;
+                }
+            }
+        }
+
+        .reschedule-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid $border-color;
+
+            .cancel-btn {
+                background: #6c757d;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+
+                &:hover {
+                    background: #5a6268;
+                }
+            }
+
+            .reschedule-submit-btn {
+                background: $primary-button-color;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+
+                &:hover:not(:disabled) {
+                    background: $primary-button-hover-color;
+                }
+
+                &:disabled {
+                    background: #6c757d;
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}
+
 @media (max-width: 480px) {
     .booking-footer a{
         font-size: 0.7rem;
+    }
+
+    .reschedule-modal {
+        width: 95%;
+        margin: 10px;
+
+        .reschedule-modal-content {
+            padding: 15px;
+
+            .time-slots {
+                .time-slot {
+                    padding: 6px 12px;
+                    font-size: 12px;
+                }
+            }
+
+            .reschedule-actions {
+                flex-direction: column;
+
+                .cancel-btn,
+                .reschedule-submit-btn {
+                    width: 100%;
+                }
+            }
+        }
     }
 }

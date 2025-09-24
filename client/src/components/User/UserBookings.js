@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useUserAuth } from './UserAuthContext';
 import axios from 'axios';
-import { FaClock, FaCalendarAlt, FaLink, FaLocationArrow, FaEnvelope } from 'react-icons/fa';
+import { FaClock, FaCalendarAlt, FaLink, FaLocationArrow, FaEnvelope, FaEdit } from 'react-icons/fa';
+import CalendarDays from '../Calendar/CalendarDays';
+import Swal from 'sweetalert2';
 import './UserBookings.scss';
 
 function UserBookings() {
     const { user } = useUserAuth();
     const [bookings, setBookings] = useState([]);
+    const [showRescheduleModal, setShowRescheduleModal] = useState(false);
+    const [reschedulingBooking, setReschedulingBooking] = useState(null);
+    const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+    const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [availableSlots, setAvailableSlots] = useState([]);
+    const [selectedSlot, setSelectedSlot] = useState(null);
 
     useEffect(() => {
         if (!user) return;
@@ -86,6 +95,113 @@ function UserBookings() {
         return sessionType;
     };
 
+    // Handle reschedule button click
+    const handleReschedule = (booking) => {
+        setReschedulingBooking(booking);
+        setShowRescheduleModal(true);
+        setSelectedDate(null);
+        setSelectedSlot(null);
+        fetchAvailableSlots();
+    };
+
+    // Fetch available slots for rescheduling
+    const fetchAvailableSlots = async () => {
+        try {
+            const response = await axios.get(`${process.env.REACT_APP_API}/api/bookings/available`);
+            setAvailableSlots(response.data.availableSlots || []);
+        } catch (error) {
+            console.error('Error fetching available slots:', error);
+        }
+    };
+
+    // Handle month navigation
+    const handlePrevMonth = () => {
+        if (currentMonth === 0) {
+            setCurrentMonth(11);
+            setCurrentYear(currentYear - 1);
+        } else {
+            setCurrentMonth(currentMonth - 1);
+        }
+    };
+
+    const handleNextMonth = () => {
+        if (currentMonth === 11) {
+            setCurrentMonth(0);
+            setCurrentYear(currentYear + 1);
+        } else {
+            setCurrentMonth(currentMonth + 1);
+        }
+    };
+
+    // Handle reschedule submission
+    const handleRescheduleSubmit = async () => {
+        if (!selectedSlot || !reschedulingBooking) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Selection Required',
+                text: 'Please select a new date and time for your appointment.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        try {
+            const response = await axios.put(`${process.env.REACT_APP_API}/api/bookings/${reschedulingBooking._id}/reschedule`, {
+                newSlotId: selectedSlot._id,
+                newDate: selectedSlot.date,
+                newTime: selectedSlot.time
+            });
+
+            if (response.data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Appointment Rescheduled',
+                    text: 'Your appointment has been successfully rescheduled. You will receive a confirmation email shortly.',
+                    confirmButtonText: 'OK'
+                });
+
+                // Refresh bookings
+                const bookingsResponse = await axios.get(`${process.env.REACT_APP_API}/api/bookings`, {
+                    params: { userId: user.id },
+                });
+
+                const now = new Date();
+                const sortedBookings = (bookingsResponse.data.bookedSlots || [])
+                    .filter((slot) => {
+                        const slotDateTime = new Date(`${slot.date}T${slot.time}`);
+                        const isFuture = slotDateTime >= now;
+                        const notCancelled = slot.status !== 'cancelled';
+                        return isFuture && notCancelled;
+                    })
+                    .sort((a, b) => {
+                        const dateA = new Date(`${a.date}T${a.time}`);
+                        const dateB = new Date(`${b.date}T${b.time}`);
+                        return dateA - dateB;
+                    });
+                
+                setBookings(sortedBookings);
+                setShowRescheduleModal(false);
+                setReschedulingBooking(null);
+            }
+        } catch (error) {
+            console.error('Error rescheduling appointment:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Reschedule Failed',
+                text: error.response?.data?.message || 'Failed to reschedule appointment. Please try again.',
+                confirmButtonText: 'OK'
+            });
+        }
+    };
+
+    // Close reschedule modal
+    const closeRescheduleModal = () => {
+        setShowRescheduleModal(false);
+        setReschedulingBooking(null);
+        setSelectedDate(null);
+        setSelectedSlot(null);
+    };
+
     return (
         <div className="user-bookings">
             <h3 className="section-title">Booked Sessions</h3>
@@ -128,14 +244,112 @@ function UserBookings() {
                                     <FaLocationArrow className="icon" /> Location/link TBD
                                 </div>
                             )}
-                            <a href="/contact">
-                                <FaEnvelope className="icon" /> Need to cancel? Email me!
-                            </a>
+                            <div className="booking-actions">
+                                <button 
+                                    className="reschedule-btn"
+                                    onClick={() => handleReschedule(booking)}
+                                    title="Reschedule Appointment"
+                                >
+                                    <FaEdit className="icon" /> Reschedule
+                                </button>
+                                <a href="/contact">
+                                    <FaEnvelope className="icon" /> Need to cancel? Email me!
+                                </a>
+                            </div>
                         </div>
                     </div>
                 ))
             ) : (
                 <p>No bookings yet.</p>
+            )}
+
+            {/* Reschedule Modal */}
+            {showRescheduleModal && (
+                <div className="reschedule-modal-overlay">
+                    <div className="reschedule-modal">
+                        <div className="reschedule-modal-header">
+                            <h3>Reschedule Appointment</h3>
+                            <button className="close-btn" onClick={closeRescheduleModal}>
+                                ×
+                            </button>
+                        </div>
+                        <div className="reschedule-modal-content">
+                            <div className="current-appointment">
+                                <h4>Current Appointment:</h4>
+                                <p><strong>{normalizeSessionType(reschedulingBooking?.title || reschedulingBooking?.sessionType)}</strong></p>
+                                <p>{formatDate(reschedulingBooking?.date)} at {formatTime(reschedulingBooking?.time, reschedulingBooking?.date)}</p>
+                            </div>
+                            
+                            <div className="calendar-section">
+                                <h4>Select New Date & Time:</h4>
+                                <div className="calendar-container">
+                                    <div className="calendar-header">
+                                        <button className="month-nav-button" onClick={handlePrevMonth}>
+                                            {'<'}
+                                        </button>
+                                        <h2>
+                                            {new Date(currentYear, currentMonth).toLocaleString('default', {
+                                                month: 'long',
+                                                year: 'numeric',
+                                            })}
+                                        </h2>
+                                        <button className="month-nav-button" onClick={handleNextMonth}>
+                                            {'>'}
+                                        </button>
+                                    </div>
+                                    <CalendarDays
+                                        day={new Date(currentYear, currentMonth, 1)}
+                                        month={currentMonth}
+                                        year={currentYear}
+                                        changeCurrentDay={(day) =>
+                                            setSelectedDate(new Date(day.year, day.month, day.number))
+                                        }
+                                        highlightedSlots={availableSlots.map((slot) => slot.date)}
+                                    />
+                                </div>
+                            </div>
+
+                            {selectedDate && (
+                                <div className="time-selection">
+                                    <h4>Available Times for {selectedDate.toLocaleDateString()}:</h4>
+                                    <div className="time-slots">
+                                        {availableSlots.filter(
+                                            (slot) => slot.date === selectedDate?.toISOString().split('T')[0]
+                                        ).length > 0 ? (
+                                            availableSlots
+                                                .filter((slot) => slot.date === selectedDate?.toISOString().split('T')[0])
+                                                .sort((a, b) => a.time.localeCompare(b.time))
+                                                .map((slot) => (
+                                                    <button
+                                                        key={slot._id}
+                                                        className={`time-slot ${selectedSlot?._id === slot._id ? 'selected' : ''}`}
+                                                        onClick={() => setSelectedSlot(slot)}
+                                                    >
+                                                        {formatTime(slot.date, slot.time)}
+                                                    </button>
+                                                ))
+                                        ) : (
+                                            <p className="no-slots-message">No available slots this day.</p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="reschedule-actions">
+                                <button className="cancel-btn" onClick={closeRescheduleModal}>
+                                    Cancel
+                                </button>
+                                <button 
+                                    className="reschedule-submit-btn" 
+                                    onClick={handleRescheduleSubmit}
+                                    disabled={!selectedSlot}
+                                >
+                                    Reschedule Appointment
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );

@@ -227,5 +227,134 @@ module.exports = (io) => {
         }
     });
 
+    // PUT: Reschedule an appointment
+    router.put('/:id/reschedule', authMiddleware, async (req, res) => {
+        const { id } = req.params;
+        const { newSlotId, newDate, newTime } = req.body;
+
+        try {
+            // Find the current booking
+            const currentBooking = await Booking.findById(id);
+            if (!currentBooking) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Booking not found'
+                });
+            }
+
+            // Find the new slot
+            const newSlot = await Booking.findById(newSlotId);
+            if (!newSlot) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'New time slot not found'
+                });
+            }
+
+            if (newSlot.isBooked) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Selected time slot is no longer available'
+                });
+            }
+
+            // Update the current booking with new date/time
+            currentBooking.date = newDate;
+            currentBooking.time = newTime;
+            currentBooking.status = 'rescheduled';
+            await currentBooking.save();
+
+            // Mark the new slot as booked
+            newSlot.isBooked = true;
+            newSlot.userId = currentBooking.userId;
+            newSlot.firstName = currentBooking.firstName;
+            newSlot.lastName = currentBooking.lastName;
+            newSlot.email = currentBooking.email;
+            newSlot.sessionType = currentBooking.sessionType;
+            newSlot.title = currentBooking.title;
+            newSlot.length = currentBooking.length;
+            newSlot.duration = currentBooking.duration;
+            newSlot.location = currentBooking.location;
+            newSlot.link = currentBooking.link;
+            newSlot.message = currentBooking.message;
+            newSlot.isAdminCreated = currentBooking.isAdminCreated;
+            newSlot.status = 'scheduled';
+            await newSlot.save();
+
+            // Format time for email
+            const [hour, minute] = newTime.split(':');
+            const newDateTime = new Date(`${newDate}T${newTime}`);
+            const formattedTime = newDateTime.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true,
+                timeZoneName: 'short'
+            });
+
+            // Send reschedule confirmation email to user
+            const userEmail = {
+                to: currentBooking.email,
+                from: process.env.SENDGRID_FROM_EMAIL,
+                subject: 'Appointment Rescheduled - Yoga with Zsuzsanna',
+                text: `Dear ${currentBooking.firstName},\n\nYour appointment has been rescheduled to ${newDate} at ${formattedTime}.\n\nIf you have any questions, please don't hesitate to contact me.\n\nWarm regards,\nZsuzsanna`,
+                html: `
+                    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                        <p>Dear ${currentBooking.firstName},</p>
+                        <p>Your appointment has been rescheduled to <strong>${newDate} at ${formattedTime}</strong>.</p>
+                        <p>If you have any questions, please don't hesitate to contact me.</p>
+                        <p>Warm regards,<br>Zsuzsanna</p>
+                    </div>
+                `
+            };
+
+            // Send reschedule notification email to admin
+            const adminEmail = {
+                to: process.env.SENDGRID_FROM_EMAIL,
+                from: process.env.SENDGRID_FROM_EMAIL,
+                subject: 'Appointment Rescheduled - Yoga with Zsuzsanna',
+                text: `Appointment rescheduled:\n\nClient: ${currentBooking.firstName} ${currentBooking.lastName}\nEmail: ${currentBooking.email}\nSession Type: ${currentBooking.title || currentBooking.sessionType}\nNew Date: ${newDate}\nNew Time: ${formattedTime}\n\nPrevious Date: ${currentBooking.date}\nPrevious Time: ${currentBooking.time}`,
+                html: `
+                    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                        <h3>Appointment Rescheduled</h3>
+                        <p><strong>Client:</strong> ${currentBooking.firstName} ${currentBooking.lastName}</p>
+                        <p><strong>Email:</strong> ${currentBooking.email}</p>
+                        <p><strong>Session Type:</strong> ${currentBooking.title || currentBooking.sessionType}</p>
+                        <p><strong>New Date:</strong> ${newDate}</p>
+                        <p><strong>New Time:</strong> ${formattedTime}</p>
+                        <p><strong>Previous Date:</strong> ${currentBooking.date}</p>
+                        <p><strong>Previous Time:</strong> ${currentBooking.time}</p>
+                    </div>
+                `
+            };
+
+            // Send emails
+            try {
+                await sgMail.send(userEmail);
+            } catch (error) {
+                console.error('Error sending user reschedule email:', error.message);
+            }
+
+            try {
+                await sgMail.send(adminEmail);
+            } catch (error) {
+                console.error('Error sending admin reschedule email:', error.message);
+            }
+
+            return res.status(200).json({
+                success: true,
+                message: 'Appointment rescheduled successfully',
+                booking: currentBooking
+            });
+
+        } catch (error) {
+            console.error('Error rescheduling appointment:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Failed to reschedule appointment',
+                error: error.message
+            });
+        }
+    });
+
     return router;
 };
