@@ -24,16 +24,17 @@ function UserBookings() {
         
         const fetchBookings = async () => {
             try {
-                const response = await userAxiosInstance.get('/api/bookings', {
-                    params: { userId: user.id },
-                });
+                const response = await userAxiosInstance.get('/api/bookings');
 
                 console.log('User bookings raw response:', response.data);
 
                 const now = new Date();
 
                 // Filter out past sessions and cancelled appointments, then sort upcoming bookings
-                const sortedBookings = (response.data.bookedSlots || [])
+                const allSlots = response.data.bookedSlots || [];
+                const userBookings = allSlots.filter(slot => slot.userId === user.id);
+                
+                const sortedBookings = userBookings
                     .filter((slot) => {
                         const slotDateTime = new Date(`${slot.date}T${slot.time}`);
                         const isFuture = slotDateTime >= now;
