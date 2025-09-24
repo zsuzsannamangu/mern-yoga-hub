@@ -555,8 +555,9 @@
 
 .appointment-actions {
     display: flex;
-    gap: 16px;
+    gap: 12px !important;
     justify-content: center;
+    align-items: center;
 
     .reschedule-btn {
         background-color: #ffc107;
@@ -567,6 +568,7 @@
         cursor: pointer;
         font-size: 12px;
         transition: background-color 0.3s ease;
+        margin-right: 8px;
 
         &:hover {
             background-color: #e0a800;
@@ -587,6 +589,7 @@
         cursor: pointer;
         font-size: 12px;
         transition: background-color 0.3s ease;
+        margin-left: 8px;
 
         &:hover {
             background-color: #c82333;
@@ -747,7 +750,7 @@
 
 // Meeting link and location styles
 .meeting-link {
-    color: $primary-button-color;
+    color: $text-color;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
