@@ -103,7 +103,7 @@ function UserBookings() {
                                 </div>
                             ) : (
                                 <div className="location-info">
-                                    <FaLocationArrow className="icon" /> Location TBD
+                                    <FaLocationArrow className="icon" /> Location/link TBD
                                 </div>
                             )}
                             <a href="/contact">

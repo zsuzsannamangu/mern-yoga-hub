@@ -358,10 +358,10 @@ const AdminUsers = () => {
     const handleEditAppointment = (appointment) => {
         setEditingAppointment(appointment);
         setEditAppointmentData({
-            title: appointment.title || '',
+            title: appointment.title || appointment.sessionType || '',
             date: appointment.date || '',
             time: appointment.time || '',
-            length: appointment.length || '',
+            length: appointment.length || appointment.duration || '',
             location: appointment.location || '',
             link: appointment.link || ''
         });
@@ -613,24 +613,20 @@ const AdminUsers = () => {
                                                                     </span>
                                                                 </div>
                                                                 <div className="appointment-actions">
-                                                                    {appointment.isAdminCreated && (
-                                                                        <>
-                                                                            <button 
-                                                                                className="reschedule-btn"
-                                                                                onClick={() => handleEditAppointment(appointment)}
-                                                                                title="Edit Appointment"
-                                                                            >
-                                                                                <FaEdit />
-                                                                            </button>
-                                                                            <button 
-                                                                                className="cancel-btn"
-                                                                                onClick={() => handleCancelAppointment(appointment._id)}
-                                                                                title="Cancel"
-                                                                            >
-                                                                                <FaTimes />
-                                                                            </button>
-                                                                        </>
-                                                                    )}
+                                                                    <button 
+                                                                        className="reschedule-btn"
+                                                                        onClick={() => handleEditAppointment(appointment)}
+                                                                        title="Edit Appointment"
+                                                                    >
+                                                                        <FaEdit />
+                                                                    </button>
+                                                                    <button 
+                                                                        className="cancel-btn"
+                                                                        onClick={() => handleCancelAppointment(appointment._id)}
+                                                                        title="Cancel"
+                                                                    >
+                                                                        <FaTimes />
+                                                                    </button>
                                                                     {!appointment.isAdminCreated && (
                                                                         <span className="user-created-label">User Booked</span>
                                                                     )}

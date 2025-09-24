@@ -464,9 +464,11 @@ router.put('/appointments/:id', authMiddleware, adminMiddleware, async (req, res
 
     // Update appointment fields
     appointment.title = title;
+    appointment.sessionType = title; // Also update sessionType for user-created appointments
     appointment.date = date;
     appointment.time = time;
     appointment.length = length;
+    appointment.duration = length; // Also update duration for user-created appointments
     appointment.location = location || '';
     appointment.link = link || '';
     appointment.status = 'rescheduled'; // Mark as rescheduled when edited
