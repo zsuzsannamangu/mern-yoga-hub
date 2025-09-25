@@ -131,7 +131,7 @@
     padding: 0; // Ensure no padding
     position: relative;
     background-image: url('/../public/images/yoga/Zsuzsi_Yogahome_cut.jpg');
-    background-size: cover; // Adjust to fill the container
+    background-size: contain; // Show the full image without cropping
     background-repeat: no-repeat;
     background-position: center;
     height: 100vh; // Ensure it spans the full viewport height
@@ -141,14 +141,17 @@
 
     @media (max-width: 768px) {
       background-image: url('/../public/images/yoga/Zsuzsi_About_22.jpg');
-      height: 120vh;
+      background-size: contain;
+      height: 100vh;
     }
 
     @media (min-width: 769px) and (max-width: 1024px) {
+      background-size: contain;
       width: 100vh;
     }
 
     @media (width: 1024px) and (height: 600px) {
+      background-size: contain;
       width: 200vh;
       height: 80vh;
     }
