@@ -177,14 +177,14 @@ button:disabled {
 }
 
 button:disabled:hover {
-  background-color: #545452 !important;
+  background-color: $tertiary-background-color !important;
 }
 
 .add-to-cart-button,
 .details-button {
   background-color: $purple-light;
   /* Match your existing color scheme */
-  color: #ffffff;
+  color: $button-text-color;
   border: none;
   padding: 8px 12px;
   font-size: 14px;
@@ -235,7 +235,7 @@ button:disabled:hover {
     font-weight: 600;
     transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease;
     background: $tertiary-background-color;
-    color: #fff;
+    color: $button-text-color;
     white-space: nowrap;
 
     &:hover {

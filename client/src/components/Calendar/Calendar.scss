@@ -65,7 +65,7 @@
   width: 70%;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: $background-color;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -127,7 +127,7 @@
   padding: 10px;
   text-align: center;
   border-radius: 4px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid $border-color;
   background-color: $background-color;
   position: relative;
 }
@@ -147,7 +147,7 @@
 }
 
 .calendar-day:hover {
-  background-color: #f0f0f0;
+  background-color: $content-background-color;
   cursor: pointer;
 }
 
@@ -168,7 +168,7 @@
 .availability-section {
   width: 25%;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: $secondary-background-color;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -203,11 +203,11 @@
 .past-event {
   opacity: 0.6;
   pointer-events: none; /* Prevent interaction */
-  color: #999; /* Grey color for text */
+  color: $secondary-text-color; /* Grey color for text */
 }
 
 .disabled-link {
-  color: #bbb; /* Grey color for disabled links */
+  color: $tertiary-text-color; /* Grey color for disabled links */
   text-decoration: none;
   cursor: not-allowed; /* Show a "not allowed" cursor */
 }

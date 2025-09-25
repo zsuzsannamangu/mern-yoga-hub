@@ -128,7 +128,7 @@
                     display: flex;
                     align-items: center;
                     gap: 0.5rem;
-                    color: #4e3d31; // adjust to your brand color
+                    color: $text-color; // adjust to your brand color
                     cursor: pointer;
 
                     input[type="checkbox"] {
@@ -138,7 +138,7 @@
                     }
 
                     &:hover {
-                        color: #3b2d26;
+                        color: $text-color;
                     }
                 }
             }

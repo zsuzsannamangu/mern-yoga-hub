@@ -2,7 +2,7 @@
 
 /* Footer container */
 .footer {
-    background-color: $background-color; // Background color from variables
+    background: $gradient-soft; // Beautiful gradient background
     padding: 20px 0; // Vertical padding
     text-align: center; // Center-align all text
     box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); // Subtle shadow for depth

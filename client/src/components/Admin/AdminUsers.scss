@@ -434,20 +434,20 @@
 
     // Force all table cells to have dark text unless cancelled
     td {
-        color: #212529 !important;
+        color: $text-color !important;
     }
 
     thead {
         display: table-header-group;
-        background-color: #f8f9fa;
+        background-color: $secondary-background-color;
         
         th {
             padding: 12px 8px;
             text-align: left;
             font-weight: 600;
             font-size: 14px;
-            color: #495057;
-            border-bottom: 2px solid #dee2e6;
+            color: $text-color;
+            border-bottom: 2px solid $border-color;
             display: table-cell;
             
             &:nth-child(1) { width: 20%; } // Title
@@ -465,21 +465,21 @@
         
         tr {
             display: table-row;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid $border-color;
             transition: background-color 0.2s ease;
 
             &:hover {
-                background-color: #f8f9fa;
+                background-color: $secondary-background-color;
             }
 
             &.cancelled {
                 opacity: 0.7;
-                background-color: #f8f9fa;
+                background-color: $secondary-background-color;
                 
                 .appointment-date,
                 .appointment-time,
                 .appointment-length {
-                    color: #6c757d;
+                    color: $secondary-text-color;
                 }
             }
         }
@@ -489,30 +489,30 @@
             padding: 12px 8px;
             font-size: 14px;
             vertical-align: middle;
-            color: #212529 !important;
+            color: $text-color !important;
         }
     }
 }
 
 .appointment-title {
     font-weight: 600;
-    color: #212529;
+    color: $text-color;
 }
 
 .appointment-date {
-    color: #212529 !important;
+    color: $text-color !important;
     font-size: 13px;
     font-weight: 500;
 }
 
 .appointment-time {
-    color: #212529 !important;
+    color: $text-color !important;
     font-size: 13px;
     font-weight: 500;
 }
 
 .appointment-length {
-    color: #212529 !important;
+    color: $text-color !important;
     font-size: 13px;
     font-weight: 500;
 }
@@ -533,7 +533,7 @@
 
 .appointment-status {
     .cancelled-badge {
-        background-color: #dc3545;
+        background-color: $delete-button;
         color: white;
         font-size: 10px;
         font-weight: bold;
@@ -543,7 +543,7 @@
     }
     
     .active-status {
-        background-color: #28a745;
+        background-color: $green-color;
         color: white;
         font-size: 10px;
         font-weight: bold;
@@ -560,8 +560,8 @@
     align-items: center;
 
     .reschedule-btn {
-        background-color: #ffc107;
-        color: #000;
+        background: $gradient-warm;
+        color: $text-color;
         border: none;
         padding: 6px 8px;
         border-radius: 4px;
@@ -571,7 +571,7 @@
         margin-right: 8px;
 
         &:hover {
-            background-color: #e0a800;
+            background: $gradient-purple;
         }
 
         svg {
@@ -581,7 +581,7 @@
     }
 
     .cancel-btn {
-        background-color: #dc3545;
+        background-color: $delete-button;
         color: white;
         border: none;
         padding: 6px 8px;
@@ -592,7 +592,7 @@
         margin-left: 8px;
 
         &:hover {
-            background-color: #c82333;
+            background-color: $delete-button-hover;
         }
 
         svg {
@@ -602,7 +602,7 @@
     }
 
     .delete-btn {
-        background-color: #dc3545;
+        background-color: $delete-button;
         color: white;
         border: none;
         padding: 6px 8px;
@@ -612,7 +612,7 @@
         transition: background-color 0.3s ease;
 
         &:hover {
-            background-color: #c82333;
+            background-color: $delete-button-hover;
         }
 
         svg {
@@ -626,9 +626,9 @@
         color: $tertiary-text-color;
         font-style: italic;
         padding: 4px 8px;
-        background-color: #f8f9fa;
+        background-color: $secondary-background-color;
         border-radius: 4px;
-        border: 1px solid #e9ecef;
+        border: 1px solid $border-color;
     }
 }
 
@@ -787,25 +787,25 @@
         transition: all 0.3s ease;
         
         &.completed {
-            background-color: #28a745;
-            border-color: #28a745;
+            background-color: $green-color;
+            border-color: $green-color;
             color: white;
             
             &:hover {
-                background-color: #218838;
-                border-color: #218838;
+                background-color: $green-color;
+                border-color: $green-color;
             }
         }
         
         &.pending {
-            background-color: #f8f9fa;
-            border-color: #6c757d;
-            color: #6c757d;
+            background-color: $secondary-background-color;
+            border-color: $secondary-text-color;
+            color: $secondary-text-color;
             
             &:hover {
-                background-color: #e9ecef;
-                border-color: #495057;
-                color: #495057;
+                background-color: $content-background-color;
+                border-color: $text-color;
+                color: $text-color;
             }
         }
         

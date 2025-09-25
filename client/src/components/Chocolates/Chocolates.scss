@@ -95,8 +95,8 @@
 }
 
 .overlay {
-    background-color: rgba(255, 255, 255, 0.826);
-    /* White overlay with transparency */
+    background: $gradient-soft;
+    /* Beautiful gradient overlay */
     padding: 30px 10px;
     /* Adds more padding for height */
     border-radius: 8px;
