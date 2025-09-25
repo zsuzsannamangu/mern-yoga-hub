@@ -542,6 +542,26 @@
             width: 100% !important;
         }
         
+        // Override CalendarDays component styles
+        .reschedule-modal-content .calendar-section .calendar-container .calendar-grid .table-content {
+            margin: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        
+        // Force left alignment for the entire calendar section
+        .reschedule-modal-content .calendar-section {
+            text-align: left !important;
+        }
+        
+        .reschedule-modal-content .calendar-section .calendar-container {
+            text-align: left !important;
+        }
+        
+        .reschedule-modal-content .calendar-section .calendar-container .calendar-grid {
+            text-align: left !important;
+        }
+        
         .reschedule-modal-content {
             .calendar-section {
                 .calendar-container {
