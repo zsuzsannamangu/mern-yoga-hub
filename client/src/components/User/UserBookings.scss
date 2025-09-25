@@ -43,9 +43,9 @@
             }
 
             .reschedule-btn {
-                background-color: $tertiary-text-color;
-                color: white;
-                border: none;
+                background-color: $secondary-background-color;
+                color: $secondary-text-color;
+                border: 1px solid $border-color;
                 padding: 6px 10px;
                 border-radius: 4px;
                 font-size: 0.8rem;
@@ -56,7 +56,9 @@
                 transition: background-color 0.3s ease;
 
                 &:hover {
-                    background-color: $primary-button-hover-color;
+                    background-color: $content-background-color;
+                    color: $text-color;
+                    border-color: $tertiary-text-color;
                 }
 
                 .icon {
