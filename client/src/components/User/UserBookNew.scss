@@ -170,7 +170,7 @@
     }
 
     .continue-button:disabled {
-        background-color: #cccccc;
+        background-color: $border-color;
         /* Gray color for disabled state */
         cursor: not-allowed;
         /* Show not-allowed cursor */

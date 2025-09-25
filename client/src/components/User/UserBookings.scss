@@ -529,6 +529,32 @@
         max-height: 95vh;
         overflow-x: auto;
         
+        // Force mobile alignment - highest specificity
+        .reschedule-modal-content .calendar-section .calendar-container {
+            align-items: flex-start !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+        
+        .reschedule-modal-content .calendar-section .calendar-container .calendar-grid {
+            margin: 0 !important;
+            max-width: 100% !important;
+            width: 100% !important;
+        }
+        
+        .reschedule-modal-content {
+            .calendar-section {
+                .calendar-container {
+                    align-items: flex-start !important; // Override desktop centering
+                    
+                    .calendar-grid {
+                        margin: 0 !important; // Override desktop centering
+                        max-width: 100% !important; // Use full width on mobile
+                    }
+                }
+            }
+        }
+        
         .reschedule-modal-header {
             padding: 15px;
             

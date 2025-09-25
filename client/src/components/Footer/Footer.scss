@@ -110,7 +110,7 @@
             }
 
             &:disabled {
-                background-color: #ccc;
+                background-color: $border-color;
                 cursor: not-allowed;
             }
         }
