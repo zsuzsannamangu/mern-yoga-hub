@@ -559,16 +559,16 @@
                 }
                 
                 .calendar-container {
-                    width: 100%;
+                    width: 100% !important;
                     overflow-x: auto;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start; // Left-align on mobile/tablet
+                    display: flex !important;
+                    flex-direction: column !important;
+                    align-items: flex-start !important; // Left-align on mobile/tablet
                     
                     .calendar-header {
                         gap: 15px;
                         min-width: 280px; // Ensure minimum width for calendar header
-                        align-self: flex-start; // Left-align header
+                        align-self: flex-start !important; // Left-align header
                         
                         .month-nav-button {
                             padding: 6px 10px;
@@ -583,9 +583,9 @@
                     
                     .calendar-grid {
                         min-width: 280px; // Ensure minimum width for calendar grid
-                        max-width: 100%; // Use full width on mobile
-                        width: 100%;
-                        margin: 0; // Remove auto margin for left alignment
+                        max-width: 100% !important; // Use full width on mobile
+                        width: 100% !important;
+                        margin: 0 !important; // Remove auto margin for left alignment
                     }
                 }
             }
@@ -640,14 +640,14 @@
             .calendar-section {
                 .calendar-container {
                     min-width: 260px; // Minimum width for very small screens
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start; // Left-align on very small screens
+                    display: flex !important;
+                    flex-direction: column !important;
+                    align-items: flex-start !important; // Left-align on very small screens
                     
                     .calendar-header {
                         gap: 8px;
                         min-width: 260px;
-                        align-self: flex-start; // Left-align header
+                        align-self: flex-start !important; // Left-align header
                         
                         .month-nav-button {
                             padding: 4px 6px;
@@ -662,8 +662,8 @@
                     
                     .calendar-grid {
                         min-width: 260px;
-                        max-width: 100%; // Use full width on very small screens
-                        margin: 0; // Remove auto margin for left alignment
+                        max-width: 100% !important; // Use full width on very small screens
+                        margin: 0 !important; // Remove auto margin for left alignment
                     }
                 }
             }
