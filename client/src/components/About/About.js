@@ -185,19 +185,25 @@ function About() {
                             flowers, fruits, and spices. The chocolates we'll taste in this workshop are created specifically to reflect the body's energetic centers, the chakras:
                         </p>
 
-                        <ul className="chakra-chocolate-list">
-                            <li>
-                                <strong>Root (1st) + Heart (4th):</strong> Cacao nibs, ashwagandha, saffron and rose petals. This blend brings earth + heart harmony: grounding your roots
-                                while softening and expanding the heart.
-                            </li>
-                            <li>
-                                <strong>Sacral (2nd) + Throat (5th):</strong> Chamomile and lavender. A powerful combination that invites you to speak your truth with softness and nurture creative flow.
-                            </li>
-                            <li>
-                                <strong>Solar Plexus (3rd) + Third Eye (6th):</strong> Orange, orange peel, calendula, and blue lotus flower. This blend brings confidence + clarity: energizing your inner
-                                fire while opening your perception to insight.
-                            </li>
-                        </ul>
+                        <div className="chakra-chocolate-info">
+                            <div className="chakra-image">
+                                <img src="/images/chocolates/Chocolate_1.jpg" alt="Handcrafted chocolate bars" />
+                            </div>
+                            
+                            <div className="chakra-list">
+                                <p><strong>Root (1st) + Heart (4th):</strong> Cacao nibs, ashwagandha, saffron and rose petals. This blend brings earth + heart harmony: grounding your roots while softening and expanding the heart.</p>
+                                
+                                <p><strong>Sacral (2nd) + Throat (5th):</strong> Chamomile and lavender. A powerful combination that invites you to speak your truth with softness and nurture creative flow.</p>
+                                
+                                <p><strong>Solar Plexus (3rd) + Third Eye (6th):</strong> Orange, orange peel, calendula, and blue lotus flower. This blend brings confidence + clarity: energizing your inner fire while opening your perception to insight.</p>
+                            </div>
+                        </div>
+
+                        <div className="workshop-signup">
+                            <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer" className="signup-link">
+                                Sign Up for Workshop
+                            </a>
+                        </div>
 
                         <p>
                             Throughout this workshop, you'll be guided through restorative yoga and meditation practices that prepare the body and mind to fully experience these flavors.

@@ -318,25 +318,69 @@
   }
 }
 
-/* Chakra Chocolate List Styling */
-.chakra-chocolate-list {
+/* Chakra Chocolate Info Styling */
+.chakra-chocolate-info {
   margin: 20px 0;
-  padding-left: 0;
-  list-style: none;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
 
-  li {
-    margin: 15px 0;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-left: 4px solid $primary-button-color;
-    border-radius: 4px;
-    line-height: 1.6;
+  .chakra-image {
+    flex: 0 0 200px;
+    
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
 
-    strong {
-      color: $primary-button-color;
-      font-weight: 600;
-      display: block;
-      margin-bottom: 8px;
+  .chakra-list {
+    flex: 1;
+    
+    p {
+      margin: 12px 0;
+      line-height: 1.6;
+      
+      strong {
+        color: $primary-button-color;
+        font-weight: 600;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    
+    .chakra-image {
+      flex: none;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+  }
+}
+
+/* Workshop Signup Styling */
+.workshop-signup {
+  text-align: center;
+  margin: 25px 0;
+  
+  .signup-link {
+    display: inline-block;
+    background-color: $primary-button-color;
+    color: $button-text-color;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    
+    &:hover {
+      background-color: $primary-button-hover-color;
+      text-decoration: none;
+      color: $button-text-color;
     }
   }
 }
