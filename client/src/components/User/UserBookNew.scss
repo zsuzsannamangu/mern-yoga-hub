@@ -183,3 +183,31 @@
         margin-top: 30px;
     }
 }
+
+/* Pricing Information Styling */
+.pricing-info {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid $primary-button-color;
+    
+    p {
+        margin: 10px 0;
+        color: $text-color;
+        line-height: 1.6;
+        
+        &:first-child {
+            margin-top: 0;
+        }
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    
+    strong {
+        color: $primary-button-color;
+        font-weight: 600;
+    }
+}
