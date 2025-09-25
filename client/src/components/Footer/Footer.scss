@@ -62,7 +62,7 @@
     margin-bottom: 2rem; // space between newsletter and footer bottom
     padding: 1.25rem 1.5rem;
     border-radius: 6px;
-    background-color: #f8f5ee;
+    background: $gradient-soft;
     text-align: center;
     max-width: 500px;
     margin-left: auto;
@@ -145,7 +145,7 @@
 
         .instagram-link:hover,
         .github-link:hover {
-            color: #e1306c; // Instagram pink hover color
+            color: $red-secondary; // Instagram red hover color
         }
     }
 

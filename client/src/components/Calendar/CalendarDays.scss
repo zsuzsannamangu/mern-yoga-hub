@@ -160,8 +160,8 @@
 }
 
 .calendar-day.disabled {
-  background-color: #e0e0e0; // Light grey for disabled dates
-  color: #aaa; // Lighter text color
+  background-color: $content-background-color; // Light grey for disabled dates
+  color: $secondary-text-color; // Lighter text color
   pointer-events: none; // Make them non-clickable
   opacity: 0.6; // Reduce opacity
 }

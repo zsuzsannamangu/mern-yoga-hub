@@ -422,7 +422,7 @@
             border-top: 1px solid $border-color;
 
             .cancel-btn {
-                background: #6c757d;
+                background: $secondary-button-color;
                 color: white;
                 border: none;
                 padding: 10px 20px;
@@ -432,7 +432,7 @@
                 text-align: center !important;
 
                 &:hover {
-                    background: #5a6268;
+                    background: $secondary-button-hover-color;
                 }
             }
 
@@ -451,7 +451,7 @@
                 }
 
                 &:disabled {
-                    background: #6c757d;
+                    background: $secondary-button-color;
                     cursor: not-allowed;
                 }
             }

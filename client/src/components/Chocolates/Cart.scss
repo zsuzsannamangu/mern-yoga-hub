@@ -133,7 +133,7 @@
 
                     input[type="checkbox"] {
                         transform: scale(1.2);
-                        accent-color: #b59110; // match your button gold if using modern browsers
+                        accent-color: $purple-primary; // match your button purple if using modern browsers
                         cursor: pointer;
                     }
 
