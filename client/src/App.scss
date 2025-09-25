@@ -24,8 +24,11 @@ a {
 }
 
 h1 {
-  font-family: 'Roboto', 'Segoe Script', cursive;
+  font-family: $font-elegant;
   font-size: 2rem;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.5px;
 }
 
 .App {

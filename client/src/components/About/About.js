@@ -45,7 +45,7 @@ function About() {
                         🍫✨ <strong>Awaken the Senses Workshop:</strong> Restorative Yoga + Handcrafted Chocolate + Chakra Exploration
                     </span>
                     <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer" className="announcement-link">
-                        Sign Up Now
+                        Sign Up
                     </a>
                 </div>
             </div>

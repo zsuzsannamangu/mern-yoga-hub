@@ -130,7 +130,7 @@
     margin: 0; // Ensure no margin
     padding: 0; // Ensure no padding
     position: relative;
-    background-image: url('/../public/images/yoga/Zsuzsi_Yogahome_cut.jpg');
+    background-image: url('/../public/images/yoga/Zsuzsi_Yogahome.jpg');
     background-size: cover; // Cover the full container
     background-repeat: no-repeat;
     background-position: center top; // Focus on the top part of the image
@@ -216,7 +216,7 @@
 
   .about-overlay-text h1 {
     font-size: 2rem;
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: $font-elegant;
     font-weight: 300;
     color: $text-color;
     margin: 0 0 1.2rem 0;
