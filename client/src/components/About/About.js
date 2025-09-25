@@ -19,6 +19,13 @@ function About() {
         transition: { duration: 1 }
     };
 
+    // Function to scroll to a specific section
+    const scrollToSection = (sectionName) => {
+        if (sectionName === 'classDescriptions' && classDescriptionsRef.current) {
+            classDescriptionsRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    };
+
     // Scroll to the "Class Descriptions" section if the URL contains the appropriate query parameter.
     useEffect(() => {
         const params = new URLSearchParams(location.search);
