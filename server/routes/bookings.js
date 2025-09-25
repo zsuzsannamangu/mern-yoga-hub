@@ -281,15 +281,24 @@ module.exports = (io) => {
             newSlot.status = 'scheduled';
             await newSlot.save();
 
-            // Format time for email
-            const [hour, minute] = newTime.split(':');
-            const newDateTime = new Date(`${newDate}T${newTime}`);
-            const formattedTime = newDateTime.toLocaleTimeString('en-US', {
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: true,
-                timeZoneName: 'short'
-            });
+            // Format time for email using Luxon to avoid timezone issues
+            const formatTimeWithZone = (dateStr, timeStr) => {
+                const [hour, minute] = timeStr.split(':');
+                const dateTime = DateTime.fromObject(
+                    {
+                        year: Number(dateStr.split('-')[0]),
+                        month: Number(dateStr.split('-')[1]),
+                        day: Number(dateStr.split('-')[2]),
+                        hour: Number(hour),
+                        minute: Number(minute),
+                    },
+                    { zone: 'America/Los_Angeles' } // Force interpretation in Pacific timezone
+                );
+            
+                return dateTime.toLocaleString(DateTime.TIME_SIMPLE) + ' ' + dateTime.offsetNameShort; // e.g., 9:00 AM PDT
+            };
+            
+            const formattedTime = formatTimeWithZone(newDate, newTime);
 
             // Send reschedule confirmation email to user
             const userEmailAddress = currentBooking.email || 'mzsuzsanna10@gmail.com';
