@@ -404,13 +404,14 @@
 
 /* Chakra Chocolate Info Styling */
 .chakra-chocolate-info {
-  margin: 20px 0;
+  margin: 30px 0;
   display: flex;
-  gap: 20px;
+  gap: 30px;
   align-items: flex-start;
 
   .chakra-image {
     flex: 0 0 200px;
+    margin-top: 20px; // Align with the start of the chakra text
     
     img {
       width: 100%;
@@ -424,8 +425,8 @@
     flex: 1;
     
     p {
-      margin: 12px 0;
-      line-height: 1.6;
+      margin: 20px 0; // Increased spacing between paragraphs
+      line-height: 1.7; // Slightly increased line height for better readability
       
       strong {
         color: $primary-button-color;
@@ -436,6 +437,7 @@
 
   @media (max-width: 768px) {
     flex-direction: column;
+    gap: 20px;
     
     .chakra-image {
       flex: none;
@@ -447,8 +449,8 @@
 
 /* Workshop Signup Styling */
 .workshop-signup {
-  text-align: center;
-  margin: 25px 0;
+  text-align: left; // Changed from center to left
+  margin: 30px 0 20px 0; // Increased top margin, reduced bottom
   
   .signup-link {
     display: inline-block;

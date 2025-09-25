@@ -211,12 +211,6 @@ function About() {
                             </div>
                         </div>
 
-                        <div className="workshop-signup">
-                            <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer" className="signup-link">
-                                Sign Up for Workshop
-                            </a>
-                        </div>
-
                         <p>
                             Throughout this workshop, you'll be guided through restorative yoga and meditation practices that prepare the body and mind to fully experience these flavors.
                             Together, we'll explore the chakras, the body's energetic centers that connect our physical, emotional, and spiritual selves, through both movement and mindful tasting.
@@ -225,6 +219,12 @@ function About() {
                         <p>
                             By slowing down and engaging the senses, this workshop offers a grounding practice that brings balance, nourishes the spirit, and awakens deeper awareness.
                         </p>
+
+                        <div className="workshop-signup">
+                            <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer" className="signup-link">
+                                Sign Up for Workshop
+                            </a>
+                        </div>
                     </motion.div>
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Yoga for Wheelchair Users</h4>
