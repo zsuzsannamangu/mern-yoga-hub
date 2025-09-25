@@ -53,7 +53,7 @@
     border-radius: 4px; // Rectangular shape (not circular like today's date)
 
     &:hover {
-      background-color: $purple-primary; // Darker purple on hover
+      background-color: $purple-secondary; // Medium purple on hover (lighter than primary)
       color: $button-text-color; // White text on hover
     }
   }
