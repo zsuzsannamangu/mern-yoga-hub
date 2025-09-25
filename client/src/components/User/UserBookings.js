@@ -487,7 +487,7 @@ function UserBookings() {
                                     onClick={handleRescheduleSubmit}
                                     disabled={!selectedSlot}
                                 >
-                                    Reschedule Appointment
+                                    Reschedule
                                 </button>
                             </div>
                         </div>

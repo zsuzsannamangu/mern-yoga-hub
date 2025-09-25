@@ -507,10 +507,13 @@
             .reschedule-actions {
                 flex-direction: row;
                 justify-content: center;
+                align-items: center;
 
                 .cancel-btn,
                 .reschedule-submit-btn {
                     width: 45%;
+                    padding: 8px 12px;
+                    flex-shrink: 0;
                 }
             }
         }
@@ -678,12 +681,14 @@
                 margin-top: 20px;
                 padding-top: 15px;
                 justify-content: center;
+                align-items: center;
                 
                 .cancel-btn,
                 .reschedule-submit-btn {
                     width: 45%;
-                    padding: 12px;
+                    padding: 8px 12px;
                     font-size: 14px;
+                    flex-shrink: 0;
                 }
             }
         }
