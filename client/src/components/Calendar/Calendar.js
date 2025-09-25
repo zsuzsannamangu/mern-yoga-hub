@@ -141,21 +141,6 @@ export default class Calendar extends Component {
 
     return (
       <div className="calendar-container">
-        <motion.div
-          className="calendar-top"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <div className="calendar-overlay">
-            <div className="calendar-overlay-text">
-              <h1>Where to find me</h1>
-              <p>Join me in these practices!</p>
-              <p>Let’s move, breathe, and be present together.</p>
-            </div>
-          </div>
-        </motion.div>
-
         {/* Workshop Announcement Bar */}
         <div className="workshop-announcement">
           <div className="announcement-content">
@@ -167,6 +152,21 @@ export default class Calendar extends Component {
             </a>
           </div>
         </div>
+
+        <motion.div
+          className="calendar-top"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <div className="calendar-overlay">
+            <div className="calendar-overlay-text">
+              <h1>Where to find me</h1>
+              <p>Join me in these practices!</p>
+              <p>Let's move, breathe, and be present together.</p>
+            </div>
+          </div>
+        </motion.div>
 
         <motion.div
           className="calendar-title"
