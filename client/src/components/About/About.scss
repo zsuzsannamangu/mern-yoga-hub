@@ -173,7 +173,7 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 50%;
+    top: 70%;
     left: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
@@ -203,13 +203,14 @@
     @media (max-width: 768px) {
       width: 80%;
       padding: 20px;
-      top: 50%;
+      top: 65%;
       border-radius: 15px;
     }
 
     @media (max-width: 480px) {
       width: 85%;
       padding: 18px;
+      top: 60%;
       border-radius: 12px;
     }
   }
