@@ -40,6 +40,20 @@
   border: rgb(208, 91, 111, 0.2) solid 2px;
 }
 
+.calendar-overlay-text h1 {
+  font-family: $font-elegant;
+  font-size: 2.5rem;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  margin: 0 0 1rem 0;
+  color: $text-color;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
 .calendar-overlay-text p {
   margin: 0 0 1rem;
   font-size: 1.2rem;
