@@ -46,21 +46,21 @@
   }
 
   &.has-slot {
-    background-color: $secondary-content-background-color; // Same color as today's date
-    color: $text-color; // Dark text for better contrast
+    background: $gradient-purple; // Beautiful purple gradient
+    color: $button-text-color; // White text for better contrast
     font-weight: bold; // Make text bold
-    border: 1px solid $secondary-content-background-color; // Same color border
+    border: 1px solid $purple-primary; // Purple border
     border-radius: 4px; // Rectangular shape (not circular like today's date)
 
     &:hover {
-      background-color: lighten($secondary-content-background-color, 10%); // Slightly lighter on hover
+      background: $gradient-purple-red; // Purple to red gradient on hover
     }
   }
 
   .slot-indicator {
     width: 4px;
     height: 4px;
-    background-color: $text-color; // Dark dot for better contrast on light background
+    background-color: $button-text-color; // White dot for better contrast on purple background
     border-radius: 50%;
     position: absolute;
     bottom: 5px;

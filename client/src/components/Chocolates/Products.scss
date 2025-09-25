@@ -182,7 +182,7 @@ button:disabled:hover {
 
 .add-to-cart-button,
 .details-button {
-  background-color: $purple-light;
+  background-color: $purple-primary;
   /* Match your existing color scheme */
   color: $button-text-color;
   border: none;
@@ -196,12 +196,12 @@ button:disabled:hover {
 
 .add-to-cart-button:hover,
 .details-button:hover {
-  background-color: $purple-primary;
+  background-color: $purple-dark;
   /* Slightly darker hover effect */
 }
 
 .details-button {
-  background-color: $purple-light;
+  background-color: $purple-primary;
   /* Match the color of the Add to Cart button */
 }
 

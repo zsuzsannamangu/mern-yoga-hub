@@ -422,9 +422,9 @@
             border-top: 1px solid $border-color;
 
             .cancel-btn {
-                background: $secondary-button-color;
-                color: white;
-                border: none;
+                background: $secondary-background-color;
+                color: $text-color;
+                border: 1px solid $border-color;
                 padding: 10px 20px;
                 border-radius: 4px;
                 cursor: pointer;
@@ -432,7 +432,8 @@
                 text-align: center !important;
 
                 &:hover {
-                    background: $secondary-button-hover-color;
+                    background: $content-background-color;
+                    border-color: $tertiary-text-color;
                 }
             }
 
