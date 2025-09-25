@@ -522,14 +522,15 @@ function UserBookNew() {
                         </div>
                     )}
 
-                    {/* Pricing Information */}
-                    <div className="pricing-info">
-                        <p>** Individual yoga sessions are $80-$110/hr sliding scale.</p> 
-                        <p> Individualized yoga therapy sessions are $10-$80/hr sliding scale through June 2026, while I'm in training.</p>
-                        <p> Your investment is a personal choice, aligning with your current financial circumstances.**</p>
-                        <p><strong> Committing to at least 8 weeks of yoga therapy gives us time to build trust, personalize your practice, and support meaningful, lasting change in body, mind, and nervous system. </strong></p>
-                    </div>
                 </div>
+            </div>
+
+            {/* Pricing Information - Outside main booking container */}
+            <div className="pricing-info">
+                <p>** Individual yoga sessions are $80-$110/hr sliding scale.</p> 
+                <p> Individualized yoga therapy sessions are $10-$80/hr sliding scale through June 2026, while I'm in training.</p>
+                <p> Your investment is a personal choice, aligning with your current financial circumstances.**</p>
+                <p><strong> Committing to at least 8 weeks of yoga therapy gives us time to build trust, personalize your practice, and support meaningful, lasting change in body, mind, and nervous system. </strong></p>
             </div>
         </div>
     );
