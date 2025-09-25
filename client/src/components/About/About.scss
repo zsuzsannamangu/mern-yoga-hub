@@ -200,7 +200,7 @@
     }
   }
 
-  .about-overlay-title {
+  .about-overlay-text h1 {
     font-size: 1.8rem;
     font-family: $font-title;
     font-weight: 600;
@@ -235,38 +235,6 @@
     }
   }
 
-  .about-overlay-button {
-    background: $gradient-warm;
-    color: $text-color;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-family: $font-main;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    align-self: center;
-    margin-top: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-    &:hover {
-      background: $gradient-purple;
-      color: $button-text-color;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-    }
-
-    @media (min-width: 768px) {
-      font-size: 1.1rem;
-      padding: 14px 28px;
-    }
-
-    @media (min-width: 1024px) {
-      font-size: 1.2rem;
-      padding: 16px 32px;
-    }
-  }
 
   @media (max-width: 768px) {
     .about-overlay {

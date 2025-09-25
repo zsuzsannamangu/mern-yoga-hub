@@ -19,12 +19,6 @@ function About() {
         transition: { duration: 1 }
     };
 
-    // Function to scroll to a specific section
-    const scrollToSection = (sectionName) => {
-        if (sectionName === 'classDescriptions' && classDescriptionsRef.current) {
-            classDescriptionsRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    };
 
     // Scroll to the "Class Descriptions" section if the URL contains the appropriate query parameter.
     useEffect(() => {
@@ -63,13 +57,10 @@ function About() {
                 transition={{ duration: 1 }}
             >
                 <div className="about-overlay">
-                    <h2 className="about-overlay-title">Our Classes</h2>
                     <div className="about-overlay-text">
-                        <p>We welcome all of you: your laughter, tears, and desire for rest and connection. We resist perfectionism and the ways that Western yoga and wellness industries have caused harm by centering white, skinny, cis gendered and able-bodied people. We are students first and always and share what excites us in our own practices to help inspire yours. We are well-studied in anatomy and trauma-informed approaches and utilize props and creative explorations to deepen practice.</p>
+                        <h1>Yoga with Zsuzsanna</h1>
+                        <p>I'm Zsuzsanna, a yoga teacher and yoga therapist-in-training, here to support you in finding alignment between body and mind.</p>
                     </div>
-                    <button className="about-overlay-button" onClick={() => scrollToSection('classDescriptions')}>
-                        class descriptions
-                    </button>
                 </div>
             </motion.div>
 
