@@ -429,6 +429,7 @@
                 border-radius: 4px;
                 cursor: pointer;
                 font-size: 14px;
+                text-align: center;
 
                 &:hover {
                     background: #5a6268;
@@ -443,6 +444,7 @@
                 border-radius: 4px;
                 cursor: pointer;
                 font-size: 14px;
+                text-align: center;
 
                 &:hover:not(:disabled) {
                     background: $primary-button-hover-color;
@@ -514,6 +516,7 @@
                     width: 45%;
                     padding: 8px 12px;
                     flex-shrink: 0;
+                    text-align: center;
                 }
             }
         }
@@ -689,6 +692,7 @@
                     padding: 8px 12px;
                     font-size: 14px;
                     flex-shrink: 0;
+                    text-align: center;
                 }
             }
         }
