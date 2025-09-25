@@ -562,6 +562,20 @@
             text-align: left !important;
         }
         
+        // Nuclear option - target everything in the reschedule modal
+        * {
+            text-align: left !important;
+        }
+        
+        .calendar-container,
+        .calendar-grid,
+        .table-content {
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            margin: 0 !important;
+            text-align: left !important;
+        }
+        
         .reschedule-modal-content {
             .calendar-section {
                 .calendar-container {

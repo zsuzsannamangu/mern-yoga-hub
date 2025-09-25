@@ -16,6 +16,7 @@ function CalendarDays({
   disablePastDates = true, // Disable past dates by default
   disabledDates = [],
   highlightedSlots = [],
+  alignment = 'center', // New prop for alignment: 'center' or 'left'
 }) {
   // Get first day of the month
   let firstDayOfMonth = new Date(day.getFullYear(), day.getMonth(), 1);
@@ -77,7 +78,7 @@ function CalendarDays({
   };
 
   return (
-    <div className="table-content">
+    <div className={`table-content ${alignment === 'left' ? 'left-aligned' : ''}`}>
       {currentDays.map((day, index) => (
         <div
           key={index}

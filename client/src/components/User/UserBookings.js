@@ -437,6 +437,7 @@ function UserBookings() {
                                             setSelectedDate(new Date(day.year, day.month, day.number))
                                         }
                                         highlightedSlots={availableSlots.map((slot) => slot.date)}
+                                        alignment="left"
                                     />
                                 </div>
 

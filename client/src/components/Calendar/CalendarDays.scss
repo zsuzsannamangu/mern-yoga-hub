@@ -142,6 +142,11 @@
   width: 100%;
   box-sizing: border-box;
   overflow: visible;
+  
+  &.left-aligned {
+    margin: 0 !important;
+    text-align: left !important;
+  }
 
   @media (max-width: $breakpoint-md) {
     gap: 2px; // Adjust gap for smaller screens
