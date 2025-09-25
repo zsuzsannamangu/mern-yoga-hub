@@ -170,29 +170,45 @@ function About() {
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Awaken the Senses: Restorative Yoga, Handcrafted Chocolate and an Exploration of the Chakras</h4>
                         <p>
-                            An immersive couple hours of restorative yoga, meditation, and sensory exploration.<br></br>
-
-                            This workshop brings together yoga and handmade chocolate to awaken presence, deepen awareness, and open the senses. 
-                            Yoga invites us to slow down and reconnect with the body. Chocolate, when made with attention and enjoyed mindfully, 
-                            becomes a pathway to taste, texture, and energy that can amplify this inner journey. Together, they create a space where movement, stillness, and sensory experience meet.<br></br>
-
-                            As both a chocolatier and yoga teacher, I bring these worlds together with intention. Since 2020, I have been making small-batch, 
-                            80% dark chocolate with organic cacao, maple sugar, vanilla, Oregon sea salt and botanicals. Each bar is made fresh, infused with edible 
-                            flowers, fruits, and spices. The chocolates we’ll taste in this workshop are created specifically to reflect the body’s energetic centers, the chakras:<br></br>
-
-                            Root (1st) + Heart (4th): Cacao nibs, ashwagandha, saffron and rose petals. This blend brings earth + heart harmony: grounding your roots 
-                            while softening and expanding the heart.<br></br>
-
-                            Sacral (2nd) + Throat (5th): Chamomile and lavender. A powerful combination that invites you to speak your truth with softness and nurture creative flow.<br></br>
-
-                            Solar Plexus (3rd) + Third Eye (6th): Orange, orange peel, calendula, and blue lotus flower. This blend brings confidence + clarity: energizing your inner 
-                            fire while opening your perception to insight.<br></br>
-
-                            Throughout this workshop, you’ll be guided through restorative yoga and meditation practices that prepare the body and mind to fully experience these flavors. 
-                            Together, we’ll explore the chakras, the body’s energetic centers that connect our physical, emotional, and spiritual selves, through both movement and mindful tasting.<br></br>
-
-                            By slowing down and engaging the senses, this workshop offers a grounding practice that brings balance, nourishes the spirit, and awakens deeper awareness
+                            An immersive couple hours of restorative yoga, meditation, and sensory exploration.
                         </p>
+                        
+                        <p>
+                            This workshop brings together yoga and handmade chocolate to awaken presence, deepen awareness, and open the senses.
+                            Yoga invites us to slow down and reconnect with the body. Chocolate, when made with attention and enjoyed mindfully,
+                            becomes a pathway to taste, texture, and energy that can amplify this inner journey. Together, they create a space where movement, stillness, and sensory experience meet.
+                        </p>
+
+                        <p>
+                            As both a chocolatier and yoga teacher, I bring these worlds together with intention. Since 2020, I have been making small-batch,
+                            80% dark chocolate with organic cacao, maple sugar, vanilla, Oregon sea salt and botanicals. Each bar is made fresh, infused with edible
+                            flowers, fruits, and spices. The chocolates we'll taste in this workshop are created specifically to reflect the body's energetic centers, the chakras:
+                        </p>
+
+                        <ul className="chakra-chocolate-list">
+                            <li>
+                                <strong>Root (1st) + Heart (4th):</strong> Cacao nibs, ashwagandha, saffron and rose petals. This blend brings earth + heart harmony: grounding your roots
+                                while softening and expanding the heart.
+                            </li>
+                            <li>
+                                <strong>Sacral (2nd) + Throat (5th):</strong> Chamomile and lavender. A powerful combination that invites you to speak your truth with softness and nurture creative flow.
+                            </li>
+                            <li>
+                                <strong>Solar Plexus (3rd) + Third Eye (6th):</strong> Orange, orange peel, calendula, and blue lotus flower. This blend brings confidence + clarity: energizing your inner
+                                fire while opening your perception to insight.
+                            </li>
+                        </ul>
+
+                        <p>
+                            Throughout this workshop, you'll be guided through restorative yoga and meditation practices that prepare the body and mind to fully experience these flavors.
+                            Together, we'll explore the chakras, the body's energetic centers that connect our physical, emotional, and spiritual selves, through both movement and mindful tasting.
+                        </p>
+
+                        <p>
+                            By slowing down and engaging the senses, this workshop offers a grounding practice that brings balance, nourishes the spirit, and awakens deeper awareness.
+                        </p>
+                    </motion.div>
+                    <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Yoga for Wheelchair Users</h4>
                         <p>A yoga practice tailored for individuals who use wheelchairs, focusing on enhancing well-being through breath, gentle movement, and mindfulness.
 

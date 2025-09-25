@@ -317,3 +317,26 @@
     }
   }
 }
+
+/* Chakra Chocolate List Styling */
+.chakra-chocolate-list {
+  margin: 20px 0;
+  padding-left: 0;
+  list-style: none;
+
+  li {
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-left: 4px solid $primary-button-color;
+    border-radius: 4px;
+    line-height: 1.6;
+
+    strong {
+      color: $primary-button-color;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+    }
+  }
+}
