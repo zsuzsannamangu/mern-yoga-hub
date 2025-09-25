@@ -164,7 +164,7 @@ function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
             >
-                <motion.h2 className="section-title" variants={fadeInUp}>Group Class Descriptions</motion.h2>
+                <motion.h2 className="section-title" variants={fadeInUp}>Classes and Workshops</motion.h2>
                 <div className="title-line"></div>
                 <div className="info-category">
                     <motion.div className="info-item" variants={fadeInUp}>

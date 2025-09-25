@@ -222,7 +222,7 @@ export default class Calendar extends Component {
                         <p>{event.time}</p>
                         <p>at {event.location}</p>
                         <p>
-                          <Link to="/about?section=classDescriptions" rel="noopener noreferrer">
+                          <Link to="/yoga?section=classDescriptions" rel="noopener noreferrer">
                             More Info
                           </Link>
                         </p>
