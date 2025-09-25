@@ -37,6 +37,18 @@ function About() {
                 <link rel="canonical" href="https://www.yogaandchocolate.com/yoga" />
             </Helmet>
 
+            {/* Workshop Announcement Bar */}
+            <div className="workshop-announcement">
+                <div className="announcement-content">
+                    <span className="announcement-text">
+                        🍫✨ <strong>Awaken the Senses Workshop:</strong> Restorative Yoga + Handcrafted Chocolate + Chakra Exploration
+                    </span>
+                    <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer" className="announcement-link">
+                        Sign Up Now
+                    </a>
+                </div>
+            </div>
+
             <motion.div
                 className='about-top'
                 initial={{ opacity: 0, y: 30 }}
