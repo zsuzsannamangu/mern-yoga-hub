@@ -383,7 +383,7 @@ function UserBookings() {
                                 </div>
                             )}
                             <a href="/contact">
-                                <FaEnvelope className="icon" /> Need to cancel? Email me!
+                                <FaEnvelope className="icon" /> Email me!
                             </a>
                         </div>
                     </div>
