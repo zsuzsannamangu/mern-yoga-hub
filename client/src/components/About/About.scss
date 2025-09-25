@@ -155,52 +155,116 @@
   }
 
   .about-overlay {
-    background-color: rgba(255, 255, 255, 0.826);
-    padding: 20px;
-    border-radius: 6px;
-    width: 90%; // Default for smaller screens
-    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 30px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 600px;
     text-align: left;
     color: $text-color;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    position: relative;
-    transform: translateY(-10%);
-    border: rgb(208, 91, 111, 0.2) solid 2px;
-    width: 30%;
-    left: -28%; // Larger screens, offset
-    top: -20%;
+    align-items: flex-start;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 2;
 
-    @media (min-width: 769px) and (max-width: 1024px) {
-      width: 30%;
-      left: -28%; // Larger screens, offset
-      top: -20%;
+    @media (min-width: 768px) {
+      width: 70%;
+      max-width: 700px;
+      padding: 40px;
+    }
+
+    @media (min-width: 1024px) {
+      width: 60%;
+      max-width: 800px;
+      padding: 50px;
+    }
+
+    @media (max-width: 768px) {
+      width: 85%;
+      padding: 25px;
+      top: 50%;
     }
 
     @media (max-width: 480px) {
       width: 90%;
-      padding: 10px;
-      font-size: 0.8rem;
-      top: 0%;
-      /* Further adjust for very small screens */
+      padding: 20px;
+      font-size: 0.9rem;
+    }
+  }
+
+  .about-overlay-title {
+    font-size: 1.8rem;
+    font-family: $font-title;
+    font-weight: 600;
+    color: $text-color;
+    margin: 0 0 1.5rem 0;
+    text-align: center;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      font-size: 2.2rem;
     }
 
-    @media (max-width: 768px) {
-      top: 85%; // Adjust overlay positioning for smaller screens
+    @media (min-width: 1024px) {
+      font-size: 2.5rem;
     }
-
   }
 
   .about-overlay-text p {
-    margin: 0 0 1rem;
-    font-size: 1rem; // Smaller font by default
-    font-family: $font-secondary;
-    line-height: 1.5;
+    margin: 0 0 1.2rem;
+    font-size: 1.1rem;
+    font-family: $font-main;
+    line-height: 1.6;
+    color: $text-color;
+    text-align: left;
 
     @media (min-width: 768px) {
-      font-size: 1.2rem; // Adjust for medium screens
+      font-size: 1.3rem;
+    }
+
+    @media (min-width: 1024px) {
+      font-size: 1.4rem;
+    }
+  }
+
+  .about-overlay-button {
+    background: $gradient-warm;
+    color: $text-color;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: $font-main;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: center;
+    margin-top: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background: $gradient-purple;
+      color: $button-text-color;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (min-width: 768px) {
+      font-size: 1.1rem;
+      padding: 14px 28px;
+    }
+
+    @media (min-width: 1024px) {
+      font-size: 1.2rem;
+      padding: 16px 32px;
     }
   }
 
