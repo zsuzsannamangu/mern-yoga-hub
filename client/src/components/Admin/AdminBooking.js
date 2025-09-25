@@ -36,6 +36,24 @@ const AdminBooking = () => {
     };
 
     /**
+     * Formats a date string into a human-readable format without timezone conversion.
+     * @param {string} dateString - Date in YYYY-MM-DD format
+     * @returns {string} - Formatted date (e.g., "Fri, Sep 26, 2024")
+     */
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+        // Parse the date string directly to avoid timezone issues
+        const [year, month, day] = dateString.split('-').map(Number);
+        const date = new Date(year, month - 1, day); // month is 0-indexed
+        return date.toLocaleDateString('en-US', { 
+            weekday: 'short', 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+        });
+    };
+
+    /**
      * Fetches slots (available and booked) from the API, categorizes them into different states.
      * Uses `useCallback` to ensure consistency in `useEffect`.
      */
@@ -327,12 +345,7 @@ const AdminBooking = () => {
                                         })
                                         .map((slot) => (
                                             <tr key={slot._id}>
-                                                <td>{new Date(slot.date).toLocaleDateString('en-US', { 
-                                                    weekday: 'short', 
-                                                    year: 'numeric', 
-                                                    month: 'short', 
-                                                    day: 'numeric' 
-                                                })}</td>
+                                                <td>{formatDate(slot.date)}</td>
                                                 <td>{formatTime(slot.time)}</td>
                                                 <td>
                                                     <button
