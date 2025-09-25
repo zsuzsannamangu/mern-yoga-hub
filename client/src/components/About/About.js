@@ -229,13 +229,20 @@ function About() {
                     </motion.div>
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Yoga for Wheelchair Users</h4>
-                        <p>A yoga practice tailored for individuals who use wheelchairs, focusing on enhancing well-being through breath, gentle movement, and mindfulness.
+                        <div className="wheelchair-yoga-content">
+                            <div className="wheelchair-yoga-text">
+                                <p>A yoga practice tailored for individuals who use wheelchairs, focusing on enhancing well-being through breath, gentle movement, and mindfulness.
 
-                            Through guided breathwork, we’ll cultivate a sense of calm, helping to lower stress, improve circulation, and support respiratory health. Gentle
-                            movements are designed to improve flexibility, build strength, and enhance range of motion, all while remaining seated.
+                                    Through guided breathwork, we'll cultivate a sense of calm, helping to lower stress, improve circulation, and support respiratory health. Gentle
+                                    movements are designed to improve flexibility, build strength, and enhance range of motion, all while remaining seated.
 
-                            Mindfulness and meditation will be woven into the practice to foster mental clarity, emotional resilience, and a deeper connection to your body.
-                            All levels are welcome, and no prior experience is needed. Props will be offered.</p>
+                                    Mindfulness and meditation will be woven into the practice to foster mental clarity, emotional resilience, and a deeper connection to your body.
+                                    All levels are welcome, and no prior experience is needed. Props will be offered.</p>
+                            </div>
+                            <div className="wheelchair-yoga-image">
+                                <img src="/images/yoga/wheelchairyoga.png" alt="Wheelchair yoga practice" />
+                            </div>
+                        </div>
                     </motion.div>
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Gentle Flow</h4>

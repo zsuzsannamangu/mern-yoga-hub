@@ -155,6 +155,19 @@ export default class Calendar extends Component {
             </div>
           </div>
         </motion.div>
+
+        {/* Workshop Announcement Bar */}
+        <div className="workshop-announcement">
+          <div className="announcement-content">
+            <span className="announcement-text">
+              🍫✨ <strong>Awaken the Senses Workshop:</strong> Restorative Yoga + Handcrafted Chocolate + Chakra Exploration
+            </span>
+            <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer" className="announcement-link">
+              Sign Up
+            </a>
+          </div>
+        </div>
+
         <motion.div
           className="calendar-title"
           initial={{ opacity: 0 }}
