@@ -90,7 +90,7 @@
 
                 span {
                     font-size: 14px;
-                    color: #555;
+                    color: $secondary-text-color;
                 }
             }
         }
@@ -216,7 +216,7 @@
         overflow-x: visible;
 
         .current-appointment {
-            background-color: #f8f9fa;
+            background-color: $secondary-background-color;
             padding: 15px;
             border-radius: 6px;
             margin-bottom: 20px;
