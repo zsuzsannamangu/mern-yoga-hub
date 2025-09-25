@@ -366,12 +366,14 @@ function UserBookNew() {
 
     const formatDate = (date) => {
         if (!date) return '';
+        // Handle both Date objects and date strings
+        const dateObj = typeof date === 'string' ? new Date(date + 'T00:00:00') : date;
         return new Intl.DateTimeFormat('en-US', {
             weekday: 'long',
             month: 'long',
             day: 'numeric',
             year: 'numeric',
-        }).format(date);
+        }).format(dateObj);
     };
 
     //convert the time to a 12-hour format with AM/PM
@@ -410,9 +412,11 @@ function UserBookNew() {
                             day={new Date(currentYear, currentMonth, currentDay.getDate())}
                             month={currentMonth}
                             year={currentYear}
-                            changeCurrentDay={(day) =>
-                                setSelectedDate(new Date(day.year, day.month, day.number))
-                            }
+                            changeCurrentDay={(day) => {
+                                // Create date string in YYYY-MM-DD format to avoid timezone issues
+                                const dateString = `${day.year}-${(day.month + 1).toString().padStart(2, '0')}-${day.number.toString().padStart(2, '0')}`;
+                                setSelectedDate(dateString);
+                            }}
                             highlightedSlots={availableSlots.map((slot) => slot.date)}
                         />
                     </div>
@@ -423,10 +427,10 @@ function UserBookNew() {
                             <p>{selectedDate ? `${formatDate(selectedDate)}` : ''}</p>
                             <div className="availability-times">
                                 {availableSlots.filter(
-                                    (slot) => slot.date === selectedDate?.toISOString().split('T')[0]
+                                    (slot) => slot.date === selectedDate
                                 ).length > 0 ? (
                                     availableSlots
-                                        .filter((slot) => slot.date === selectedDate?.toISOString().split('T')[0])
+                                        .filter((slot) => slot.date === selectedDate)
                                         .sort((a, b) => a.time.localeCompare(b.time)) // Sort by time string
                                         .map((slot) => (
                                             <button
