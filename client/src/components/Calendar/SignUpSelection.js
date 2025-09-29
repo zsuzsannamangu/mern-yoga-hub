@@ -31,7 +31,16 @@ const SignUpSelection = () => {
             setError('Please enter your email address.');
             return;
         }
+
+        // Basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setError('Please enter a valid email address.');
+            return;
+        }
+
         setIsChecking(true); // Prevents multiple submissions
+        setError(''); // Clear previous errors
 
         try {
             const response = await fetch(`${process.env.REACT_APP_API}/api/check-student`, {
@@ -45,7 +54,8 @@ const SignUpSelection = () => {
             });
 
             const data = await response.json();
-            if (response.status === 200) {
+            
+            if (response.ok) {
                 Swal.fire({
                     icon: 'success',
                     title: 'Registration confirmed!',
@@ -54,23 +64,46 @@ const SignUpSelection = () => {
                 setEmail('');
                 setError('');
             } else if (response.status === 400) {
-                setError(data.error); // "You have already signed up for this class."
+                setError(data.message || data.error || 'You have already signed up for this class.');
             } else if (response.status === 404) {
-                setError(data.message); // "Email not found. Please sign up as a new student!"
+                setError(data.message || 'Email not found. Please sign up as a new student!');
+            } else if (response.status === 500) {
+                setError('Server error. Please try again later.');
             } else {
-                setError('Unexpected error. Please try again.');
+                setError(data.message || data.error || 'Unexpected error. Please try again.');
             }
         } catch (err) {
-            setError('Server error. Please try again.');
+            console.error('Signup error:', err);
+            setError('Network error. Please check your connection and try again.');
+        } finally {
+            setIsChecking(false); // Always stop loading state
         }
-        setIsChecking(false); // Stops loading state, frontend should prevent multiple clicks while checking
     };
 
     // Redirects new students to the signup form, preserving class details in the URL
     const handleNewStudent = () => {
+        if (!eventTitle || !eventDate || !eventLocation) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Missing Class Information',
+                text: 'Class details are missing. Please try selecting the class again from the calendar.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
         navigate(`/signup?date=${eventDate}&title=${encodeURIComponent(eventTitle)}&location=${encodeURIComponent(eventLocation)}`);
-
     };
+
+    // Show error if class information is missing
+    if (!eventTitle || !eventDate || !eventLocation) {
+        return (
+            <div className="signup-selection-container">
+                <h2>Class Information Missing</h2>
+                <p>Sorry, the class information could not be loaded. Please try selecting the class again from the calendar.</p>
+                <button onClick={() => navigate('/calendar')}>Back to Calendar</button>
+            </div>
+        );
+    }
 
     return (
         <div className="signup-selection-container">
@@ -88,8 +121,14 @@ const SignUpSelection = () => {
                             placeholder="Enter your email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            disabled={isChecking}
                         />
-                        <button onClick={handleReturningStudent}>Sign up</button>
+                        <button 
+                            onClick={handleReturningStudent}
+                            disabled={isChecking || !email.trim()}
+                        >
+                            {isChecking ? 'Signing up...' : 'Sign up'}
+                        </button>
                     </div>
                     {error && <p className="error-text">{error}</p>}
                 </div>

@@ -31,6 +31,12 @@ const Signup = () => {
     // Load reCAPTCHA script dynamically
     const siteKey = process.env.REACT_APP_CAPTCHA_SITE_KEY;
     if (!siteKey) {
+      console.warn('reCAPTCHA site key not found in environment variables');
+      return;
+    }
+
+    // Check if script is already loaded
+    if (document.querySelector(`script[src*="recaptcha"]`)) {
       return;
     }
 
@@ -38,30 +44,39 @@ const Signup = () => {
     script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
     script.async = true;
     script.defer = true;
-    document.body.appendChild(script);
+    script.onerror = () => {
+      console.error('Failed to load reCAPTCHA script');
+      Swal.fire({
+        icon: 'warning',
+        title: 'reCAPTCHA Loading Issue',
+        text: 'reCAPTCHA failed to load. You can still submit the form, but verification may not work properly.',
+        confirmButtonText: 'OK'
+      });
+    };
 
-    let isRecaptchaReady = false;
+    document.body.appendChild(script);
 
     script.onload = () => {
       if (window.grecaptcha) {
-        // Show error message if reCAPTCHA fails to load
         window.grecaptcha.ready(() => {
-          isRecaptchaReady = true;
-          // Perform any action needed when reCAPTCHA is ready
+          console.log('reCAPTCHA loaded successfully');
         });
       } else {
-        // Handle failure case, such as showing a warning message to the user
+        console.error('reCAPTCHA not available after script load');
         Swal.fire({
-          icon: 'error',
-          title: 'reCAPTCHA Failed to Load',
-          text: 'Please refresh the page or check your internet connection.',
+          icon: 'warning',
+          title: 'reCAPTCHA Not Ready',
+          text: 'reCAPTCHA is not ready. Please refresh the page if you encounter issues.',
           confirmButtonText: 'OK'
         });
       }
     };
 
     return () => {
-      document.body.removeChild(script);
+      // Only remove if we added it
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
     };
   }, []);
 
@@ -94,6 +109,29 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate required fields
+    if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim()) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Missing Information',
+        text: 'Please fill in all required fields.',
+        confirmButtonText: 'Got it'
+      });
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Email',
+        text: 'Please enter a valid email address.',
+        confirmButtonText: 'Got it'
+      });
+      return;
+    }
+
     // Ensures a signature is provided.
     if (!signatureData) {
       Swal.fire({
@@ -106,36 +144,41 @@ const Signup = () => {
     }
 
     const siteKey = process.env.REACT_APP_CAPTCHA_SITE_KEY;
-    if (!window.grecaptcha || !siteKey) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Verification Not Ready',
-        text: 'reCAPTCHA is still loading. Please wait a moment and try again.',
-        confirmButtonText: 'Okay'
-      });
-      return;
+    let recaptchaToken = null;
+
+    // Try to get reCAPTCHA token if available
+    if (window.grecaptcha && siteKey) {
+      try {
+        recaptchaToken = await window.grecaptcha.execute(siteKey, { action: 'signup_form_submit' });
+      } catch (recaptchaError) {
+        console.warn('reCAPTCHA failed:', recaptchaError);
+        // Continue without reCAPTCHA if it fails
+      }
+    } else {
+      console.warn('reCAPTCHA not available, proceeding without verification');
     }
 
     try {
-      // Generate reCAPTCHA token
-      const recaptchaToken = await window.grecaptcha.execute(siteKey, { action: 'signup_form_submit' });
-
       // API call to save form data and signature
       const response = await fetch(`${process.env.REACT_APP_API}/api/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, signature: signatureData, recaptchaToken }),
+        body: JSON.stringify({ 
+          ...formData, 
+          signature: signatureData, 
+          recaptchaToken: recaptchaToken || 'bypass' // Send bypass if no token
+        }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        const errorMsg = errorData.message || "Something went wrong.";
+        const errorMsg = errorData.message || errorData.error || "Something went wrong.";
 
         if (errorMsg.toLowerCase().includes("already")) {
           await Swal.fire({
             icon: 'warning',
             title: 'Already Signed Up',
-            text: 'You’ve already registered for this class.',
+            text: 'You have already registered for this class.',
             confirmButtonText: 'Okay'
           });
 
@@ -147,11 +190,22 @@ const Signup = () => {
           return; // prevent further execution
         }
 
-        if (errorMsg.toLowerCase().includes("email doesn't exist")) {
+        if (errorMsg.toLowerCase().includes("email does not exist")) {
           Swal.fire({
             icon: 'warning',
             title: 'Student Not Found',
             text: "Email not found. Please register as a new student.",
+            confirmButtonText: 'Okay'
+          });
+
+          return;
+        }
+
+        if (errorMsg.toLowerCase().includes("full")) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Class Full',
+            text: 'This class is full. Please select another date.',
             confirmButtonText: 'Okay'
           });
 
@@ -173,14 +227,15 @@ const Signup = () => {
       });
 
       // Reset form
-      setFormData({ name: "", email: "", phone: "", classTitle: "", waiver: false });
+      setFormData({ name: "", email: "", phone: "", classTitle: "", date: "", waiver: false });
       setSignatureData(null);
       sigPad.current.clear(); // Clear the signature pad after successful submission
     } catch (error) {
+      console.error('Signup error:', error);
       Swal.fire({
         icon: 'error',
         title: 'Sign-Up Failed',
-        text: 'Something went wrong. Please try again later or contact me if the issue persists.',
+        text: `Something went wrong: ${error.message}. Please try again later or contact me if the issue persists.`,
         confirmButtonText: 'Okay'
       });
     }
@@ -243,29 +298,21 @@ const Signup = () => {
           />
         </label>
         <label className="waiver">
-          <p readOnly className="waiver-text">
-            WAIVER AND RELEASE OF LIABILITY<br></br><br></br>
-            I understand that the yoga classes and events offered by Zsuzsanna Mangu are designed to provide a safe and supportive environment for exploring movement, breath, and mindfulness. Participation in all activities is entirely optional, and I am encouraged to adapt or opt out of any movement or activity that does not feel right for me.
-
-            By signing this waiver, I acknowledge and agree to the following:<br></br><br></br>
-
-            Voluntary Participation:
-            I am voluntarily participating in yoga classes, workshops, or events offered by Zsuzsanna Mangu.<br></br>
-
-            Assumption of Risk:
-            I am aware that participation involves inherent risks, including but not limited to the potential for physical or psychological discomfort, injury, or the transmission of communicable diseases.<br></br>
-
-            Release of Liability:
-            I release and hold harmless Zsuzsanna Mangu, her affiliates, employees, and agents, from any responsibility or liability for injuries, disabilities, or other issues that may arise from my participation in any yoga class, workshop, or event, now and in the future.<br></br>
-
-            Fitness to Participate:
-            I affirm that I am physically and mentally fit to participate in yoga classes and events. I understand that I am responsible for monitoring my own limits, modifying activities as needed, and taking rests when appropriate.<br></br>
-
-            General Applicability:
-            This waiver applies to all yoga classes, workshops, and events I attend, now and in the future, that are conducted by Zsuzsanna Mangu.<br></br><br></br>
-
-            By signing below, I confirm my understanding of this waiver and my agreement to its terms. I consent to participate with these assurances and release Zsuzsanna Mangu from any liability for any unforeseen outcomes.<br></br>
-          </p>
+          <div className="waiver-text">
+            <h4>WAIVER AND RELEASE OF LIABILITY</h4>
+            <p>
+              I understand that the yoga classes and events offered by Zsuzsanna Mangu are designed to provide a safe and supportive environment for exploring movement, breath, and mindfulness. Participation in all activities is entirely optional, and I am encouraged to adapt or opt out of any movement or activity that does not feel right for me.
+            </p>
+            <p>By signing this waiver, I acknowledge and agree to the following:</p>
+            <ul>
+              <li><strong>Voluntary Participation:</strong> I am voluntarily participating in yoga classes, workshops, or events offered by Zsuzsanna Mangu.</li>
+              <li><strong>Assumption of Risk:</strong> I am aware that participation involves inherent risks, including but not limited to the potential for physical or psychological discomfort, injury, or the transmission of communicable diseases.</li>
+              <li><strong>Release of Liability:</strong> I release and hold harmless Zsuzsanna Mangu, her affiliates, employees, and agents, from any responsibility or liability for injuries, disabilities, or other issues that may arise from my participation in any yoga class, workshop, or event, now and in the future.</li>
+              <li><strong>Fitness to Participate:</strong> I affirm that I am physically and mentally fit to participate in yoga classes and events. I understand that I am responsible for monitoring my own limits, modifying activities as needed, and taking rests when appropriate.</li>
+              <li><strong>General Applicability:</strong> This waiver applies to all yoga classes, workshops, and events I attend, now and in the future, that are conducted by Zsuzsanna Mangu.</li>
+            </ul>
+            <p>By signing below, I confirm my understanding of this waiver and my agreement to its terms. I consent to participate with these assurances and release Zsuzsanna Mangu from any liability for any unforeseen outcomes.</p>
+          </div>
         </label>
 
         <div className="signature-section">
