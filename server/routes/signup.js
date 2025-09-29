@@ -104,21 +104,38 @@ router.post("/signup", async (req, res) => {
 
                 try {
                     // Step 1: Verify reCAPTCHA token
-                    const fetchFunction = fetch || fallbackFetch;
-                    const recaptchaResponse = await fetchFunction(verifyUrl, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                        body: { secret: secretKey, response: recaptchaToken },
-                    });
-
-                    const recaptchaData = await recaptchaResponse.json();
-
-                    // If reCAPTCHA verification fails
-                    if (!recaptchaData.success || recaptchaData.score < 0.5) {
-                        return res.status(400).json({
-                            error: "Failed reCAPTCHA verification. Please try again.",
-                            score: recaptchaData.score,
+                    if (fetch) {
+                        // Use regular fetch with URLSearchParams
+                        const recaptchaResponse = await fetch(verifyUrl, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                            body: new URLSearchParams({ secret: secretKey, response: recaptchaToken }),
                         });
+                        const recaptchaData = await recaptchaResponse.json();
+                        
+                        // If reCAPTCHA verification fails
+                        if (!recaptchaData.success || recaptchaData.score < 0.5) {
+                            return res.status(400).json({
+                                error: "Failed reCAPTCHA verification. Please try again.",
+                                score: recaptchaData.score,
+                            });
+                        }
+                    } else {
+                        // Use fallback fetch
+                        const recaptchaResponse = await fallbackFetch(verifyUrl, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                            body: { secret: secretKey, response: recaptchaToken },
+                        });
+                        const recaptchaData = await recaptchaResponse.json();
+                        
+                        // If reCAPTCHA verification fails
+                        if (!recaptchaData.success || recaptchaData.score < 0.5) {
+                            return res.status(400).json({
+                                error: "Failed reCAPTCHA verification. Please try again.",
+                                score: recaptchaData.score,
+                            });
+                        }
                     }
                 } catch (recaptchaError) {
                     console.error('reCAPTCHA verification error:', recaptchaError);
