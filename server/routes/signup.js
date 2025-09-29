@@ -29,41 +29,42 @@ router.post("/signup", async (req, res) => {
         return res.status(400).json({ error: "All fields are required." });
     }
 
-    // Handle reCAPTCHA verification (allow bypass for development/testing)
-    if (recaptchaToken && recaptchaToken !== 'bypass') {
-        const secretKey = process.env.RECAPTCHA_SECRET_KEY;
-        if (!secretKey) {
-            console.warn('reCAPTCHA secret key not found, skipping verification');
-        } else {
-            const verifyUrl = `https://www.google.com/recaptcha/api/siteverify`;
+    try {
+        // Handle reCAPTCHA verification (allow bypass for development/testing)
+        if (recaptchaToken && recaptchaToken !== 'bypass') {
+            const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+            if (!secretKey) {
+                console.warn('reCAPTCHA secret key not found, skipping verification');
+            } else {
+                const verifyUrl = `https://www.google.com/recaptcha/api/siteverify`;
 
-            try {
-                // Step 1: Verify reCAPTCHA token
-                const recaptchaResponse = await fetch(verifyUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: new URLSearchParams({ secret: secretKey, response: recaptchaToken }),
-                });
+                try {
+                    // Step 1: Verify reCAPTCHA token
+                    const recaptchaResponse = await fetch(verifyUrl, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                        body: new URLSearchParams({ secret: secretKey, response: recaptchaToken }),
+                    });
 
-                const recaptchaData = await recaptchaResponse.json();
+                    const recaptchaData = await recaptchaResponse.json();
 
-                // If reCAPTCHA verification fails
-                if (!recaptchaData.success || recaptchaData.score < 0.5) {
+                    // If reCAPTCHA verification fails
+                    if (!recaptchaData.success || recaptchaData.score < 0.5) {
+                        return res.status(400).json({
+                            error: "Failed reCAPTCHA verification. Please try again.",
+                            score: recaptchaData.score,
+                        });
+                    }
+                } catch (recaptchaError) {
+                    console.error('reCAPTCHA verification error:', recaptchaError);
                     return res.status(400).json({
-                        error: "Failed reCAPTCHA verification. Please try again.",
-                        score: recaptchaData.score,
+                        error: "reCAPTCHA verification failed. Please try again.",
                     });
                 }
-            } catch (recaptchaError) {
-                console.error('reCAPTCHA verification error:', recaptchaError);
-                return res.status(400).json({
-                    error: "reCAPTCHA verification failed. Please try again.",
-                });
             }
+        } else {
+            console.log('reCAPTCHA bypassed or not provided');
         }
-    } else {
-        console.log('reCAPTCHA bypassed or not provided');
-    }
 
         // Step 2: Check if the event exists
         const event = await Event.findOne({ title: classTitle, date });
