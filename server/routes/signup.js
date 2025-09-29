@@ -7,13 +7,17 @@ const Signup = require("../models/Signup"); // Unified Signup model
 let fetch;
 try {
     // Try to use node-fetch for older Node.js versions
-    fetch = require('node-fetch');
+    const nodeFetch = require('node-fetch');
+    fetch = nodeFetch.default || nodeFetch;
+    console.log('Using node-fetch');
 } catch (error) {
+    console.log('node-fetch failed:', error.message);
     // For Node.js 18+, use built-in fetch
     if (typeof globalThis.fetch !== 'undefined') {
         fetch = globalThis.fetch;
+        console.log('Using built-in fetch');
     } else {
-        console.error('Fetch is not available. reCAPTCHA verification will be skipped.');
+        console.log('No fetch available, will use fallback');
         fetch = null;
     }
 }
@@ -104,7 +108,8 @@ router.post("/signup", async (req, res) => {
 
                 try {
                     // Step 1: Verify reCAPTCHA token
-                    if (fetch) {
+                    if (fetch && typeof fetch === 'function') {
+                        console.log('Using fetch for reCAPTCHA verification');
                         // Use regular fetch with URLSearchParams
                         const recaptchaResponse = await fetch(verifyUrl, {
                             method: "POST",
@@ -121,6 +126,7 @@ router.post("/signup", async (req, res) => {
                             });
                         }
                     } else {
+                        console.log('Using fallback fetch for reCAPTCHA verification');
                         // Use fallback fetch
                         const recaptchaResponse = await fallbackFetch(verifyUrl, {
                             method: "POST",
