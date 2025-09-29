@@ -3,7 +3,65 @@ const router = express.Router();
 const sgMail = require("@sendgrid/mail");
 const Event = require("../models/Event");
 const Signup = require("../models/Signup"); // Unified Signup model
-const fetch = require('node-fetch'); // Required for making HTTP requests to reCAPTCHA API
+// Import fetch with fallback for different Node.js versions
+let fetch;
+try {
+    // Try to use node-fetch for older Node.js versions
+    fetch = require('node-fetch');
+} catch (error) {
+    // For Node.js 18+, use built-in fetch
+    if (typeof globalThis.fetch !== 'undefined') {
+        fetch = globalThis.fetch;
+    } else {
+        console.error('Fetch is not available. reCAPTCHA verification will be skipped.');
+        fetch = null;
+    }
+}
+
+// Fallback fetch implementation using built-in https module
+const https = require('https');
+const querystring = require('querystring');
+
+function fallbackFetch(url, options) {
+    return new Promise((resolve, reject) => {
+        const urlObj = new URL(url);
+        const postData = querystring.stringify(options.body || {});
+        
+        const requestOptions = {
+            hostname: urlObj.hostname,
+            port: urlObj.port || 443,
+            path: urlObj.pathname + urlObj.search,
+            method: options.method || 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Length': Buffer.byteLength(postData),
+                ...options.headers
+            }
+        };
+
+        const req = https.request(requestOptions, (res) => {
+            let data = '';
+            res.on('data', (chunk) => {
+                data += chunk;
+            });
+            res.on('end', () => {
+                resolve({
+                    json: () => Promise.resolve(JSON.parse(data)),
+                    status: res.statusCode
+                });
+            });
+        });
+
+        req.on('error', (err) => {
+            reject(err);
+        });
+
+        if (postData) {
+            req.write(postData);
+        }
+        req.end();
+    });
+}
 
 // Set SendGrid API key
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -46,10 +104,11 @@ router.post("/signup", async (req, res) => {
 
                 try {
                     // Step 1: Verify reCAPTCHA token
-                    const recaptchaResponse = await fetch(verifyUrl, {
+                    const fetchFunction = fetch || fallbackFetch;
+                    const recaptchaResponse = await fetchFunction(verifyUrl, {
                         method: "POST",
                         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                        body: new URLSearchParams({ secret: secretKey, response: recaptchaToken }),
+                        body: { secret: secretKey, response: recaptchaToken },
                     });
 
                     const recaptchaData = await recaptchaResponse.json();
