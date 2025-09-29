@@ -29,6 +29,12 @@ router.post("/signup", async (req, res) => {
         return res.status(400).json({ error: "All fields are required." });
     }
 
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ error: "Please enter a valid email address." });
+    }
+
     try {
         // Handle reCAPTCHA verification (allow bypass for development/testing)
         if (recaptchaToken && recaptchaToken !== 'bypass') {
@@ -179,7 +185,7 @@ router.post("/signup", async (req, res) => {
                   <li><strong>Duration:</strong> 60 minutes</li>
                   <li><strong>Location:</strong> ${location}</li>
               </ul>
-              <p>There is no front desk, so please try your best to arrive on time. If you’re running late, text Zsuzsanna at <a href="tel:+15037346656">503-734-6656</a> with your name and estimated time of arrival if possible.</p>
+              <p>If you have any issues on the day of the class, please text me at <a href="tel:+15037346656">503-734-6656</a>.</p>
               
               <p>Below is a copy of the waiver you signed:</p>
               <pre style="white-space: pre-wrap;">${waiverText}</pre>
@@ -239,6 +245,17 @@ router.delete("/signup/:id", async (req, res) => {
 router.post('/check-student', async (req, res) => {
     const { email, classTitle, date } = req.body;
 
+    // Validate required fields
+    if (!email || !classTitle || !date) {
+        return res.status(400).json({ error: "Email, class title, and date are required." });
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ error: "Please enter a valid email address." });
+    }
+
     try {
         // Check if the user has signed up for any previous class
         const pastSignup = await Signup.findOne({ email });
@@ -288,7 +305,7 @@ router.post('/check-student', async (req, res) => {
                     <li><strong>Duration:</strong> 60 minutes</li>
                     <li><strong>Location:</strong> ${location}</li>
                 </ul>
-                <p>There is no front desk, so please try your best to arrive on time. If you’re running late, text Zsuzsanna at <a href="tel:+15037346656">503-734-6656</a> with your name and estimated time of arrival if possible.</p>
+                <p>If you have any issues on the day of the class, please text me at <a href="tel:+15037346656">503-734-6656</a>.</p>
                 <p>Looking forward to seeing you!</p>
                 <p>With gratitude,<br>Zsuzsanna</p>
             `,

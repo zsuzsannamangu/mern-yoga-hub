@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Testing Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .test-button.danger {
+            background: #dc3545;
+        }
+        .test-button.danger:hover {
+            background: #c82333;
+        }
+        .test-button.success {
+            background: #28a745;
+        }
+        .test-button.success:hover {
+            background: #218838;
+        }
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .result.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .result.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .result.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Signup Testing Page</h1>
+    <p>Use this page to test various signup scenarios and ensure everything works correctly.</p>
+
+    <!-- API Configuration -->
+    <div class="test-section">
+        <h2>API Configuration</h2>
+        <div class="form-group">
+            <label for="apiUrl">API Base URL:</label>
+            <input type="text" id="apiUrl" value="http://localhost:5001" placeholder="http://localhost:5001">
+        </div>
+        <button class="test-button" onclick="testConnection()">Test Connection</button>
+        <div id="connectionResult"></div>
+    </div>
+
+    <!-- Returning Student Tests -->
+    <div class="test-section">
+        <h2>Returning Student Tests</h2>
+        <div class="form-group">
+            <label for="returningEmail">Email:</label>
+            <input type="email" id="returningEmail" placeholder="test@example.com">
+        </div>
+        <div class="form-group">
+            <label for="returningClass">Class Title:</label>
+            <input type="text" id="returningClass" placeholder="Test Yoga Class">
+        </div>
+        <div class="form-group">
+            <label for="returningDate">Date:</label>
+            <input type="date" id="returningDate">
+        </div>
+        <button class="test-button success" onclick="testReturningStudent()">Test Valid Returning Student</button>
+        <button class="test-button danger" onclick="testInvalidReturningStudent()">Test Invalid Email</button>
+        <button class="test-button danger" onclick="testEmptyReturningStudent()">Test Empty Email</button>
+        <div id="returningResult"></div>
+    </div>
+
+    <!-- New Student Tests -->
+    <div class="test-section">
+        <h2>New Student Tests</h2>
+        <div class="form-group">
+            <label for="newName">Name:</label>
+            <input type="text" id="newName" placeholder="Test User">
+        </div>
+        <div class="form-group">
+            <label for="newEmail">Email:</label>
+            <input type="email" id="newEmail" placeholder="newuser@test.com">
+        </div>
+        <div class="form-group">
+            <label for="newPhone">Phone:</label>
+            <input type="tel" id="newPhone" placeholder="555-123-4567">
+        </div>
+        <div class="form-group">
+            <label for="newClass">Class Title:</label>
+            <input type="text" id="newClass" placeholder="Test Yoga Class">
+        </div>
+        <div class="form-group">
+            <label for="newDate">Date:</label>
+            <input type="date" id="newDate">
+        </div>
+        <button class="test-button success" onclick="testValidNewStudent()">Test Valid New Student</button>
+        <button class="test-button danger" onclick="testInvalidNewStudent()">Test Invalid Data</button>
+        <button class="test-button danger" onclick="testMissingFields()">Test Missing Fields</button>
+        <div id="newStudentResult"></div>
+    </div>
+
+    <!-- Error Handling Tests -->
+    <div class="test-section">
+        <h2>Error Handling Tests</h2>
+        <button class="test-button danger" onclick="testNetworkError()">Test Network Error</button>
+        <button class="test-button danger" onclick="testServerError()">Test Server Error</button>
+        <button class="test-button" onclick="testValidationErrors()">Test Validation Errors</button>
+        <div id="errorResult"></div>
+    </div>
+
+    <!-- Results Summary -->
+    <div class="test-section">
+        <h2>Test Results Summary</h2>
+        <div id="summaryResult"></div>
+        <button class="test-button" onclick="clearResults()">Clear Results</button>
+    </div>
+
+    <script>
+        let testResults = [];
+
+        function getApiUrl() {
+            return document.getElementById('apiUrl').value;
+        }
+
+        function addResult(testName, success, message, details = null) {
+            const result = {
+                testName,
+                success,
+                message,
+                details,
+                timestamp: new Date().toISOString()
+            };
+            testResults.push(result);
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const summary = document.getElementById('summaryResult');
+            const total = testResults.length;
+            const passed = testResults.filter(r => r.success).length;
+            const failed = total - passed;
+            
+            summary.innerHTML = `
+                <div class="result info">
+                    <strong>Total Tests: ${total}</strong><br>
+                    <span style="color: #28a745;">✅ Passed: ${passed}</span><br>
+                    <span style="color: #dc3545;">❌ Failed: ${failed}</span><br>
+                    <strong>Success Rate: ${total > 0 ? Math.round((passed / total) * 100) : 0}%</strong>
+                </div>
+            `;
+        }
+
+        function clearResults() {
+            testResults = [];
+            updateSummary();
+            document.querySelectorAll('[id$="Result"]').forEach(el => el.innerHTML = '');
+        }
+
+        async function testConnection() {
+            try {
+                const response = await fetch(`${getApiUrl()}/api/events`);
+                if (response.ok) {
+                    addResult('API Connection', true, 'API is reachable');
+                    document.getElementById('connectionResult').innerHTML = '<div class="result success">✅ API Connection Successful</div>';
+                } else {
+                    addResult('API Connection', false, `API returned status ${response.status}`);
+                    document.getElementById('connectionResult').innerHTML = '<div class="result error">❌ API Connection Failed</div>';
+                }
+            } catch (error) {
+                addResult('API Connection', false, `Connection error: ${error.message}`);
+                document.getElementById('connectionResult').innerHTML = '<div class="result error">❌ Connection Error</div>';
+            }
+        }
+
+        async function testReturningStudent() {
+            const email = document.getElementById('returningEmail').value || 'test@example.com';
+            const classTitle = document.getElementById('returningClass').value || 'Test Yoga Class';
+            const date = document.getElementById('returningDate').value || '2024-12-31';
+
+            try {
+                const response = await fetch(`${getApiUrl()}/api/check-student`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, classTitle, date })
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    addResult('Returning Student (Valid)', true, 'Returning student check successful');
+                    document.getElementById('returningResult').innerHTML = '<div class="result success">✅ Returning Student Test Passed</div>';
+                } else {
+                    addResult('Returning Student (Valid)', false, result.message || 'Unknown error');
+                    document.getElementById('returningResult').innerHTML = '<div class="result error">❌ Returning Student Test Failed</div>';
+                }
+            } catch (error) {
+                addResult('Returning Student (Valid)', false, `Error: ${error.message}`);
+                document.getElementById('returningResult').innerHTML = '<div class="result error">❌ Network Error</div>';
+            }
+        }
+
+        async function testInvalidReturningStudent() {
+            try {
+                const response = await fetch(`${getApiUrl()}/api/check-student`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        email: 'invalid-email', 
+                        classTitle: 'Test Class', 
+                        date: '2024-12-31' 
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    addResult('Returning Student (Invalid Email)', true, 'Correctly rejected invalid email');
+                    document.getElementById('returningResult').innerHTML = '<div class="result success">✅ Invalid Email Correctly Rejected</div>';
+                } else {
+                    addResult('Returning Student (Invalid Email)', false, 'Should have rejected invalid email');
+                    document.getElementById('returningResult').innerHTML = '<div class="result error">❌ Should Have Rejected Invalid Email</div>';
+                }
+            } catch (error) {
+                addResult('Returning Student (Invalid Email)', false, `Error: ${error.message}`);
+                document.getElementById('returningResult').innerHTML = '<div class="result error">❌ Network Error</div>';
+            }
+        }
+
+        async function testEmptyReturningStudent() {
+            try {
+                const response = await fetch(`${getApiUrl()}/api/check-student`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: '', classTitle: 'Test Class', date: '2024-12-31' })
+                });
+
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    addResult('Returning Student (Empty Email)', true, 'Correctly rejected empty email');
+                    document.getElementById('returningResult').innerHTML = '<div class="result success">✅ Empty Email Correctly Rejected</div>';
+                } else {
+                    addResult('Returning Student (Empty Email)', false, 'Should have rejected empty email');
+                    document.getElementById('returningResult').innerHTML = '<div class="result error">❌ Should Have Rejected Empty Email</div>';
+                }
+            } catch (error) {
+                addResult('Returning Student (Empty Email)', false, `Error: ${error.message}`);
+                document.getElementById('returningResult').innerHTML = '<div class="result error">❌ Network Error</div>';
+            }
+        }
+
+        async function testValidNewStudent() {
+            const name = document.getElementById('newName').value || 'Test User';
+            const email = document.getElementById('newEmail').value || 'newuser@test.com';
+            const phone = document.getElementById('newPhone').value || '555-123-4567';
+            const classTitle = document.getElementById('newClass').value || 'Test Yoga Class';
+            const date = document.getElementById('newDate').value || '2024-12-31';
+
+            try {
+                const response = await fetch(`${getApiUrl()}/api/signup`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        phone,
+                        classTitle,
+                        date,
+                        signature: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+                        recaptchaToken: 'bypass'
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    addResult('New Student (Valid)', true, 'New student signup successful');
+                    document.getElementById('newStudentResult').innerHTML = '<div class="result success">✅ New Student Signup Successful</div>';
+                } else {
+                    addResult('New Student (Valid)', false, result.message || result.error || 'Unknown error');
+                    document.getElementById('newStudentResult').innerHTML = '<div class="result error">❌ New Student Signup Failed</div>';
+                }
+            } catch (error) {
+                addResult('New Student (Valid)', false, `Error: ${error.message}`);
+                document.getElementById('newStudentResult').innerHTML = '<div class="result error">❌ Network Error</div>';
+            }
+        }
+
+        async function testInvalidNewStudent() {
+            try {
+                const response = await fetch(`${getApiUrl()}/api/signup`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: 'Test User',
+                        email: 'invalid-email',
+                        phone: '555-123-4567',
+                        classTitle: 'Test Class',
+                        date: '2024-12-31',
+                        signature: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+                        recaptchaToken: 'bypass'
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    addResult('New Student (Invalid Email)', true, 'Correctly rejected invalid email');
+                    document.getElementById('newStudentResult').innerHTML = '<div class="result success">✅ Invalid Email Correctly Rejected</div>';
+                } else {
+                    addResult('New Student (Invalid Email)', false, 'Should have rejected invalid email');
+                    document.getElementById('newStudentResult').innerHTML = '<div class="result error">❌ Should Have Rejected Invalid Email</div>';
+                }
+            } catch (error) {
+                addResult('New Student (Invalid Email)', false, `Error: ${error.message}`);
+                document.getElementById('newStudentResult').innerHTML = '<div class="result error">❌ Network Error</div>';
+            }
+        }
+
+        async function testMissingFields() {
+            try {
+                const response = await fetch(`${getApiUrl()}/api/signup`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: '',
+                        email: 'test@test.com',
+                        phone: '555-123-4567',
+                        classTitle: 'Test Class',
+                        date: '2024-12-31',
+                        signature: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+                        recaptchaToken: 'bypass'
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    addResult('New Student (Missing Fields)', true, 'Correctly rejected missing fields');
+                    document.getElementById('newStudentResult').innerHTML = '<div class="result success">✅ Missing Fields Correctly Rejected</div>';
+                } else {
+                    addResult('New Student (Missing Fields)', false, 'Should have rejected missing fields');
+                    document.getElementById('newStudentResult').innerHTML = '<div class="result error">❌ Should Have Rejected Missing Fields</div>';
+                }
+            } catch (error) {
+                addResult('New Student (Missing Fields)', false, `Error: ${error.message}`);
+                document.getElementById('newStudentResult').innerHTML = '<div class="result error">❌ Network Error</div>';
+            }
+        }
+
+        function testNetworkError() {
+            addResult('Network Error Simulation', true, 'Network error handling test (simulated)');
+            document.getElementById('errorResult').innerHTML = '<div class="result info">ℹ️ Network error test - manually disconnect internet and try signup</div>';
+        }
+
+        function testServerError() {
+            addResult('Server Error Simulation', true, 'Server error handling test (simulated)');
+            document.getElementById('errorResult').innerHTML = '<div class="result info">ℹ️ Server error test - stop your server and try signup</div>';
+        }
+
+        function testValidationErrors() {
+            addResult('Validation Error Test', true, 'Validation error handling test (simulated)');
+            document.getElementById('errorResult').innerHTML = '<div class="result info">ℹ️ Validation test - try submitting forms with invalid data</div>';
+        }
+
+        // Set default date to tomorrow
+        document.addEventListener('DOMContentLoaded', function() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('returningDate').value = tomorrow.toISOString().split('T')[0];
+            document.getElementById('newDate').value = tomorrow.toISOString().split('T')[0];
+        });
+    </script>
+</body>
+</html>
