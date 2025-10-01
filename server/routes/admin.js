@@ -7,7 +7,56 @@ const { authMiddleware, adminMiddleware } = require('../middlewares/auth'); // I
 const router = express.Router();
 const dotenv = require('dotenv');
 const User = require('../models/User');
-const fetch = require('node-fetch'); // For reCAPTCHA validation
+// Import fetch with fallback for different Node.js versions
+let fetch;
+try {
+    // Try to use node-fetch for older Node.js versions
+    const nodeFetch = require('node-fetch');
+    fetch = nodeFetch.default || nodeFetch;
+    console.log('Admin route: Using node-fetch');
+} catch (error) {
+    console.log('Admin route: node-fetch failed:', error.message);
+    // For Node.js 18+, use built-in fetch
+    if (typeof globalThis.fetch !== 'undefined') {
+        fetch = globalThis.fetch;
+        console.log('Admin route: Using built-in fetch');
+    } else {
+        console.log('Admin route: No fetch available, will use fallback');
+        fetch = null;
+    }
+}
+
+// Fallback fetch implementation using built-in https module
+const https = require('https');
+const querystring = require('querystring');
+
+function fallbackFetch(url, options) {
+    return new Promise((resolve, reject) => {
+        const urlObj = new URL(url);
+        const postData = querystring.stringify(options.body || {}); // Expects plain object
+        
+        const requestOptions = {
+            hostname: urlObj.hostname,
+            port: urlObj.port || 443,
+            path: urlObj.pathname + urlObj.search,
+            method: options.method || 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Length': Buffer.byteLength(postData),
+                ...options.headers
+            }
+        };
+
+        const req = https.request(requestOptions, (res) => {
+            let data = '';
+            res.on('data', (chunk) => { data += chunk; });
+            res.on('end', () => { resolve({ json: () => Promise.resolve(JSON.parse(data)), status: res.statusCode }); });
+        });
+        req.on('error', (err) => { reject(err); });
+        if (postData) { req.write(postData); }
+        req.end();
+    });
+}
 const Subscriber = require('../models/Subscriber');
 const Booking = require('../models/Booking');
 const sgMail = require('@sendgrid/mail');
@@ -29,14 +78,28 @@ router.post('/login', async (req, res) => {
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify`;
 
     try {
-        const recaptchaRes = await fetch(verifyUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                secret: secretKey,
-                response: recaptchaToken,
-            }),
-        });
+        let recaptchaRes;
+        if (fetch && typeof fetch === 'function') {
+            console.log('Admin login: Using fetch for reCAPTCHA verification');
+            recaptchaRes = await fetch(verifyUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    secret: secretKey,
+                    response: recaptchaToken,
+                }),
+            });
+        } else {
+            console.log('Admin login: Using fallback fetch for reCAPTCHA verification');
+            recaptchaRes = await fallbackFetch(verifyUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: {
+                    secret: secretKey,
+                    response: recaptchaToken,
+                },
+            });
+        }
 
         const recaptchaData = await recaptchaRes.json();
 
