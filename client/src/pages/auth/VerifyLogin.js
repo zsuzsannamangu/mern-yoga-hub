@@ -47,7 +47,7 @@ function VerifyLogin() {
                             icon: 'success',
                             title: 'Login Successful',
                             text: 'You have been logged in successfully.',
-                            icon: 'success',
+                            confirmButtonText: 'OK'
                         }).then(() => {
                             navigate(`/user/${userId}`);
                         });
@@ -58,10 +58,17 @@ function VerifyLogin() {
             } catch (error) {
                 if (!alertShown.current) {
                     alertShown.current = true;
+                    
+                    // Extract error message from server response
+                    const errorMessage = error.response?.data?.message || 'Your login link is invalid or has expired. Please request a new link and try again.';
+                    const isExpired = error.response?.data?.expired;
+                    
+                    console.error('Login verification error:', error);
+                    
                     Swal.fire({
                         icon: 'error',
                         title: 'Login Failed',
-                        text: 'Your login link is invalid or has expired. Please request a new link and try again.',
+                        text: errorMessage,
                         confirmButtonText: 'OK'
                     }).then(() => {
                         navigate('/login');

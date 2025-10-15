@@ -197,7 +197,7 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ message: 'Please verify your email before logging in.' });
         }
 
-        const loginToken = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '15m' });
+        const loginToken = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
         const loginUrl = `${process.env.FRONTEND_URL}/verify-login?token=${loginToken}`;
 
         const userName = user.firstName || 'there';
@@ -280,6 +280,25 @@ router.get('/verify-login', async (req, res) => {
             },
         });
     } catch (error) {
+        console.error('Login verification error:', error.message);
+        
+        // Check if it's a JWT expiration error
+        if (error.name === 'TokenExpiredError') {
+            return res.status(400).json({ 
+                message: 'Your login link has expired. Please request a new one.',
+                expired: true 
+            });
+        }
+        
+        // Check if it's a JWT verification error
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(400).json({ 
+                message: 'Invalid login link. Please request a new one.',
+                invalid: true 
+            });
+        }
+        
+        // Generic error
         res.status(400).json({ message: 'Invalid or expired login token.' });
     }
 });
