@@ -785,13 +785,14 @@
 
   &.open {
     background: rgba(139, 75, 140, 0.08);
-    color: $purple-primary;
+    color: $text-color;
   }
 
   span {
     flex: 1;
     padding-right: 15px;
     line-height: 1.5;
+    text-align: left;
   }
 
   .faq-icon {
@@ -814,10 +815,10 @@
   overflow: hidden;
   
   .faq-answer-content {
-    padding: 0 20px 20px 20px;
+    padding: 15px 20px 20px 20px;
     
     @media (min-width: 768px) {
-      padding: 0 25px 25px 25px;
+      padding: 20px 25px 25px 25px;
     }
 
     p {
