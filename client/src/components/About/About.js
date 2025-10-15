@@ -292,8 +292,13 @@ function About() {
                             </div>
                         </div>
                     </motion.div>
+
+                    {/* Regular Classes Section */}
+                    <motion.h3 className="classes-subtitle" variants={fadeInUp}>Regular Classes</motion.h3>
+
                     <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Yoga for Wheelchair Users (every other Saturday 6-7pm at The People’s Yoga NE)</h4>
+                        <h4>Yoga for Wheelchair Users</h4>
+                        <p className="class-schedule">Every other Saturday 6-7pm at The People's Yoga NE, Studio 3 - entrance on 30th</p>
                         <div className="wheelchair-yoga-content">
                             <div className="wheelchair-yoga-text">
                                 <p>A yoga practice tailored for individuals who use wheelchairs, focusing on enhancing well-being through breath, gentle movement, and mindfulness.
@@ -309,30 +314,60 @@ function About() {
                             </div>
                         </div>
                     </motion.div>
+
                     <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Gentle Flow</h4>
-                        <p>This class focuses on mindful movement, allowing you to ease into each posture with intention and awareness.
-                            Through gentle flows, we’ll explore balance and strength at a pace that honors your body.
-                            This practice is inclusive and adaptive, offering a welcoming space for all levels, whether you’re new to yoga or looking to refine your practice.</p>
+                        <h4>Morning Flow</h4>
+                        <p className="class-schedule">Fridays 7am-8am at Yoga Refuge, NW location (also available livestream)</p>
+                        <p>Start your day with an energizing flow that awakens the body and centers the mind. This mindful practice combines breath-synchronized movement with intentional transitions, building strength and flexibility while cultivating presence. Perfect for setting a grounded, positive tone for your day.</p>
                     </motion.div>
+
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Hatha Yoga</h4>
-                        <p>A grounding practice that blends breath awareness with intentional movement. Hatha Flow emphasizes steady postures and transitions, creating space for balance,
+                        <p className="class-schedule">Mondays 9:30-10:30am at Dear Yoga</p>
+                        <p>A grounding practice that blends breath awareness with intentional movement. Hatha Yoga emphasizes steady postures and transitions, creating space for balance,
                             strength, and inner stillness. This class is slower-paced than vinyasa, offering time to explore alignment and deepen into each pose. Ideal for those seeking a
                             more meditative, breath-centered experience. Modifications and props are welcome.
                         </p>
                     </motion.div>
+
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <h4>Grounded Alignment</h4>
+                        <p className="class-schedule">Mondays 12:15-1:15pm at Full Bodied Yoga (also available livestream)</p>
+                        <p>A practice focused on building awareness of proper alignment and sustainable movement patterns. Through mindful exploration of foundational poses, we'll strengthen the connection between body and breath while developing stability and ease. This class is perfect for those looking to refine their practice or deepen their understanding of alignment principles.</p>
+                    </motion.div>
+
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <h4>Postnatal Yoga</h4>
+                        <p className="class-schedule">Thursdays 10:30am-11:30am at The Bhakti Yoga Movement Center</p>
+                        <p>A nurturing practice designed to support postpartum recovery and reconnection with your body. This class offers gentle movement, breathwork, and restorative practices that honor the physical and emotional journey of postpartum life. All stages of postpartum are welcome, and babies are encouraged to join.</p>
+                    </motion.div>
+
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <h4>Vinyasa Flow</h4>
+                        <p className="class-schedule">Fridays 4pm-5pm at Yoga Refuge, NW location (also available livestream)</p>
+                        <p>Vinyasa Flow builds strength, flexibility, and focus through creative sequences and mindful transitions. Expect to move, breathe,
+                            and sweat while cultivating presence and resilience. Options will be offered to support a variety of experience levels.
+                        </p>
+                    </motion.div>
+
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Restorative Yoga</h4>
+                        <p className="class-schedule">Thursdays 7:30-8:45pm at Yoga Refuge, NW location</p>
                         <p>A deeply relaxing class designed to soothe the nervous system and restore balance. Using props to support the body in restful poses, this
                             practice encourages deep release and stillness. Perfect for stress relief, recovery, and cultivating a sense of inner calm.
                         </p>
                     </motion.div>
+
                     <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Vinyasa Flow</h4>
-                        <p>Vinyasa Flow builds strength, flexibility, and focus through creative sequences and mindful transitions. Expect to move, breathe,
-                            and sweat while cultivating presence and resilience. Options will be offered to support a variety of experience levels.
-                        </p>
+                        <h4>Gentle Flow</h4>
+                        <p>This class focuses on mindful movement, allowing you to ease into each posture with intention and awareness.
+                            Through gentle flows, we'll explore balance and strength at a pace that honors your body.
+                            This practice is inclusive and adaptive, offering a welcoming space for all levels, whether you're new to yoga or looking to refine your practice.</p>
+                    </motion.div>
+
+                    {/* Additional Classes Note */}
+                    <motion.div className="info-item additional-classes-note" variants={fadeInUp}>
+                        <p><em>I also regularly sub at The People's Yoga and Firelight Yoga. For a complete schedule of all classes, including substitute classes and special events, please check the <a href="/calendar">calendar</a>.</em></p>
                     </motion.div>
                 </div>
             </motion.div>

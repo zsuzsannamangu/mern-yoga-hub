@@ -417,17 +417,44 @@
     .info-category {
       margin-bottom: 15px;
 
+      // Subtitle for Regular Classes section
+      .classes-subtitle {
+        font-size: 1.3rem;
+        color: $main-title-color;
+        margin-top: 50px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        @media (min-width: 768px) {
+          font-size: 1.5rem;
+        }
+      }
+
       .info-item {
         margin-bottom: 35px;
 
         h4 {
           font-size: 1.1rem; // Adjust for small screens
           font-weight: bold;
-          margin: 5px 0;
+          margin: 5px 0 8px 0;
           color: $tertiary-text-color;
 
           @media (min-width: 768px) {
             font-size: 1.25rem;
+          }
+        }
+
+        // Class schedule subtitle styling
+        .class-schedule {
+          font-size: 0.95rem;
+          font-style: italic;
+          color: $purple-primary;
+          margin: 0 0 15px 0;
+          font-weight: 500;
+
+          @media (min-width: 768px) {
+            font-size: 1rem;
           }
         }
 
@@ -451,7 +478,32 @@
 
           a {
             text-decoration: none;
-            color: $secondary-text-color;
+            color: $purple-primary;
+            font-weight: 500;
+
+            &:hover {
+              color: $purple-secondary;
+              text-decoration: underline;
+            }
+          }
+        }
+
+        // Additional classes note styling
+        &.additional-classes-note {
+          margin-top: 40px;
+          padding: 20px;
+          background: linear-gradient(135deg, rgba(139, 75, 140, 0.05) 0%, rgba(139, 75, 140, 0.02) 100%);
+          border-left: 4px solid $purple-primary;
+          border-radius: 4px;
+
+          p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+
+            @media (min-width: 768px) {
+              font-size: 1rem;
+            }
           }
         }
       }
