@@ -222,7 +222,7 @@ function About() {
                         </p>
 
                         <div className="workshop-dates-section">
-                            <h5>Upcoming Workshop Dates</h5>
+                            <h5>Upcoming Dates</h5>
                             <div className="workshop-dates-grid">
                                 <div className="workshop-date-card">
                                     <div className="date-header">
@@ -248,7 +248,7 @@ function About() {
                                     </div>
                                     <div className="location-text">
                                         <span className="location-icon">📍</span>
-                                        Yoga Refuge NW
+                                        <a href="#" target="_blank" rel="noopener noreferrer">Yoga Refuge NW</a>
                                     </div>
                                     <div className="chakra-focus">
                                         <strong>Focus:</strong> Root (1st) + Heart (4th) Chakras
@@ -265,7 +265,7 @@ function About() {
                                     </div>
                                     <div className="location-text">
                                         <span className="location-icon">📍</span>
-                                        The Bhakti Yoga Movement Center
+                                        <a href="https://www.thebymc.com/post/awaken-the-senses-where-artisanal-chocolate-and-restorative-yoga-meet" target="_blank" rel="noopener noreferrer">The Bhakti Yoga Movement Center</a>
                                     </div>
                                     <div className="chakra-focus">
                                         <strong>Focus:</strong> Sacral (2nd) + Throat (5th) Chakras
@@ -282,7 +282,7 @@ function About() {
                                     </div>
                                     <div className="location-text">
                                         <span className="location-icon">📍</span>
-                                        Dear Yoga
+                                        <a href="#" target="_blank" rel="noopener noreferrer">Dear Yoga</a>
                                     </div>
                                     <div className="chakra-focus">
                                         <strong>Focus:</strong> Solar Plexus (3rd) + Third Eye (6th) Chakras
@@ -298,7 +298,7 @@ function About() {
                         </div>
                     </motion.div>
                     <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Yoga for Wheelchair Users</h4>
+                        <h4>Yoga for Wheelchair Users (every other Saturday 6-7pm at The People’s Yoga NE)</h4>
                         <div className="wheelchair-yoga-content">
                             <div className="wheelchair-yoga-text">
                                 <p>A yoga practice tailored for individuals who use wheelchairs, focusing on enhancing well-being through breath, gentle movement, and mindfulness.

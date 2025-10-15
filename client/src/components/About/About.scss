@@ -506,54 +506,55 @@
 
 /* Workshop Dates Section */
 .workshop-dates-section {
-  margin: 40px 0 30px 0;
+  margin: 30px 0 25px 0;
   
   h5 {
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: 600;
     color: $tertiary-text-color;
-    margin-bottom: 25px;
-    text-align: center;
+    margin-bottom: 18px;
+    text-align: left;
     
     @media (min-width: 768px) {
-      font-size: 1.5rem;
+      font-size: 1.1rem;
     }
   }
   
   .workshop-dates-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 20px;
-    margin-bottom: 30px;
+    gap: 15px;
+    margin-bottom: 25px;
     
     @media (min-width: 768px) {
       grid-template-columns: repeat(2, 1fr);
-      gap: 25px;
+      gap: 18px;
+      max-width: 900px;
     }
   }
   
   .workshop-date-card {
-    background: linear-gradient(135deg, rgba(170, 157, 18, 0.05) 0%, rgba(170, 157, 18, 0.02) 100%);
-    border: 2px solid rgba(170, 157, 18, 0.15);
-    border-radius: 12px;
-    padding: 20px;
+    background: linear-gradient(135deg, rgba(139, 75, 140, 0.03) 0%, rgba(139, 75, 140, 0.01) 100%);
+    border: 1.5px solid rgba(139, 75, 140, 0.2);
+    border-radius: 8px;
+    padding: 14px 16px;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
     
     &:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-      border-color: rgba(170, 157, 18, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(139, 75, 140, 0.15);
+      border-color: rgba(139, 75, 140, 0.35);
     }
     
     .date-header {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
+      gap: 10px;
+      margin-bottom: 10px;
       
       .date-icon {
-        font-size: 24px;
+        font-size: 20px;
         flex-shrink: 0;
       }
       
@@ -561,16 +562,16 @@
         flex: 1;
         
         .date-text {
-          font-size: 1.1rem;
+          font-size: 1rem;
           font-weight: 600;
           color: $tertiary-text-color;
-          margin-bottom: 4px;
+          margin-bottom: 2px;
         }
         
         .time-text {
-          font-size: 0.95rem;
+          font-size: 0.85rem;
           color: $secondary-text-color;
-          font-weight: 500;
+          font-weight: 400;
         }
       }
     }
@@ -578,39 +579,39 @@
     .location-text {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 1rem;
+      gap: 6px;
+      font-size: 0.95rem;
       color: $text-color;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       
       .location-icon {
-        font-size: 18px;
+        font-size: 16px;
         flex-shrink: 0;
       }
       
       a {
-        color: $accent-color;
+        color: $purple-primary;
         text-decoration: none;
         font-weight: 500;
         transition: color 0.3s ease;
         
         &:hover {
-          color: darken($accent-color, 15%);
+          color: $purple-secondary;
           text-decoration: underline;
         }
       }
     }
     
     .chakra-focus {
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(170, 157, 18, 0.15);
-      font-size: 0.9rem;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(139, 75, 140, 0.15);
+      font-size: 0.85rem;
       color: $secondary-text-color;
-      line-height: 1.5;
+      line-height: 1.4;
       
       strong {
-        color: $primary-button-color;
+        color: $purple-primary;
         font-weight: 600;
       }
     }
