@@ -221,6 +221,76 @@ function About() {
                             By slowing down and engaging the senses, this workshop offers a grounding practice that brings balance, nourishes the spirit, and awakens deeper awareness.
                         </p>
 
+                        <div className="workshop-dates-section">
+                            <h5>Upcoming Workshop Dates</h5>
+                            <div className="workshop-dates-grid">
+                                <div className="workshop-date-card">
+                                    <div className="date-header">
+                                        <span className="date-icon">📅</span>
+                                        <div className="date-info">
+                                            <div className="date-text">November 8</div>
+                                            <div className="time-text">11:00 AM - 1:00 PM</div>
+                                        </div>
+                                    </div>
+                                    <div className="location-text">
+                                        <span className="location-icon">📍</span>
+                                        <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer">Full Bodied Yoga</a>
+                                    </div>
+                                </div>
+
+                                <div className="workshop-date-card">
+                                    <div className="date-header">
+                                        <span className="date-icon">📅</span>
+                                        <div className="date-info">
+                                            <div className="date-text">November 22</div>
+                                            <div className="time-text">2:00 PM - 4:00 PM</div>
+                                        </div>
+                                    </div>
+                                    <div className="location-text">
+                                        <span className="location-icon">📍</span>
+                                        Yoga Refuge NW
+                                    </div>
+                                    <div className="chakra-focus">
+                                        <strong>Focus:</strong> Root (1st) + Heart (4th) Chakras
+                                    </div>
+                                </div>
+
+                                <div className="workshop-date-card">
+                                    <div className="date-header">
+                                        <span className="date-icon">📅</span>
+                                        <div className="date-info">
+                                            <div className="date-text">November 23</div>
+                                            <div className="time-text">2:00 PM - 4:00 PM</div>
+                                        </div>
+                                    </div>
+                                    <div className="location-text">
+                                        <span className="location-icon">📍</span>
+                                        The Bhakti Yoga Movement Center
+                                    </div>
+                                    <div className="chakra-focus">
+                                        <strong>Focus:</strong> Sacral (2nd) + Throat (5th) Chakras
+                                    </div>
+                                </div>
+
+                                <div className="workshop-date-card">
+                                    <div className="date-header">
+                                        <span className="date-icon">📅</span>
+                                        <div className="date-info">
+                                            <div className="date-text">December 6</div>
+                                            <div className="time-text">2:00 PM - 4:00 PM</div>
+                                        </div>
+                                    </div>
+                                    <div className="location-text">
+                                        <span className="location-icon">📍</span>
+                                        Dear Yoga
+                                    </div>
+                                    <div className="chakra-focus">
+                                        <strong>Focus:</strong> Solar Plexus (3rd) + Third Eye (6th) Chakras
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="workshop-signup">
                             <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer" className="signup-link">
                                 Sign Up for Workshop
