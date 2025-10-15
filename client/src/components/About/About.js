@@ -45,8 +45,8 @@ function About() {
                     <span className="announcement-text">
                         🍫✨ <strong>Awaken the Senses Workshop:</strong> Restorative Yoga + Handcrafted Chocolate + Chakra Exploration
                     </span>
-                    <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer" className="announcement-link">
-                        Sign Up
+                    <a href="/yoga?section=classDescriptions" className="announcement-link">
+                        View Dates
                     </a>
                 </div>
             </div>
@@ -460,7 +460,7 @@ function About() {
                         <p>Accessible & adaptive practices for those with limited mobility & wheelchair users</p>
                     </div>
                     <div className="info-item">
-                        <h4>50hr Yoga Anatomy and Physiology Training</h4>
+                        <h4>50hr "Yoga Anatomy and Physiology" Training</h4>
                         <p><em>with <strong><a href="https://joemilleryoga.com/" target='_blank'>Joe Miller</a></strong>, online</em><br />
                             November 2024</p>
                         <p>Applying anatomy to yoga practice and teachings, using anatomical terminology.</p>
