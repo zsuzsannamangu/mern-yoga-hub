@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 //useEffect() is a React Hook that lets you perform side effects in function components, instead of class components. useRef is a React Hook that allows you to create a mutable reference to a DOM element.
 import { useLocation } from 'react-router-dom'; //useLocation is a hook provided by React Router that gives access to the current URL's location object.
 import './About.scss';
@@ -7,11 +7,60 @@ import Offerings from './Offerings';
 import '../../App.scss';
 import { motion } from 'framer-motion';
 import Slideshow from './Slideshow';
-import { FaCalendarAlt, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaCalendarAlt, FaExternalLinkAlt, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 function About() {
     const location = useLocation(); // React Router hook to access current location (current URL, such as the path or query parameters)
     const classDescriptionsRef = useRef(null); // Reference for the "Class Descriptions" section to enable scrolling.
+    const [openFAQ, setOpenFAQ] = useState(null); // State for managing which FAQ item is open
+
+    // FAQ data
+    const faqData = [
+        {
+            id: 1,
+            question: "Do I need to have yoga experience to do yoga therapy?",
+            answer: "Not at all. Sessions are designed to meet you exactly where you are."
+        },
+        {
+            id: 2,
+            question: "What is trauma-informed yoga?",
+            answer: "Trauma-informed yoga is an approach that prioritizes safety, choice, and empowerment. It's designed to create a supportive environment where students can connect with their bodies at their own pace. The focus is on invitation rather than instruction, offering space for each person to decide what feels right for them in the moment."
+        },
+        {
+            id: 3,
+            question: "What is yoga therapy?",
+            answer: "Yoga therapy is a personalized, holistic approach that supports physical, emotional, and mental well-being. It combines breath, movement, psychology, neurobiology, mindfulness, somatic practices and the ancient wisdom of yoga to address specific concerns or conditions. Sessions are tailored to the individual, creating space for healing, resilience, and greater self-awareness."
+        },
+        {
+            id: 4,
+            question: "Are sessions in-person or online?",
+            answer: "I offer both. You're welcome to join in person in Portland, Oregon, or online via Google Meet. If you're local, I recommend in-person sessions when possible for deeper support."
+        },
+        {
+            id: 5,
+            question: "Do you offer hands-on assists or touch during in-person sessions?",
+            answer: "Yes, only with consent. I offer gentle, intentional touch and hands-on support when appropriate and always with your clear permission. Touch can be a beautiful tool for grounding, connection, and transformation."
+        },
+        {
+            id: 6,
+            question: "What props do I need for online sessions?",
+            answer: "If you have yoga props, great! But you can easily use everyday items too: a stack of books for blocks, a firm pillow for a bolster, a belt as a strap, and any cozy blanket you have on hand. I always offer modifications so you can make the most of what you have."
+        },
+        {
+            id: 7,
+            question: "Are yoga therapy sessions covered by insurance?",
+            answer: "Yoga therapy may be reimbursable through HSA or FSA accounts if recommended by a licensed healthcare provider. Please check with your provider to confirm eligibility."
+        },
+        {
+            id: 8,
+            question: "How much are individual sessions?",
+            answer: "Private yoga therapy sessions are $10-$80 sliding scale through June 2026, while I'm in training. Individual yoga sessions are $80-$110 sliding scale."
+        }
+    ];
+
+    const toggleFAQ = (id) => {
+        setOpenFAQ(openFAQ === id ? null : id);
+    };
 
     //Animation Variants
     const fadeInUp = {
@@ -382,32 +431,37 @@ function About() {
             >
                 <motion.h2 className="section-title" variants={fadeInUp}>Frequently Asked Questions</motion.h2>
                 <div className="title-line"></div>
-                <div className="faq">
-                    <h4>Do I need to have yoga experience to do yoga therapy?</h4>
-                    <p>Not at all. Sessions are designed to meet you exactly where you are.</p>
-
-                    <h4>What is trauma-informed yoga?</h4>
-                    <p>Trauma-informed yoga is an approach that prioritizes safety, choice, and empowerment. It’s designed to create a supportive environment where students can connect with their bodies at their own pace.
-                        The focus is on invitation rather than instruction, offering space for each person to decide what feels right for them in the moment.</p>
-
-                    <h4>What is yoga therapy?</h4>
-                    <p>Yoga therapy is a personalized, holistic approach that supports physical, emotional, and mental well-being. It combines breath, movement, psychology, neurobiology, mindfulness, somatic practices and the ancient wisdom of yoga to address specific concerns
-                        or conditions. Sessions are tailored to the individual, creating space for healing, resilience, and greater self-awareness.</p>
-
-                    <h4>Are sessions in-person or online?</h4>
-                    <p>I offer both. You’re welcome to join in person in Portland, Oregon, or online via Google Meet. If you're local, I recommend in-person sessions when possible for deeper support.</p>
-
-                    <h4>Do you offer hands-on assists or touch during in-person sessions?</h4>
-                    <p>Yes, only with consent. I offer gentle, intentional touch and hands-on support when appropriate and always with your clear permission. Touch can be a beautiful tool for grounding, connection, and transformation.</p>
-
-                    <h4>What props do I need for online sessions?</h4>
-                    <p>If you have yoga props, great! But you can easily use everyday items too: a stack of books for blocks, a firm pillow for a bolster, a belt as a strap, and any cozy blanket you have on hand. I always offer modifications so you can make the most of what you have.</p>
-
-                    <h4>Are yoga therapy sessions covered by insurance?</h4>
-                    <p>Yoga therapy may be reimbursable through HSA or FSA accounts if recommended by a licensed healthcare provider. Please check with your provider to confirm eligibility.</p>
-
-                    <h4>How much are individual sessions?</h4>
-                    <p>Private yoga therapy sessions are $10-$80 sliding scale through June 2026, while I'm in training. Individual yoga sessions are $80-$110 sliding scale.</p>
+                <div className="faq-accordion">
+                    {faqData.map((faq) => (
+                        <motion.div key={faq.id} className="faq-item" variants={fadeInUp}>
+                            <button 
+                                className={`faq-question ${openFAQ === faq.id ? 'open' : ''}`}
+                                onClick={() => toggleFAQ(faq.id)}
+                                aria-expanded={openFAQ === faq.id}
+                                aria-controls={`faq-answer-${faq.id}`}
+                            >
+                                <span>{faq.question}</span>
+                                {openFAQ === faq.id ? 
+                                    <FaChevronUp className="faq-icon" aria-hidden="true" /> : 
+                                    <FaChevronDown className="faq-icon" aria-hidden="true" />
+                                }
+                            </button>
+                            <motion.div
+                                id={`faq-answer-${faq.id}`}
+                                className={`faq-answer ${openFAQ === faq.id ? 'open' : ''}`}
+                                initial={false}
+                                animate={{
+                                    height: openFAQ === faq.id ? 'auto' : 0,
+                                    opacity: openFAQ === faq.id ? 1 : 0
+                                }}
+                                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                            >
+                                <div className="faq-answer-content">
+                                    <p>{faq.answer}</p>
+                                </div>
+                            </motion.div>
+                        </motion.div>
+                    ))}
                 </div>
             </motion.div>
 
