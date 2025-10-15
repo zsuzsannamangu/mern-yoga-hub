@@ -17,38 +17,50 @@ import '../../App.scss';
 const offeringsData = [
     {
         id: 1,
-        title: "Individual & Group Yoga",
+        title: "Group Classes",
         description: `
-        <strong>Slow Gentle Flow:</strong> These classes unite breath and movement in a flowing sequence, building strength and concentration with a mindful pace. Classes weave in pranayama (breathing practices), visualization, and meditation to support a holistic and grounding practice.
-	    <br><br><strong>Restorative Yoga:</strong> A deeply restful practice, using supportive postures to help release tension and foster a state of renewal and relaxation.
-	    <br><br><strong>Chair, Adaptive & Wheelchair Yoga:</strong> Inclusive classes offering gentle movement and thoughtful modifications.
-        <br><br>--------
-        <br><br><strong>Individual Sessions:</strong> Personalized one-on-one sessions designed to deepen your connection to yoga through tailored physical postures, breathwork, mindfulness practices, and philosophical insights.
-        <br><br>**Individual yoga sessions are $80-$110/hr sliding scale. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked.**
+        I teach weekly group classes at various studios throughout Portland, offering a range of practices to meet you where you are.
+        <br><br><strong>Hatha Yoga:</strong> A grounding practice that blends breath awareness with intentional movement, creating space for balance, strength, and inner stillness. Slower-paced than vinyasa, offering time to explore alignment and deepen into each pose.
+	    <br><br><strong>Vinyasa & Morning Flow:</strong> Flowing breath-based movement that builds strength, flexibility, and focus through creative sequences and mindful transitions. Perfect for cultivating presence and energy.
+	    <br><br><strong>Restorative Yoga:</strong> A deeply relaxing practice designed to soothe the nervous system and restore balance, using props to support the body in restful poses.
+        <br><br><strong>Wheelchair & Adaptive Yoga:</strong> Inclusive practices tailored for wheelchair users and those with limited mobility, focusing on breathwork, gentle movement, and mindfulness.
+        <br><br><strong>Postnatal Yoga:</strong> Supporting postpartum recovery through gentle movement, breathwork, and community. Pre-crawling babies welcome!
+        <br><br>View the complete schedule and sign up for classes on the <a href="/yoga?section=classDescriptions">Classes & Workshops page</a> or check the <a href="/calendar">calendar</a> for current offerings.
         `,
         image: '/images/yoga/Zsuzsi_Yoga_StandingSplit.jpg',
     },
     {
         id: 2,
-        title: "Workshops",
-        description: `<strong>Ayurvedic Restorative Yoga Workshop:</strong> Ayurveda, the ancient Indian system of holistic medicine, aligns practices with the rhythms of nature and the changing seasons. This restorative yoga workshop incorporates Ayurvedic principles to support 
-        balance during the current season.<br><br><strong>Yoga and Chocolate Infusion Workshop:</strong> A unique blend of mindful restorative yoga, <a href="/chocolates">house-made artisanal chocolate</a>, and a guided meditation on the senses. This practice invites you to 
-        explore the sensations of smell, taste, and touch, enhancing sensory awareness and grounding you in 
-        the present moment. Gentle movement, meditative music, and rich flavors create a joyful experience to nurture body, mind, and taste buds. <br><br><strong>Mindfulness Practices Workshop:</strong> Explore mindfulness through sensory awareness, subtle body practices, 
-        and breathing techniques to enrich daily life. Engage in activities like sensing light, eye gazing, tuning into touch, taste, and smell, and meditations on sound and space. 
-        Experience gentle movement, chanting, and breathwork, all while cultivating compassion and loving-kindness to deepen your connection to the present moment.
+        title: "Private Sessions",
+        description: `
+        <strong>Individual Yoga Sessions:</strong> Personalized one-on-one sessions designed to meet your unique needs, whether physical, emotional, or spiritual. These sessions offer tailored practices including physical postures, breathwork, meditation, and yoga philosophy.
+        <br><br>Private sessions are ideal for:
+        <br>• Building a personal practice tailored to your body and goals
+        <br>• Working with specific physical conditions or injuries
+        <br>• Deepening your understanding of breathwork and meditation
+        <br>• Exploring yoga philosophy and its application to daily life
+        <br><br><strong>Pricing:</strong> $80-$110/hr sliding scale. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked.
+        <br><br>Sessions are available in-person in Portland, Oregon, or online via Google Meet.
+        <br><br>To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available time slots in the <a href="/calendar">calendar</a>.
         `,
-        image: '/images/yoga/Zsuzsi_yoga_21.jpg',
+        image: '/images/yoga/Zsuzsi_Home_4.jpg',
     },
     {
         id: 3,
         title: "Yoga Therapy",
-        description: `Yoga therapy is an integrative approach that invites balance and harmony across body, mind, and spirit, offering a pathway to support specific health challenges and overall well-being. It embraces each individual’s unique needs and life circumstances, with gentle practices that can bring ease and resilience into daily life.<br><br>
-        This therapeutic process can help navigate a range of concerns, from managing anxiety, depression, and trauma to supporting physical conditions like muscle pain, osteoporosis and spinal cord injury. Each session weaves together mindful movement, guided breathwork, and meditative practices to encourage a grounded presence, inviting release and renewal.<br><br>
-        As a collaborative journey, yoga therapy provides space to explore tools such as mindful yoga postures, restorative breath exercises, and grounding visualizations. These elements are carefully tailored to support you in nurturing your body’s innate wisdom and ease.<br><br>
-        Every session is crafted with consideration of age, health conditions, and personal goals, integrating practices that can be gently woven into the rhythm of daily life. This is not a replacement for traditional medical treatment but a complement, an invitation to cultivate inner balance, self-compassion, and a sustainable path toward wellness.
-        <br><br>$10-$80/hr sliding scale, offered until June 2026, while I'm in training. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked. The first 30-minute session is free. 
-        <br><br>To book a session, please <a href="/register">sign up</a> for an account. Once registered, you will see available sessions in the calendar.`,
+        description: `
+        Yoga therapy is a personalized, holistic approach that supports physical, emotional, and mental well-being. It combines breath, movement, psychology, neurobiology, mindfulness, and somatic practices to address specific concerns or conditions.
+        <br><br><strong>What makes yoga therapy different?</strong> Unlike general yoga classes, yoga therapy sessions are tailored to your individual needs, creating space for healing, resilience, and greater self-awareness. Sessions are designed to meet you exactly where you are.
+        <br><br><strong>Who can benefit?</strong>
+        <br>• Those managing anxiety, depression, trauma, or chronic stress
+        <br>• People navigating physical conditions (chronic pain, injuries, spinal cord injury)
+        <br>• Anyone seeking support for addiction recovery or postpartum challenges
+        <br>• Individuals wanting to deepen their mind-body connection
+        <br><br><strong>What to expect:</strong> Each session weaves together mindful movement, guided breathwork, meditation, and nervous system support. Practices are designed to be integrated into your daily life for sustainable wellness.
+        <br><br><strong>Pricing:</strong> $10-$80/hr sliding scale (offered until June 2026, while I'm in training). Your investment is a personal choice, aligning with your current financial circumstances. No questions asked. 
+        <br><br><strong>First 30-minute consultation is free.</strong>
+        <br><br>To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available sessions in the <a href="/calendar">calendar</a>.
+        `,
         image: '/images/yoga/childs-pose.jpg'
     },
 ];
