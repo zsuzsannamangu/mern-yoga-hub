@@ -23,7 +23,7 @@ const offeringsData = [
         <br><br><strong>Hatha Yoga:</strong> A grounding practice that blends breath awareness with intentional movement, creating space for balance, strength, and inner stillness. Slower-paced than vinyasa, offering time to explore alignment and deepen into each pose.
 	    <br><br><strong>Vinyasa & Morning Flow:</strong> Flowing breath-based movement that builds strength, flexibility, and focus through creative sequences and mindful transitions. Perfect for cultivating presence and energy.
 	    <br><br><strong>Restorative Yoga:</strong> A deeply relaxing practice designed to soothe the nervous system and restore balance, using props to support the body in restful poses.
-        <br><br><strong>Wheelchair & Adaptive Yoga:</strong> Inclusive practices tailored for wheelchair users and those with limited mobility, focusing on breathwork, gentle movement, and mindfulness.
+        <br><br><strong>Wheelchair & Adaptive Yoga:</strong> Practices tailored for wheelchair users, focusing on breathwork, gentle movement, and mindfulness.
         <br><br><strong>Postnatal Yoga:</strong> Supporting postpartum recovery through gentle movement, breathwork, and community. Pre-crawling babies welcome!
         <br><br>View the complete schedule and sign up for classes on the <a href="/yoga?section=classDescriptions">Classes & Workshops page</a> or check the <a href="/calendar">calendar</a> for current offerings.
         `,
@@ -35,15 +35,9 @@ const offeringsData = [
         description: `
         Yoga therapy is a personalized, holistic approach that supports physical, emotional, and mental well-being. It combines breath, movement, psychology, neurobiology, mindfulness, and somatic practices to address specific concerns or conditions.
         <br><br><strong>What makes yoga therapy different?</strong> Unlike general yoga classes, yoga therapy sessions are tailored to your individual needs, creating space for healing, resilience, and greater self-awareness. Sessions are designed to meet you exactly where you are.
-        <br><br><strong>Who can benefit?</strong>
-        <br>• Those managing anxiety, depression, trauma, or chronic stress
-        <br>• People navigating physical conditions (chronic pain, injuries, spinal cord injury)
-        <br>• Anyone seeking support for addiction recovery or postpartum challenges
-        <br>• Individuals wanting to deepen their mind-body connection
-        <br><br><strong>What to expect:</strong> Each session weaves together mindful movement, guided breathwork, meditation, and nervous system support. Practices are designed to be integrated into your daily life for sustainable wellness.
+        <br><br><strong>What to expect:</strong> Each session brings together mindful movement, guided breathwork, meditation, and nervous system support. Practices are designed to be integrated into your daily life for sustainable wellness.
         <br><br><strong>Pricing:</strong> $10-$80/hr sliding scale (offered until June 2026, while I'm in training). Your investment is a personal choice, aligning with your current financial circumstances. No questions asked. 
-        <br><br><strong>First 30-minute consultation is free.</strong>
-        <br><br>To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available sessions in the <a href="/calendar">calendar</a>.
+        <br><br>To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available sessions.
         `,
         image: '/images/yoga/childs-pose.jpg'
     },
