@@ -61,7 +61,7 @@ const offeringsData = [
         <br><br>Sessions are available in-person in Portland, Oregon, or online via Google Meet.
         <br><br>To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available time slots in the <a href="/calendar">calendar</a>.
         `,
-        image: '/images/yoga/Zsuzsi_yoga_34.jpg',
+        image: '/images/yoga/Zsuzsi_Home_111.jpg',
     },
     {
         id: 4,
