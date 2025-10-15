@@ -7,6 +7,7 @@ import Offerings from './Offerings';
 import '../../App.scss';
 import { motion } from 'framer-motion';
 import Slideshow from './Slideshow';
+import { FaCalendarAlt, FaExternalLinkAlt } from 'react-icons/fa';
 
 function About() {
     const location = useLocation(); // React Router hook to access current location (current URL, such as the path or query parameters)
@@ -153,9 +154,9 @@ function About() {
                             </p>
                             <ul className="custom-bullet-list">
                                 <li>Teens and adults in addiction recovery</li>
-                                <li>Pregnant and postpartum mothers</li>
+                                <li>People navigating postpartum</li>
                                 <li>Wheelchair users and those with spinal cord injuries</li>
-                                <li>Stay-at-home moms navigating identity shifts, overwhelm, and emotional labor</li>
+                                <li>Stay-at-home caregivers navigating identity shifts, overwhelm, and emotional labor</li>
                                 <li>Immigrants and those navigating cultural displacement or loss</li>
                                 <li>Everyone!</li>
                             </ul>
@@ -226,29 +227,29 @@ function About() {
                             <div className="workshop-dates-grid">
                                 <div className="workshop-date-card">
                                     <div className="date-header">
-                                        <span className="date-icon">📅</span>
+                                        <FaCalendarAlt className="date-icon" />
                                         <div className="date-info">
                                             <div className="date-text">November 8</div>
                                             <div className="time-text">11:00 AM - 1:00 PM</div>
                                         </div>
                                     </div>
                                     <div className="location-text">
-                                        <span className="location-icon">📍</span>
+                                        <FaExternalLinkAlt className="register-icon" />
                                         <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer">Full Bodied Yoga</a>
                                     </div>
                                 </div>
 
                                 <div className="workshop-date-card">
                                     <div className="date-header">
-                                        <span className="date-icon">📅</span>
+                                        <FaCalendarAlt className="date-icon" />
                                         <div className="date-info">
                                             <div className="date-text">November 22</div>
                                             <div className="time-text">2:00 PM - 4:00 PM</div>
                                         </div>
                                     </div>
                                     <div className="location-text">
-                                        <span className="location-icon">📍</span>
-                                        <a href="#" target="_blank" rel="noopener noreferrer">Yoga Refuge NW</a>
+                                        <FaExternalLinkAlt className="register-icon" />
+                                        <a href="https://www.yogarefugepdx.com/workshops-and-events?mobile=false&options%5Bids%5D=1466&options%5Bsite_id%5D=140907&version=0" target="_blank" rel="noopener noreferrer">Yoga Refuge NW</a>
                                     </div>
                                     <div className="chakra-focus">
                                         <strong>Focus:</strong> Root (1st) + Heart (4th) Chakras
@@ -257,14 +258,14 @@ function About() {
 
                                 <div className="workshop-date-card">
                                     <div className="date-header">
-                                        <span className="date-icon">📅</span>
+                                        <FaCalendarAlt className="date-icon" />
                                         <div className="date-info">
                                             <div className="date-text">November 23</div>
                                             <div className="time-text">2:00 PM - 4:00 PM</div>
                                         </div>
                                     </div>
                                     <div className="location-text">
-                                        <span className="location-icon">📍</span>
+                                        <FaExternalLinkAlt className="register-icon" />
                                         <a href="https://www.thebymc.com/post/awaken-the-senses-where-artisanal-chocolate-and-restorative-yoga-meet" target="_blank" rel="noopener noreferrer">The Bhakti Yoga Movement Center</a>
                                     </div>
                                     <div className="chakra-focus">
@@ -274,27 +275,21 @@ function About() {
 
                                 <div className="workshop-date-card">
                                     <div className="date-header">
-                                        <span className="date-icon">📅</span>
+                                        <FaCalendarAlt className="date-icon" />
                                         <div className="date-info">
                                             <div className="date-text">December 6</div>
                                             <div className="time-text">2:00 PM - 4:00 PM</div>
                                         </div>
                                     </div>
                                     <div className="location-text">
-                                        <span className="location-icon">📍</span>
-                                        <a href="#" target="_blank" rel="noopener noreferrer">Dear Yoga</a>
+                                        <FaExternalLinkAlt className="register-icon" />
+                                        <a href="https://www.dearyogastudio.com/workshops" target="_blank" rel="noopener noreferrer">Dear Yoga</a>
                                     </div>
                                     <div className="chakra-focus">
                                         <strong>Focus:</strong> Solar Plexus (3rd) + Third Eye (6th) Chakras
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="workshop-signup">
-                            <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer" className="signup-link">
-                                Sign Up for Workshop
-                            </a>
                         </div>
                     </motion.div>
                     <motion.div className="info-item" variants={fadeInUp}>
