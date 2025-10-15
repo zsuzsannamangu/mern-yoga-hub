@@ -45,7 +45,7 @@ const offeringsData = [
         id: 3,
         title: "Private Yoga",
         description: `
-        <strong>Individual Yoga Sessions:</strong> Personalized one-on-one sessions designed to meet your unique needs, whether physical, emotional, or spiritual. These sessions offer tailored practices including physical postures, breathwork, meditation, and yoga philosophy.
+        <strong>Individual Yoga Sessions:</strong> Personalized one-on-one sessions designed to meet your unique needs. These sessions offer tailored practices including physical postures, breathwork, meditation, and yoga philosophy.
         <br><br>Private sessions are ideal for:
         <br>• Building a personal practice tailored to your body and goals
         <br>• Working with specific physical conditions or injuries
@@ -53,18 +53,18 @@ const offeringsData = [
         <br>• Exploring yoga philosophy and its application to daily life
         <br><br><strong>Pricing:</strong> $80-$110/hr sliding scale. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked.
         <br><br>Sessions are available in-person in Portland, Oregon, or online via Google Meet.
-        <br><br>To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available time slots in the <a href="/calendar">calendar</a>.
+        <br><br>To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available time slots.
         `,
-        image: '/images/yoga/Zsuzsi_yoga_37.jpg',
+        image: '/images/yoga/yoga5.jpg',
     },
     {
         id: 4,
         title: "Workshops",
         description: `
         <strong>Awaken the Senses: Restorative Yoga, Handcrafted Chocolate and Chakra Exploration</strong>
-        <br><br>An immersive experience combining restorative yoga, meditation, and mindful chocolate tasting. This workshop brings together yoga and handmade chocolate to awaken presence, deepen awareness, and open the senses.
+        <br><br>An immersive experience combining restorative yoga, meditation, and sense awareness. This workshop brings together yoga and handmade chocolate to awaken presence, deepen awareness, and open the senses.
         <br><br>As both a chocolatier and yoga teacher, I bring these worlds together with intention. The chocolates we taste are created specifically to reflect the body's energetic centers, the chakras, using organic cacao infused with edible flowers, fruits, and spices.
-        <br><br>Throughout the workshop, you'll be guided through restorative yoga and meditation practices that prepare the body and mind to fully experience these flavors. Together, we'll explore the chakras through both movement and mindful tasting.
+        <br><br>Throughout the workshop, you'll be guided through restorative yoga and meditation practices that prepare the body and mind to fully experience these flavors. Together, we'll explore the chakras through both movement and sense awareness.
         <br><br>View upcoming workshop dates and register on the <a href="/yoga?section=classDescriptions">Classes & Workshops page</a>.
         `,
         image: '/images/yoga/Zsuzsi_yoga_21.jpg',
