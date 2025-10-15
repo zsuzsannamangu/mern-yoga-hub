@@ -13,22 +13,22 @@
   outline-offset: 2px;
 }
 
-/* Better focus styles for buttons and links */
-a:focus,
+/* Better focus styles for links - use underline instead of box */
+a:focus {
+  outline: none;
+  text-decoration: underline;
+  text-decoration-color: $purple-primary;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* Focus styles for form elements and buttons keep the outline */
 button:focus,
 input:focus,
 textarea:focus,
 select:focus {
   outline: 3px solid $purple-primary;
   outline-offset: 2px;
-}
-
-/* Refined focus styles for navbar links */
-.navbar a:focus,
-.nav-links a:focus {
-  outline: none;
-  box-shadow: 0 2px 0 0 $purple-primary;
-  border-radius: 2px;
 }
 
 /* Accessibility: Reduced motion preference */
