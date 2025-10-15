@@ -2,9 +2,9 @@
 
 /* Workshop Announcement Bar */
 .workshop-announcement {
-  background: linear-gradient(135deg, rgba(139, 75, 140, 0.1) 0%, rgba(139, 75, 140, 0.05) 100%);
-  border-top: 2px solid $purple-primary;
-  border-bottom: 2px solid $purple-primary;
+  background: rgba(255, 255, 255, 0.95);
+  border-top: 1px solid rgba(139, 75, 140, 0.2);
+  border-bottom: 1px solid rgba(139, 75, 140, 0.2);
   padding: 15px 20px;
   text-align: center;
   margin: 0;
