@@ -134,7 +134,7 @@ function Offerings() {
                             dangerouslySetInnerHTML={{ __html: selectedOffering.description }}
                         />
                         <button className="book-session-button" onClick={handleBookClick}>
-                            Book a Session
+                            Book a Private Session
                         </button>
                     </div>
                 </div>
