@@ -125,7 +125,11 @@
     font-size: 1rem;
     color: $secondary-text-color;
     margin: 10px 0;
-    line-height: 1.6;
+    line-height: 1.7;
+    text-align: left;
+    hyphens: auto;
+    word-spacing: normal;
+    text-rendering: optimizeLegibility;
 
     strong {
         font-weight: bold;

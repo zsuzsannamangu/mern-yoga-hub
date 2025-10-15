@@ -105,8 +105,10 @@
       flex: 1 1 50%;
 
       p {
-        text-align: justify;
-        text-justify: inter-word;
+        text-align: left;
+        hyphens: auto;
+        word-spacing: normal;
+        text-rendering: optimizeLegibility;
       }
     }
 
@@ -314,7 +316,11 @@
       font-size: 0.95rem;
       margin-top: 0.4rem;
       color: $text-color;
-      line-height: 1.6;
+      line-height: 1.7;
+      text-align: left;
+      hyphens: auto;
+      word-spacing: normal;
+      text-rendering: optimizeLegibility;
 
       @media (min-width: 768px) {
         font-size: 1rem;
