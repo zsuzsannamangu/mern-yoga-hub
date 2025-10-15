@@ -7,6 +7,54 @@
   }
 }
 
+/* Accessibility: Focus styles for keyboard navigation */
+*:focus {
+  outline: 3px solid $purple-primary;
+  outline-offset: 2px;
+}
+
+/* Better focus styles for buttons and links */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 3px solid $purple-primary;
+  outline-offset: 2px;
+}
+
+/* Accessibility: Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Accessibility: Skip to main content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: $purple-primary;
+  color: $button-text-color;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 10000;
+  border-radius: 0 0 4px 0;
+  font-weight: 600;
+  
+  &:focus {
+    top: 0;
+    outline: 3px solid $purple-secondary;
+    outline-offset: 2px;
+  }
+}
+
 body,
 html,
 #root {

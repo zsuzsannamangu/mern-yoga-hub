@@ -66,9 +66,13 @@ function App() {
       <AdminAuthProvider>
         <Router>
           <div className="App">
+            {/* Accessibility: Skip to main content */}
+            <a href="#main-content" className="skip-link">
+              Skip to main content
+            </a>
             {/* Navbar is hidden on admin routes */}
             <ConditionalNavbar />
-            <div className="content">
+            <div className="content" id="main-content">
               <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<Home showAlert={showAlert} />} /> {/* Passes the reusable showAlert function as a prop to the page for triggering alerts  */}

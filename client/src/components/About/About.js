@@ -227,29 +227,29 @@ function About() {
                             <div className="workshop-dates-grid">
                                 <div className="workshop-date-card">
                                     <div className="date-header">
-                                        <FaCalendarAlt className="date-icon" />
+                                        <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
                                             <div className="date-text">November 8</div>
                                             <div className="time-text">11:00 AM - 1:00 PM</div>
                                         </div>
                                     </div>
                                     <div className="location-text">
-                                        <FaExternalLinkAlt className="register-icon" />
-                                        <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer">Full Bodied Yoga</a>
+                                        <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
+                                        <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on November 8 at Full Bodied Yoga, 11:00 AM to 1:00 PM">Full Bodied Yoga</a>
                                     </div>
                                 </div>
 
                                 <div className="workshop-date-card">
                                     <div className="date-header">
-                                        <FaCalendarAlt className="date-icon" />
+                                        <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
                                             <div className="date-text">November 22</div>
                                             <div className="time-text">2:00 PM - 4:00 PM</div>
                                         </div>
                                     </div>
                                     <div className="location-text">
-                                        <FaExternalLinkAlt className="register-icon" />
-                                        <a href="https://www.yogarefugepdx.com/workshops-and-events?mobile=false&options%5Bids%5D=1466&options%5Bsite_id%5D=140907&version=0" target="_blank" rel="noopener noreferrer">Yoga Refuge NW</a>
+                                        <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
+                                        <a href="https://www.yogarefugepdx.com/workshops-and-events?mobile=false&options%5Bids%5D=1466&options%5Bsite_id%5D=140907&version=0" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on November 22 at Yoga Refuge NW, 2:00 PM to 4:00 PM, focusing on Root and Heart Chakras">Yoga Refuge NW</a>
                                     </div>
                                     <div className="chakra-focus">
                                         <strong>Focus:</strong> Root (1st) + Heart (4th) Chakras
@@ -258,15 +258,15 @@ function About() {
 
                                 <div className="workshop-date-card">
                                     <div className="date-header">
-                                        <FaCalendarAlt className="date-icon" />
+                                        <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
                                             <div className="date-text">November 23</div>
                                             <div className="time-text">2:00 PM - 4:00 PM</div>
                                         </div>
                                     </div>
                                     <div className="location-text">
-                                        <FaExternalLinkAlt className="register-icon" />
-                                        <a href="https://www.thebymc.com/post/awaken-the-senses-where-artisanal-chocolate-and-restorative-yoga-meet" target="_blank" rel="noopener noreferrer">The Bhakti Yoga Movement Center</a>
+                                        <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
+                                        <a href="https://www.thebymc.com/post/awaken-the-senses-where-artisanal-chocolate-and-restorative-yoga-meet" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on November 23 at The Bhakti Yoga Movement Center, 2:00 PM to 4:00 PM, focusing on Sacral and Throat Chakras">The Bhakti Yoga Movement Center</a>
                                     </div>
                                     <div className="chakra-focus">
                                         <strong>Focus:</strong> Sacral (2nd) + Throat (5th) Chakras
@@ -275,15 +275,15 @@ function About() {
 
                                 <div className="workshop-date-card">
                                     <div className="date-header">
-                                        <FaCalendarAlt className="date-icon" />
+                                        <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
                                             <div className="date-text">December 6</div>
                                             <div className="time-text">2:00 PM - 4:00 PM</div>
                                         </div>
                                     </div>
                                     <div className="location-text">
-                                        <FaExternalLinkAlt className="register-icon" />
-                                        <a href="https://www.dearyogastudio.com/workshops" target="_blank" rel="noopener noreferrer">Dear Yoga</a>
+                                        <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
+                                        <a href="https://www.dearyogastudio.com/workshops" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on December 6 at Dear Yoga, 2:00 PM to 4:00 PM, focusing on Solar Plexus and Third Eye Chakras">Dear Yoga</a>
                                     </div>
                                     <div className="chakra-focus">
                                         <strong>Focus:</strong> Solar Plexus (3rd) + Third Eye (6th) Chakras
