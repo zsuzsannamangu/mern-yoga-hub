@@ -161,6 +161,18 @@ function Home({ showAlert }) {
 
   return (
     <div className="homepage">
+      {/* Workshop Announcement Bar - Top */}
+      <div className="workshop-announcement">
+        <div className="announcement-content">
+          <span className="announcement-text">
+            🍫✨ <strong>Awaken the Senses Workshop:</strong> Restorative Yoga + Handcrafted Chocolate + Chakra Exploration
+          </span>
+          <a href="/yoga?section=classDescriptions" className="announcement-link">
+            View Dates
+          </a>
+        </div>
+      </div>
+
       <motion.div
         className="split-banner"
         initial={{ opacity: 0, y: 30 }}
@@ -187,18 +199,6 @@ function Home({ showAlert }) {
           className="split-banner__link split-banner__link--right"
         />
       </motion.div>
-
-      {/* Workshop Announcement Bar */}
-      <div className="workshop-announcement">
-        <div className="announcement-content">
-          <span className="announcement-text">
-            🍫✨ <strong>Awaken the Senses Workshop:</strong> Restorative Yoga + Handcrafted Chocolate + Chakra Exploration
-          </span>
-          <a href="/yoga?section=classDescriptions" className="announcement-link">
-            View Dates
-          </a>
-        </div>
-      </div>
 
       {/* Rest of the content sections */}
       <div className='main-section'>
