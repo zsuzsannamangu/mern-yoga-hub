@@ -60,7 +60,7 @@ function About() {
                 <div className="about-overlay">
                     <div className="about-overlay-text">
                         <h1>Yoga with Zsuzsanna</h1>
-                        <p>I'm Zsuzsanna, a yoga teacher and yoga therapist-in-training, here to support you in finding alignment between body and mind.</p>
+                        <p>I'm Zsuzsanna, a yoga teacher and yoga therapist, here to support you in finding alignment between body and mind.</p>
                     </div>
                 </div>
             </motion.div>
@@ -298,7 +298,7 @@ function About() {
 
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Yoga for Wheelchair Users</h4>
-                        <p className="class-schedule">Every other Saturday 6-7pm at The People's Yoga NE, Studio 3 - entrance on 30th</p>
+                        <p className="class-schedule">Every other Saturday 6-7pm at The People's Yoga NE, Studio 3 - entrance on 30th · <a href="/calendar">Sign up</a></p>
                         <div className="wheelchair-yoga-content">
                             <div className="wheelchair-yoga-text">
                                 <p>A yoga practice tailored for individuals who use wheelchairs, focusing on enhancing well-being through breath, gentle movement, and mindfulness.
@@ -317,7 +317,7 @@ function About() {
 
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Hatha Yoga</h4>
-                        <p className="class-schedule">Mondays 9:30-10:30am at Dear Yoga</p>
+                        <p className="class-schedule">Mondays 9:30-10:30am at <a href="https://www.dearyogastudio.com/schedule" target="_blank" rel="noopener noreferrer">Dear Yoga</a></p>
                         <p>A grounding practice that blends breath awareness with intentional movement. Hatha Yoga emphasizes steady postures and transitions, creating space for balance,
                             strength, and inner stillness. This class is slower-paced than vinyasa, offering time to explore alignment and deepen into each pose. Ideal for those seeking a
                             more meditative, breath-centered experience. Modifications and props are welcome.
@@ -326,20 +326,20 @@ function About() {
 
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Grounded Alignment</h4>
-                        <p className="class-schedule">Mondays 12:15-1:15pm at Full Bodied Yoga (also available livestream)</p>
+                        <p className="class-schedule">Mondays 12:15-1:15pm at <a href="https://fullbodiedyoga.union.site/" target="_blank" rel="noopener noreferrer">Full Bodied Yoga</a> (also available livestream)</p>
                         <p>Grounded Alignment is a Hatha-inspired yoga class designed to help all bodies move mindfully and confidently. Led by experienced instructors who honor body diversity, this class offers personalized techniques tailored to your needs. You'll build strength, find balance, and embrace your unique capabilities, leaving you grounded both on and off the mat.</p>
                     </motion.div>
 
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Postnatal Yoga</h4>
-                        <p className="class-schedule">Thursdays 10:30am-11:30am at The Bhakti Yoga Movement Center</p>
+                        <p className="class-schedule">Thursdays 10:30am-11:30am at <a href="https://www.thebymc.com/classes" target="_blank" rel="noopener noreferrer">The Bhakti Yoga Movement Center</a></p>
                         <p>This postpartum yoga class aims to help you regain core strength, relieve pelvic floor imbalances, ease neck and back tension and be in community. Pre-crawling babies welcome to attend!  This class is designed for new parents 4 weeks - 6 months postpartum, but may be helpful for anyone with diastasis recti (abdominal muscle separation) or pelvic floor issues 
                             regardless of childbirth. This is a wonderful place to tend to your body and spirit, and be in community with others on the postpartum journey. No prior yoga experience necessary.</p>
                     </motion.div>
 
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Restorative Yoga</h4>
-                        <p className="class-schedule">Thursdays 7:30-8:45pm at Yoga Refuge, NW location</p>
+                        <p className="class-schedule">Thursdays 7:30-8:45pm at <a href="https://www.yogarefugepdx.com/class-schedule" target="_blank" rel="noopener noreferrer">Yoga Refuge, NW location</a></p>
                         <p>A deeply relaxing class designed to soothe the nervous system and restore balance. Using props to support the body in restful poses, this
                             practice encourages deep release and stillness. Perfect for stress relief, recovery, and cultivating a sense of inner calm.
                         </p>
@@ -347,13 +347,13 @@ function About() {
 
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Morning Flow</h4>
-                        <p className="class-schedule">Fridays 7am-8am at Yoga Refuge, NW location (also available livestream)</p>
+                        <p className="class-schedule">Fridays 7am-8am at <a href="https://www.yogarefugepdx.com/class-schedule" target="_blank" rel="noopener noreferrer">Yoga Refuge, NW location</a> (also available livestream)</p>
                         <p>Start your day with an energizing flow that awakens the body and centers the mind. This mindful practice combines breath-synchronized movement with intentional transitions, building strength and flexibility while cultivating presence. Perfect for setting a grounded, positive tone for your day.</p>
                     </motion.div>
 
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Vinyasa Flow</h4>
-                        <p className="class-schedule">Fridays 4pm-5pm at Yoga Refuge, NW location (also available livestream)</p>
+                        <p className="class-schedule">Fridays 4pm-5pm at <a href="https://www.yogarefugepdx.com/class-schedule" target="_blank" rel="noopener noreferrer">Yoga Refuge, NW location</a> (also available livestream)</p>
                         <p>Vinyasa Flow builds strength, flexibility, and focus through creative sequences and mindful transitions. Expect to move, breathe,
                             and sweat while cultivating presence and resilience. Options will be offered to support a variety of experience levels.
                         </p>
