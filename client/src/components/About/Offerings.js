@@ -27,7 +27,7 @@ const offeringsData = [
         <br><br><strong>Postnatal Yoga:</strong> Supporting postpartum recovery through gentle movement, breathwork, and community. Pre-crawling babies welcome!
         <br><br>View the complete schedule and sign up for classes on the <a href="/yoga?section=classDescriptions">Classes & Workshops page</a> or check the <a href="/calendar">calendar</a> for current offerings.
         `,
-        image: '/images/yoga/Zsuzsi_Yoga_StandingSplit.jpg',
+        image: '/images/yoga/Zsuzsi_Yoga_25.jpg',
     },
     {
         id: 2,
@@ -61,7 +61,7 @@ const offeringsData = [
         <br><br>Sessions are available in-person in Portland, Oregon, or online via Google Meet.
         <br><br>To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available time slots in the <a href="/calendar">calendar</a>.
         `,
-        image: '/images/yoga/Zsuzsi_Home_111.jpg',
+        image: '/images/yoga/Yoga_37.jpg',
     },
     {
         id: 4,
