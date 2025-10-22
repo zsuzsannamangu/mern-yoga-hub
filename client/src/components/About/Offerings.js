@@ -24,7 +24,7 @@ const offeringsData = [
 	    <br><br><strong>Vinyasa & Morning Flow:</strong> Flowing breath-based movement that builds strength, flexibility, and focus through creative sequences and mindful transitions. Perfect for cultivating presence and energy.
 	    <br><br><strong>Restorative Yoga:</strong> A deeply relaxing practice designed to soothe the nervous system and restore balance, using props to support the body in restful poses.
         <br><br><strong>Wheelchair & Adaptive Yoga:</strong> Practices tailored for wheelchair users, focusing on breathwork, gentle movement, and mindfulness.
-        <br><br><strong>Postnatal Yoga:</strong> Supporting postpartum recovery through gentle movement, breathwork, and community. Pre-crawling babies welcome!
+        <br><br><strong>Postpartum Yoga:</strong> Supporting postpartum recovery through gentle movement, breathwork, and community. Pre-crawling babies welcome!
         <br><br>View the complete schedule and sign up for classes on the <a href="/yoga?section=classDescriptions">Classes & Workshops page</a> or check the <a href="/calendar">calendar</a> for current offerings.
         `,
         image: '/images/yoga/Zsuzsi_yoga_25.jpg',

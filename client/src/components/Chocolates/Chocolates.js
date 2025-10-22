@@ -57,7 +57,7 @@ function Chocolates() {
                         <h1>ReTreat Chocolates</h1>
                         <p>Plant-based. Sustainably sourced. Low waste packaging.</p>
                         <p>Organic, local and seasonal ingredients.</p>
-                        <p>I never use: gluten, soy, palm oil, and refined sugar.</p>
+                        <p>I never use: soy, palm oil, and refined sugar.</p>
                         <p>Made to order, from scratch, by hand, in very small batches.</p>
                         <motion.button
                             onClick={scrollToProductsSection}

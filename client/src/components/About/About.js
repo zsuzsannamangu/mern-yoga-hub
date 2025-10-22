@@ -235,7 +235,7 @@ function About() {
                         <p>
                             An immersive couple hours of restorative yoga, meditation, and sensory exploration.
                         </p>
-                        
+
                         <p>
                             This workshop brings together yoga and handmade chocolate to awaken presence, deepen awareness, and open the senses.
                             Yoga invites us to slow down and reconnect with the body. Chocolate, when made with attention and enjoyed mindfully,
@@ -252,12 +252,12 @@ function About() {
                             <div className="chakra-image">
                                 <img src="/images/chocolates/Chocolate_1.jpg" alt="Handcrafted chocolate bars" />
                             </div>
-                            
+
                             <div className="chakra-list">
                                 <p><strong>Root (1st) + Heart (4th):</strong> Cacao nibs, ashwagandha, saffron and rose petals. This blend brings earth + heart harmony: grounding your roots while softening and expanding the heart.</p>
-                                
+
                                 <p><strong>Sacral (2nd) + Throat (5th):</strong> Chamomile and lavender. A powerful combination that invites you to speak your truth with softness and nurture creative flow.</p>
-                                
+
                                 <p><strong>Solar Plexus (3rd) + Third Eye (6th):</strong> Orange, orange peel, calendula, and blue lotus flower. This blend brings confidence + clarity: energizing your inner fire while opening your perception to insight.</p>
                             </div>
                         </div>
@@ -285,6 +285,9 @@ function About() {
                                     <div className="location-text">
                                         <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
                                         <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on November 8 at Full Bodied Yoga, 11:00 AM to 1:00 PM">Full Bodied Yoga</a>
+                                    </div>
+                                    <div className="chakra-focus">
+                                        <strong>Focus:</strong> Solar Plexus (3rd) + Third Eye (6th) Chakras
                                     </div>
                                 </div>
 
@@ -319,23 +322,6 @@ function About() {
                                     </div>
                                     <div className="chakra-focus">
                                         <strong>Focus:</strong> Sacral (2nd) + Throat (5th) Chakras
-                                    </div>
-                                </div>
-
-                                <div className="workshop-date-card">
-                                    <div className="date-header">
-                                        <FaCalendarAlt className="date-icon" aria-hidden="true" />
-                                        <div className="date-info">
-                                            <div className="date-text">December 6</div>
-                                            <div className="time-text">2:00 PM - 4:00 PM</div>
-                                        </div>
-                                    </div>
-                                    <div className="location-text">
-                                        <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
-                                        <a href="https://www.dearyogastudio.com/workshops" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on December 6 at Dear Yoga, 2:00 PM to 4:00 PM, focusing on Solar Plexus and Third Eye Chakras">Dear Yoga</a>
-                                    </div>
-                                    <div className="chakra-focus">
-                                        <strong>Focus:</strong> Solar Plexus (3rd) + Third Eye (6th) Chakras
                                     </div>
                                 </div>
                             </div>
@@ -380,9 +366,9 @@ function About() {
                     </motion.div>
 
                     <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Postnatal Yoga</h4>
-                        <p className="class-schedule">Thursdays 10:30am-11:30am at <a href="https://www.thebymc.com/classes" target="_blank" rel="noopener noreferrer">The Bhakti Yoga Movement Center</a></p>
-                        <p>This postpartum yoga class aims to help you regain core strength, relieve pelvic floor imbalances, ease neck and back tension and be in community. Pre-crawling babies welcome to attend!  This class is designed for new parents 4 weeks - 6 months postpartum, but may be helpful for anyone with diastasis recti (abdominal muscle separation) or pelvic floor issues 
+                        <h4>Postpartum Yoga</h4>
+                        <p className="class-schedule">Thursdays 10:30am-11:30am at <a href="https://www.thebymc.com/classes" target="_blank" rel="noopener noreferrer">The Bhakti Yoga Movement Center (starting soon)</a></p>
+                        <p>This postpartum yoga class aims to help you regain core strength, relieve pelvic floor imbalances, ease neck and back tension and be in community. Pre-crawling babies welcome to attend!  This class is designed for new parents 4 weeks - 6 months postpartum, but may be helpful for anyone with diastasis recti (abdominal muscle separation) or pelvic floor issues
                             regardless of childbirth. This is a wonderful place to tend to your body and spirit, and be in community with others on the postpartum journey. No prior yoga experience necessary.</p>
                     </motion.div>
 
@@ -434,15 +420,15 @@ function About() {
                 <div className="faq-accordion">
                     {faqData.map((faq) => (
                         <motion.div key={faq.id} className="faq-item" variants={fadeInUp}>
-                            <button 
+                            <button
                                 className={`faq-question ${openFAQ === faq.id ? 'open' : ''}`}
                                 onClick={() => toggleFAQ(faq.id)}
                                 aria-expanded={openFAQ === faq.id}
                                 aria-controls={`faq-answer-${faq.id}`}
                             >
                                 <span>{faq.question}</span>
-                                {openFAQ === faq.id ? 
-                                    <FaChevronUp className="faq-icon" aria-hidden="true" /> : 
+                                {openFAQ === faq.id ?
+                                    <FaChevronUp className="faq-icon" aria-hidden="true" /> :
                                     <FaChevronDown className="faq-icon" aria-hidden="true" />
                                 }
                             </button>
@@ -507,6 +493,11 @@ function About() {
                 </div>
                 <div className="info-category">
                     <h3>Other Yoga Trainings</h3>
+                    <div className="info-item">
+                        <h4>20hr "Postpartum Yoga" Teacher Training</h4>
+                        <p><em>with <strong><a href="https://www.awakenedspirityoga.com/product/postnatal-yoga-teacher-training-virtual/" target='_blank'>Julia Forest</a></strong>, online</em><br />
+                            October, 2025</p>
+                    </div>
                     <div className="info-item">
                         <h4>10hr "Yoga for Disabled Folks" Training</h4>
                         <p><em>with <strong><a href="https://www.allihopayoga.com/about" target='_blank'>Rodrigo Souza</a></strong>, live via Accessible Yoga</em><br />
