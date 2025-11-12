@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 function UserBookNew() {
     const { userId } = useParams(); // Get user ID from URL parameters
     const [user, setUser] = useState(null); // Store user data
-    const [currentDay, setCurrentDay] = useState(new Date()); // Track the current day
+    const [currentDay] = useState(new Date()); // Track the current day
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth()); // Track the current month
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear()); // Track the current year
     const [selectedDate, setSelectedDate] = useState(null); // Store the selected date
@@ -46,6 +46,40 @@ function UserBookNew() {
             });
             return;
         }
+
+        const fetchUser = async () => {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_API}/api/user/${userId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const userData = await response.json();
+                setUser(userData);
+            } catch (error) {
+                console.error('Failed to fetch user:', error);
+            }
+        };
+
+        const fetchSlots = async () => {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_API}/api/bookings`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const { availableSlots } = await response.json();
+                const now = new Date();
+
+                const filteredSlots = availableSlots.filter((slot) => {
+                    const slotDateTime = new Date(`${slot.date}T${slot.time}`);
+                    return slotDateTime > now;
+                });
+
+                setAvailableSlots(filteredSlots);
+            } catch (error) {
+                console.error('Failed to fetch slots:', error);
+            }
+        };
 
         fetchUser();
         fetchSlots();
@@ -87,41 +121,6 @@ function UserBookNew() {
     }, [selectedDate]);
 
     // Fetch user details
-    const fetchUser = async () => {
-        try {
-            const response = await fetch(`${process.env.REACT_APP_API}/api/user/${userId}`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const userData = await response.json();
-            setUser(userData);
-        } catch (error) {
-            console.error('Failed to fetch user:', error);
-        }
-    };
-
-    // Fetch available booking slots
-    const fetchSlots = async () => {
-        try {
-            const response = await fetch(`${process.env.REACT_APP_API}/api/bookings`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const { availableSlots } = await response.json();
-            const now = new Date();
-
-            const filteredSlots = availableSlots.filter((slot) => {
-                const slotDateTime = new Date(`${slot.date}T${slot.time}`);
-                return slotDateTime > now;
-            });
-
-            setAvailableSlots(filteredSlots);
-        } catch (error) {
-            console.error('Failed to fetch slots:', error);
-        }
-    };
-
     // Handle navigation to the previous month
     const handlePreviousMonth = () => {
         if (currentMonth === 0) {

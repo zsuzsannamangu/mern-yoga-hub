@@ -61,7 +61,6 @@ function VerifyLogin() {
                     
                     // Extract error message from server response
                     const errorMessage = error.response?.data?.message || 'Your login link is invalid or has expired. Please request a new link and try again.';
-                    const isExpired = error.response?.data?.expired;
                     
                     console.error('Login verification error:', error);
                     

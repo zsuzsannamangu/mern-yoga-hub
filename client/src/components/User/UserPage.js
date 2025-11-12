@@ -38,7 +38,7 @@ function UserPage() {
             };
             validateToken();
         }
-    }, [searchParams]);
+    }, [searchParams, login, paramUserId]);
 
     useEffect(() => {
         if (!userId) {

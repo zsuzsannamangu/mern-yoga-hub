@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useUserAuth } from './UserAuthContext';
 import axios from 'axios';
-import { userAxiosInstance } from '../../config/axiosConfig';
-import { FaClock, FaCalendarAlt, FaLink, FaLocationArrow, FaEnvelope, FaEdit } from 'react-icons/fa';
+import { FaClock, FaCalendarAlt, FaLocationArrow, FaEnvelope, FaEdit } from 'react-icons/fa';
 import CalendarDays from '../Calendar/CalendarDays';
 import Swal from 'sweetalert2';
 import io from 'socket.io-client';
@@ -165,7 +164,7 @@ function UserBookings() {
 
     // Format date consistently
     const formatDate = (dateStr) => {
-        const [year, month, day] = dateStr.split('-');
+        const [, month, day] = dateStr.split('-');
         return `${month}/${day}`;
     };
 
