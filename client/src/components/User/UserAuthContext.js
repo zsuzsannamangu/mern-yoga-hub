@@ -2,10 +2,6 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 // Importing necessary React hooks and utilities
 import { userAxiosInstance } from '../../config/axiosConfig';
 // Importing a pre-configured Axios instance for making API requests
-import Swal from 'sweetalert2';
-// Importing SweetAlert2 for displaying alert pop-ups
-
-
 const UserAuthContext = createContext();
 // Creating a React Context for user authentication
 
@@ -56,8 +52,6 @@ export const UserAuthProvider = ({ children }) => { // Creating a provider compo
             setIsAuthenticated(true);
         }
 
-        const token = localStorage.getItem('userToken');
-
         const validateSession = async () => {
             setLoading(true);
             const token = localStorage.getItem('userToken');
@@ -103,38 +97,6 @@ export const UserAuthProvider = ({ children }) => { // Creating a provider compo
             validateSession();
         }, 300); // Delay validation to ensure localStorage is ready
     }, []);
-
-    // The handleSave method is responsible for updating the user's profile information
-    const handleSave = async (userData, e) => {
-        e.preventDefault(); // Ensures that the function does not trigger a page refresh when called inside a form submission, which is the default form submission behaviour
-        try {
-            const response = await fetch('api/user/update', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(userData),
-            });
-            // Sends an API request to update the user's profile
-
-            if (response.ok) {
-                const updatedUser = await response.json();
-                setUser(updatedUser); // Update state with the new user data
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: 'Profile updated successfully!',
-                }); // Show success alert
-            } else {
-                throw new Error('Failed to update profile.');
-            }
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Something went wrong!',
-                text: 'Failed to update profile. Please try again later.',
-            }); // Show error alert
-        }
-    };
 
     const logout = (navigate) => {
         setIsAuthenticated(false); // Set authentication status to false

@@ -1,4 +1,3 @@
-/* global grecaptcha */
 import React, { useEffect } from 'react';
 import './Home.scss';
 import '../../App.scss';

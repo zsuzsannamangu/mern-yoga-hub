@@ -74,7 +74,7 @@ const AdminUsers = () => {
             
             return sortOrder === 'asc' ? comparison : -comparison;
         });
-    }, [sortBy, sortOrder, sortUsers]);
+    }, [sortBy, sortOrder]);
 
     // Fetch all users from the database
     const fetchUsers = useCallback(async () => {
@@ -619,11 +619,13 @@ const AdminUsers = () => {
 
     // Re-sort users when sort settings change
     useEffect(() => {
-        if (users.length > 0) {
-            const sortedUsers = sortUsers(users);
-            setUsers(sortedUsers);
-        }
-    }, [sortBy, sortOrder]);
+        setUsers((prevUsers) => {
+            if (prevUsers.length === 0) {
+                return prevUsers;
+            }
+            return sortUsers(prevUsers);
+        });
+    }, [sortUsers]);
 
     // Fetch users when the component mounts
     useEffect(() => {

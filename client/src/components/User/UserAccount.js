@@ -56,7 +56,7 @@ function UserAccount() {
             });
 
             if (response.ok) {
-                const updatedUser = await response.json();
+                await response.json();
                 Swal.fire({
                     icon: 'success',
                     title: 'Success!',
