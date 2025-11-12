@@ -16,10 +16,13 @@
 /* Better focus styles for links - use underline instead of box */
 a:focus {
   outline: none;
-  text-decoration: underline;
-  text-decoration-color: $purple-primary;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
+  text-decoration: none;
+  color: $purple-secondary;
+}
+
+.nav-item:focus,
+.nav-item:focus-visible {
+  text-decoration: none !important;
 }
 
 /* Focus styles for form elements and buttons keep the outline */
