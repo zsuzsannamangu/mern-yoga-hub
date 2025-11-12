@@ -14,14 +14,6 @@ function Chocolates() {
     const scrollToProductsSection = () => {
         document.getElementById("products-section").scrollIntoView({ behavior: "smooth" });
     };
-
-    //Animation Variants
-    const fadeInUp = {
-        hidden: { opacity: 0, y: 30 },
-        visible: { opacity: 1, y: 0 },
-        transition: { duration: 1 }
-    };
-
     return (
         <div className='chocolates-page'>
             <Helmet>

@@ -466,7 +466,7 @@ function About() {
                     <div className="info-item">
                         <h4>800hr Integrative Yoga Therapy Training</h4>
                         <h4>Accredited with IAYT</h4>
-                        <p><em><a href="https://www.sarahjoyyoga.com/800-hour-yoga-therapy-training-curriculum-dates.html" target='_blank'>Institute for Living Yoga, Portland OR</a></em><br />
+                        <p><em><a href="https://www.sarahjoyyoga.com/800-hour-yoga-therapy-training-curriculum-dates.html" target='_blank' rel="noopener noreferrer">Institute for Living Yoga, Portland OR</a></em><br />
                             June 2025 - exp. June 2026</p>
                         <p>The Science of the Breath and the Art of Yoga Therapy; Internal Family Systems Model;<br />
                             Chronic Pain and Brain-Based Approaches to Yoga Therapy; Yoga and Expressive Arts Therapy;<br />
@@ -478,7 +478,7 @@ function About() {
                         <h4>(RYT-500)</h4>
                         <p><em>Sarahjoy Yoga, Portland OR</em><br />
                             May 2024 - February 2025</p>
-                        <p>Trauma-informed, neurobiologically grounded teacher training with <strong><a href="https://www.sarahjoyyoga.com/300-hour-advanced-yoga-teacher-training.html" target='_blank'>Sarahjoy Marsh</a></strong><br />
+                        <p>Trauma-informed, neurobiologically grounded teacher training with <strong><a href="https://www.sarahjoyyoga.com/300-hour-advanced-yoga-teacher-training.html" target='_blank' rel="noopener noreferrer">Sarahjoy Marsh</a></strong><br />
                             Restorative Yoga, Slow Flow, Chair Yoga, Adaptive Yoga, Pranayama<br />
                             Focus on neuroscience, mindfulness, psychology, physiology, and ayurvedic practices</p>
                     </div>
@@ -486,7 +486,7 @@ function About() {
                         <h4>300hr Foundational Yoga Teacher Training</h4>
                         <p><em>The People’s Yoga, Portland OR</em><br />
                             October 2023 - April 2024</p>
-                        <p>Treasures of Engagement with <strong><a href="https://www.suniti.net/" target='_blank'>Suniti Dernovsek</a></strong><br />
+                        <p>Treasures of Engagement with <strong><a href="https://www.suniti.net/" target='_blank' rel="noopener noreferrer">Suniti Dernovsek</a></strong><br />
                             Hatha Yoga, Vinyasa Yoga, Restorative Yoga<br />
                             Focus on somatic practices such as Body-Mind Centering and the Alexander Technique</p>
                     </div>
@@ -495,24 +495,24 @@ function About() {
                     <h3>Other Yoga Trainings</h3>
                     <div className="info-item">
                         <h4>20hr "Postpartum Yoga" Teacher Training</h4>
-                        <p><em>with <strong><a href="https://www.awakenedspirityoga.com/product/postnatal-yoga-teacher-training-virtual/" target='_blank'>Julia Forest</a></strong>, online</em><br />
+                        <p><em>with <strong><a href="https://www.awakenedspirityoga.com/product/postnatal-yoga-teacher-training-virtual/" target='_blank' rel="noopener noreferrer">Julia Forest</a></strong>, online</em><br />
                             October, 2025</p>
                     </div>
                     <div className="info-item">
                         <h4>10hr "Yoga for Disabled Folks" Training</h4>
-                        <p><em>with <strong><a href="https://www.allihopayoga.com/about" target='_blank'>Rodrigo Souza</a></strong>, live via Accessible Yoga</em><br />
+                        <p><em>with <strong><a href="https://www.allihopayoga.com/about" target='_blank' rel="noopener noreferrer">Rodrigo Souza</a></strong>, live via Accessible Yoga</em><br />
                             December 9-19, 2024</p>
                         <p>Accessible & adaptive practices for those with limited mobility & wheelchair users</p>
                     </div>
                     <div className="info-item">
                         <h4>50hr "Yoga Anatomy and Physiology" Training</h4>
-                        <p><em>with <strong><a href="https://joemilleryoga.com/" target='_blank'>Joe Miller</a></strong>, online</em><br />
+                        <p><em>with <strong><a href="https://joemilleryoga.com/" target='_blank' rel="noopener noreferrer">Joe Miller</a></strong>, online</em><br />
                             November 2024</p>
                         <p>Applying anatomy to yoga practice and teachings, using anatomical terminology.</p>
                     </div>
                     <div className="info-item">
                         <h4>8hr Kids Yoga Teacher Training</h4>
-                        <p><em>with Leslie Wilda, <strong><a href="https://www.yogaplaygrounds.com/" target='_blank'>Yoga Playgrounds</a></strong>, in-person in Portland, OR</em><br />
+                        <p><em>with Leslie Wilda, <strong><a href="https://www.yogaplaygrounds.com/" target='_blank' rel="noopener noreferrer">Yoga Playgrounds</a></strong>, in-person in Portland, OR</em><br />
                             August 2024</p>
                         <p>Teaching yoga and mindfulness for kids ages 3-12.<br />
                             Yoga games, breathing exercises, visualizations, mindfulness activities and relaxation techniques.</p>
@@ -522,13 +522,13 @@ function About() {
                     <h3>Other Programs</h3>
                     <div className="info-item">
                         <h4>Master of Arts in International Studies</h4>
-                        <p><em> <strong><a href="https://www.nccu.edu.tw/index.php?Lang=en" target='_blank'>National Chengchi University</a></strong>, Taipei, Taiwan</em><br />
+                        <p><em> <strong><a href="https://www.nccu.edu.tw/index.php?Lang=en" target='_blank' rel="noopener noreferrer">National Chengchi University</a></strong>, Taipei, Taiwan</em><br />
                             2009-2011</p>
                         <p>Full scholarship recipient of the Ministry of Education, Taiwan</p>
                     </div>
                     <div className="info-item">
                         <h4>Bachelor of Arts in International Studies</h4>
-                        <p><em> <strong><a href="https://english.nye.hu/" target='_blank'>University of Nyíregyháza</a></strong>, Nyíregyháza, Hungary</em><br />
+                        <p><em> <strong><a href="https://english.nye.hu/" target='_blank' rel="noopener noreferrer">University of Nyíregyháza</a></strong>, Nyíregyháza, Hungary</em><br />
                             2003-2007</p>
                         <p>Scholarship recipient of the Ministry of Education, Hungary</p>
                     </div>

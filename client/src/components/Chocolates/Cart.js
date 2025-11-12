@@ -4,7 +4,6 @@ import './Cart.scss';
 import '../../App.scss';
 import { useCart } from '../../context/CartContext';
 import axios from 'axios';
-import { useEffect } from 'react';
 
 /* 
 * Cart Component

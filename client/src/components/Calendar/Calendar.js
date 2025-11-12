@@ -97,8 +97,6 @@ export default class Calendar extends Component {
       .toString()
       .padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
 
-    const sortedDates = Object.keys(events).sort((a, b) => new Date(a) - new Date(b));
-
     // Always set today as the first date, even if there are no events for today
     this.setState({
       currentDay: today,

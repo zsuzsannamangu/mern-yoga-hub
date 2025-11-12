@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { adminAxiosInstance } from '../../config/axiosConfig';
 import AdminLayout from './AdminLayout';
 import './AdminFinances.scss';
@@ -29,11 +29,7 @@ const AdminFinances = () => {
         repeatFrequency: 'weekly'
     });
 
-    useEffect(() => {
-        fetchClassData();
-    }, []);
-
-    const fetchClassData = async () => {
+    const fetchClassData = useCallback(async () => {
         try {
             const token = localStorage.getItem('adminToken');
             const response = await adminAxiosInstance.get('/api/finances', {
@@ -67,7 +63,11 @@ const AdminFinances = () => {
             });
             setLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchClassData();
+    }, [fetchClassData]);
 
     const sortClassData = (data) => {
         return data.sort((a, b) => {

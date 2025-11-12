@@ -1,17 +1,12 @@
 /* global grecaptcha */
-import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import React, { useEffect } from 'react';
 import './Home.scss';
 import '../../App.scss';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
-import { getRecaptchaToken } from '../../utils/recaptcha';
 import { motion } from 'framer-motion';
 
-function Home({ showAlert }) {
-  const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
+function Home() {
   useEffect(() => {
     // Dynamically add reCAPTCHA script
     const siteKey = process.env.REACT_APP_CAPTCHA_SITE_KEY;
@@ -92,70 +87,6 @@ function Home({ showAlert }) {
         icon: 'error',
         confirmButtonText: 'OK'
       });
-    }
-  };
-
-  const handleNewsletterSubmit = async (e) => {
-    e.preventDefault();
-
-    if (isSubmitting) return;
-
-    const trimmedEmail = email.trim();
-    if (!trimmedEmail) return;
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(trimmedEmail)) {
-      Swal.fire({
-        title: 'Invalid Email',
-        text: 'Please enter a valid email address.',
-        icon: 'warning',
-        confirmButtonText: 'OK'
-      });
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API}/api/subscribers/subscribe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: trimmedEmail }),
-      });
-
-      const result = await response.json(); // parse the response JSON
-
-      if (response.status === 409) {
-        Swal.fire({
-          title: 'Already Subscribed',
-          text: 'This email is already on our list.',
-          icon: 'info',
-          confirmButtonText: 'OK'
-        });
-        setEmail('');
-        e.target.reset();
-      } else if (response.ok) {
-        Swal.fire({
-          title: 'Subscribed!',
-          text: 'Thanks for signing up! 🎉',
-          icon: 'success',
-          confirmButtonText: 'Awesome'
-        });
-        setEmail('');
-        e.target.reset();
-      } else {
-        throw new Error(result?.error || 'Subscription failed');
-      }
-    } catch (error) {
-      Swal.fire({
-        title: 'Oops!',
-        text: 'We couldn\'t process your subscription.',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
-      setEmail(''); //clears email input field
-    } finally {
-      setIsSubmitting(false);
     }
   };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { adminAxiosInstance } from '../../config/axiosConfig';
 import './AdminUsers.scss';
 import '../../App.scss';
@@ -60,7 +60,7 @@ const AdminUsers = () => {
     });
 
     // Sort users based on current sort settings
-    const sortUsers = (userList) => {
+    const sortUsers = useCallback((userList) => {
         return [...userList].sort((a, b) => {
             let comparison = 0;
             
@@ -74,10 +74,10 @@ const AdminUsers = () => {
             
             return sortOrder === 'asc' ? comparison : -comparison;
         });
-    };
+    }, [sortBy, sortOrder, sortUsers]);
 
     // Fetch all users from the database
-    const fetchUsers = async () => {
+    const fetchUsers = useCallback(async () => {
         setLoading(true);
         try {
             const res = await adminAxiosInstance.get('/api/admin/users'); // API request to get users
@@ -94,7 +94,7 @@ const AdminUsers = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [sortUsers]);
 
     // Delete a user by ID
     const deleteUser = async (id) => {
@@ -159,7 +159,7 @@ const AdminUsers = () => {
 
         try {
             const token = localStorage.getItem('adminToken');
-            const response = await adminAxiosInstance.post('/api/admin/users', newClient, {
+            await adminAxiosInstance.post('/api/admin/users', newClient, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -590,7 +590,6 @@ const AdminUsers = () => {
 
     // Format time with timezone
     const formatTimeWithZone = (dateStr, timeStr) => {
-        const [hour, minute] = timeStr.split(':');
         const date = new Date(`${dateStr}T${timeStr}`);
         return date.toLocaleTimeString('en-US', {
             hour: 'numeric',
@@ -602,7 +601,7 @@ const AdminUsers = () => {
 
     // Format date consistently
     const formatDate = (dateStr) => {
-        const [year, month, day] = dateStr.split('-');
+        const [, month, day] = dateStr.split('-');
         return `${month}/${day}`;
     };
 
@@ -629,7 +628,7 @@ const AdminUsers = () => {
     // Fetch users when the component mounts
     useEffect(() => {
         fetchUsers();
-    }, []);
+    }, [fetchUsers]);
 
     return (
         <AdminLayout>

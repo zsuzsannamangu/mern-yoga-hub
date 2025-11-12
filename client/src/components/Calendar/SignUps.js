@@ -17,7 +17,6 @@ const Signup = () => {
   const queryParams = new URLSearchParams(location.search);
   const navigate = useNavigate(); // React Router navigation hook
   const [signatureData, setSignatureData] = useState(null);
-  const [recaptchaToken, setRecaptchaToken] = useState('');
   const [formData, setFormData] = useState({
     name: "",
     email: "",

@@ -16,7 +16,6 @@ import '@sweetalert2/theme-material-ui/material-ui.css';
 const AdminBooking = () => {
     // State to store different types of slots
     const [availableSlots, setAvailableSlots] = useState([]);
-    const [bookedSlots, setBookedSlots] = useState([]);
     const [upcomingSlots, setUpcomingSlots] = useState([]);
     const [passedSlots, setPassedSlots] = useState([]);
     const [newSlot, setNewSlot] = useState({ date: '', time: '' }); // New slot form state
@@ -61,7 +60,7 @@ const AdminBooking = () => {
         setLoading(true);
         try {
             const res = await adminAxiosInstance.get('/api/bookings');
-            let { availableSlots, bookedSlots } = res.data;
+            let { availableSlots, bookedSlots: fetchedBookedSlots } = res.data;
 
             const now = new Date();
 
@@ -73,13 +72,12 @@ const AdminBooking = () => {
 
             // Sort slots by date
             const sortedAvailableSlots = availableSlots.sort((a, b) => new Date(a.date) - new Date(b.date));
-            const sortedBookedSlots = bookedSlots.sort((a, b) => new Date(a.date) - new Date(b.date));
+            const sortedBookedSlots = fetchedBookedSlots.sort((a, b) => new Date(a.date) - new Date(b.date));
 
             setAvailableSlots(sortedAvailableSlots);
-            setBookedSlots(sortedBookedSlots); // This will trigger useEffect for categorization
 
             // Categorize booked slots
-            let { upcoming, passed } = categorizeBookedSlots(sortedBookedSlots); // Ensure slots are categorized after sorting
+            const { upcoming, passed } = categorizeBookedSlots(sortedBookedSlots); // Ensure slots are categorized after sorting
 
             // Update state
             setUpcomingSlots([...upcoming]); // Ensure immutability
@@ -371,9 +369,9 @@ const AdminBooking = () => {
                     {loading ? (
                         <p>Loading...</p>
                     ) : upcomingSlots.length > 0 ? (
-                        <ul role="list">
+                        <ul>
                             {upcomingSlots.map((slot) => (
-                                <li key={slot._id} role="listitem" className="slot-item">
+                                <li key={slot._id} className="slot-item">
                                     <p>
                                         <strong>{slot.date}</strong> at {formatTime(slot.time)} - Booked by {slot.firstName} {slot.lastName} ({slot.email})
                                     </p>
@@ -394,9 +392,9 @@ const AdminBooking = () => {
                     {loading ? (
                         <p>Loading...</p>
                     ) : passedSlots.length > 0 ? (
-                        <ul role="list">
+                        <ul>
                             {passedSlots.map((slot) => (
-                                <li key={slot._id} role="listitem" className="slot-item">
+                                <li key={slot._id} className="slot-item">
                                     <p>
                                         <strong>{slot.date}</strong> at {formatTime(slot.time)} - Booked by {slot.firstName} {slot.lastName} ({slot.email})
                                     </p>

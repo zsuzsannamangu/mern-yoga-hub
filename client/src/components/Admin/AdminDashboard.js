@@ -14,7 +14,6 @@ const AdminDashboard = () => {
     const [selectedEvents, setSelectedEvents] = useState([]); // State for selected events for bulk delete
     const [newEvent, setNewEvent] = useState({ title: '', date: '', time: '', location: '', signUpLink: '' }); // State for new event form
     const [loading, setLoading] = useState(false); // State for loading indicator
-    const [signups, setSignups] = useState([]); // State for storing event signups
     const alertShown = useRef(false);
 
     const toDateTime = (e) => {
@@ -232,29 +231,7 @@ const AdminDashboard = () => {
         }
     };
 
-    // Fetch event signups
-    const fetchSignups = async () => {
-        setLoading(true);
-        try {
-            const res = await adminAxiosInstance.get('/api/admin/signups');
-            setSignups(res.data);
-        } catch (error) {
-            if (!alertShown.current) {
-                alertShown.current = true;
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to fetch signups.',
-                    text: error.message,
-                    confirmButtonText: 'OK'
-                });
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
-        let isMounted = true;
         const checkAuth = async () => {
             try {
                 const token = localStorage.getItem('adminToken');
@@ -280,12 +257,6 @@ const AdminDashboard = () => {
 
         checkAuth();
         fetchEvents();
-        fetchSignups();
-
-        // Cleanup function: component unmounting or route change
-        return () => {
-            isMounted = false;
-        };
     }, [navigate]);
 
     return (
@@ -376,6 +347,15 @@ const AdminDashboard = () => {
                                         <p>
                                             <strong>{event.title}</strong> - {event.date} {event.time} at {event.location}
                                         </p>
+                                    </div>
+                                    <div className="event-actions">
+                                        <button
+                                            type="button"
+                                            className="delete-single-event-button"
+                                            onClick={() => deleteEvent(event._id)}
+                                        >
+                                            Delete
+                                        </button>
                                     </div>
                                     <form
                                         onSubmit={(e) => {
