@@ -92,7 +92,7 @@ function Home() {
   return (
     <div className="homepage">
       {/* Workshop Announcement Bar - Top */}
-      <div className="workshop-announcement">
+      <div className="workshop-announcement newyear-announcement">
         <div className="announcement-content">
           <span className="announcement-text">
             ✨ <strong>New Year's Day Workshop:</strong> Intention Setting & Slow Flow Yoga

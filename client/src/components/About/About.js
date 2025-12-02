@@ -89,7 +89,7 @@ function About() {
             </Helmet>
 
             {/* Workshop Announcement Bar */}
-            <div className="workshop-announcement">
+            <div className="workshop-announcement newyear-announcement">
                 <div className="announcement-content">
                     <span className="announcement-text">
                         ✨ <strong>New Year's Day Workshop:</strong> Intention Setting & Slow Flow Yoga
@@ -139,7 +139,7 @@ function About() {
                             <p>
                                 I offer weekly group classes and private 1:1 sessions in both general yoga and yoga therapy.
                                 Group classes follow a consistent theme and are open to all levels.
-                                Private sessions are tailored to your personal needs, whether physical, emotional, or spiritual.
+                                Private sessions are tailored to your personal needs: physical, emotional, or spiritual.
                             </p>
                             <p>
                                 My approach to yoga is rooted in presence and compassion.
@@ -230,6 +230,14 @@ function About() {
                 <motion.h2 className="section-title" variants={fadeInUp}>Classes and Workshops</motion.h2>
                 <div className="title-line"></div>
                 <div className="info-category">
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <h4>New Year's Day: Intention Setting & Slow Flow Yoga</h4>
+                        <p className="class-schedule">January 1, 2026 at <a href="https://www.yogarefugepdx.com/workshops-and-events" target="_blank" rel="noopener noreferrer">Yoga Refuge</a> · Details coming soon</p>
+                        <p>
+                            This workshop combines slow flow yoga with intention-setting practices to help you ground yourself for the year ahead. Details coming soon.
+                        </p>
+                    </motion.div>
+
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Awaken the Senses: Restorative Yoga, Handcrafted Chocolate and an Exploration of the Chakras</h4>
                         <p>
@@ -328,14 +336,6 @@ function About() {
                         </div>
                     </motion.div>
 
-                    <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>New Year's Day: Intention Setting & Slow Flow Yoga</h4>
-                        <p className="class-schedule">January 1, 2026 at <a href="https://www.yogarefugepdx.com/class-schedule" target="_blank" rel="noopener noreferrer">Yoga Refuge</a> · Details coming soon</p>
-                        <p>
-                            Start the new year with intention and mindful movement. This workshop combines slow flow yoga with intention-setting practices to help you ground yourself and set meaningful goals for the year ahead. Through gentle movement, breathwork, and reflection, we'll create space for clarity, intention, and renewal.
-                        </p>
-                    </motion.div>
-
                     {/* Regular Classes Section */}
                     <motion.h3 className="classes-subtitle" variants={fadeInUp}>Regular Classes</motion.h3>
 
@@ -384,14 +384,8 @@ function About() {
                         <h4>Restorative Yoga</h4>
                         <p className="class-schedule">Thursdays 7:30-8:45pm at <a href="https://www.yogarefugepdx.com/class-schedule" target="_blank" rel="noopener noreferrer">Yoga Refuge, NW location</a></p>
                         <p>A deeply relaxing class designed to soothe the nervous system and restore balance. Using props to support the body in restful poses, this
-                            practice encourages deep release and stillness. Perfect for stress relief, recovery, and cultivating a sense of inner calm.
+                            practice encourages deep release and stillness.
                         </p>
-                    </motion.div>
-
-                    <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Morning Flow</h4>
-                        <p className="class-schedule">Fridays 7am-8am at <a href="https://www.yogarefugepdx.com/class-schedule" target="_blank" rel="noopener noreferrer">Yoga Refuge, NW location</a> (also available livestream)</p>
-                        <p>Start your day with an energizing flow that awakens the body and centers the mind. This mindful practice combines breath-synchronized movement with intentional transitions, building strength and flexibility while cultivating presence. Perfect for setting a grounded, positive tone for your day.</p>
                     </motion.div>
 
                     <motion.div className="info-item" variants={fadeInUp}>
@@ -406,7 +400,7 @@ function About() {
                         <h4>Slow Flow</h4>
                         <p>This class focuses on mindful movement, allowing you to ease into each posture with intention and awareness.
                             Through gentle flows, we'll explore balance and strength at a pace that honors your body.
-                            This practice is inclusive and adaptive, offering a welcoming space for all levels, whether you're new to yoga or looking to refine your practice.</p>
+                            This practice is inclusive and adaptive, offering a welcoming space for all levels.</p>
                     </motion.div>
 
                     {/* Additional Classes Note */}
