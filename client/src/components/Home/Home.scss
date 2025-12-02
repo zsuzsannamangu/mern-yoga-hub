@@ -11,24 +11,24 @@
   
   /* New Year's Announcement Bar - Different Color */
   &.newyear-announcement {
-    background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 50%, #F7DC6F 100%);
-    border-top: 1px solid rgba(212, 175, 55, 0.3);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-    color: #2C3E50;
+    background: linear-gradient(135deg, #4A90E2 0%, #E91E63 50%, #9C27B0 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
     
     .announcement-text {
-      color: #2C3E50;
+      color: white;
     }
     
     .announcement-link {
-      background: rgba(44, 62, 80, 0.15);
-      color: #2C3E50;
-      border: 2px solid rgba(44, 62, 80, 0.3);
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
       
       &:hover {
-        background: rgba(44, 62, 80, 0.25);
-        border-color: rgba(44, 62, 80, 0.5);
-        color: #2C3E50;
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.5);
+        color: white;
       }
     }
   }
