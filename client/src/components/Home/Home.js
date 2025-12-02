@@ -95,10 +95,10 @@ function Home() {
       <div className="workshop-announcement">
         <div className="announcement-content">
           <span className="announcement-text">
-            🍫✨ <strong>Awaken the Senses Workshop:</strong> Restorative Yoga + Handcrafted Chocolate + Chakra Exploration
+            ✨ <strong>New Year's Day Workshop:</strong> Intention Setting & Slow Flow Yoga
           </span>
           <a href="/yoga?section=classDescriptions" className="announcement-link">
-            View Dates
+            View Workshops
           </a>
         </div>
       </div>

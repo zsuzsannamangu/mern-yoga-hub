@@ -92,10 +92,10 @@ function About() {
             <div className="workshop-announcement">
                 <div className="announcement-content">
                     <span className="announcement-text">
-                        🍫✨ <strong>Awaken the Senses Workshop:</strong> Restorative Yoga + Handcrafted Chocolate + Chakra Exploration
+                        ✨ <strong>New Year's Day Workshop:</strong> Intention Setting & Slow Flow Yoga
                     </span>
                     <a href="/yoga?section=classDescriptions" className="announcement-link">
-                        View Dates
+                        View Workshops
                     </a>
                 </div>
             </div>
@@ -278,7 +278,7 @@ function About() {
                                     <div className="date-header">
                                         <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
-                                            <div className="date-text">November 8</div>
+                                            <div className="date-text">November 8, 2025</div>
                                             <div className="time-text">11:00 AM - 1:00 PM</div>
                                         </div>
                                     </div>
@@ -295,7 +295,7 @@ function About() {
                                     <div className="date-header">
                                         <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
-                                            <div className="date-text">November 22</div>
+                                            <div className="date-text">November 22, 2025</div>
                                             <div className="time-text">2:00 PM - 4:00 PM</div>
                                         </div>
                                     </div>
@@ -312,7 +312,7 @@ function About() {
                                     <div className="date-header">
                                         <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
-                                            <div className="date-text">November 23</div>
+                                            <div className="date-text">November 23, 2025</div>    
                                             <div className="time-text">2:00 PM - 4:00 PM</div>
                                         </div>
                                     </div>
@@ -326,6 +326,14 @@ function About() {
                                 </div>
                             </div>
                         </div>
+                    </motion.div>
+
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <h4>New Year's Day: Intention Setting & Slow Flow Yoga</h4>
+                        <p className="class-schedule">January 1, 2026 at <a href="https://www.yogarefugepdx.com/class-schedule" target="_blank" rel="noopener noreferrer">Yoga Refuge</a> · Details coming soon</p>
+                        <p>
+                            Start the new year with intention and mindful movement. This workshop combines slow flow yoga with intention-setting practices to help you ground yourself and set meaningful goals for the year ahead. Through gentle movement, breathwork, and reflection, we'll create space for clarity, intention, and renewal.
+                        </p>
                     </motion.div>
 
                     {/* Regular Classes Section */}
