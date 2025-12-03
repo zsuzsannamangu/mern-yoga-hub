@@ -143,7 +143,7 @@ export default class Calendar extends Component {
         <div className="workshop-announcement newyear-announcement">
           <div className="announcement-content">
             <span className="announcement-text">
-              ✨ <strong>New Year's Day Workshop:</strong> Intention Setting & Slow Flow Yoga
+              ✨ <strong>New Year's Day Workshop:</strong> New Year's Day Practice and Intention Setting
             </span>
             <a href="/yoga?section=classDescriptions" className="announcement-link">
               View Workshops
