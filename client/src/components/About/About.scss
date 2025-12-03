@@ -483,10 +483,11 @@
           
           a {
             color: $text-color;
-            text-decoration: underline;
+            text-decoration: none;
             
             &:hover {
               color: $purple-secondary;
+              text-decoration: underline;
             }
           }
         }
