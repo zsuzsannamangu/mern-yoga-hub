@@ -140,13 +140,13 @@ export default class Calendar extends Component {
     return (
       <div className="calendar-container">
         {/* Workshop Announcement Bar */}
-        <div className="workshop-announcement">
+        <div className="workshop-announcement newyear-announcement">
           <div className="announcement-content">
             <span className="announcement-text">
-              🍫✨ <strong>Awaken the Senses Workshop:</strong> Restorative Yoga + Handcrafted Chocolate + Chakra Exploration
+              ✨ <strong>New Year's Day Workshop:</strong> Intention Setting & Slow Flow Yoga
             </span>
-            <a href="/yoga?section=classDescriptions" target="_blank" rel="noopener noreferrer" className="announcement-link">
-              Sign Up
+            <a href="/yoga?section=classDescriptions" className="announcement-link">
+              View Workshops
             </a>
           </div>
         </div>

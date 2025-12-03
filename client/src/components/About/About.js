@@ -92,7 +92,7 @@ function About() {
             <div className="workshop-announcement newyear-announcement">
                 <div className="announcement-content">
                     <span className="announcement-text">
-                        ✨ <strong>New Year's Day Workshop:</strong> Intention Setting & Slow Flow Yoga
+                        ✨ <strong>New Year's Day Workshop:</strong> New Year's Day Practice and Intention Setting
                     </span>
                     <a href="/yoga?section=classDescriptions" className="announcement-link">
                         View Workshops
@@ -231,10 +231,14 @@ function About() {
                 <div className="title-line"></div>
                 <div className="info-category">
                     <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>New Year's Day: Intention Setting & Slow Flow Yoga</h4>
-                        <p className="class-schedule">January 1, 2026 at <a href="https://www.yogarefugepdx.com/workshops-and-events" target="_blank" rel="noopener noreferrer">Yoga Refuge</a> · Details coming soon</p>
+                        <h4>New Year's Day Practice and Intention Setting</h4>
+                        <p className="class-schedule">
+                            <strong>Date & Time:</strong> 01/01 at 11am-1pm
+                            <br />
+                            <strong>Location:</strong> <a href="https://www.yogarefugepdx.com/workshops-and-events" target="_blank" rel="noopener noreferrer">Yoga Refuge NW</a>, 210 NW 17th Ave #101, Portland, OR 97209
+                        </p>
                         <p>
-                            This workshop combines slow flow yoga with intention-setting practices to help you ground yourself for the year ahead. Details coming soon.
+                            A grounding New Year's Day practice blending gentle flow with restorative poses. We'll explore intention setting, seasonal well being inspired by Ayurveda, and reflections inspired by the Yoga Sutras.
                         </p>
                     </motion.div>
 
