@@ -231,7 +231,7 @@ function About() {
                 <div className="title-line"></div>
                 <div className="info-category">
                     <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>New Year's Day Practice and Intention Setting</h4>
+                        <h4><a href="https://www.yogarefugepdx.com/workshops-and-events" target="_blank" rel="noopener noreferrer">New Year's Day Practice and Intention Setting</a></h4>
                         <p className="class-schedule">
                             <strong>Date & Time:</strong> 01/01 at 11am-1pm
                             <br />
