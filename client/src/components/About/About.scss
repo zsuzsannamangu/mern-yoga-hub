@@ -473,12 +473,21 @@
         .class-schedule {
           font-size: 0.95rem;
           font-style: italic;
-          color: $purple-primary;
+          color: $text-color;
           margin: 0 0 15px 0;
           font-weight: 500;
 
           @media (min-width: 768px) {
             font-size: 1rem;
+          }
+          
+          a {
+            color: $text-color;
+            text-decoration: underline;
+            
+            &:hover {
+              color: $purple-secondary;
+            }
           }
         }
 
