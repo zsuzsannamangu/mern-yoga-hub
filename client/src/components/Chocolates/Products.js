@@ -160,7 +160,7 @@ function Products({ showAlert }) {
       {selectedProduct && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={closeModal}>X</button>
+            <button className="close-button" onClick={closeModal}>×</button>
             <img src={selectedProduct.image} alt={selectedProduct.name} className="modal-image" />
             <h3>{selectedProduct.name}</h3>
             <p className="modal-description">{selectedProduct.description}</p>
