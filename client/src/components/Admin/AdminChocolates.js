@@ -85,6 +85,15 @@ const AdminChocolates = () => {
                         <div key={product._id} className="admin-product-card">
                             <img src={product.image} alt={product.name} className="product-image" />
                             <div>
+                                <p>
+                                    Image URL:
+                                    <input
+                                        type="text"
+                                        value={product.image || ''}
+                                        onChange={(e) => handleEdit(index, 'image', e.target.value)}
+                                        placeholder="/images/chocolates/..."
+                                    />
+                                </p>
                                 <textarea
                                     value={product.name}
                                     onChange={(e) => handleEdit(index, 'name', e.target.value)}
