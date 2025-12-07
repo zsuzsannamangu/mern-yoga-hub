@@ -65,7 +65,7 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
         if (isNaN(receivedRateNum) || receivedRateNum < 0) {
             return res.status(400).json({
                 success: false,
-                message: 'Received rate must be a valid positive number'
+                message: 'Received must be a valid positive number'
             });
         }
 
@@ -154,7 +154,7 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
         if (isNaN(receivedRateNum) || receivedRateNum < 0) {
             return res.status(400).json({
                 success: false,
-                message: 'Received rate must be a valid positive number'
+                message: 'Received must be a valid positive number'
             });
         }
 

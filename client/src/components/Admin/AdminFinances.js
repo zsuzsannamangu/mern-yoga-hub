@@ -687,7 +687,7 @@ const AdminFinances = () => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Received Rate ($)</label>
+                                <label>Received ($)</label>
                                 <input
                                     type="number"
                                     name="receivedRate"
