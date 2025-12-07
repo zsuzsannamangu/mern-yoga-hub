@@ -126,13 +126,11 @@
 
     // Days with slots that are selected - prioritize selected styling
     &.has-slot.selected {
-        background-color: darken($primary-button-color, 35%) !important;
+        background-color: darken($primary-button-color, 15%) !important;
         color: $button-text-color !important;
-        border: 3px solid darken($primary-button-color, 45%) !important;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.3);
         transform: scale(1.1);
         z-index: 10;
-        border-radius: 50%;
         width: 38px;
         height: 38px;
         display: flex;

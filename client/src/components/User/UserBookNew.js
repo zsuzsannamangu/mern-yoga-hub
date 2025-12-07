@@ -103,6 +103,12 @@ function UserBookNew() {
         const code = couponCode.trim().toUpperCase();
         if (code === 'YOURJOURNEY') {
             setPaymentAmount(0);
+            setPaymentSuccess(true);
+            setShowPayPal(false);
+            clearPayPalButtons();
+        } else if (couponCode.trim() !== '') {
+            // Reset payment success if coupon code is changed to invalid
+            setPaymentSuccess(false);
         }
     }, [couponCode]);
 
@@ -149,17 +155,11 @@ function UserBookNew() {
         const isFree = trimmedCode === 'YOURJOURNEY';
         const amount = Number(paymentAmount);
 
-        // Skip all checks if coupon is valid
+        // Skip all checks if coupon is valid (should already be handled by useEffect, but keep as fallback)
         if (isFree) {
             setPaymentSuccess(true);
             setShowPayPal(false);
             clearPayPalButtons();
-            Swal.fire({
-                icon: 'success',
-                title: 'Coupon Applied',
-                text: 'Please finalize your booking!',
-                confirmButtonText: 'OK'
-            });
             return;
         }
 
@@ -560,7 +560,7 @@ function UserBookNew() {
                                 </label>
                                 {couponCode.trim() && couponCode.trim().toUpperCase() === 'YOURJOURNEY' && (
                                     <p style={{ color: 'green', marginTop: '0.3rem' }}>
-                                        Coupon valid. Click Continue to apply.
+                                        Coupon applied! You can finalize your booking.
                                     </p>
                                 )}
                                 {couponCode.trim() && couponCode.trim().toUpperCase() !== 'YOURJOURNEY' && (
@@ -583,7 +583,12 @@ function UserBookNew() {
                                         />
                                     </label>
                                 )}
-                                {!showPayPal ? (
+                                {couponCode.trim().toUpperCase() === 'YOURJOURNEY' ? (
+                                    // Show Finalize Booking button immediately when coupon is valid
+                                    <button className="book-slot-button" onClick={handleSlotBooking} disabled={!isFormValid()}>
+                                        Finalize Booking
+                                    </button>
+                                ) : !showPayPal ? (
                                     <button className="continue-button"
                                         onClick={handlePaymentClick}
                                         disabled={!isFormValid()} // Disable the button based on validation
@@ -598,8 +603,8 @@ function UserBookNew() {
                                         Failed to load PayPal. Please try again later.
                                     </p>
                                 )}
-                                {(paymentSuccess || couponCode.trim().toUpperCase() === 'YOURJOURNEY') && (
-                                    <button className="book-slot-button" onClick={handleSlotBooking}>
+                                {paymentSuccess && couponCode.trim().toUpperCase() !== 'YOURJOURNEY' && (
+                                    <button className="book-slot-button" onClick={handleSlotBooking} disabled={!isFormValid()}>
                                         Finalize Booking
                                     </button>
                                 )}
