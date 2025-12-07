@@ -9,8 +9,7 @@
 
 /* Accessibility: Focus styles for keyboard navigation */
 *:focus {
-  outline: 3px solid $purple-primary;
-  outline-offset: 2px;
+  outline: none;
 }
 
 /* Better focus styles for links - use underline instead of box */
@@ -25,13 +24,16 @@ a:focus {
   text-decoration: none !important;
 }
 
-/* Focus styles for form elements and buttons keep the outline */
-button:focus,
+/* Focus styles for form elements - no outline */
 input:focus,
 textarea:focus,
 select:focus {
-  outline: 3px solid $purple-primary;
-  outline-offset: 2px;
+  outline: none;
+}
+
+/* Buttons can keep a subtle focus style for accessibility */
+button:focus {
+  outline: none;
 }
 
 /* Accessibility: Reduced motion preference */

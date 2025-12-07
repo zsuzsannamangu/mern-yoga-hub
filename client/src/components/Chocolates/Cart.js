@@ -93,13 +93,13 @@ function Cart() {
           // Add intent=CAPTURE for immediate payment capture
           script.src = `https://www.paypal.com/sdk/js?client-id=${data.clientId}&currency=USD&intent=capture`;
           script.id = 'paypal-sdk';
-          script.setAttribute('data-namespace', 'paypal_sdk');
           script.onload = () => {
             console.log('PayPal SDK script loaded, waiting for initialization...');
+            console.log('window.paypal available:', !!window.paypal);
             // Wait a moment for PayPal SDK to fully initialize
             setTimeout(() => {
               renderPayPalButtons();
-            }, 100);
+            }, 500);
           };
           script.onerror = (error) => {
             console.error('PayPal SDK script failed to load:', error);
@@ -145,8 +145,12 @@ function Cart() {
     }
 
     // Check if PayPal SDK is loaded - try multiple times with increasing delays
-    const checkPayPalReady = (attempts = 0, maxAttempts = 10) => {
-      if (window.paypal && window.paypal.Buttons) {
+    const checkPayPalReady = (attempts = 0, maxAttempts = 15) => {
+      console.log(`Checking PayPal SDK readiness (attempt ${attempts + 1}/${maxAttempts})...`);
+      console.log('window.paypal:', window.paypal);
+      console.log('window.paypal.Buttons:', window.paypal?.Buttons);
+      
+      if (window.paypal && typeof window.paypal.Buttons === 'function') {
         console.log('PayPal SDK is ready');
         // Continue with rendering buttons
         return true;
@@ -154,6 +158,7 @@ function Cart() {
       
       if (attempts >= maxAttempts) {
         console.error('PayPal SDK failed to initialize after multiple attempts');
+        console.error('Final check - window.paypal:', window.paypal);
         Swal.fire({
           icon: 'error',
           title: 'Payment Service Unavailable',
@@ -165,13 +170,14 @@ function Cart() {
         return false;
       }
       
-      // Retry with exponential backoff
+      // Retry with increasing delays
+      const delay = Math.min(300 * (attempts + 1), 2000); // Cap at 2 seconds
       setTimeout(() => {
         if (checkPayPalReady(attempts + 1, maxAttempts)) {
           // If ready after retry, continue with rendering
           renderPayPalButtons();
         }
-      }, 200 * (attempts + 1));
+      }, delay);
       return false;
     };
 
