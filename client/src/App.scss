@@ -296,6 +296,29 @@ button {
 }
 
 /* Responsive SweetAlert2 styling */
+.swal2-styled.swal2-confirm {
+  background-color: $primary-button-color !important;
+  color: $button-text-color !important;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  border: none !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+
+  &:hover {
+    background-color: $primary-button-hover-color !important;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba($primary-button-color, 0.3) !important;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 8px 10px; // Adjust for smaller screens
+  }
+}
+
 .swal2-styled.swal2-cancel {
   background-color: $primary-button-color;
   color: $button-text-color;
