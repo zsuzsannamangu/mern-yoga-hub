@@ -71,15 +71,15 @@
         padding: 5px;
     }
 
-    // Days with available slots - bright background with dot
+    // Days with available slots - very light background with dot
     &.has-slot {
-        background-color: $secondary-background-color;
+        background-color: rgba($primary-button-color, 0.08); // Very light purple tint
         border: 1px solid $border-color;
         color: $text-color;
         font-weight: normal;
 
         &:hover {
-            background-color: lighten($secondary-background-color, 5%);
+            background-color: rgba($primary-button-color, 0.12); // Slightly more visible on hover
         }
 
         // Show dot for available slots

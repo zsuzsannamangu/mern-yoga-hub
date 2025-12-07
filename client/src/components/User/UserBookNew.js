@@ -488,7 +488,10 @@ function UserBookNew() {
                             </button>
                         </header>
                         <CalendarDays
-                            day={new Date(currentYear, currentMonth, currentDay.getDate())}
+                            day={selectedDate ? (() => {
+                                const [year, month, day] = selectedDate.split('-');
+                                return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+                            })() : new Date(currentYear, currentMonth, currentDay.getDate())}
                             month={currentMonth}
                             year={currentYear}
                             changeCurrentDay={(day) => {

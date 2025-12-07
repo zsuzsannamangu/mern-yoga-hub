@@ -110,7 +110,9 @@ const AdminFinances = () => {
                 const monthData = groupedData[monthKey];
                 const monthRevenue = monthData.entries.reduce((sum, entry) => sum + (entry.receivedRate || entry.rate || 0), 0);
                 totalRevenue += monthRevenue;
-                totalClasses += monthData.entries.length;
+                // Only count entries with category "yoga teaching"
+                const yogaTeachingCount = monthData.entries.filter(entry => entry.category === 'yoga teaching').length;
+                totalClasses += yogaTeachingCount;
                 monthNames.push(monthData.name);
             }
         });
@@ -443,7 +445,7 @@ const AdminFinances = () => {
                 </div>
                 <div className="summary-card yearly">
                     <h3>Total Classes (All Time)</h3>
-                    <p className="revenue-amount">{classData.length}</p>
+                    <p className="revenue-amount">{classData.filter(entry => entry.category === 'yoga teaching').length}</p>
                 </div>
                 
                 {/* Monthly Totals - Only show when months are expanded */}

@@ -1,9 +1,10 @@
 @use '../../styles/variables' as *;
 
 .admin-finances {
-    padding: 20px;
-    max-width: 1400px;
-    margin: 0 auto;
+    padding: 20px 20px 20px 10px;
+    max-width: 100%;
+    margin: 0;
+    width: 100%;
 
     .loading {
         display: flex;
@@ -209,7 +210,7 @@
 .class-table-container {
     background: white;
     border-radius: 8px;
-    padding: 25px;
+    padding: 25px 25px 25px 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow-x: auto;
 }
@@ -321,28 +322,28 @@
                     text-transform: capitalize;
                     
                     &.category-chocolate {
-                        background-color: #8B4513; // Brown
-                        color: white;
+                        background-color: #D2B48C; // Tan/light brown (muted)
+                        color: #5C4033; // Dark brown text for contrast
                     }
                     
                     &.category-yoga-teaching {
-                        background-color: #9370DB; // Medium purple
-                        color: white;
+                        background-color: #D8BFD8; // Thistle/pale purple (muted)
+                        color: #4B0082; // Dark purple text for contrast
                     }
                     
                     &.category-yoga-therapy {
-                        background-color: #4169E1; // Royal blue
-                        color: white;
+                        background-color: #B0C4DE; // Light steel blue (muted)
+                        color: #191970; // Dark blue text for contrast
                     }
                     
                     &.category-workshop {
-                        background-color: #FF6347; // Tomato red
-                        color: white;
+                        background-color: #F0A0A0; // Light coral/salmon (muted)
+                        color: #8B0000; // Dark red text for contrast
                     }
                     
                     &.category-other {
-                        background-color: #708090; // Slate gray
-                        color: white;
+                        background-color: #C0C0C0; // Silver/light gray (muted)
+                        color: #2F4F4F; // Dark slate gray text for contrast
                     }
                 }
 
