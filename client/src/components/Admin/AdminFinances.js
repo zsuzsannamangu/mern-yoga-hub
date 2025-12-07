@@ -429,9 +429,19 @@ const AdminFinances = () => {
                 const entry = classData.find(e => e.id === entryId);
                 if (!entry) return;
 
+                // Construct the update payload with all required fields
+                // Use existing entry values and override with bulk updates
                 const updatedEntry = {
-                    ...entry,
-                    ...updates
+                    date: entry.date,
+                    time: entry.time,
+                    class: entry.class || entry.className, // Handle both field names
+                    location: entry.location,
+                    category: updates.category || entry.category || 'other',
+                    grossRate: entry.grossRate || entry.rate || 0,
+                    receivedRate: entry.receivedRate || entry.rate || 0,
+                    paymentMethod: updates.paymentMethod || entry.paymentMethod || 'cash',
+                    paid: updates.paid || entry.paid || 'no',
+                    taxed: updates.taxed || entry.taxed || 'no'
                 };
 
                 const response = await adminAxiosInstance.put(`/api/finances/${entryId}`, updatedEntry, {
@@ -548,7 +558,7 @@ const AdminFinances = () => {
                         className="add-entry-btn"
                         onClick={() => setShowAddForm(!showAddForm)}
                     >
-                        {showAddForm ? 'Cancel' : 'Add New Class'}
+                        {showAddForm ? 'Cancel' : 'Add New'}
                     </button>
                 </div>
             </div>
