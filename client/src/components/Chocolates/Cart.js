@@ -103,7 +103,7 @@ function Cart() {
             Swal.fire({
               icon: 'error',
               title: 'Payment Service Unavailable',
-              text: 'We couldn't load PayPal. Please check your internet connection, refresh the page, or try again later.',
+              text: 'We couldn\'t load PayPal. Please check your internet connection, refresh the page, or try again later.',
               confirmButtonText: 'OK'
             });
             setPaypalError(true);
@@ -116,7 +116,7 @@ function Cart() {
           Swal.fire({
             icon: 'error',
             title: 'Payment Service Unavailable',
-            text: error.message || 'We couldn't load PayPal. Please check your internet connection, refresh the page, or try again later.',
+            text: error.message || 'We couldn\'t load PayPal. Please check your internet connection, refresh the page, or try again later.',
             confirmButtonText: 'Retry'
           });
           setPaypalError(true);
@@ -134,7 +134,7 @@ function Cart() {
       Swal.fire({
         icon: 'error',
         title: 'Payment Error',
-        text: 'We couldn't find the PayPal button. Please refresh the page and try again.',
+        text: 'We couldn\'t find the PayPal button. Please refresh the page and try again.',
         confirmButtonText: 'OK'
       });
       setShowPayPal(false);
@@ -229,7 +229,7 @@ function Cart() {
                 Swal.fire({
                   icon: 'error',
                   title: 'Order Submission Failed',
-                  text: error.message || 'We couldn't save your order. Please contact support if this issue persists.',
+                  text: error.message || 'We couldn\'t save your order. Please contact support if this issue persists.',
                   confirmButtonText: 'OK'
                 });
               });
@@ -262,7 +262,7 @@ function Cart() {
         Swal.fire({
           icon: 'error',
           title: 'Payment Button Error',
-          text: 'We couldn’t load the PayPal buttons. Please refresh the page and try again.',
+          text: 'We couldn\'t load the PayPal buttons. Please refresh the page and try again.',
           confirmButtonText: 'Refresh Page'
         });
         setPaypalError(true);

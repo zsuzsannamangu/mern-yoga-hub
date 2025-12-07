@@ -41,7 +41,7 @@ function UserBookNew() {
             Swal.fire({
                 icon: 'error',
                 title: 'User ID Required',
-                text: 'We couldn’t find your User ID. Please log in again or contact me if the issue persists.',
+                text: 'We couldn\'t find your User ID. Please log in again or contact me if the issue persists.',
                 confirmButtonText: 'OK'
             });
             return;
@@ -206,7 +206,7 @@ function UserBookNew() {
                         Swal.fire({
                             icon: 'error',
                             title: 'Payment Service Unavailable',
-                            text: 'We couldn't load PayPal. Please check your internet connection, refresh the page, or try again later.',
+                            text: 'We couldn\'t load PayPal. Please check your internet connection, refresh the page, or try again later.',
                         });
                         setPaypalError(true);
                         setShowPayPal(false);
@@ -218,7 +218,7 @@ function UserBookNew() {
                     Swal.fire({
                         icon: 'error',
                         title: 'Payment Service Unavailable',
-                        text: error.message || 'We couldn't load PayPal. Please try again later.',
+                        text: error.message || 'We couldn\'t load PayPal. Please try again later.',
                     });
                     setPaypalError(true);
                     setShowPayPal(false);
@@ -235,7 +235,7 @@ function UserBookNew() {
             Swal.fire({
                 icon: 'error',
                 title: 'Payment Button Not Found',
-                text: 'We couldn't load the PayPal button. Please refresh the page and try again.',
+                text: 'We couldn\'t load the PayPal button. Please refresh the page and try again.',
                 confirmButtonText: 'OK'
             });
             setShowPayPal(false);
@@ -319,7 +319,7 @@ function UserBookNew() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Payment Button Error',
-                    text: 'We couldn’t display the PayPal buttons. Please refresh the page and try again.',
+                    text: 'We couldn\'t display the PayPal buttons. Please refresh the page and try again.',
                     confirmButtonText: 'OK'
                 });
                 setPaypalError(true);
@@ -402,7 +402,7 @@ function UserBookNew() {
             Swal.fire({
                 icon: 'error',
                 title: 'Booking Failed',
-                text: 'We couldn’t confirm your booking. Please try again or contact support if the issue persists.',
+                text: 'We couldn\'t confirm your booking. Please try again or contact support if the issue persists.',
                 confirmButtonText: 'OK'
             });
         }
