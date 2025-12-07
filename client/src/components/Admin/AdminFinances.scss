@@ -220,7 +220,7 @@
 
     .table-header {
         display: grid;
-        grid-template-columns: 150px 100px 100px 80px 120px 120px 100px 100px 100px 80px 80px 100px;
+        grid-template-columns: 150px 110px 110px 75px 140px 140px 100px 100px 120px 70px 70px 70px;
         background: $content-background-color;
         border-radius: 6px 6px 0 0;
         font-weight: bold;
@@ -291,7 +291,7 @@
     .month-entries {
         .table-row {
             display: grid;
-            grid-template-columns: 150px 100px 100px 80px 120px 120px 100px 100px 100px 80px 80px 100px;
+            grid-template-columns: 150px 110px 110px 75px 140px 140px 100px 100px 120px 70px 70px 70px;
             border-bottom: 1px solid rgba(204, 204, 204, 0.3);
             transition: background-color 0.2s ease;
 
@@ -472,7 +472,7 @@
         min-width: 800px;
 
         .table-header {
-            grid-template-columns: 120px 90px 90px 70px 100px 100px 80px 80px 80px 70px 70px 90px;
+            grid-template-columns: 120px 100px 100px 65px 120px 120px 90px 90px 100px 60px 60px 60px;
             font-size: 0.75rem;
 
             .header-cell {
@@ -494,7 +494,7 @@
         }
 
         .month-entries .table-row {
-            grid-template-columns: 120px 90px 90px 70px 100px 100px 80px 80px 80px 70px 70px 90px;
+            grid-template-columns: 120px 100px 100px 65px 120px 120px 90px 90px 100px 60px 60px 60px;
 
             .table-cell {
                 padding: 10px 8px;
@@ -519,7 +519,7 @@
         min-width: 700px;
 
         .table-header {
-            grid-template-columns: 100px 80px 80px 60px 90px 90px 70px 70px 70px 60px 60px 80px;
+            grid-template-columns: 100px 90px 90px 55px 110px 110px 80px 80px 90px 50px 50px 50px;
             font-size: 0.7rem;
 
             .header-cell {
@@ -541,7 +541,7 @@
         }
 
         .month-entries .table-row {
-            grid-template-columns: 100px 80px 80px 60px 90px 90px 70px 70px 70px 60px 60px 80px;
+            grid-template-columns: 100px 90px 90px 55px 110px 110px 80px 80px 90px 50px 50px 50px;
 
             .table-cell {
                 padding: 8px 6px;
