@@ -164,11 +164,11 @@ function UserBookNew() {
         }
 
         // Only validate if not free
-        if (!isFree && (isNaN(amount) || amount < 50 || amount > 201)) {
+        if (!isFree && (isNaN(amount) || amount < 10 || amount > 200)) {
             Swal.fire({
                 icon: 'error',
                 title: 'Invalid Payment Amount',
-                text: 'The amount must be at least $10. Please adjust your entry and try again.',
+                text: 'The amount must be between $10 and $200. Please adjust your entry and try again.',
                 confirmButtonText: 'OK'
             });
             return;
@@ -179,28 +179,46 @@ function UserBookNew() {
 
         if (!document.querySelector('#paypal-sdk')) {
             fetch(`${process.env.REACT_APP_API}/config/paypal`)
-                .then((res) => res.json())
+                .then((res) => {
+                    if (!res.ok) {
+                        return res.json().then(err => {
+                            throw new Error(err.error || 'Failed to get PayPal configuration');
+                        });
+                    }
+                    return res.json();
+                })
                 .then((data) => {
+                    if (!data.clientId) {
+                        throw new Error('PayPal client ID is missing');
+                    }
+                    
                     const script = document.createElement('script');
-                    script.src = `https://www.paypal.com/sdk/js?client-id=${data.clientId}&currency=USD`;
+                    // Add intent=CAPTURE for immediate payment capture
+                    script.src = `https://www.paypal.com/sdk/js?client-id=${data.clientId}&currency=USD&intent=capture`;
                     script.id = 'paypal-sdk';
-                    script.onload = renderPayPalButtons;
-                    script.onerror = () => {
+                    script.setAttribute('data-namespace', 'paypal_sdk');
+                    script.onload = () => {
+                        console.log('PayPal SDK loaded successfully');
+                        renderPayPalButtons();
+                    };
+                    script.onerror = (error) => {
+                        console.error('PayPal SDK script failed to load:', error);
                         Swal.fire({
                             icon: 'error',
                             title: 'Payment Service Unavailable',
-                            text: 'We couldn’t load PayPal. Please try again later.',
+                            text: 'We couldn't load PayPal. Please check your internet connection, refresh the page, or try again later.',
                         });
                         setPaypalError(true);
                         setShowPayPal(false);
                     };
                     document.body.appendChild(script);
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.error('PayPal configuration error:', error);
                     Swal.fire({
                         icon: 'error',
                         title: 'Payment Service Unavailable',
-                        text: 'We couldn’t load PayPal. Please try again later.',
+                        text: error.message || 'We couldn't load PayPal. Please try again later.',
                     });
                     setPaypalError(true);
                     setShowPayPal(false);
@@ -217,21 +235,48 @@ function UserBookNew() {
             Swal.fire({
                 icon: 'error',
                 title: 'Payment Button Not Found',
-                text: 'We couldn’t load the PayPal button. Please refresh the page and try again.',
+                text: 'We couldn't load the PayPal button. Please refresh the page and try again.',
                 confirmButtonText: 'OK'
             });
             setShowPayPal(false);
             return;
         }
 
+        // Check if PayPal SDK is loaded
+        if (!window.paypal || !window.paypal.Buttons) {
+            console.error('PayPal SDK not loaded yet');
+            // Retry after a short delay
+            setTimeout(() => {
+                if (window.paypal && window.paypal.Buttons) {
+                    renderPayPalButtons();
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Payment Service Unavailable',
+                        text: 'PayPal is taking longer than expected to load. Please refresh the page and try again.',
+                        confirmButtonText: 'OK'
+                    });
+                    setPaypalError(true);
+                    setShowPayPal(false);
+                }
+            }, 1000);
+            return;
+        }
+
         window.paypal
             .Buttons({
                 createOrder: (data, actions) => {
+                    const amount = Number(paymentAmount);
+                    if (isNaN(amount) || amount <= 0) {
+                        throw new Error('Invalid payment amount');
+                    }
+                    console.log("Creating PayPal order for:", amount.toFixed(2));
                     return actions.order.create({
                         purchase_units: [
                             {
                                 amount: {
-                                    value: paymentAmount, // Use sliding scale payment amount
+                                    value: amount.toFixed(2), // PayPal requires string with 2 decimal places
+                                    currency_code: 'USD'
                                 },
                             },
                         ],
@@ -239,12 +284,23 @@ function UserBookNew() {
                 },
                 onApprove: (data, actions) => {
                     return actions.order.capture().then((details) => {
+                        console.log('PayPal payment approved:', details);
                         Swal.fire({
                             icon: 'success',
                             title: 'Payment Successful',
                             text: `Transaction completed by ${details.payer.name.given_name}`,
                         });
                         setPaymentSuccess(true);
+                    }).catch((error) => {
+                        console.error('PayPal capture error:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Payment Capture Failed',
+                            text: 'Your payment was approved but could not be processed. Please contact support with your order ID.',
+                            confirmButtonText: 'OK'
+                        });
+                        setPaypalError(true);
+                        setShowPayPal(false);
                     });
                 },
                 onError: (err) => {
@@ -355,7 +411,8 @@ function UserBookNew() {
     //function to check if all required fields are filled
     const isFormValid = () => {
         const isFree = couponCode.trim().toUpperCase() === 'YOURJOURNEY';
-        const validAmount = paymentAmount >= 50 && paymentAmount <= 140;
+        const amount = Number(paymentAmount);
+        const validAmount = !isNaN(amount) && amount >= 10 && amount <= 200;
         return (
             sessionType.trim() !== '' &&
             selectedSlot !== null &&

@@ -57,7 +57,25 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get('/config/paypal', (req, res) => {
-    res.json({ clientId: process.env.PAYPAL_CLIENT_ID });
+    const clientId = process.env.PAYPAL_CLIENT_ID;
+    
+    if (!clientId) {
+        console.error('PAYPAL_CLIENT_ID environment variable is not set');
+        return res.status(500).json({ 
+            error: 'PayPal configuration is missing. Please contact support.',
+            clientId: null 
+        });
+    }
+    
+    if (clientId.trim() === '') {
+        console.error('PAYPAL_CLIENT_ID environment variable is empty');
+        return res.status(500).json({ 
+            error: 'PayPal configuration is invalid. Please contact support.',
+            clientId: null 
+        });
+    }
+    
+    res.json({ clientId: clientId.trim() });
 });
 
 app.get("/api/health", (req, res) => {

@@ -76,17 +76,34 @@ function Cart() {
 
     if (!document.querySelector('#paypal-sdk')) {
       fetch(`${process.env.REACT_APP_API}/config/paypal`)
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            return response.json().then(err => {
+              throw new Error(err.error || 'Failed to get PayPal configuration');
+            });
+          }
+          return response.json();
+        })
         .then((data) => {
+          if (!data.clientId) {
+            throw new Error('PayPal client ID is missing');
+          }
+          
           const script = document.createElement('script');
-          script.src = `https://www.paypal.com/sdk/js?client-id=${data.clientId}&currency=USD`;
+          // Add intent=CAPTURE for immediate payment capture
+          script.src = `https://www.paypal.com/sdk/js?client-id=${data.clientId}&currency=USD&intent=capture`;
           script.id = 'paypal-sdk';
-          script.onload = () => renderPayPalButtons();
-          script.onerror = () => {
+          script.setAttribute('data-namespace', 'paypal_sdk');
+          script.onload = () => {
+            console.log('PayPal SDK loaded successfully');
+            renderPayPalButtons();
+          };
+          script.onerror = (error) => {
+            console.error('PayPal SDK script failed to load:', error);
             Swal.fire({
               icon: 'error',
               title: 'Payment Service Unavailable',
-              text: 'We couldn’t load PayPal. Please refresh the page or try again later.',
+              text: 'We couldn't load PayPal. Please check your internet connection, refresh the page, or try again later.',
               confirmButtonText: 'OK'
             });
             setPaypalError(true);
@@ -95,10 +112,11 @@ function Cart() {
           document.body.appendChild(script);
         })
         .catch((error) => {
+          console.error('PayPal configuration error:', error);
           Swal.fire({
             icon: 'error',
             title: 'Payment Service Unavailable',
-            text: 'We couldn’t load PayPal. Please check your internet connection, refresh the page, or try again later.',
+            text: error.message || 'We couldn't load PayPal. Please check your internet connection, refresh the page, or try again later.',
             confirmButtonText: 'Retry'
           });
           setPaypalError(true);
@@ -116,22 +134,48 @@ function Cart() {
       Swal.fire({
         icon: 'error',
         title: 'Payment Error',
-        text: 'We couldn’t find the PayPal button. Please refresh the page and try again.',
+        text: 'We couldn't find the PayPal button. Please refresh the page and try again.',
         confirmButtonText: 'OK'
       });
       setShowPayPal(false);
       return;
     }
 
+    // Check if PayPal SDK is loaded
+    if (!window.paypal || !window.paypal.Buttons) {
+      console.error('PayPal SDK not loaded yet');
+      // Retry after a short delay
+      setTimeout(() => {
+        if (window.paypal && window.paypal.Buttons) {
+          renderPayPalButtons();
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Payment Service Unavailable',
+            text: 'PayPal is taking longer than expected to load. Please refresh the page and try again.',
+            confirmButtonText: 'OK'
+          });
+          setPaypalError(true);
+          setShowPayPal(false);
+        }
+      }, 1000);
+      return;
+    }
+
     window.paypal
       .Buttons({
         createOrder: (data, actions) => {
-          console.log("Creating order for:", totalNumber.toFixed(2));
+          const amount = Number(totalNumber);
+          if (isNaN(amount) || amount <= 0) {
+            throw new Error('Invalid payment amount');
+          }
+          console.log("Creating PayPal order for:", amount.toFixed(2));
           return actions.order.create({
             purchase_units: [
               {
                 amount: {
-                  value: totalNumber.toFixed(2),
+                  value: amount.toFixed(2),
+                  currency_code: 'USD'
                 },
               },
             ],
@@ -139,6 +183,7 @@ function Cart() {
         },
         onApprove: (data, actions) => {
           return actions.order.capture().then((details) => {
+            console.log('PayPal payment approved:', details);
             clearCart(); // clear the cart after successful payment
             Swal.fire({
               icon: 'success',
@@ -161,7 +206,14 @@ function Cart() {
                 discount,
               }),
             })
-              .then((res) => res.json())
+              .then((res) => {
+                if (!res.ok) {
+                  return res.json().then(err => {
+                    throw new Error(err.error || 'Failed to save order');
+                  });
+                }
+                return res.json();
+              })
               .then((response) => {
                 // Show confirmation message or redirect user
                 Swal.fire({
@@ -172,14 +224,25 @@ function Cart() {
                 });
               })
               .catch((error) => {
+                console.error('Order submission error:', error);
                 // Handle error with a user-friendly message
                 Swal.fire({
                   icon: 'error',
                   title: 'Order Submission Failed',
-                  text: 'We couldn’t save your order. Please contact support if this issue persists.',
+                  text: error.message || 'We couldn't save your order. Please contact support if this issue persists.',
                   confirmButtonText: 'OK'
                 });
               });
+          }).catch((error) => {
+            console.error('PayPal capture error:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Payment Capture Failed',
+              text: 'Your payment was approved but could not be processed. Please contact support with your order ID.',
+              confirmButtonText: 'OK'
+            });
+            setPaypalError(true);
+            setShowPayPal(false);
           });
         },
 
