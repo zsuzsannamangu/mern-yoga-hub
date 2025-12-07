@@ -97,7 +97,7 @@
 
     // Selected date - different color (overrides has-slot)
     &.selected {
-        background-color: $primary-button-color !important;
+        background-color: darken($primary-button-color, 15%) !important;
         color: $button-text-color !important;
         font-weight: bold;
         border-radius: 50%;
@@ -107,7 +107,8 @@
         align-items: center;
         justify-content: center;
         margin: 0 auto;
-        border: none !important;
+        border: 2px solid darken($primary-button-color, 25%) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
         // Hide dot when selected
         .slot-indicator {
@@ -115,15 +116,17 @@
         }
 
         &:hover {
-            background-color: $primary-button-hover-color !important;
+            background-color: darken($primary-button-color, 20%) !important;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
         }
     }
 
     // Days with slots that are selected - prioritize selected styling
     &.has-slot.selected {
-        background-color: $primary-button-color !important;
+        background-color: darken($primary-button-color, 15%) !important;
         color: $button-text-color !important;
-        border: none !important;
+        border: 2px solid darken($primary-button-color, 25%) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
         .slot-indicator {
             display: none !important;
