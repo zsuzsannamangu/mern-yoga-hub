@@ -370,30 +370,26 @@
                 &.category-cell {
                     font-weight: 600;
                     text-transform: capitalize;
+                    color: #333333; // Dark grey/black text for all categories
                     
                     &.category-chocolate {
                         background-color: #D2B48C; // Tan/light brown (muted)
-                        color: #5C4033; // Dark brown text for contrast
                     }
                     
                     &.category-yoga-teaching {
                         background-color: #D8BFD8; // Thistle/pale purple (muted)
-                        color: #4B0082; // Dark purple text for contrast
                     }
                     
                     &.category-yoga-therapy {
                         background-color: #B0C4DE; // Light steel blue (muted)
-                        color: #191970; // Dark blue text for contrast
                     }
                     
                     &.category-workshop {
                         background-color: #F0A0A0; // Light coral/salmon (muted)
-                        color: #8B0000; // Dark red text for contrast
                     }
                     
                     &.category-other {
                         background-color: #C0C0C0; // Silver/light gray (muted)
-                        color: #2F4F4F; // Dark slate gray text for contrast
                     }
                 }
 
