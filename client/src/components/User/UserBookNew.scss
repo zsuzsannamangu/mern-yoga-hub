@@ -180,10 +180,10 @@
         }
 
         &.selected {
-            background-color: $text-color;
+            background-color: $primary-button-color;
             color: $button-text-color;
             font-weight: bold;
-            border-color: $text-color;
+            border-color: $primary-button-color;
         }
     }
 
