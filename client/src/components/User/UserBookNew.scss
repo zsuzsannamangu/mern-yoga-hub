@@ -97,7 +97,7 @@
 
     // Selected date - different color (overrides has-slot)
     &.selected {
-        background-color: darken($primary-button-color, 10%) !important;
+        background-color: $purple-secondary !important;
         color: $text-color !important;
         font-weight: normal;
 
