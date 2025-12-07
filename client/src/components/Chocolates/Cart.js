@@ -95,8 +95,11 @@ function Cart() {
           script.id = 'paypal-sdk';
           script.setAttribute('data-namespace', 'paypal_sdk');
           script.onload = () => {
-            console.log('PayPal SDK loaded successfully');
-            renderPayPalButtons();
+            console.log('PayPal SDK script loaded, waiting for initialization...');
+            // Wait a moment for PayPal SDK to fully initialize
+            setTimeout(() => {
+              renderPayPalButtons();
+            }, 100);
           };
           script.onerror = (error) => {
             console.error('PayPal SDK script failed to load:', error);
@@ -141,24 +144,38 @@ function Cart() {
       return;
     }
 
-    // Check if PayPal SDK is loaded
-    if (!window.paypal || !window.paypal.Buttons) {
-      console.error('PayPal SDK not loaded yet');
-      // Retry after a short delay
+    // Check if PayPal SDK is loaded - try multiple times with increasing delays
+    const checkPayPalReady = (attempts = 0, maxAttempts = 10) => {
+      if (window.paypal && window.paypal.Buttons) {
+        console.log('PayPal SDK is ready');
+        // Continue with rendering buttons
+        return true;
+      }
+      
+      if (attempts >= maxAttempts) {
+        console.error('PayPal SDK failed to initialize after multiple attempts');
+        Swal.fire({
+          icon: 'error',
+          title: 'Payment Service Unavailable',
+          text: 'PayPal is taking longer than expected to load. Please refresh the page and try again.',
+          confirmButtonText: 'OK'
+        });
+        setPaypalError(true);
+        setShowPayPal(false);
+        return false;
+      }
+      
+      // Retry with exponential backoff
       setTimeout(() => {
-        if (window.paypal && window.paypal.Buttons) {
+        if (checkPayPalReady(attempts + 1, maxAttempts)) {
+          // If ready after retry, continue with rendering
           renderPayPalButtons();
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Payment Service Unavailable',
-            text: 'PayPal is taking longer than expected to load. Please refresh the page and try again.',
-            confirmButtonText: 'OK'
-          });
-          setPaypalError(true);
-          setShowPayPal(false);
         }
-      }, 1000);
+      }, 200 * (attempts + 1));
+      return false;
+    };
+
+    if (!checkPayPalReady()) {
       return;
     }
 
