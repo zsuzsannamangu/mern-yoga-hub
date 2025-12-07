@@ -836,7 +836,6 @@ const AdminFinances = () => {
                                 }}
                             />
                         </div>
-                        <div className="header-cell">Month</div>
                         <div className="header-cell">Category</div>
                         <div className="header-cell">Date</div>
                         <div className="header-cell">Time</div>
