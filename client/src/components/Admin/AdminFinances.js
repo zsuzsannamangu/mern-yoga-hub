@@ -13,6 +13,14 @@ const AdminFinances = () => {
     const [loading, setLoading] = useState(true);
     const [editingId, setEditingId] = useState(null);
     const [editingData, setEditingData] = useState({});
+    const [selectedEntries, setSelectedEntries] = useState(new Set());
+    const [showBulkEdit, setShowBulkEdit] = useState(false);
+    const [bulkEditData, setBulkEditData] = useState({
+        category: '',
+        paid: '',
+        taxed: '',
+        paymentMethod: ''
+    });
     const [newEntry, setNewEntry] = useState({
         date: '',
         time: '',
@@ -358,6 +366,104 @@ const AdminFinances = () => {
         setEditingData({});
     };
 
+    // Handle checkbox selection
+    const handleSelectEntry = (entryId) => {
+        const newSelected = new Set(selectedEntries);
+        if (newSelected.has(entryId)) {
+            newSelected.delete(entryId);
+        } else {
+            newSelected.add(entryId);
+        }
+        setSelectedEntries(newSelected);
+    };
+
+    // Handle select all in a month
+    const handleSelectAll = (monthEntries) => {
+        const allSelected = monthEntries.every(entry => selectedEntries.has(entry.id));
+        const newSelected = new Set(selectedEntries);
+        
+        if (allSelected) {
+            // Deselect all in this month
+            monthEntries.forEach(entry => newSelected.delete(entry.id));
+        } else {
+            // Select all in this month
+            monthEntries.forEach(entry => newSelected.add(entry.id));
+        }
+        setSelectedEntries(newSelected);
+    };
+
+    // Handle bulk edit
+    const handleBulkEdit = async () => {
+        if (selectedEntries.size === 0) {
+            Swal.fire({
+                title: 'No Entries Selected',
+                text: 'Please select at least one entry to edit.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('adminToken');
+            const updates = {};
+            
+            // Only include fields that have values
+            if (bulkEditData.category) updates.category = bulkEditData.category;
+            if (bulkEditData.paid) updates.paid = bulkEditData.paid;
+            if (bulkEditData.taxed) updates.taxed = bulkEditData.taxed;
+            if (bulkEditData.paymentMethod) updates.paymentMethod = bulkEditData.paymentMethod;
+
+            if (Object.keys(updates).length === 0) {
+                Swal.fire({
+                    title: 'No Changes',
+                    text: 'Please select at least one field to update.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+            // Update each selected entry
+            const updatePromises = Array.from(selectedEntries).map(async (entryId) => {
+                const entry = classData.find(e => e.id === entryId);
+                if (!entry) return;
+
+                const updatedEntry = {
+                    ...entry,
+                    ...updates
+                };
+
+                const response = await adminAxiosInstance.put(`/api/finances/${entryId}`, updatedEntry, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                return response.data.finance;
+            });
+
+            await Promise.all(updatePromises);
+            
+            // Refresh data
+            await fetchClassData();
+            setSelectedEntries(new Set());
+            setShowBulkEdit(false);
+            setBulkEditData({
+                category: '',
+                paid: '',
+                taxed: '',
+                paymentMethod: ''
+            });
+
+        } catch (error) {
+            console.error('Error bulk updating entries:', error);
+            Swal.fire({
+                title: 'Error',
+                text: error.response?.data?.message || 'Failed to update entries',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    };
+
     const handleDelete = async (id) => {
         const result = await Swal.fire({
             title: 'Are you sure?',
@@ -429,12 +535,22 @@ const AdminFinances = () => {
             <div className="admin-finances">
             <h3 className="section-title">Class & Financial Tracking</h3>
             <div className="finances-header">
-                <button 
-                    className="add-entry-btn"
-                    onClick={() => setShowAddForm(!showAddForm)}
-                >
-                    {showAddForm ? 'Cancel' : 'Add New Class'}
-                </button>
+                <div className="header-actions">
+                    {selectedEntries.size > 0 && (
+                        <button 
+                            className="bulk-edit-btn"
+                            onClick={() => setShowBulkEdit(true)}
+                        >
+                            Bulk Edit ({selectedEntries.size})
+                        </button>
+                    )}
+                    <button 
+                        className="add-entry-btn"
+                        onClick={() => setShowAddForm(!showAddForm)}
+                    >
+                        {showAddForm ? 'Cancel' : 'Add New Class'}
+                    </button>
+                </div>
             </div>
 
             <div className="finances-summary">
@@ -700,6 +816,26 @@ const AdminFinances = () => {
             <div className="class-table-container">
                 <div className="class-table">
                     <div className="table-header">
+                        <div className="header-cell checkbox-cell">
+                            <input
+                                type="checkbox"
+                                onChange={(e) => {
+                                    const allEntries = Object.values(groupedData).flatMap(m => m.entries);
+                                    if (e.target.checked) {
+                                        setSelectedEntries(new Set(allEntries.map(e => e.id)));
+                                    } else {
+                                        setSelectedEntries(new Set());
+                                    }
+                                }}
+                                checked={selectedEntries.size > 0 && Object.values(groupedData).flatMap(m => m.entries).every(e => selectedEntries.has(e.id))}
+                                ref={(input) => {
+                                    if (input) {
+                                        const allEntries = Object.values(groupedData).flatMap(m => m.entries);
+                                        input.indeterminate = selectedEntries.size > 0 && selectedEntries.size < allEntries.length;
+                                    }
+                                }}
+                            />
+                        </div>
                         <div className="header-cell">Month</div>
                         <div className="header-cell">Category</div>
                         <div className="header-cell">Date</div>
@@ -718,8 +854,25 @@ const AdminFinances = () => {
                         <div key={monthKey} className="month-group">
                             <div 
                                 className={`month-header ${expandedMonths.has(monthKey) ? 'expanded' : ''}`}
-                                onClick={() => toggleMonth(monthKey)}
+                                onClick={(e) => {
+                                    // Don't toggle if clicking on checkbox
+                                    if (e.target.type !== 'checkbox') {
+                                        toggleMonth(monthKey);
+                                    }
+                                }}
                             >
+                                <input
+                                    type="checkbox"
+                                    onClick={(e) => e.stopPropagation()}
+                                    onChange={() => handleSelectAll(monthData.entries)}
+                                    checked={monthData.entries.length > 0 && monthData.entries.every(entry => selectedEntries.has(entry.id))}
+                                    ref={(input) => {
+                                        if (input) {
+                                            input.indeterminate = monthData.entries.some(entry => selectedEntries.has(entry.id)) && 
+                                                                 !monthData.entries.every(entry => selectedEntries.has(entry.id));
+                                        }
+                                    }}
+                                />
                                 <span className="expand-icon">
                                     {expandedMonths.has(monthKey) ? '▼' : '▶'}
                                 </span>
@@ -730,8 +883,14 @@ const AdminFinances = () => {
                             {expandedMonths.has(monthKey) && (
                                 <div className="month-entries">
                                     {monthData.entries.map(entry => (
-                                        <div key={entry.id} className="table-row">
-                                            <div className="table-cell"></div>
+                                        <div key={entry.id} className={`table-row ${selectedEntries.has(entry.id) ? 'selected' : ''}`}>
+                                            <div className="table-cell checkbox-cell">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selectedEntries.has(entry.id)}
+                                                    onChange={() => handleSelectEntry(entry.id)}
+                                                />
+                                            </div>
                                             {editingId === entry.id ? (
                                                 // Edit mode
                                                 <>
@@ -883,6 +1042,92 @@ const AdminFinances = () => {
                     ))}
                 </div>
             </div>
+
+            {/* Bulk Edit Modal */}
+            {showBulkEdit && (
+                <div className="bulk-edit-modal">
+                    <div className="bulk-edit-content">
+                        <h3>Bulk Edit ({selectedEntries.size} entries)</h3>
+                        <p className="bulk-edit-note">Leave fields empty to keep current values. Only filled fields will be updated.</p>
+                        <form onSubmit={(e) => { e.preventDefault(); handleBulkEdit(); }}>
+                            <div className="form-group">
+                                <label>Category</label>
+                                <select
+                                    name="category"
+                                    value={bulkEditData.category}
+                                    onChange={(e) => setBulkEditData({ ...bulkEditData, category: e.target.value })}
+                                >
+                                    <option value="">-- Keep Current --</option>
+                                    <option value="chocolate">Chocolate</option>
+                                    <option value="yoga teaching">Yoga Teaching</option>
+                                    <option value="yoga therapy">Yoga Therapy</option>
+                                    <option value="workshop">Workshop</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>Paid</label>
+                                <select
+                                    name="paid"
+                                    value={bulkEditData.paid}
+                                    onChange={(e) => setBulkEditData({ ...bulkEditData, paid: e.target.value })}
+                                >
+                                    <option value="">-- Keep Current --</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>Taxed</label>
+                                <select
+                                    name="taxed"
+                                    value={bulkEditData.taxed}
+                                    onChange={(e) => setBulkEditData({ ...bulkEditData, taxed: e.target.value })}
+                                >
+                                    <option value="">-- Keep Current --</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>Payment Method</label>
+                                <select
+                                    name="paymentMethod"
+                                    value={bulkEditData.paymentMethod}
+                                    onChange={(e) => setBulkEditData({ ...bulkEditData, paymentMethod: e.target.value })}
+                                >
+                                    <option value="">-- Keep Current --</option>
+                                    <option value="cash">Cash</option>
+                                    <option value="check">Check</option>
+                                    <option value="venmo">Venmo</option>
+                                    <option value="paypal">PayPal</option>
+                                    <option value="zelle">Zelle</option>
+                                    <option value="deposit">Deposit</option>
+                                    <option value="card">Card</option>
+                                </select>
+                            </div>
+                            <div className="form-actions">
+                                <button type="submit" className="submit-btn">Apply Changes</button>
+                                <button 
+                                    type="button" 
+                                    className="cancel-btn" 
+                                    onClick={() => {
+                                        setShowBulkEdit(false);
+                                        setBulkEditData({
+                                            category: '',
+                                            paid: '',
+                                            taxed: '',
+                                            paymentMethod: ''
+                                        });
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
             </div>
         </AdminLayout>
     );

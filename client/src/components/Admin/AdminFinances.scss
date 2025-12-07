@@ -23,7 +23,14 @@
     margin-bottom: 30px;
     margin-top: 20px;
 
-    .add-entry-btn {
+    .header-actions {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .add-entry-btn,
+    .bulk-edit-btn {
         background: $primary-button-color;
         color: white;
         border: none;
@@ -37,6 +44,14 @@
 
         &:hover {
             background: $primary-button-hover-color;
+        }
+    }
+
+    .bulk-edit-btn {
+        background: $green-color;
+        
+        &:hover {
+            background: darken($green-color, 10%);
         }
     }
 }
@@ -162,9 +177,7 @@
         }
     }
 
-    .repeat-section {
-        // No special styling - looks like regular form rows
-    }
+    // Repeat section uses default form styling
 
     .form-actions {
         display: flex;
@@ -221,7 +234,7 @@
 
     .table-header {
         display: grid;
-        grid-template-columns: 150px 110px 110px 75px 140px 140px 100px 100px 120px 70px 70px 70px;
+        grid-template-columns: 40px 150px 110px 110px 75px 140px 140px 100px 100px 120px 70px 70px 70px;
         background: $content-background-color;
         border-radius: 6px 6px 0 0;
         font-weight: bold;
@@ -237,6 +250,19 @@
             &:last-child {
                 border-right: none;
             }
+
+            &.checkbox-cell {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 10px;
+
+                input[type="checkbox"] {
+                    width: 18px;
+                    height: 18px;
+                    cursor: pointer;
+                }
+            }
         }
     }
 
@@ -251,13 +277,14 @@
 
     .month-header {
         display: grid;
-        grid-template-columns: 150px 1fr;
+        grid-template-columns: 40px 150px 1fr;
         align-items: center;
         background: $secondary-background-color;
         padding: 15px 10px;
         cursor: pointer;
         transition: background-color 0.2s ease;
         border-bottom: 1px solid $border-color;
+        gap: 10px;
 
         &:hover {
             background: $content-background-color-hover;
@@ -265,6 +292,12 @@
 
         &.expanded {
             background: $content-background-color;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
         }
 
         .expand-icon {
@@ -292,9 +325,13 @@
     .month-entries {
         .table-row {
             display: grid;
-            grid-template-columns: 150px 110px 110px 75px 140px 140px 100px 100px 120px 70px 70px 70px;
+            grid-template-columns: 40px 150px 110px 110px 75px 140px 140px 100px 100px 120px 70px 70px 70px;
             border-bottom: 1px solid rgba(204, 204, 204, 0.3);
             transition: background-color 0.2s ease;
+
+            &.selected {
+                background-color: rgba($primary-button-color, 0.1);
+            }
 
             &:hover {
                 background: rgba(245, 245, 243, 0.7);
@@ -310,6 +347,19 @@
                 font-size: 0.85rem;
                 color: $text-color;
                 text-align: center;
+
+                &.checkbox-cell {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 10px;
+
+                    input[type="checkbox"] {
+                        width: 18px;
+                        height: 18px;
+                        cursor: pointer;
+                    }
+                }
                 border-right: 1px solid rgba(204, 204, 204, 0.3);
 
                 &:last-child {
@@ -473,7 +523,7 @@
         min-width: 800px;
 
         .table-header {
-            grid-template-columns: 120px 100px 100px 65px 120px 120px 90px 90px 100px 60px 60px 60px;
+            grid-template-columns: 40px 120px 100px 100px 65px 120px 120px 90px 90px 100px 60px 60px 60px;
             font-size: 0.75rem;
 
             .header-cell {
@@ -482,7 +532,7 @@
         }
 
         .month-header {
-            grid-template-columns: 120px 1fr;
+            grid-template-columns: 40px 120px 1fr;
             padding: 12px 8px;
 
             .month-name {
@@ -495,7 +545,7 @@
         }
 
         .month-entries .table-row {
-            grid-template-columns: 120px 100px 100px 65px 120px 120px 90px 90px 100px 60px 60px 60px;
+            grid-template-columns: 40px 120px 100px 100px 65px 120px 120px 90px 90px 100px 60px 60px 60px;
 
             .table-cell {
                 padding: 10px 8px;
@@ -520,7 +570,7 @@
         min-width: 700px;
 
         .table-header {
-            grid-template-columns: 100px 90px 90px 55px 110px 110px 80px 80px 90px 50px 50px 50px;
+            grid-template-columns: 35px 100px 90px 90px 55px 110px 110px 80px 80px 90px 50px 50px 50px;
             font-size: 0.7rem;
 
             .header-cell {
@@ -529,7 +579,7 @@
         }
 
         .month-header {
-            grid-template-columns: 100px 1fr;
+            grid-template-columns: 35px 100px 1fr;
             padding: 10px 6px;
 
             .month-name {
@@ -542,11 +592,118 @@
         }
 
         .month-entries .table-row {
-            grid-template-columns: 100px 90px 90px 55px 110px 110px 80px 80px 90px 50px 50px 50px;
+            grid-template-columns: 35px 100px 90px 90px 55px 110px 110px 80px 80px 90px 50px 50px 50px;
 
             .table-cell {
                 padding: 8px 6px;
                 font-size: 0.7rem;
+            }
+        }
+    }
+}
+
+// Bulk Edit Modal
+.bulk-edit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+
+    .bulk-edit-content {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        max-width: 500px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+        h3 {
+            margin: 0 0 10px 0;
+            color: $text-color;
+            font-family: $font-title;
+            font-size: 1.5rem;
+        }
+
+        .bulk-edit-note {
+            color: $secondary-text-color;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+
+            label {
+                display: block;
+                margin-bottom: 8px;
+                color: $text-color;
+                font-weight: 500;
+                font-family: $font-main;
+            }
+
+            select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid $border-color;
+                border-radius: 4px;
+                font-family: $font-secondary;
+                font-size: 0.9rem;
+                color: $text-color;
+                background: white;
+
+                &:focus {
+                    outline: none;
+                    border-color: $primary-button-color;
+                    box-shadow: 0 0 0 2px rgba(170, 157, 18, 0.2);
+                }
+            }
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 25px;
+
+            .submit-btn {
+                background: $primary-button-color;
+                color: white;
+                border: none;
+                padding: 12px 24px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-family: $font-main;
+                font-weight: 500;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background: $primary-button-hover-color;
+                }
+            }
+
+            .cancel-btn {
+                background: transparent;
+                color: $text-color;
+                border: 1px solid $border-color;
+                padding: 12px 24px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-family: $font-main;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    background: $secondary-background-color;
+                    border-color: $text-color;
+                }
             }
         }
     }
