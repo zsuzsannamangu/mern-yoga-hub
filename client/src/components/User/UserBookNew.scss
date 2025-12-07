@@ -97,8 +97,8 @@
 
     // Selected date - different color (overrides has-slot)
     &.selected {
-        background-color: $purple-secondary !important;
-        color: $text-color !important;
+        background-color: darken($primary-button-color, 10%) !important;
+        color: $button-text-color !important;
         font-weight: normal;
 
         // Hide dot when selected
@@ -113,8 +113,8 @@
 
     // Days with slots that are selected - prioritize selected styling
     &.has-slot.selected {
-        background-color: $purple-secondary !important;
-        color: $text-color !important;
+        background-color: darken($primary-button-color, 10%) !important;
+        color: $button-text-color !important;
 
         .slot-indicator {
             display: none !important;
