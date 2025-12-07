@@ -711,9 +711,7 @@ const AdminFinances = () => {
                         <div className="header-cell">Category</div>
                         <div className="header-cell">Gross Rate</div>
                         <div className="header-cell">Received Rate</div>
-                        <div className="header-cell">Payment Freq.</div>
                         <div className="header-cell">Payment Method</div>
-                        <div className="header-cell">Request Sent</div>
                         <div className="header-cell">Paid</div>
                         <div className="header-cell">Taxed</div>
                         <div className="header-cell">Actions</div>
@@ -814,19 +812,6 @@ const AdminFinances = () => {
                                                     </div>
                                                     <div className="table-cell">
                                                         <select
-                                                            name="paymentFrequency"
-                                                            value={editingData.paymentFrequency}
-                                                            onChange={handleEditInputChange}
-                                                            className="edit-select"
-                                                        >
-                                                            <option value="per-class">Per Class</option>
-                                                            <option value="weekly">Weekly</option>
-                                                            <option value="monthly">Monthly</option>
-                                                            <option value="biweekly">Biweekly</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className="table-cell">
-                                                        <select
                                                             name="paymentMethod"
                                                             value={editingData.paymentMethod}
                                                             onChange={handleEditInputChange}
@@ -839,18 +824,6 @@ const AdminFinances = () => {
                                                             <option value="zelle">Zelle</option>
                                                             <option value="deposit">Deposit</option>
                                                             <option value="card">Card</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className="table-cell">
-                                                        <select
-                                                            name="paymentRequestSent"
-                                                            value={editingData.paymentRequestSent}
-                                                            onChange={handleEditInputChange}
-                                                            className="edit-select"
-                                                        >
-                                                            <option value="no">No</option>
-                                                            <option value="yes">Yes</option>
-                                                            <option value="n/a">N/A</option>
                                                         </select>
                                                     </div>
                                                     <div className="table-cell">
@@ -890,11 +863,7 @@ const AdminFinances = () => {
                                                     <div className="table-cell">{entry.category || 'other'}</div>
                                                     <div className="table-cell">{formatCurrency(entry.grossRate || entry.rate || 0)}</div>
                                                     <div className="table-cell">{formatCurrency(entry.receivedRate || entry.rate || 0)}</div>
-                                                    <div className="table-cell">{entry.paymentFrequency}</div>
                                                     <div className="table-cell">{entry.paymentMethod}</div>
-                                                    <div className={`table-cell status-${entry.paymentRequestSent}`}>
-                                                        {entry.paymentRequestSent}
-                                                    </div>
                                                     <div className={`table-cell status-${entry.paid}`}>
                                                         {entry.paid}
                                                     </div>
