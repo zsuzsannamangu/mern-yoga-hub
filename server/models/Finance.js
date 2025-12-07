@@ -5,7 +5,15 @@ const financeSchema = new mongoose.Schema({
     time: { type: String, required: true }, // Format: HH:MM (24-hour)
     class: { type: String, required: true }, // Class name/type
     location: { type: String, required: true }, // Where the class is held
-    rate: { type: Number, required: true }, // Payment amount
+    category: {
+        type: String,
+        required: true,
+        enum: ['chocolate', 'yoga teaching', 'yoga therapy', 'workshop', 'other'],
+        default: 'other'
+    },
+    rate: { type: Number, required: false }, // Payment amount (kept for backward compatibility)
+    grossRate: { type: Number, required: true }, // Gross payment amount
+    receivedRate: { type: Number, required: true }, // Actual received payment amount
     paymentFrequency: { 
         type: String, 
         required: true,

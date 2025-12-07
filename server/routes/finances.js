@@ -31,7 +31,10 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
             time,
             class: className,
             location,
+            category,
             rate,
+            grossRate,
+            receivedRate,
             paymentFrequency,
             paymentMethod,
             paymentRequestSent,
@@ -40,19 +43,29 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
         } = req.body;
 
         // Validate required fields
-        if (!date || !time || !className || !location || rate === undefined) {
+        if (!date || !time || !className || !location || grossRate === undefined || receivedRate === undefined) {
             return res.status(400).json({
                 success: false,
-                message: 'Missing required fields: date, time, class, location, and rate are required'
+                message: 'Missing required fields: date, time, class, location, grossRate, and receivedRate are required'
             });
         }
 
-        // Validate rate is a number
-        const rateNum = parseFloat(rate);
-        if (isNaN(rateNum) || rateNum < 0) {
+        // Validate rates are numbers
+        const grossRateNum = parseFloat(grossRate);
+        const receivedRateNum = parseFloat(receivedRate);
+        const rateNum = rate !== undefined ? parseFloat(rate) : receivedRateNum; // For backward compatibility
+        
+        if (isNaN(grossRateNum) || grossRateNum < 0) {
             return res.status(400).json({
                 success: false,
-                message: 'Rate must be a valid positive number'
+                message: 'Gross rate must be a valid positive number'
+            });
+        }
+        
+        if (isNaN(receivedRateNum) || receivedRateNum < 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'Received rate must be a valid positive number'
             });
         }
 
@@ -61,7 +74,10 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
             time,
             class: className,
             location,
-            rate: rateNum,
+            category: category || 'other',
+            rate: rateNum, // Keep for backward compatibility
+            grossRate: grossRateNum,
+            receivedRate: receivedRateNum,
             paymentFrequency: paymentFrequency || 'per-class',
             paymentMethod: paymentMethod || 'cash',
             paymentRequestSent: paymentRequestSent || 'no',
