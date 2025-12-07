@@ -8,52 +8,52 @@ $content-background-color: #f0f0f0;
 $secondary-content-background-color: #e8e8e8;
 $content-background-color-hover: #e0e0e0;
 
-// Main Color Palette - Only 5 colors used throughout
-$main-color-1: #bc68be; // Purple - primary actions, buttons, accents
-$main-color-2: #C9CBA3; // Sage green/beige - backgrounds, subtle elements
-$main-color-3: #FFE1A8; // Light yellow/cream - highlights, light backgrounds
-$main-color-4: #E26D5C; // Coral/salmon - secondary actions, accents, warnings
-$main-color-5: #472D30; // Dark brown/burgundy - text, dark elements
+// Text Colors
+$text-color: #2c3e50;
+$secondary-text-color: #5a6c7d;
+$accent-color: #d5231b;
+$green-color: #28a745;
+$tertiary-text-color: #bc68be;
 
-// Text Colors - using main colors
-$text-color: $main-color-5; // Dark brown for main text
-$secondary-text-color: lighten($main-color-5, 20%); // Lighter brown for secondary text
-$accent-color: $main-color-4; // Coral for accents
-$green-color: #28a745; // Keep green for success states (not in main palette)
-$tertiary-text-color: $main-color-1; // Purple for tertiary text
-$main-title-color: $main-color-5; // Dark brown for titles
+$main-color-1: #bc68be;
+$main-color-2: #C9CBA3;
+$main-color-3: #FFE1A8;
+$main-color-4: #E26D5C;
+$main-color-5: #472D30;
 
-// Button Colors - using main colors
-$button-text-color: #ffffff; // White text on colored buttons
-$primary-button-color: $main-color-1; // Purple for primary buttons
-$primary-button-hover-color: lighten($main-color-1, 10%); // Lighter purple on hover
-$secondary-button-color: $main-color-4; // Coral for secondary buttons
-$secondary-button-hover-color: darken($main-color-4, 10%); // Darker coral on hover
-$delete-button: $main-color-4; // Coral for delete buttons
-$delete-button-hover: darken($main-color-4, 15%); // Darker coral on hover
+$main-title-color: #2c3e50;
 
-// Accent Colors - using main colors
-$line-color: $main-color-1; // Purple for lines and dividers
-$border-color: lighten($main-color-2, 20%); // Light beige for borders
+// Button Colors
+$button-text-color: #ffffff;
+$primary-button-color: #bc68be;
+$primary-button-hover-color: #c086d7;
+$secondary-button-color: #d5231b;
+$secondary-button-hover-color: #b81e17;
+$delete-button: #d5231b;
+$delete-button-hover: #b81e17;
 
-// Purple Palette - mapped to main-color-1
-$purple-primary: $main-color-1;
-$purple-secondary: lighten($main-color-1, 10%);
-$purple-light: lighten($main-color-1, 30%);
-$purple-dark: darken($main-color-1, 15%);
+// Accent Colors
+$line-color: #a37ba4;
+$border-color: #e0e0e0;
 
-// Red Palette - mapped to main-color-4 (coral)
-$red-primary: $main-color-4;
-$red-secondary: lighten($main-color-4, 10%);
-$red-light: lighten($main-color-4, 25%);
-$red-dark: darken($main-color-4, 15%);
+// Purple Palette
+$purple-primary: #bc68be;
+$purple-secondary: #A569BD;
+$purple-light: #D2B4DE;
+$purple-dark: #8064a8;
 
-// Gradients - using main colors
-$gradient-purple: linear-gradient(135deg, $main-color-1, lighten($main-color-1, 10%), lighten($main-color-1, 25%));
-$gradient-red: linear-gradient(135deg, $main-color-4, lighten($main-color-4, 10%));
-$gradient-purple-red: linear-gradient(135deg, $main-color-1, $main-color-4);
-$gradient-soft: linear-gradient(135deg, lighten($main-color-2, 15%), lighten($main-color-2, 10%));
-$gradient-warm: linear-gradient(135deg, $main-color-3, lighten($main-color-4, 20%));
+// Red Palette (from logo)
+$red-primary: #d5231b;
+$red-secondary: #e74c3c;
+$red-light: #f1948a;
+$red-dark: #a93226;
+
+// Gradients
+$gradient-purple: linear-gradient(135deg, #7452b8, #a063b8, #c898db);
+$gradient-red: linear-gradient(135deg, #d5231b, #e74c3c);
+$gradient-purple-red: linear-gradient(135deg, #8B4B8C, #d5231b);
+$gradient-soft: linear-gradient(135deg, #f5f0f5, #f0ecf0);
+$gradient-warm: linear-gradient(135deg, #ffeaa7, #fab1a0);
 
 // Fonts
 $font-main: 'Avenir Light';
