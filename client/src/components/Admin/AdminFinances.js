@@ -335,18 +335,13 @@ const AdminFinances = () => {
                 setClassData(sortClassData(updatedData));
                 setEditingId(null);
                 setEditingData({});
-
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Finance entry updated successfully',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
+                // No popup - just exit edit mode silently
             } else {
                 throw new Error(response.data.message);
             }
         } catch (error) {
             console.error('Error updating finance entry:', error);
+            // Only show error popup if something goes wrong
             Swal.fire({
                 title: 'Error',
                 text: error.response?.data?.message || 'Failed to update finance entry',
@@ -484,7 +479,7 @@ const AdminFinances = () => {
 
             {showAddForm && (
                 <div className="add-entry-form">
-                    <h2>Add New Class Entry</h2>
+                    <h2>Add New Entry</h2>
                     <form onSubmit={handleAddEntry}>
                         <div className="form-row">
                             <div className="form-group">
@@ -704,11 +699,11 @@ const AdminFinances = () => {
                 <div className="class-table">
                     <div className="table-header">
                         <div className="header-cell">Month</div>
+                        <div className="header-cell">Category</div>
                         <div className="header-cell">Date</div>
                         <div className="header-cell">Time</div>
                         <div className="header-cell">Class</div>
                         <div className="header-cell">Location</div>
-                        <div className="header-cell">Category</div>
                         <div className="header-cell">Gross Rate</div>
                         <div className="header-cell">Received Rate</div>
                         <div className="header-cell">Payment Method</div>
@@ -738,6 +733,20 @@ const AdminFinances = () => {
                                             {editingId === entry.id ? (
                                                 // Edit mode
                                                 <>
+                                                    <div className="table-cell">
+                                                        <select
+                                                            name="category"
+                                                            value={editingData.category || 'other'}
+                                                            onChange={handleEditInputChange}
+                                                            className="edit-select category-select"
+                                                        >
+                                                            <option value="chocolate">Chocolate</option>
+                                                            <option value="yoga teaching">Yoga Teaching</option>
+                                                            <option value="yoga therapy">Yoga Therapy</option>
+                                                            <option value="workshop">Workshop</option>
+                                                            <option value="other">Other</option>
+                                                        </select>
+                                                    </div>
                                                     <div className="table-cell">
                                                         <input
                                                             type="date"
@@ -773,20 +782,6 @@ const AdminFinances = () => {
                                                             onChange={handleEditInputChange}
                                                             className="edit-input"
                                                         />
-                                                    </div>
-                                                    <div className="table-cell">
-                                                        <select
-                                                            name="category"
-                                                            value={editingData.category || 'other'}
-                                                            onChange={handleEditInputChange}
-                                                            className="edit-select"
-                                                        >
-                                                            <option value="chocolate">Chocolate</option>
-                                                            <option value="yoga teaching">Yoga Teaching</option>
-                                                            <option value="yoga therapy">Yoga Therapy</option>
-                                                            <option value="workshop">Workshop</option>
-                                                            <option value="other">Other</option>
-                                                        </select>
                                                     </div>
                                                     <div className="table-cell">
                                                         <input
@@ -856,11 +851,13 @@ const AdminFinances = () => {
                                             ) : (
                                                 // View mode
                                                 <>
+                                                    <div className={`table-cell category-cell category-${(entry.category || 'other').replace(/\s+/g, '-')}`}>
+                                                        {entry.category || 'other'}
+                                                    </div>
                                                     <div className="table-cell">{formatDate(entry.date)}</div>
                                                     <div className="table-cell">{formatTime(entry.time)}</div>
                                                     <div className="table-cell">{entry.class}</div>
                                                     <div className="table-cell">{entry.location}</div>
-                                                    <div className="table-cell">{entry.category || 'other'}</div>
                                                     <div className="table-cell">{formatCurrency(entry.grossRate || entry.rate || 0)}</div>
                                                     <div className="table-cell">{formatCurrency(entry.receivedRate || entry.rate || 0)}</div>
                                                     <div className="table-cell">{entry.paymentMethod}</div>

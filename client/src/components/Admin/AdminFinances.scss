@@ -220,7 +220,7 @@
 
     .table-header {
         display: grid;
-        grid-template-columns: 150px 100px 80px 120px 120px 80px 100px 100px 100px 80px 80px 100px;
+        grid-template-columns: 150px 100px 100px 80px 120px 120px 100px 100px 100px 80px 80px 100px;
         background: $content-background-color;
         border-radius: 6px 6px 0 0;
         font-weight: bold;
@@ -291,7 +291,7 @@
     .month-entries {
         .table-row {
             display: grid;
-            grid-template-columns: 150px 100px 80px 120px 120px 80px 100px 100px 100px 80px 80px 100px;
+            grid-template-columns: 150px 100px 100px 80px 120px 120px 100px 100px 100px 80px 80px 100px;
             border-bottom: 1px solid rgba(204, 204, 204, 0.3);
             transition: background-color 0.2s ease;
 
@@ -313,6 +313,37 @@
 
                 &:last-child {
                     border-right: none;
+                }
+
+                // Category color coding
+                &.category-cell {
+                    font-weight: 600;
+                    text-transform: capitalize;
+                    
+                    &.category-chocolate {
+                        background-color: #8B4513; // Brown
+                        color: white;
+                    }
+                    
+                    &.category-yoga-teaching {
+                        background-color: #9370DB; // Medium purple
+                        color: white;
+                    }
+                    
+                    &.category-yoga-therapy {
+                        background-color: #4169E1; // Royal blue
+                        color: white;
+                    }
+                    
+                    &.category-workshop {
+                        background-color: #FF6347; // Tomato red
+                        color: white;
+                    }
+                    
+                    &.category-other {
+                        background-color: #708090; // Slate gray
+                        color: white;
+                    }
                 }
 
                 &.status-yes {
@@ -441,7 +472,7 @@
         min-width: 800px;
 
         .table-header {
-            grid-template-columns: 120px 90px 70px 100px 100px 70px 80px 80px 80px 70px 70px 90px;
+            grid-template-columns: 120px 90px 90px 70px 100px 100px 80px 80px 80px 70px 70px 90px;
             font-size: 0.75rem;
 
             .header-cell {
@@ -463,7 +494,7 @@
         }
 
         .month-entries .table-row {
-            grid-template-columns: 120px 90px 70px 100px 100px 70px 80px 80px 80px 70px 70px 90px;
+            grid-template-columns: 120px 90px 90px 70px 100px 100px 80px 80px 80px 70px 70px 90px;
 
             .table-cell {
                 padding: 10px 8px;
@@ -488,7 +519,7 @@
         min-width: 700px;
 
         .table-header {
-            grid-template-columns: 100px 80px 60px 90px 90px 60px 70px 70px 70px 60px 60px 80px;
+            grid-template-columns: 100px 80px 80px 60px 90px 90px 70px 70px 70px 60px 60px 80px;
             font-size: 0.7rem;
 
             .header-cell {
@@ -510,7 +541,7 @@
         }
 
         .month-entries .table-row {
-            grid-template-columns: 100px 80px 60px 90px 90px 60px 70px 70px 70px 60px 60px 80px;
+            grid-template-columns: 100px 80px 80px 60px 90px 90px 70px 70px 70px 60px 60px 80px;
 
             .table-cell {
                 padding: 8px 6px;
