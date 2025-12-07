@@ -61,34 +61,89 @@
     padding: 15px;
     border-radius: 5px;
     text-align: center;
-    background-color: $secondary-background-color;
-    border: 1px solid $border-color;
+    background-color: transparent;
+    border: none;
     position: relative;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 
     @media (max-width: 768px) {
         padding: 5px;
     }
 
+    // Days with available slots - only show dot, no background or border
+    &.has-slot {
+        background-color: transparent !important;
+        border: none !important;
+        color: $text-color;
+        font-weight: normal;
+
+        &:hover {
+            background-color: transparent !important;
+        }
+
+        // Show dot for available slots
+        .slot-indicator {
+            width: 6px;
+            height: 6px;
+            background-color: $primary-button-color;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    // Selected date - different color (overrides has-slot)
     &.selected {
-        background-color: $primary-button-color;
-        color: $button-text-color;
+        background-color: $primary-button-color !important;
+        color: $button-text-color !important;
         font-weight: bold;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        border: none !important;
+
+        // Hide dot when selected
+        .slot-indicator {
+            display: none !important;
+        }
+
+        &:hover {
+            background-color: $primary-button-hover-color !important;
+        }
     }
 
-    &:hover {
-        background-color: lighten($secondary-background-color, 10%);
+    // Days with slots that are selected - prioritize selected styling
+    &.has-slot.selected {
+        background-color: $primary-button-color !important;
+        color: $button-text-color !important;
+        border: none !important;
+
+        .slot-indicator {
+            display: none !important;
+        }
     }
 
+    &:hover:not(.selected) {
+        background-color: transparent;
+    }
+
+    // Default slot indicator (for non-selected days with slots)
     .slot-indicator {
-        width: 5px;
-        height: 5px;
-        background-color: $tertiary-text-color;
+        width: 6px;
+        height: 6px;
+        background-color: $primary-button-color;
         border-radius: 50%;
         position: absolute;
-        bottom: 5px;
-        left: 5px;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 }
 

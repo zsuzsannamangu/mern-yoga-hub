@@ -18,7 +18,9 @@ const AdminFinances = () => {
         time: '',
         class: '',
         location: '',
-        rate: '',
+        category: 'other',
+        grossRate: '',
+        receivedRate: '',
         paymentFrequency: 'per-class',
         paymentMethod: 'cash',
         paymentRequestSent: 'no',
@@ -106,7 +108,7 @@ const AdminFinances = () => {
         expandedMonths.forEach(monthKey => {
             if (groupedData[monthKey]) {
                 const monthData = groupedData[monthKey];
-                const monthRevenue = monthData.entries.reduce((sum, entry) => sum + entry.rate, 0);
+                const monthRevenue = monthData.entries.reduce((sum, entry) => sum + (entry.receivedRate || entry.rate || 0), 0);
                 totalRevenue += monthRevenue;
                 totalClasses += monthData.entries.length;
                 monthNames.push(monthData.name);
@@ -197,7 +199,9 @@ const AdminFinances = () => {
                         time: newEntry.time,
                         class: newEntry.class,
                         location: newEntry.location,
-                        rate: newEntry.rate,
+                        category: newEntry.category,
+                        grossRate: newEntry.grossRate,
+                        receivedRate: newEntry.receivedRate,
                         paymentFrequency: newEntry.paymentFrequency,
                         paymentMethod: newEntry.paymentMethod,
                         paymentRequestSent: newEntry.paymentRequestSent,
@@ -212,7 +216,9 @@ const AdminFinances = () => {
                     time: newEntry.time,
                     class: newEntry.class,
                     location: newEntry.location,
-                    rate: newEntry.rate,
+                    category: newEntry.category,
+                    grossRate: newEntry.grossRate,
+                    receivedRate: newEntry.receivedRate,
                     paymentFrequency: newEntry.paymentFrequency,
                     paymentMethod: newEntry.paymentMethod,
                     paymentRequestSent: newEntry.paymentRequestSent,
@@ -248,7 +254,9 @@ const AdminFinances = () => {
                 time: '',
                 class: '',
                 location: '',
-                rate: '',
+                category: 'other',
+                grossRate: '',
+                receivedRate: '',
                 paymentFrequency: 'per-class',
                 paymentMethod: 'cash',
                 paymentRequestSent: 'no',
@@ -304,7 +312,12 @@ const AdminFinances = () => {
 
     const handleEdit = (entry) => {
         setEditingId(entry.id);
-        setEditingData({ ...entry });
+        setEditingData({ 
+            ...entry,
+            category: entry.category || 'other',
+            grossRate: entry.grossRate || entry.rate || '',
+            receivedRate: entry.receivedRate || entry.rate || ''
+        });
     };
 
     const handleSaveEdit = async () => {
@@ -411,7 +424,7 @@ const AdminFinances = () => {
     }
 
     const groupedData = groupDataByMonth(classData);
-    const totalRevenue = classData.reduce((sum, entry) => sum + entry.rate, 0);
+    const totalRevenue = classData.reduce((sum, entry) => sum + (entry.receivedRate || entry.rate || 0), 0);
     const monthlyTotals = calculateMonthlyTotals(groupedData, expandedMonths);
 
     return (
@@ -520,11 +533,42 @@ const AdminFinances = () => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Rate ($)</label>
+                                <label>Category</label>
+                                <select
+                                    name="category"
+                                    value={newEntry.category}
+                                    onChange={handleInputChange}
+                                    required
+                                >
+                                    <option value="chocolate">Chocolate</option>
+                                    <option value="yoga teaching">Yoga Teaching</option>
+                                    <option value="yoga therapy">Yoga Therapy</option>
+                                    <option value="workshop">Workshop</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label>Gross Rate ($)</label>
                                 <input
                                     type="number"
-                                    name="rate"
-                                    value={newEntry.rate}
+                                    name="grossRate"
+                                    value={newEntry.grossRate}
+                                    onChange={handleInputChange}
+                                    placeholder="100.00"
+                                    step="0.01"
+                                    min="0"
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Received Rate ($)</label>
+                                <input
+                                    type="number"
+                                    name="receivedRate"
+                                    value={newEntry.receivedRate}
                                     onChange={handleInputChange}
                                     placeholder="75.00"
                                     step="0.01"
@@ -664,7 +708,9 @@ const AdminFinances = () => {
                         <div className="header-cell">Time</div>
                         <div className="header-cell">Class</div>
                         <div className="header-cell">Location</div>
-                        <div className="header-cell">Rate</div>
+                        <div className="header-cell">Category</div>
+                        <div className="header-cell">Gross Rate</div>
+                        <div className="header-cell">Received Rate</div>
                         <div className="header-cell">Payment Freq.</div>
                         <div className="header-cell">Payment Method</div>
                         <div className="header-cell">Request Sent</div>
@@ -731,10 +777,35 @@ const AdminFinances = () => {
                                                         />
                                                     </div>
                                                     <div className="table-cell">
+                                                        <select
+                                                            name="category"
+                                                            value={editingData.category || 'other'}
+                                                            onChange={handleEditInputChange}
+                                                            className="edit-select"
+                                                        >
+                                                            <option value="chocolate">Chocolate</option>
+                                                            <option value="yoga teaching">Yoga Teaching</option>
+                                                            <option value="yoga therapy">Yoga Therapy</option>
+                                                            <option value="workshop">Workshop</option>
+                                                            <option value="other">Other</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="table-cell">
                                                         <input
                                                             type="number"
-                                                            name="rate"
-                                                            value={editingData.rate}
+                                                            name="grossRate"
+                                                            value={editingData.grossRate}
+                                                            onChange={handleEditInputChange}
+                                                            className="edit-input"
+                                                            step="0.01"
+                                                            min="0"
+                                                        />
+                                                    </div>
+                                                    <div className="table-cell">
+                                                        <input
+                                                            type="number"
+                                                            name="receivedRate"
+                                                            value={editingData.receivedRate}
                                                             onChange={handleEditInputChange}
                                                             className="edit-input"
                                                             step="0.01"
@@ -816,7 +887,9 @@ const AdminFinances = () => {
                                                     <div className="table-cell">{formatTime(entry.time)}</div>
                                                     <div className="table-cell">{entry.class}</div>
                                                     <div className="table-cell">{entry.location}</div>
-                                                    <div className="table-cell">{formatCurrency(entry.rate)}</div>
+                                                    <div className="table-cell">{entry.category || 'other'}</div>
+                                                    <div className="table-cell">{formatCurrency(entry.grossRate || entry.rate || 0)}</div>
+                                                    <div className="table-cell">{formatCurrency(entry.receivedRate || entry.rate || 0)}</div>
                                                     <div className="table-cell">{entry.paymentFrequency}</div>
                                                     <div className="table-cell">{entry.paymentMethod}</div>
                                                     <div className={`table-cell status-${entry.paymentRequestSent}`}>
