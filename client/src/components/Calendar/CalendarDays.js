@@ -86,7 +86,8 @@ function CalendarDays({
                       ${day.isToday ? 'highlighted' : ''} 
                       ${day.isPast || day.isDisabled ? 'disabled' : ''} 
                       ${isEventDay(day) ? 'has-event' : ''} 
-                      ${isSlotDay(day) ? 'has-slot' : ''}`} // Add has-slot for days with slots
+                      ${isSlotDay(day) ? 'has-slot' : ''}
+                      ${day.selected ? 'selected' : ''}`} // Add selected class for selected day
           onClick={() => !(day.isPast || day.isDisabled) && changeCurrentDay(day)}
         >
           <p>{day.number}</p>
