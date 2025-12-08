@@ -109,10 +109,10 @@
 
     // Selected date - different color (overrides has-slot and highlighted)
     &.selected {
-        background-color: darken($primary-button-color, 15%) !important;
-        color: #ffffff !important;
+        background-color: rgba($primary-button-color, 0.25) !important;
+        color: $text-color !important;
         font-weight: normal !important;
-        border: 1px solid darken($primary-button-color, 20%) !important;
+        border: 1px solid rgba($primary-button-color, 0.4) !important;
         width: auto !important;
         height: auto !important;
         line-height: normal !important;
@@ -126,24 +126,24 @@
             display: none !important;
         }
 
-        // Force white text on all child elements
+        // Force dark text on all child elements
         p {
-            color: #ffffff !important;
-    }
+            color: $text-color !important;
+        }
 
-    &:hover {
-            background-color: darken($primary-button-color, 20%) !important;
+        &:hover {
+            background-color: rgba($primary-button-color, 0.35) !important;
         }
     }
 
     // Days with slots that are selected - prioritize selected styling
     &.has-slot.selected {
-        background-color: darken($primary-button-color, 15%) !important;
-        color: #ffffff !important;
-        border: 1px solid darken($primary-button-color, 20%) !important;
+        background-color: rgba($primary-button-color, 0.25) !important;
+        color: $text-color !important;
+        border: 1px solid rgba($primary-button-color, 0.4) !important;
 
         p {
-            color: #ffffff !important;
+            color: $text-color !important;
         }
 
         .slot-indicator {
@@ -153,9 +153,9 @@
 
     // Today's date that is also selected
     &.highlighted.selected {
-        background-color: darken($primary-button-color, 15%) !important;
-        color: #ffffff !important;
-        border: 1px solid darken($primary-button-color, 20%) !important;
+        background-color: rgba($primary-button-color, 0.25) !important;
+        color: $text-color !important;
+        border: 1px solid rgba($primary-button-color, 0.4) !important;
         width: auto !important;
         height: auto !important;
         line-height: normal !important;
@@ -165,7 +165,7 @@
         padding: 15px !important;
 
         p {
-            color: #ffffff !important;
+            color: $text-color !important;
         }
     }
 
