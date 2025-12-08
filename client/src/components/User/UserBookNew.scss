@@ -72,8 +72,9 @@
         color: $text-color;
         font-weight: normal;
 
-        &:hover {
-            background-color: rgba($primary-button-color, 0.12); // Slightly more visible on hover
+        &:hover:not(.selected) {
+            background-color: rgba($primary-button-color, 0.25); // Same as selected date
+            border: 1px solid rgba($primary-button-color, 0.4);
         }
 
         // Show dot for available slots
@@ -89,13 +90,13 @@
         }
     }
 
-    // Today's date styling - keep circular shape
-    &.highlighted:not(.selected) {
+    // Today's date styling - always keep circular shape
+    &.highlighted {
         background-color: rgba($primary-button-color, 0.15) !important;
         color: $text-color !important;
         border: 1px solid rgba($primary-button-color, 0.3) !important;
         font-weight: normal !important;
-        // Keep circular shape for today's date when not selected
+        // Keep circular shape for today's date
         width: 35px !important;
         height: 35px !important;
         line-height: 35px !important;
@@ -151,26 +152,31 @@
         }
     }
 
-    // Today's date that is also selected
+    // Today's date that is also selected - keep circular but with selected background
     &.highlighted.selected {
         background-color: rgba($primary-button-color, 0.25) !important;
         color: $text-color !important;
         border: 1px solid rgba($primary-button-color, 0.4) !important;
-        width: auto !important;
-        height: auto !important;
-        line-height: normal !important;
-        border-radius: 5px !important;
-        margin: 0 !important;
+        // Keep circular shape even when selected
+        width: 35px !important;
+        height: 35px !important;
+        line-height: 35px !important;
+        border-radius: 50% !important;
+        margin: 0 auto !important;
         display: flex !important;
-        padding: 15px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
 
         p {
             color: $text-color !important;
         }
     }
 
-    &:hover:not(.selected):not(.has-slot) {
-        background-color: lighten($secondary-background-color, 5%);
+    &:hover:not(.selected):not(.has-slot):not(.highlighted) {
+        background-color: rgba($primary-button-color, 0.25);
+        color: $text-color;
+        border: 1px solid rgba($primary-button-color, 0.4);
     }
 
     // Default slot indicator (for non-selected days with slots)
