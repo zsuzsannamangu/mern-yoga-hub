@@ -93,7 +93,7 @@
     // Today's date styling - always keep circular shape
     &.highlighted {
         background-color: rgba($primary-button-color, 0.15) !important;
-        color: $text-color !important;
+        color: #333333 !important;
         border: 1px solid rgba($primary-button-color, 0.3) !important;
         font-weight: normal !important;
         // Keep circular shape for today's date
@@ -106,6 +106,10 @@
         align-items: center !important;
         justify-content: center !important;
         padding: 0 !important;
+
+        p {
+            color: #333333 !important;
+        }
     }
 
     // Selected date - different color (overrides has-slot and highlighted)
