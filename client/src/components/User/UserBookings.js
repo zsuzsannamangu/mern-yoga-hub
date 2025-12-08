@@ -429,7 +429,7 @@ function UserBookings() {
                                         </button>
                                     </div>
                                     <CalendarDays
-                                        day={selectedDate || new Date(2099, 11, 31)}
+                                        day={selectedDate ? selectedDate : new Date(currentYear, currentMonth, 15)}
                                         month={currentMonth}
                                         year={currentYear}
                                         changeCurrentDay={(day) =>
