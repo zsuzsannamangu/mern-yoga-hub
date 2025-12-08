@@ -51,13 +51,7 @@
     }
 }
 
-.table-content {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
-}
-
-.calendar-day {
+.userbooknew .calendar-day {
     padding: 15px;
     border-radius: 5px;
     text-align: center;
@@ -72,7 +66,7 @@
     }
 
     // Days with available slots - very light background with dot
-    &.has-slot {
+    &.userbooknew-has-slot {
         background-color: rgba($primary-button-color, 0.08); // Very light purple tint
         border: 1px solid $border-color;
         color: $text-color;
@@ -174,6 +168,13 @@
         left: 50%;
         transform: translateX(-50%);
     }
+}
+
+// Scope table-content to userbooknew as well
+.userbooknew .table-content {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
 }
 
 .availability-section {
