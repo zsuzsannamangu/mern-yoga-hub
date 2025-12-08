@@ -429,23 +429,7 @@ function UserBookings() {
                                         </button>
                                     </div>
                                     <CalendarDays
-                                        day={(() => {
-                                            // If user selected a date, use that
-                                            if (selectedDate) {
-                                                return selectedDate;
-                                            }
-                                            // If current appointment is in the current month, highlight it
-                                            if (reschedulingBooking?.date) {
-                                                const [year, month, day] = reschedulingBooking.date.split('-').map(Number);
-                                                const appointmentDate = new Date(year, month - 1, day);
-                                                if (appointmentDate.getMonth() === currentMonth && appointmentDate.getFullYear() === currentYear) {
-                                                    return appointmentDate;
-                                                }
-                                            }
-                                            // Use a date in current month but different year so it won't match any calendar day
-                                            // This ensures correct month display (via getMonth()) but won't highlight anything
-                                            return new Date(2099, currentMonth, 1);
-                                        })()}
+                                        day={new Date(currentYear, currentMonth, 1)}
                                         month={currentMonth}
                                         year={currentYear}
                                         changeCurrentDay={(day) =>
