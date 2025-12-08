@@ -107,7 +107,7 @@
     // Selected date - different color (overrides has-slot and highlighted)
     &.selected {
         background-color: darken($primary-button-color, 15%) !important;
-        color: $button-text-color !important;
+        color: #ffffff !important;
         font-weight: normal !important;
         border: 1px solid darken($primary-button-color, 20%) !important;
         width: auto !important;
@@ -123,6 +123,11 @@
             display: none !important;
         }
 
+        // Force white text on all child elements
+        p {
+            color: #ffffff !important;
+        }
+
         &:hover {
             background-color: darken($primary-button-color, 20%) !important;
         }
@@ -131,8 +136,12 @@
     // Days with slots that are selected - prioritize selected styling
     &.has-slot.selected {
         background-color: darken($primary-button-color, 15%) !important;
-        color: $button-text-color !important;
+        color: #ffffff !important;
         border: 1px solid darken($primary-button-color, 20%) !important;
+
+        p {
+            color: #ffffff !important;
+        }
 
         .slot-indicator {
             display: none !important;
@@ -142,7 +151,7 @@
     // Today's date that is also selected
     &.highlighted.selected {
         background-color: darken($primary-button-color, 15%) !important;
-        color: $button-text-color !important;
+        color: #ffffff !important;
         border: 1px solid darken($primary-button-color, 20%) !important;
         width: auto !important;
         height: auto !important;
@@ -151,6 +160,10 @@
         margin: 0 !important;
         display: flex !important;
         padding: 15px !important;
+
+        p {
+            color: #ffffff !important;
+        }
     }
 
     &:hover:not(.selected):not(.has-slot) {
