@@ -429,7 +429,11 @@ function UserBookings() {
                                         </button>
                                     </div>
                                     <CalendarDays
-                                        day={selectedDate || new Date(2099, currentMonth, 1)}
+                                        day={selectedDate || (reschedulingBooking?.date ? (() => {
+                                            // Parse the current appointment date to highlight it
+                                            const [year, month, day] = reschedulingBooking.date.split('-').map(Number);
+                                            return new Date(year, month - 1, day);
+                                        })() : new Date(2099, currentMonth, 1))}
                                         month={currentMonth}
                                         year={currentYear}
                                         changeCurrentDay={(day) =>
