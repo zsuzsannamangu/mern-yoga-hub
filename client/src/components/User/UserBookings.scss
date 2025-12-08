@@ -360,26 +360,26 @@
 
                     // Selected date - more prominent for reschedule calendar
                     &.selected {
-                        background-color: darken($primary-button-color, 10%) !important;
-                        color: $button-text-color !important;
-                        font-weight: bold !important;
-                        border: 2px solid darken($primary-button-color, 20%) !important;
+                        background-color: rgba($primary-button-color, 0.35) !important;
+                        color: $text-color !important;
+                        font-weight: normal !important;
+                        border: 2px solid darken($primary-button-color, 15%) !important;
                         width: auto !important;
                         height: auto !important;
                         border-radius: 5px !important;
                         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
 
                         p {
-                            color: $button-text-color !important;
-                            font-weight: bold !important;
+                            color: $text-color !important;
+                            font-weight: normal !important;
                         }
                     }
 
                     // Today's date that is also selected - prioritize selected styling
                     &.highlighted.selected {
-                        background-color: darken($primary-button-color, 10%) !important;
-                        color: $button-text-color !important;
-                        border: 2px solid darken($primary-button-color, 20%) !important;
+                        background-color: rgba($primary-button-color, 0.35) !important;
+                        color: $text-color !important;
+                        border: 2px solid darken($primary-button-color, 15%) !important;
                         width: auto !important;
                         height: auto !important;
                         border-radius: 5px !important;
@@ -388,8 +388,8 @@
                         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
 
                         p {
-                            color: $button-text-color !important;
-                            font-weight: bold !important;
+                            color: $text-color !important;
+                            font-weight: normal !important;
                         }
                     }
 
