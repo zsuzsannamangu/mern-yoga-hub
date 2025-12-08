@@ -14,21 +14,30 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 
   &.highlighted {
-    background-color: $secondary-content-background-color; /* Background for today's date */
+    background-color: #808080; /* Grey background for today's date */
+    color: #ffffff !important; /* White text */
     font-weight: bold; /* Make the text bold */
-    width: 15px; /* Set the width of the circle */
-    height: 15px; /* Set the height of the circle */
-    line-height: 15px; /* Center the text vertically */
+    width: 35px; /* Set the width of the circle */
+    height: 35px; /* Set the height of the circle */
+    line-height: 35px; /* Center the text vertically */
     text-align: center; /* Center the text horizontally */
     border-radius: 50%; /* Make the background circular */
     margin: 0 auto; /* Center the circle within the day cell */
-    display: inline-block; /* Treat the <p> as an inline-block element */
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    padding: 0; /* Remove padding */
+
+    p {
+      color: #ffffff !important; /* White text for paragraph */
+      margin: 0;
+    }
 
     @media (max-width: 768px) {
-      width: 100%; /* Set the width of the circle */
-      height: 100%; /* Set the height of the circle */
-      line-height: 100%; /* Center the text vertically */
-      border-radius: 4px;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 50%;
     }
   }
 
