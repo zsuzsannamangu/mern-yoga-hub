@@ -360,7 +360,7 @@
 
                     // Selected date - more prominent for reschedule calendar
                     &.selected {
-                        background-color: rgba($primary-button-color, 0.35) !important;
+                        background-color: rgba($primary-button-color, 0.38) !important;
                         color: #333333 !important;
                         font-weight: normal !important;
                         border: 2px solid darken($primary-button-color, 15%) !important;
@@ -377,7 +377,7 @@
 
                     // Today's date that is also selected - prioritize selected styling
                     &.highlighted.selected {
-                        background-color: rgba($primary-button-color, 0.35) !important;
+                        background-color: rgba($primary-button-color, 0.38) !important;
                         color: #333333 !important;
                         border: 2px solid darken($primary-button-color, 15%) !important;
                         width: auto !important;

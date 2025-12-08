@@ -110,7 +110,7 @@
 
     // Selected date - different color (overrides has-slot and highlighted)
     &.selected {
-        background-color: rgba($primary-button-color, 0.25) !important;
+        background-color: rgba($primary-button-color, 0.28) !important;
         color: $text-color !important;
         font-weight: normal !important;
         border: 1px solid rgba($primary-button-color, 0.4) !important;
@@ -139,7 +139,7 @@
 
     // Days with slots that are selected - prioritize selected styling
     &.has-slot.selected {
-        background-color: rgba($primary-button-color, 0.25) !important;
+        background-color: rgba($primary-button-color, 0.28) !important;
         color: $text-color !important;
         border: 1px solid rgba($primary-button-color, 0.4) !important;
 
@@ -154,7 +154,7 @@
 
     // Today's date that is also selected - keep circular but with selected background
     &.highlighted.selected {
-        background-color: rgba($primary-button-color, 0.25) !important;
+        background-color: rgba($primary-button-color, 0.28) !important;
         color: $text-color !important;
         border: 1px solid rgba($primary-button-color, 0.4) !important;
         // Keep circular shape even when selected

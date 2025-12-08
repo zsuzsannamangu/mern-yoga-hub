@@ -131,7 +131,7 @@
   }
 
   &.selected {
-    background-color: $primary-button-color; // Highlight selected day
+    background-color: darken($primary-button-color, 3%); // Highlight selected day
     color: $button-text-color;
     font-weight: bold;
 
