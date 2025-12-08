@@ -47,7 +47,6 @@ function CalendarDays({
       date: new Date(firstDayOfMonth),
       month: firstDayOfMonth.getMonth(),
       number: firstDayOfMonth.getDate(),
-      selected: firstDayOfMonth.toDateString() === day.toDateString(), // Is this the selected day?
       year: firstDayOfMonth.getFullYear(),
       isToday: firstDayOfMonth.toDateString() === highlightedDate.toDateString(), // Is this today?
       isPast: disablePastDates && firstDayOfMonth < new Date().setHours(0, 0, 0, 0), // Disable past dates
@@ -86,8 +85,7 @@ function CalendarDays({
                       ${day.isToday ? 'highlighted' : ''} 
                       ${day.isPast || day.isDisabled ? 'disabled' : ''} 
                       ${isEventDay(day) ? 'has-event' : ''} 
-                      ${isSlotDay(day) ? 'has-slot' : ''}
-                      ${day.selected ? 'selected' : ''}`} // Add selected class for selected day
+                      ${isSlotDay(day) ? 'has-slot' : ''}`}
           onClick={() => !(day.isPast || day.isDisabled) && changeCurrentDay(day)}
         >
           <p>{day.number}</p>
