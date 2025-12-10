@@ -4,7 +4,6 @@ import './Cart.scss';
 import '../../App.scss';
 import { useCart } from '../../context/CartContext';
 import axios from 'axios';
-import { calculateTax } from '../../utils/taxCalculator';
 
 /* 
 * Cart Component
@@ -20,8 +19,6 @@ function Cart() {
   const [discount, setDiscount] = useState(0);
   const [couponMessage, setCouponMessage] = useState('');
   const [appliedCode, setAppliedCode] = useState('');
-  const [shippingZip, setShippingZip] = useState('');
-  const [shippingState, setShippingState] = useState('');
 
   // Function to apply coupon code:
   const applyCoupon = async () => {
@@ -65,8 +62,7 @@ function Cart() {
 
   const shipping = isLocalPickup ? 0 : 5.0;
   const discountedSubtotal = subtotal * (1 - discount);
-  const tax = calculateTax(discountedSubtotal, shippingState, isLocalPickup);
-  const totalNumber = discountedSubtotal + shipping + tax;
+  const totalNumber = discountedSubtotal + shipping;
   const total = totalNumber.toFixed(2); // for display only
 
   // Updates item quantity in the cart, ensuring it doesn't go below 1.
@@ -76,38 +72,6 @@ function Cart() {
 
   // Initiates PayPal checkout process. Loads PayPal SDK dynamically if not already loaded.
   const handlePaymentClick = () => {
-    // Validate shipping address if not local pickup
-    if (!isLocalPickup) {
-      if (!shippingZip || !shippingState) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Shipping Address Required',
-          text: 'Please enter your zip code and state to calculate tax.',
-          confirmButtonText: 'OK'
-        });
-        return;
-      }
-      // Validate zip code format (5 digits)
-      if (!/^\d{5}$/.test(shippingZip.trim())) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Invalid Zip Code',
-          text: 'Please enter a valid 5-digit zip code.',
-          confirmButtonText: 'OK'
-        });
-        return;
-      }
-      // Validate state format (2 letters)
-      if (!/^[A-Z]{2}$/i.test(shippingState.trim())) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Invalid State',
-          text: 'Please enter a valid 2-letter state code (e.g., OR, CA, NY).',
-          confirmButtonText: 'OK'
-        });
-        return;
-      }
-    }
     setShowPayPal(true);
 
     if (!document.querySelector('#paypal-sdk')) {
@@ -229,40 +193,13 @@ function Cart() {
             throw new Error('Invalid payment amount');
           }
           console.log("Creating PayPal order for:", amount.toFixed(2));
-          // Calculate breakdown for PayPal
-          const itemTotal = discountedSubtotal.toFixed(2);
-          const shippingAmount = shipping.toFixed(2);
-          const taxAmount = tax.toFixed(2);
-          
           return actions.order.create({
             purchase_units: [
               {
                 amount: {
                   value: amount.toFixed(2),
-                  currency_code: 'USD',
-                  breakdown: {
-                    item_total: {
-                      value: itemTotal,
-                      currency_code: 'USD'
-                    },
-                    shipping: {
-                      value: shippingAmount,
-                      currency_code: 'USD'
-                    },
-                    tax_total: {
-                      value: taxAmount,
-                      currency_code: 'USD'
-                    }
-                  }
+                  currency_code: 'USD'
                 },
-                items: cartItems.map(item => ({
-                  name: item.name,
-                  quantity: item.quantity.toString(),
-                  unit_amount: {
-                    value: (item.price * (1 - discount)).toFixed(2),
-                    currency_code: 'USD'
-                  }
-                }))
               },
             ],
           });
@@ -290,9 +227,6 @@ function Cart() {
                 isLocalPickup,
                 couponCode,
                 discount,
-                tax: tax.toFixed(2),
-                shippingZip: shippingZip.trim(),
-                shippingState: shippingState.trim().toUpperCase(),
               }),
             })
               .then((res) => {
@@ -402,55 +336,11 @@ function Cart() {
                 <input
                   type="checkbox"
                   checked={isLocalPickup}
-                  onChange={(e) => {
-                    setIsLocalPickup(e.target.checked);
-                    if (e.target.checked) {
-                      // Clear shipping address when local pickup is selected
-                      setShippingZip('');
-                      setShippingState('');
-                    }
-                  }}
+                  onChange={(e) => setIsLocalPickup(e.target.checked)}
                 />
                 Local Pickup (no shipping fee)
               </label>
             </div>
-            {!isLocalPickup && (
-              <div className="shipping-address-section">
-                <h3>Shipping Address (for tax calculation)</h3>
-                <div className="address-inputs">
-                  <div className="address-input-group">
-                    <label htmlFor="shipping-zip">Zip Code *</label>
-                    <input
-                      type="text"
-                      id="shipping-zip"
-                      value={shippingZip}
-                      onChange={(e) => {
-                        const value = e.target.value.replace(/\D/g, '').slice(0, 5);
-                        setShippingZip(value);
-                      }}
-                      placeholder="12345"
-                      maxLength="5"
-                      required
-                    />
-                  </div>
-                  <div className="address-input-group">
-                    <label htmlFor="shipping-state">State *</label>
-                    <input
-                      type="text"
-                      id="shipping-state"
-                      value={shippingState}
-                      onChange={(e) => {
-                        const value = e.target.value.replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase();
-                        setShippingState(value);
-                      }}
-                      placeholder="OR"
-                      maxLength="2"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
             <div className="coupon-section">
               <label htmlFor="coupon">Coupon Code</label>
               <div className="coupon-input-group">
@@ -471,7 +361,6 @@ function Cart() {
             </div>
             <p>Subtotal <span>${discountedSubtotal.toFixed(2)}</span></p>
             <p>Shipping <span>${shipping.toFixed(2)}</span></p>
-            <p>Tax <span>${tax.toFixed(2)}</span></p>
             <p className="total">Total <span>${total}</span></p>
           </div>
           {!showPayPal ? (

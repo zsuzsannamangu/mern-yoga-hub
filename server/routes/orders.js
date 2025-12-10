@@ -8,19 +8,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Handle new order creation
 router.post("/orders", async (req, res) => {
-    const { 
-        orderId, 
-        payerName, 
-        payerEmail, 
-        transactionAmount, 
-        cartItems,
-        tax = 0,
-        shippingZip,
-        shippingState,
-        isLocalPickup = false,
-        discount = 0,
-        couponCode
-    } = req.body;
+    const { orderId, payerName, payerEmail, transactionAmount, cartItems } = req.body;
 
     if (!orderId || !payerName || !payerEmail || !transactionAmount || !cartItems.length) {
         return res.status(400).json({ error: "Missing order details." });
@@ -42,10 +30,6 @@ router.post("/orders", async (req, res) => {
             });
         }
 
-        // Calculate subtotal and shipping for order record
-        const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const shipping = isLocalPickup ? 0 : 5.0;
-
         // Save order in database
         const newOrder = new Order({
             orderId,
@@ -53,14 +37,6 @@ router.post("/orders", async (req, res) => {
             payerEmail,
             transactionAmount,
             cartItems,
-            subtotal: subtotal * (1 - discount),
-            shipping,
-            tax: parseFloat(tax) || 0,
-            discount: discount || 0,
-            couponCode: couponCode || null,
-            isLocalPickup: isLocalPickup || false,
-            shippingZip: shippingZip || null,
-            shippingState: shippingState || null,
         });
         await newOrder.save();
 
@@ -80,10 +56,7 @@ router.post("/orders", async (req, res) => {
                     )
                     .join("")}
                 </ul>
-                <p><b>Subtotal:</b> $${(subtotal * (1 - discount)).toFixed(2)}</p>
-                ${shipping > 0 ? `<p><b>Shipping:</b> $${shipping.toFixed(2)}</p>` : '<p><b>Shipping:</b> Local Pickup</p>'}
-                ${tax > 0 ? `<p><b>Tax:</b> $${parseFloat(tax).toFixed(2)}</p>` : ''}
-                <p><b>Total amount paid:</b> $${transactionAmount}</p>
+                <p><b>Total amount paid including shipping:</b> $${transactionAmount}</p>
                 <p>Your chocolates are being lovingly prepared and will ship within 4–6 days. You'll receive an email when your order is on its way.</p>
                 <p>I appreciate your support!</p>
                 <p>As a gift, you're invited to book a <b>free 60-minute yoga therapy session</b> with me. 
@@ -105,12 +78,7 @@ router.post("/orders", async (req, res) => {
                 <p><b>Name:</b> ${payerName}</p>
                 <p><b>Email:</b> ${payerEmail}</p>
                 <p><b>Order ID:</b> ${orderId}</p>
-                <p><b>Subtotal:</b> $${(subtotal * (1 - discount)).toFixed(2)}</p>
-                <p><b>Shipping:</b> $${shipping.toFixed(2)}</p>
-                ${tax > 0 ? `<p><b>Tax:</b> $${parseFloat(tax).toFixed(2)}</p>` : ''}
-                <p><b>Total Amount:</b> $${transactionAmount}</p>
-                ${shippingZip ? `<p><b>Shipping Zip:</b> ${shippingZip}</p>` : ''}
-                ${shippingState ? `<p><b>Shipping State:</b> ${shippingState}</p>` : ''}
+                <p><b>Total Amount:</b> ${transactionAmount}</p>
                 <p><b>Order details:</p>
                 <ul>
                     ${cartItems
