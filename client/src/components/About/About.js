@@ -236,6 +236,8 @@ function About() {
                             <strong>Date & Time:</strong> 01/01 at 11am-1pm
                             <br />
                             <strong>Location:</strong> <a href="https://www.yogarefugepdx.com/workshops-and-events" target="_blank" rel="noopener noreferrer">Yoga Refuge NW</a>, 210 NW 17th Ave #101, Portland, OR 97209
+                            <br />
+                            <strong>Pricing:</strong> $30-$45 sliding scale
                         </p>
                         <p>
                             A grounding New Year's Day practice blending gentle flow with restorative poses. We'll explore intention setting, seasonal well being inspired by Ayurveda, and reflections inspired by the Yoga Sutras.
@@ -334,6 +336,23 @@ function About() {
                                     </div>
                                     <div className="chakra-focus">
                                         <strong>Focus:</strong> Sacral (2nd) + Throat (5th) Chakras
+                                    </div>
+                                </div>
+
+                                <div className="workshop-date-card">
+                                    <div className="date-header">
+                                        <FaCalendarAlt className="date-icon" aria-hidden="true" />
+                                        <div className="date-info">
+                                            <div className="date-text">Spring 2026</div>
+                                            <div className="time-text">TBA</div>
+                                        </div>
+                                    </div>
+                                    <div className="location-text">
+                                        <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
+                                        <a href="/calendar" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop in Spring 2026 at The People's Yoga on NE Killingsworth">The People's Yoga, NE Killingsworth</a>
+                                    </div>
+                                    <div className="chakra-focus">
+                                        <strong>Pricing:</strong> $30-$45 sliding scale
                                     </div>
                                 </div>
                             </div>
