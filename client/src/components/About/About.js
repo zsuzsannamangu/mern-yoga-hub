@@ -298,7 +298,7 @@ function About() {
                                     </div>
                                     <div className="location-text">
                                         <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
-                                        <a href="/calendar" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop in Spring 2026 at The People's Yoga on NE Killingsworth">The People's Yoga, NE Killingsworth</a>
+                                        <a href="https://thepeoplesyoga.org/events-and-workshops/" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop in Spring 2026 at The People's Yoga on NE Killingsworth">The People's Yoga, NE Killingsworth</a>
                                     </div>
                                     <div className="chakra-focus">
                                         
