@@ -292,6 +292,23 @@ function About() {
                                     <div className="date-header">
                                         <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
+                                            <div className="date-text">Spring 2026</div>
+                                            <div className="time-text">TBA</div>
+                                        </div>
+                                    </div>
+                                    <div className="location-text">
+                                        <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
+                                        <a href="/calendar" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop in Spring 2026 at The People's Yoga on NE Killingsworth">The People's Yoga, NE Killingsworth</a>
+                                    </div>
+                                    <div className="chakra-focus">
+                                        <strong>Pricing:</strong> $30-$45 sliding scale
+                                    </div>
+                                </div>
+
+                                <div className="workshop-date-card">
+                                    <div className="date-header">
+                                        <FaCalendarAlt className="date-icon" aria-hidden="true" />
+                                        <div className="date-info">
                                             <div className="date-text">November 8, 2025</div>
                                             <div className="time-text">11:00 AM - 1:00 PM</div>
                                         </div>
@@ -336,23 +353,6 @@ function About() {
                                     </div>
                                     <div className="chakra-focus">
                                         <strong>Focus:</strong> Sacral (2nd) + Throat (5th) Chakras
-                                    </div>
-                                </div>
-
-                                <div className="workshop-date-card">
-                                    <div className="date-header">
-                                        <FaCalendarAlt className="date-icon" aria-hidden="true" />
-                                        <div className="date-info">
-                                            <div className="date-text">Spring 2026</div>
-                                            <div className="time-text">TBA</div>
-                                        </div>
-                                    </div>
-                                    <div className="location-text">
-                                        <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
-                                        <a href="/calendar" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop in Spring 2026 at The People's Yoga on NE Killingsworth">The People's Yoga, NE Killingsworth</a>
-                                    </div>
-                                    <div className="chakra-focus">
-                                        <strong>Pricing:</strong> $30-$45 sliding scale
                                     </div>
                                 </div>
                             </div>
