@@ -301,7 +301,7 @@ function About() {
                                         <a href="/calendar" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop in Spring 2026 at The People's Yoga on NE Killingsworth">The People's Yoga, NE Killingsworth</a>
                                     </div>
                                     <div className="chakra-focus">
-                                        <strong>Pricing:</strong> $30-$45 sliding scale
+                                        
                                     </div>
                                 </div>
 
