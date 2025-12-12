@@ -48,7 +48,7 @@ function YogaTherapy() {
         {
             id: 8,
             question: "How much are yoga therapy sessions?",
-            answer: "Private yoga therapy sessions are $10-$80/hr sliding scale through June 2026, while I'm in training. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked."
+            answer: "Yoga therapy sessions are offered on a sliding scale through June 2026, while I'm in training. Online sessions are $10-$80/hr, and in-person sessions in NW Portland are $20-$100/hr. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked."
         }
     ];
 
@@ -229,8 +229,12 @@ function YogaTherapy() {
                 <div className="info-category">
                     <motion.div className="info-item" variants={fadeInUp}>
                         <p>
-                            <strong>Yoga Therapy Sessions:</strong> $10-$80/hr sliding scale (offered until June 2026, while I'm in training).
+                            <strong>Yoga Therapy Sessions:</strong> Sliding scale pricing (offered until June 2026, while I'm in training).
                         </p>
+                        <ul className="custom-bullet-list">
+                            <li><strong>Online sessions:</strong> $10-$80/hr sliding scale</li>
+                            <li><strong>In-person sessions (NW Portland):</strong> $20-$100/hr sliding scale</li>
+                        </ul>
                         <p>
                             Your investment is a personal choice, aligning with your current financial circumstances. No questions asked.
                         </p>
@@ -239,7 +243,7 @@ function YogaTherapy() {
                             and support meaningful, lasting change in body, mind, and nervous system.
                         </p>
                         <p>
-                            Sessions are available in-person in Portland, Oregon, or online via Google Meet.
+                            Sessions are available in-person in NW Portland, Oregon, or online via Google Meet.
                         </p>
                         <p>
                             To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available sessions.
