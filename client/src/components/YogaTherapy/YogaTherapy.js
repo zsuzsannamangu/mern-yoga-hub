@@ -218,7 +218,7 @@ function YogaTherapy() {
 
             {/* Pricing Section */}
             <motion.div
-                className="yoga-therapy-info-section"
+                className="yoga-therapy-info-section pricing-booking-section"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

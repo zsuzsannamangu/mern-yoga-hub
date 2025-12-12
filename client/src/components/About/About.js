@@ -207,43 +207,6 @@ function About() {
                 </div>
             </div>
 
-            {/* Group Classes Section */}
-            <motion.div
-                className="about-info-section"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1 }}
-            >
-                <motion.h2 className="section-title" variants={fadeInUp}>Group Classes</motion.h2>
-                <div className="title-line"></div>
-                <div className="info-category">
-                    <motion.div className="info-item" variants={fadeInUp}>
-                        <p>
-                            I teach weekly group classes at various studios throughout Portland, offering a range of practices to meet you where you are.
-                        </p>
-                        <p>
-                            <strong>Hatha Yoga:</strong> A grounding practice that blends breath awareness with intentional movement, creating space for balance, strength, and inner stillness. Slower-paced than vinyasa, offering time to explore alignment and deepen into each pose.
-                        </p>
-                        <p>
-                            <strong>Vinyasa & Morning Flow:</strong> Flowing breath-based movement that builds strength, flexibility, and focus through creative sequences and mindful transitions. Perfect for cultivating presence and energy.
-                        </p>
-                        <p>
-                            <strong>Restorative Yoga:</strong> A deeply relaxing practice designed to soothe the nervous system and restore balance, using props to support the body in restful poses.
-                        </p>
-                        <p>
-                            <strong>Wheelchair & Adaptive Yoga:</strong> Practices tailored for wheelchair users, focusing on breathwork, gentle movement, and mindfulness.
-                        </p>
-                        <p>
-                            <strong>Postpartum Yoga:</strong> Supporting postpartum recovery through gentle movement, breathwork, and community. Pre-crawling babies welcome!
-                        </p>
-                        <p>
-                            View the complete schedule and sign up for classes on the <a href="/yoga?section=classDescriptions">Classes & Workshops page</a> or check the <a href="/calendar">calendar</a> for current offerings.
-                        </p>
-                    </motion.div>
-                </div>
-            </motion.div>
-
             {/* Private Yoga Section */}
             <motion.div
                 className="about-info-section"
