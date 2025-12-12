@@ -152,21 +152,6 @@ export default class Calendar extends Component {
         </div>
 
         <motion.div
-          className="calendar-top"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <div className="calendar-overlay">
-            <div className="calendar-overlay-text">
-              <h1>Practices</h1>
-              <p>Join me in these practices!</p>
-              <p>Let's move, breathe, and be present together.</p>
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div
           className="calendar-title"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
