@@ -100,16 +100,18 @@ function YogaTherapy() {
                             <div className="title-line"></div>
                             <p>
                                 Yoga therapy is a personalized, holistic approach that supports physical, emotional, and mental well-being. 
-                                It combines breath, movement, psychology, neurobiology, mindfulness, somatic practices and the ancient wisdom 
-                                of yoga to address specific concerns or conditions.
+                                It combines breath, movement, psychology, neurobiology, mindfulness, and somatic practices to address specific concerns or conditions.
                             </p>
                             <p>
-                                Unlike general yoga classes, yoga therapy sessions are tailored to your individual needs, creating space for 
+                                <strong>What makes yoga therapy different?</strong> Unlike general yoga classes, yoga therapy sessions are tailored to your individual needs, creating space for 
                                 healing, resilience, and greater self-awareness. Sessions are designed to meet you exactly where you are.
                             </p>
                             <p>
-                                Each session brings together mindful movement, guided breathwork, meditation, and nervous system support. 
+                                <strong>What to expect:</strong> Each session brings together mindful movement, guided breathwork, meditation, and nervous system support. 
                                 Practices are designed to be integrated into your daily life for sustainable wellness.
+                            </p>
+                            <p>
+                                To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available sessions.
                             </p>
                         </div>
                         <div className="yoga-therapy-info-image">
@@ -218,7 +220,7 @@ function YogaTherapy() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
             >
-                <motion.h2 className="section-title" variants={fadeInUp}>Pricing</motion.h2>
+                <motion.h2 className="section-title" variants={fadeInUp}>Pricing & Booking</motion.h2>
                 <div className="title-line"></div>
                 <div className="info-category">
                     <motion.div className="info-item" variants={fadeInUp}>
@@ -234,6 +236,9 @@ function YogaTherapy() {
                         </p>
                         <p>
                             Sessions are available in-person in Portland, Oregon, or online via Google Meet.
+                        </p>
+                        <p>
+                            To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available sessions.
                         </p>
                     </motion.div>
                 </div>

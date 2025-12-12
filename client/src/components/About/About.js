@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 //useEffect() is a React Hook that lets you perform side effects in function components, instead of class components. useRef is a React Hook that allows you to create a mutable reference to a DOM element.
 import { useLocation } from 'react-router-dom'; //useLocation is a hook provided by React Router that gives access to the current URL's location object.
 import './About.scss';
-import Offerings from './Offerings';
 import '../../App.scss';
 import { motion } from 'framer-motion';
 import Slideshow from './Slideshow';
@@ -109,15 +108,6 @@ function About() {
                 </div>
             </motion.div>
 
-            <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1 }}
-            >
-                <Offerings />
-            </motion.div>
-
             <div className="three-sections-about-yoga">
                 {/* MY APPROACH SECTION WITH IMAGE */}
                 <div className="about-info-section">
@@ -213,6 +203,80 @@ function About() {
                 </div>
             </div>
 
+            {/* Group Classes Section */}
+            <motion.div
+                className="about-info-section"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <motion.h2 className="section-title" variants={fadeInUp}>Group Classes</motion.h2>
+                <div className="title-line"></div>
+                <div className="info-category">
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <p>
+                            I teach weekly group classes at various studios throughout Portland, offering a range of practices to meet you where you are.
+                        </p>
+                        <p>
+                            <strong>Hatha Yoga:</strong> A grounding practice that blends breath awareness with intentional movement, creating space for balance, strength, and inner stillness. Slower-paced than vinyasa, offering time to explore alignment and deepen into each pose.
+                        </p>
+                        <p>
+                            <strong>Vinyasa & Morning Flow:</strong> Flowing breath-based movement that builds strength, flexibility, and focus through creative sequences and mindful transitions. Perfect for cultivating presence and energy.
+                        </p>
+                        <p>
+                            <strong>Restorative Yoga:</strong> A deeply relaxing practice designed to soothe the nervous system and restore balance, using props to support the body in restful poses.
+                        </p>
+                        <p>
+                            <strong>Wheelchair & Adaptive Yoga:</strong> Practices tailored for wheelchair users, focusing on breathwork, gentle movement, and mindfulness.
+                        </p>
+                        <p>
+                            <strong>Postpartum Yoga:</strong> Supporting postpartum recovery through gentle movement, breathwork, and community. Pre-crawling babies welcome!
+                        </p>
+                        <p>
+                            View the complete schedule and sign up for classes on the <a href="/yoga?section=classDescriptions">Classes & Workshops page</a> or check the <a href="/calendar">calendar</a> for current offerings.
+                        </p>
+                    </motion.div>
+                </div>
+            </motion.div>
+
+            {/* Private Yoga Section */}
+            <motion.div
+                className="about-info-section"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <motion.h2 className="section-title" variants={fadeInUp}>Private Yoga Sessions</motion.h2>
+                <div className="title-line"></div>
+                <div className="info-category">
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <p>
+                            <strong>Individual Yoga Sessions:</strong> Personalized one-on-one sessions designed to meet your unique needs. These sessions offer tailored practices including physical postures, breathwork, meditation, and yoga philosophy.
+                        </p>
+                        <p>
+                            Private sessions are ideal for:
+                        </p>
+                        <ul className="custom-bullet-list">
+                            <li>Building a personal practice tailored to your body and goals</li>
+                            <li>Working with specific physical conditions or injuries</li>
+                            <li>Deepening your understanding of breathwork and meditation</li>
+                            <li>Exploring yoga philosophy and its application to daily life</li>
+                        </ul>
+                        <p>
+                            <strong>Pricing:</strong> $80-$110/hr sliding scale. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked.
+                        </p>
+                        <p>
+                            Sessions are available in-person in Portland, Oregon, or online via Google Meet.
+                        </p>
+                        <p>
+                            To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available time slots.
+                        </p>
+                    </motion.div>
+                </div>
+            </motion.div>
+
             {/* Class Descriptions Section */}
             <motion.div
                 className="about-info-section"
@@ -242,9 +306,11 @@ function About() {
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Awaken the Senses: Restorative Yoga, Handcrafted Chocolate and an Exploration of the Chakras</h4>
                         <p>
-                            An immersive couple hours of restorative yoga, meditation, and sensory exploration.
+                            An immersive experience combining restorative yoga, meditation, and sense awareness. This workshop brings together yoga and handmade chocolate to awaken presence, deepen awareness, and open the senses.
                         </p>
-
+                        <p>
+                            As both a chocolatier and yoga teacher, I bring these worlds together with intention. The chocolates we taste are created specifically to reflect the body's energetic centers, the chakras, using organic cacao infused with edible flowers, fruits, and spices.
+                        </p>
                         <p>
                             This workshop brings together yoga and handmade chocolate to awaken presence, deepen awareness, and open the senses.
                             Yoga invites us to slow down and reconnect with the body. Chocolate, when made with attention and enjoyed mindfully,
