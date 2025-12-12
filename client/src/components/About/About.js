@@ -149,15 +149,19 @@ function About() {
                         transition={{ duration: 1 }}
                     >
                         <div className="about-info-text">
-                            <motion.h2 className="section-title" variants={fadeInUp}>My sessions are</motion.h2>
+                            <motion.h2 className="section-title" variants={fadeInUp}>My Classes & Sessions</motion.h2>
                             <div className="title-line"></div>
+                            <p>
+                                Whether you're joining a group class or booking a private session, my teaching style emphasizes:
+                            </p>
                             <ul className="custom-bullet-list">
-                                <li>Trauma-informed and neurobiologically grounded</li>
-                                <li>Adaptive and accessible: chair and gentle floor options</li>
-                                <li>Rooted in yoga therapy principles and somatic movement</li>
-                                <li>Small-group or one-on-one settings for deeper connection</li>
+                                <li>Trauma-informed and accessible practices</li>
+                                <li>Adaptive options: chair and gentle floor variations</li>
+                                <li>Breath-centered movement and mindfulness</li>
+                                <li>Small-group classes and one-on-one private sessions</li>
                                 <li>Inclusive of all bodies, abilities, and backgrounds</li>
-                                <li>Practices designed to support the nervous system and emotional health</li>
+                                <li>Support for nervous system regulation and emotional well-being</li>
+                                <li>Classes that welcome beginners and challenge experienced practitioners</li>
                             </ul>
                         </div>
                         <div className="about-info-image">
@@ -176,23 +180,23 @@ function About() {
                     >
                         <div className="about-info-text">
                             <motion.h2 className="section-title" variants={fadeInUp}>
-                                Who I Work With
+                                Who Can Join My Classes
                             </motion.h2>
                             <div className="title-line"></div>
                             <p>
-                                I offer group classes, workshops, and private yoga sessions.
+                                I offer group classes, workshops, and private yoga sessions throughout Portland.
                             </p>
                             <p>
                                 All classes and sessions are open to all, regardless of experience, background, or physical ability.
-                                I always strive to create a supportive, welcoming environment for everyone. My classes and sessions welcome:
+                                I always strive to create a supportive, welcoming environment for everyone. My classes welcome:
                             </p>
                             <ul className="custom-bullet-list">
-                                <li>All levels - beginners to advanced practitioners</li>
+                                <li>Complete beginners and experienced practitioners</li>
                                 <li>All bodies - adaptive and accessible options available</li>
                                 <li>Wheelchair users and those with limited mobility</li>
                                 <li>People seeking gentle, restorative practices</li>
                                 <li>Those looking for more dynamic, flowing movement</li>
-                                <li>Everyone!</li>
+                                <li>Anyone wanting to explore yoga in a supportive community</li>
                             </ul>
                         </div>
 

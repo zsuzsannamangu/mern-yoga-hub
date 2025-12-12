@@ -142,7 +142,7 @@ function YogaTherapy() {
                             </p>
                         </div>
                         <div className="yoga-therapy-info-image">
-                            <img src="/images/yoga/Zsuzsi_Home_4.jpg" alt="Zsuzsanna doing yoga next to river" />
+                            <img src="/images/yoga/yoga5.jpg" alt="Yoga therapy practice" />
                         </div>
                     </motion.div>
                 </div>
@@ -157,19 +157,23 @@ function YogaTherapy() {
                         transition={{ duration: 1 }}
                     >
                         <div className="yoga-therapy-info-text">
-                            <motion.h2 className="section-title" variants={fadeInUp}>My Sessions Are</motion.h2>
+                            <motion.h2 className="section-title" variants={fadeInUp}>My Yoga Therapy Sessions</motion.h2>
                             <div className="title-line"></div>
+                            <p>
+                                Yoga therapy sessions are personalized, one-on-one experiences designed to support your unique healing journey.
+                            </p>
                             <ul className="custom-bullet-list">
-                                <li>Trauma-informed and neurobiologically grounded</li>
+                                <li>Trauma-informed and neurobiologically grounded approaches</li>
                                 <li>Adaptive and accessible: chair and gentle floor options</li>
                                 <li>Rooted in yoga therapy principles and somatic movement</li>
-                                <li>One-on-one settings for deeper connection</li>
+                                <li>One-on-one settings for deeper connection and personalized attention</li>
                                 <li>Inclusive of all bodies, abilities, and backgrounds</li>
                                 <li>Practices designed to support the nervous system and emotional health</li>
+                                <li>Integration of practices into daily life for sustainable wellness</li>
                             </ul>
                         </div>
                         <div className="yoga-therapy-info-image">
-                            <img src="/images/yoga/Zsuzsi_Home_111.jpg" alt="Zsuzsanna doing extended side angle pose with full bind next to the river" />
+                            <img src="/images/yoga/Zsuzsi_About_2.jpg" alt="Yoga therapy session" />
                         </div>
                     </motion.div>
                 </div>
@@ -185,11 +189,11 @@ function YogaTherapy() {
                     >
                         <div className="yoga-therapy-info-text">
                             <motion.h2 className="section-title" variants={fadeInUp}>
-                                Who I Work With
+                                Who I Work With in Yoga Therapy
                             </motion.h2>
                             <div className="title-line"></div>
                             <p>
-                                I offer one-on-one yoga therapy sessions.
+                                I offer one-on-one yoga therapy sessions tailored to your specific needs and goals.
                             </p>
                             <p>
                                 These sessions are open to all, regardless of experience, background, or physical ability.
@@ -201,12 +205,12 @@ function YogaTherapy() {
                                 <li>Wheelchair users and those with spinal cord injuries</li>
                                 <li>Stay-at-home caregivers navigating identity shifts, overwhelm, and emotional labor</li>
                                 <li>Immigrants and those navigating cultural displacement or loss</li>
-                                <li>Everyone!</li>
+                                <li>Anyone seeking personalized support for physical, emotional, or mental well-being</li>
                             </ul>
                         </div>
 
                         <div className="yoga-therapy-info-image">
-                            <img src="/images/yoga/Zsuzsi_chair.jpg" alt="Zsuzsanna doing chair yoga" />
+                            <img src="/images/yoga/Zsuzsi_yoga_34.jpg" alt="Yoga therapy practice" />
                         </div>
                     </motion.div>
                 </div>
