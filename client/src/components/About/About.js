@@ -14,12 +14,12 @@ function About() {
     const classDescriptionsRef = useRef(null); // Reference for the "Class Descriptions" section to enable scrolling.
     const [openFAQ, setOpenFAQ] = useState(null); // State for managing which FAQ item is open
 
-    // FAQ data
+    // FAQ data focused on general yoga classes
     const faqData = [
         {
             id: 1,
-            question: "Do I need to have yoga experience to do yoga therapy?",
-            answer: "Not at all. Sessions are designed to meet you exactly where you are."
+            question: "Do I need yoga experience to attend classes?",
+            answer: "Not at all! All classes are open to all levels, including complete beginners. I offer modifications and options for every pose."
         },
         {
             id: 2,
@@ -28,33 +28,28 @@ function About() {
         },
         {
             id: 3,
-            question: "What is yoga therapy?",
-            answer: "Yoga therapy is a personalized, holistic approach that supports physical, emotional, and mental well-being. It combines breath, movement, psychology, neurobiology, mindfulness, somatic practices and the ancient wisdom of yoga to address specific concerns or conditions. Sessions are tailored to the individual, creating space for healing, resilience, and greater self-awareness."
+            question: "What types of classes do you offer?",
+            answer: "I offer a variety of classes including Hatha Yoga, Vinyasa Flow, Slow Flow, Restorative Yoga, Postpartum Yoga, and Wheelchair & Adaptive Yoga. I also teach workshops combining yoga with chocolate tasting and chakra exploration."
         },
         {
             id: 4,
-            question: "Are sessions in-person or online?",
-            answer: "I offer both. You're welcome to join in person in Portland, Oregon, or online via Google Meet. If you're local, I recommend in-person sessions when possible for deeper support."
+            question: "Are classes in-person or online?",
+            answer: "Most group classes are in-person at various studios throughout Portland, Oregon. Some classes are also available via livestream. Check the class schedule for details."
         },
         {
             id: 5,
-            question: "Do you offer hands-on assists or touch during in-person sessions?",
-            answer: "Yes, only with consent. I offer gentle, intentional touch and hands-on support when appropriate and always with your clear permission. Touch can be a beautiful tool for grounding, connection, and transformation."
+            question: "How much are private yoga sessions?",
+            answer: "Private yoga sessions are $80-$110/hr sliding scale. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked."
         },
         {
             id: 6,
-            question: "What props do I need for online sessions?",
-            answer: "If you have yoga props, great! But you can easily use everyday items too: a stack of books for blocks, a firm pillow for a bolster, a belt as a strap, and any cozy blanket you have on hand. I always offer modifications so you can make the most of what you have."
+            question: "What props do I need for classes?",
+            answer: "Most studios provide props. If you're practicing at home, you can use everyday items: a stack of books for blocks, a firm pillow for a bolster, a belt as a strap, and any cozy blanket. I always offer modifications so you can make the most of what you have."
         },
         {
             id: 7,
-            question: "Are yoga therapy sessions covered by insurance?",
-            answer: "Yoga therapy may be reimbursable through HSA or FSA accounts if recommended by a licensed healthcare provider. Please check with your provider to confirm eligibility."
-        },
-        {
-            id: 8,
-            question: "How much are individual sessions?",
-            answer: "Private yoga therapy sessions are $10-$80 sliding scale through June 2026, while I'm in training. Individual yoga sessions are $80-$110 sliding scale."
+            question: "Do you offer yoga therapy?",
+            answer: "Yes! I offer yoga therapy sessions which are different from general yoga classes. Yoga therapy is a personalized, holistic approach tailored to individual needs. <a href='/yoga-therapy'>Learn more about yoga therapy here</a>."
         }
     ];
 
@@ -83,8 +78,8 @@ function About() {
     return (
         <div className='about-page'>
             <Helmet>
-                <title>Yoga with Zsuzsanna | Accessible, Therapeutic, Trauma-Informed Yoga</title>
-                <meta name="description" content="Explore yoga therapy and accessible, trauma-informed yoga with Zsuzsanna, offering slow flow, restorative, chair, and wheelchair yoga in Portland and online." />
+                <title>Yoga Classes with Zsuzsanna | Group Classes, Workshops & Private Sessions</title>
+                <meta name="description" content="Explore group yoga classes, workshops, and private sessions with Zsuzsanna, offering slow flow, restorative, chair, and wheelchair yoga in Portland and online." />
                 <link rel="canonical" href="https://www.yogaandchocolate.com/yoga" />
             </Helmet>
 
@@ -108,8 +103,8 @@ function About() {
             >
                 <div className="about-overlay">
                     <div className="about-overlay-text">
-                        <h1>Yoga with Zsuzsanna</h1>
-                        <p>I'm Zsuzsanna, a yoga teacher and yoga therapist, here to support you in finding alignment between body and mind.</p>
+                        <h1>Yoga Classes & Workshops</h1>
+                        <p>I'm Zsuzsanna, a yoga teacher offering group classes, workshops, and private sessions to support you in finding alignment between body and mind.</p>
                     </div>
                 </div>
             </motion.div>
@@ -137,16 +132,16 @@ function About() {
                             <motion.h2 className="section-title" variants={fadeInUp}>My approach</motion.h2>
                             <div className="title-line"></div>
                             <p>
-                                I offer weekly group classes and private 1:1 sessions in both general yoga and yoga therapy.
+                                I offer weekly group classes, workshops, and private 1:1 yoga sessions.
                                 Group classes follow a consistent theme and are open to all levels.
                                 Private sessions are tailored to your personal needs: physical, emotional, or spiritual.
                             </p>
                             <p>
                                 My approach to yoga is rooted in presence and compassion.
-                                I offer trauma-informed and adaptive practices that meet you where you are. As an aspiring yoga therapist,
-                                I combine breath science, somatic awareness, and yoga psychology to support nervous system regulation, emotional resilience, and healing.
+                                I offer trauma-informed and adaptive practices that meet you where you are.
+                                I combine breath science, somatic awareness, and yoga philosophy to support nervous system regulation, emotional resilience, and well-being.
                             </p>
-                            <p>Sessions are about discovering what it means to be in your body, right now, with curiosity and kindness.</p>
+                            <p>Classes and sessions are about discovering what it means to be in your body, right now, with curiosity and kindness.</p>
                         </div>
                         <div className="about-info-image">
                             <img src="/images/yoga/Zsuzsi_Home_4.jpg" alt="Zsuzsanna doing yoga next to river" />
@@ -195,18 +190,18 @@ function About() {
                             </motion.h2>
                             <div className="title-line"></div>
                             <p>
-                                I offer one-on-one sessions in yoga and yoga therapy.
+                                I offer group classes, workshops, and private yoga sessions.
                             </p>
                             <p>
-                                These sessions are open to all, regardless of experience, background, or physical ability.
-                                I always strive to create a supportive, welcoming environment for everyone. While all are welcome, I specialize in supporting:
+                                All classes and sessions are open to all, regardless of experience, background, or physical ability.
+                                I always strive to create a supportive, welcoming environment for everyone. My classes and sessions welcome:
                             </p>
                             <ul className="custom-bullet-list">
-                                <li>Teens and adults in addiction recovery</li>
-                                <li>People navigating postpartum</li>
-                                <li>Wheelchair users and those with spinal cord injuries</li>
-                                <li>Stay-at-home caregivers navigating identity shifts, overwhelm, and emotional labor</li>
-                                <li>Immigrants and those navigating cultural displacement or loss</li>
+                                <li>All levels - beginners to advanced practitioners</li>
+                                <li>All bodies - adaptive and accessible options available</li>
+                                <li>Wheelchair users and those with limited mobility</li>
+                                <li>People seeking gentle, restorative practices</li>
+                                <li>Those looking for more dynamic, flowing movement</li>
                                 <li>Everyone!</li>
                             </ul>
                         </div>
@@ -468,7 +463,7 @@ function About() {
                                 transition={{ duration: 0.3, ease: 'easeInOut' }}
                             >
                                 <div className="faq-answer-content">
-                                    <p>{faq.answer}</p>
+                                    <p dangerouslySetInnerHTML={{ __html: faq.answer }}></p>
                                 </div>
                             </motion.div>
                         </motion.div>
@@ -489,14 +484,7 @@ function About() {
                 <div className="info-category">
                     <motion.h3 variants={fadeInUp}>Core Yoga Teacher Trainings</motion.h3>
                     <div className="info-item">
-                        <h4>800hr Integrative Yoga Therapy Training</h4>
-                        <h4>Accredited with IAYT</h4>
-                        <p><em><a href="https://www.sarahjoyyoga.com/800-hour-yoga-therapy-training-curriculum-dates.html" target='_blank' rel="noopener noreferrer">Institute for Living Yoga, Portland OR</a></em><br />
-                            June 2025 - exp. June 2026</p>
-                        <p>The Science of the Breath and the Art of Yoga Therapy; Internal Family Systems Model;<br />
-                            Chronic Pain and Brain-Based Approaches to Yoga Therapy; Yoga and Expressive Arts Therapy;<br />
-                            Endocrine, Digestive and Immune Health; Attachment Theory and Implicit Memory in Yoga Therapy;<br />
-                            Yoga for Cancer; Yoga, Biofeedback + Mind-Body Medicine; Kriya Yoga Model for Addiction Recovery.</p>
+                        <p><em>For information about my yoga therapy training, please visit the <a href="/yoga-therapy">Yoga Therapy page</a>.</em></p>
                     </div>
                     <div className="info-item">
                         <h4>300hr Advanced Yoga Teacher Training</h4>
@@ -575,6 +563,9 @@ function About() {
                     </a>
                     <a href="/calendar" className="cta-button">
                         Sign up for group classes
+                    </a>
+                    <a href="/yoga-therapy" className="cta-button outline">
+                        Learn about Yoga Therapy
                     </a>
                 </div>
             </motion.div>

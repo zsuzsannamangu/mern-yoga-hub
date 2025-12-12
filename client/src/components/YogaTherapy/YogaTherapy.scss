@@ -1,0 +1,879 @@
+@use '../../styles/variables' as *;
+
+.yoga-therapy-page {
+  width: 100%;
+  max-width: 100%; // Remove any restrictions
+  margin: 0 auto; // Ensure it's centered
+}
+
+/* Workshop Announcement Bar */
+.workshop-announcement {
+  background: $gradient-purple;
+  color: white;
+  padding: 12px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shimmer 3s infinite;
+  }
+  
+  .announcement-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+  
+  .announcement-text {
+    font-size: 16px;
+    font-weight: 500;
+    
+    strong {
+      font-weight: 700;
+    }
+    
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
+  
+  .announcement-link {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-1px);
+      text-decoration: none;
+      color: white;
+    }
+  }
+}
+
+/* New Year's Announcement Bar - Different Color */
+.newyear-announcement {
+  background: linear-gradient(135deg, #6B9FD0 0%, #D88FB0 50%, #A584C8 100%);
+  color: white;
+  
+  .announcement-link {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: white;
+    }
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.yoga-therapy-page {
+
+  .yoga-therapy-flex-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    gap: 2rem;
+
+    &.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .yoga-therapy-info-text {
+      flex: 1 1 50%;
+
+      p {
+        text-align: left;
+        hyphens: auto;
+        word-spacing: normal;
+        text-rendering: optimizeLegibility;
+      }
+    }
+
+    .yoga-therapy-info-image {
+      flex: 1 1 45%;
+
+      img {
+        width: 100%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  .three-sections-yoga-therapy {
+    background: $gradient-soft;
+    margin-bottom: 40px;
+    margin-top: 30px;
+  }
+
+  .yoga-therapy-top {
+    margin: 0; // Ensure no margin
+    padding: 0; // Ensure no padding
+    position: relative;
+    background-image: url('/../public/images/yoga/Zsuzsi_Yogahome3.jpg');
+    background-size: cover; // Fill the container
+    background-repeat: no-repeat;
+    background-position: center 40%; // Center the image
+    height: 100vh; // Ensure it spans the full viewport height
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: 768px) {
+      background-position: center center;
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      background-size: cover;
+      background-position: center center;
+      width: 100vh;
+    }
+
+    @media (width: 1024px) and (height: 600px) {
+      background-size: cover;
+      background-position: center center;
+      width: 200vh;
+      height: 80vh;
+    }
+  }
+
+  .yoga-therapy-overlay {
+    background-color: rgba(255, 255, 255, 0.65);
+    padding: 25px;
+    border-radius: 20px;
+    width: 75%;
+    max-width: 550px;
+    text-align: center;
+    color: $text-color;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    z-index: 2;
+    transition: all 0.3s ease;
+    animation: gentleFloat 6s ease-in-out infinite;
+
+    &:hover {
+      transform: translate(-50%, -50%) scale(1.02);
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.12);
+    }
+
+    @media (min-width: 768px) {
+      width: 65%;
+      max-width: 600px;
+      padding: 35px;
+    }
+
+    @media (min-width: 1024px) {
+      width: 55%;
+      max-width: 650px;
+      padding: 40px;
+    }
+
+    @media (max-width: 768px) {
+      width: 80%;
+      padding: 20px;
+      top: 50%;
+      border-radius: 15px;
+    }
+
+    @media (max-width: 480px) {
+      width: 85%;
+      padding: 18px;
+      top: 50%;
+      border-radius: 12px;
+    }
+  }
+
+  .yoga-therapy-overlay-text h1 {
+    font-size: 2rem;
+    font-family: $font-elegant;
+    font-weight: 300;
+    color: $text-color;
+    margin: 0 0 1.2rem 0;
+    text-align: center;
+    width: 100%;
+    font-style: italic;
+    letter-spacing: 0.5px;
+
+    @media (min-width: 768px) {
+      font-size: 2.4rem;
+    }
+
+    @media (min-width: 1024px) {
+      font-size: 2.8rem;
+    }
+  }
+
+  .yoga-therapy-overlay-text p {
+    margin: 0 0 1.2rem;
+    font-size: 1.1rem;
+    font-family: $font-secondary;
+    line-height: 1.7;
+    color: $text-color;
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+
+    @media (min-width: 768px) {
+      font-size: 1.2rem;
+    }
+
+    @media (min-width: 1024px) {
+      font-size: 1.3rem;
+    }
+  }
+
+
+  @keyframes gentleFloat {
+    0%, 100% {
+      transform: translate(-50%, -50%) translateY(0px);
+    }
+    50% {
+      transform: translate(-50%, -50%) translateY(-8px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .yoga-therapy-overlay {
+      top: 50%;
+      /* Center the overlay vertically */
+      left: 50%;
+      /* Center the overlay horizontally */
+      transform: translate(-50%, -50%);
+      /* Center the overlay vertically */
+      position: absolute;
+      /* Ensure positioning is relative to the parent */
+      width: 80%;
+      /* Adjust width to fit smaller screens */
+    }
+  }
+
+  .custom-bullet-list {
+    list-style: none;
+    padding-left: 1.5rem;
+    margin-top: 1rem;
+
+    li {
+      position: relative;
+      padding-left: 1.8rem;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+
+      &::before {
+        content: '✔️';
+        position: absolute;
+        left: 0;
+        top: 0.1rem;
+        font-size: 1rem;
+        color: $accent-color;
+      }
+    }
+  }
+
+  .faq {
+    h4 {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      color: $tertiary-text-color;
+
+      @media (min-width: 768px) {
+        font-size: 1.25rem;
+      }
+    }
+
+    p {
+      font-size: 0.95rem;
+      margin-top: 0.4rem;
+      color: $text-color;
+      line-height: 1.7;
+      text-align: left;
+      hyphens: auto;
+      word-spacing: normal;
+      text-rendering: optimizeLegibility;
+
+      @media (min-width: 768px) {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  a {
+    color: $accent-color;
+    text-decoration: underline;
+
+    &:hover {
+      color: darken($accent-color, 10%);
+    }
+  }
+
+  .yoga-therapy-info-section {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px; // Default padding for smaller screens
+    font-family: $font-main;
+    color: $text-color;
+    max-width: 1200px;
+
+    @media (min-width: 344px) and (max-width: 768px) {
+      max-width: 800px;
+      padding: 40px;
+      width: 100%;
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      max-width: 1200px;
+      padding: 20px;
+      margin-left: 50px;
+      margin-right: 50px;
+    }
+
+    .cta-links {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: left;
+      gap: 1rem;
+
+      .cta-button {
+        padding: 0.75rem 1.25rem;
+        font-size: 1rem;
+        font-weight: 500;
+        font-family: $font-main;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        max-width: 280px;
+        width: 100%;
+        margin-bottom: 3rem;
+
+        // Primary button
+        &.cta-button {
+          background-color: $primary-button-color;
+          color: $button-text-color;
+          border: none;
+
+          &:hover {
+            background-color: $primary-button-hover-color;
+          }
+        }
+
+        // Outline button
+        &.outline {
+          background-color: transparent;
+          color: $primary-button-color;
+          border: 2px solid $primary-button-color;
+
+          &:hover {
+            background-color: $primary-button-color;
+            color: white;
+          }
+        }
+
+        @media (min-width: $breakpoint-md) {
+          width: auto;
+          flex: 1 1 auto;
+        }
+      }
+    }
+
+
+    h3 {
+      font-size: 1.25rem; // Adjust for smaller screens
+      text-transform: uppercase;
+      color: $main-title-color;
+      margin-bottom: 25px;
+
+      @media (min-width: 768px) {
+        font-size: 1.5rem;
+      }
+    }
+
+    .info-category {
+      margin-bottom: 15px;
+
+      // Subtitle for Regular Classes section
+      .classes-subtitle {
+        font-size: 1.3rem;
+        color: $main-title-color;
+        margin-top: 50px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        @media (min-width: 768px) {
+          font-size: 1.5rem;
+        }
+      }
+
+      .info-item {
+        margin-bottom: 35px;
+
+        h4 {
+          font-size: 1.1rem; // Adjust for small screens
+          font-weight: bold;
+          margin: 5px 0 8px 0;
+          color: $tertiary-text-color;
+
+          @media (min-width: 768px) {
+            font-size: 1.25rem;
+          }
+          
+          a {
+            color: $tertiary-text-color;
+            text-decoration: none;
+            cursor: pointer;
+            
+            &:hover {
+              color: $tertiary-text-color;
+              text-decoration: none;
+            }
+          }
+        }
+
+        // Class schedule subtitle styling
+        .class-schedule {
+          font-size: 0.95rem;
+          font-style: italic;
+          color: $text-color;
+          margin: 0 0 15px 0;
+          font-weight: 500;
+
+          @media (min-width: 768px) {
+            font-size: 1rem;
+          }
+          
+          a {
+            color: $text-color;
+            text-decoration: none;
+            
+            &:hover {
+              color: $purple-secondary;
+              text-decoration: underline;
+            }
+          }
+        }
+
+        p {
+          font-size: 0.9rem; // Default for small screens
+          line-height: 1.5;
+          margin: 5px 0;
+
+          @media (min-width: 768px) {
+            font-size: 1rem;
+          }
+
+          em {
+            font-style: italic;
+            color: $secondary-text-color;
+          }
+
+          strong {
+            font-weight: bold;
+          }
+
+          a {
+            text-decoration: none;
+            color: $purple-primary;
+            font-weight: 500;
+
+            &:hover {
+              color: $purple-secondary;
+              text-decoration: underline;
+            }
+          }
+        }
+
+        // Additional classes note styling
+        &.additional-classes-note {
+          margin-top: 40px;
+          padding: 20px;
+          background: linear-gradient(135deg, rgba(139, 75, 140, 0.05) 0%, rgba(139, 75, 140, 0.02) 100%);
+          border-left: 4px solid $purple-primary;
+          border-radius: 4px;
+
+          p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+
+            @media (min-width: 768px) {
+              font-size: 1rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Chakra Chocolate Info Styling */
+.chakra-chocolate-info {
+  margin: 30px 0;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+
+  .chakra-image {
+    flex: 0 0 200px;
+    margin-top: 20px; // Align with the start of the chakra text
+    
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .chakra-list {
+    flex: 1;
+    
+    p {
+      margin: 20px 0; // Increased spacing between paragraphs
+      line-height: 1.7; // Slightly increased line height for better readability
+      
+      strong {
+        color: $primary-button-color;
+        font-weight: 600;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+    
+    .chakra-image {
+      flex: none;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+  }
+}
+
+/* Workshop Dates Section */
+.workshop-dates-section {
+  margin: 30px 0 25px 0;
+  
+  h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $tertiary-text-color;
+    margin-bottom: 18px;
+    text-align: left;
+    
+    @media (min-width: $breakpoint-md) {
+      font-size: 1.1rem;
+    }
+  }
+  
+  .workshop-dates-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+    
+    // Tablet - 2 columns
+    @media (min-width: $breakpoint-md) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+    
+    // Desktop - 4 columns in one row
+    @media (min-width: $breakpoint-lg) {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    
+    // Large desktop - ensure cards don't get too wide
+    @media (min-width: 1400px) {
+      max-width: 1200px;
+    }
+  }
+  
+  .workshop-date-card {
+    background: linear-gradient(135deg, rgba(139, 75, 140, 0.03) 0%, rgba(139, 75, 140, 0.01) 100%);
+    border: 1.5px solid rgba(139, 75, 140, 0.2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(139, 75, 140, 0.15);
+      border-color: rgba(139, 75, 140, 0.35);
+    }
+    
+    .date-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      
+      .date-icon {
+        font-size: 16px;
+        color: $purple-primary;
+        flex-shrink: 0;
+      }
+      
+      .date-info {
+        flex: 1;
+        
+        .date-text {
+          font-size: 0.9rem;
+          font-weight: 600;
+          color: $tertiary-text-color;
+          margin-bottom: 2px;
+          
+          @media (min-width: $breakpoint-md) {
+            font-size: 0.95rem;
+          }
+        }
+        
+        .time-text {
+          font-size: 0.75rem;
+          color: $secondary-text-color;
+          font-weight: 400;
+          
+          @media (min-width: $breakpoint-md) {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+    
+    .location-text {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.85rem;
+      color: $text-color;
+      margin-bottom: 6px;
+      
+      @media (min-width: $breakpoint-md) {
+        font-size: 0.9rem;
+      }
+      
+      .register-icon {
+        font-size: 12px;
+        color: $purple-primary;
+        flex-shrink: 0;
+      }
+      
+      a {
+        color: $purple-primary;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        
+        &:hover {
+          color: $purple-secondary;
+          text-decoration: underline;
+        }
+      }
+    }
+    
+    .chakra-focus {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(139, 75, 140, 0.15);
+      font-size: 0.75rem;
+      color: $secondary-text-color;
+      line-height: 1.3;
+      
+      @media (min-width: $breakpoint-md) {
+        font-size: 0.8rem;
+        line-height: 1.4;
+      }
+      
+      strong {
+        color: $purple-primary;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+/* Wheelchair Yoga Image Styling */
+.wheelchair-yoga-content {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .wheelchair-yoga-text {
+    flex: 1;
+  }
+
+  .wheelchair-yoga-image {
+    flex-shrink: 0;
+    
+    img {
+      width: 120px;
+      height: auto;
+      border-radius: 8px;
+
+      &:hover {
+        transition: opacity 0.3s ease;
+        opacity: 0.8;
+      }
+
+      @media (max-width: 768px) {
+        width: 100px;
+        align-self: center;
+      }
+    }
+  }
+}
+
+/* FAQ Accordion Styling */
+.faq-accordion {
+  max-width: 800px;
+  margin: 0;
+  text-align: left;
+}
+
+.faq-item {
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+  background: $background-color;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.faq-question {
+  width: 100%;
+  padding: 20px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: $text-color;
+  transition: all 0.3s ease;
+  outline: none;
+
+  &:hover {
+    background: rgba(139, 75, 140, 0.05);
+  }
+
+  &:focus {
+    background: rgba(139, 75, 140, 0.1);
+    outline: 2px solid $purple-primary;
+    outline-offset: -2px;
+  }
+
+  &.open {
+    background: rgba(139, 75, 140, 0.08);
+    color: $text-color;
+  }
+
+  span {
+    flex: 1;
+    padding-right: 15px;
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  .faq-icon {
+    font-size: 14px;
+    color: $purple-primary;
+    transition: transform 0.3s ease;
+  }
+
+  &.open .faq-icon {
+    transform: rotate(180deg);
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1.1rem;
+    padding: 25px;
+  }
+}
+
+.faq-answer {
+  overflow: hidden;
+  
+  .faq-answer-content {
+    padding: 15px 20px 20px 20px;
+    
+    @media (min-width: 768px) {
+      padding: 20px 25px 25px 25px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: $secondary-text-color;
+      text-align: left;
+      hyphens: auto;
+      word-spacing: normal;
+      text-rendering: optimizeLegibility;
+
+      @media (min-width: 768px) {
+        font-size: 1rem;
+      }
+    }
+  }
+}

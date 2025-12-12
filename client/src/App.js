@@ -14,6 +14,7 @@ import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
 import Contact from './components/Contact/Contact';
 import About from './components/About/About';
+import YogaTherapy from './components/YogaTherapy/YogaTherapy';
 import Calendar from './components/Calendar/Calendar';
 import Chocolates from './components/Chocolates/Chocolates';
 import Register from './components/User/UserRegister';
@@ -77,6 +78,7 @@ function App() {
                 {/* Public Routes */}
                 <Route path="/" element={<Home showAlert={showAlert} />} /> {/* Passes the reusable showAlert function as a prop to the page for triggering alerts  */}
                 <Route path="/yoga" element={<About />} />
+                <Route path="/yoga-therapy" element={<YogaTherapy />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/chocolates" element={<Chocolates showAlert={showAlert} />} />
                 <Route path="/contact" element={<Contact showAlert={showAlert} />} />
