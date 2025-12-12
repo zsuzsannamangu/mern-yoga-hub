@@ -111,7 +111,7 @@ function YogaTherapy() {
                                 Practices are designed to be integrated into your daily life for sustainable wellness.
                             </p>
                             <p>
-                                To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available sessions.
+                                To book a session, please <a href="/register" className="register-link">create an account</a>. Once registered, you'll see available sessions.
                             </p>
                         </div>
                         <div className="yoga-therapy-info-image">
