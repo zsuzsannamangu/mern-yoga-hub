@@ -134,7 +134,7 @@ function About() {
                             <p>Classes and sessions are about discovering what it means to be in your body, right now, with curiosity and kindness.</p>
                         </div>
                         <div className="about-info-image">
-                            <img src="/images/yoga/Zsuzsi_Home_4.jpg" alt="Zsuzsanna doing yoga next to river" />
+                            <img src="/images/yoga/childs-pose.jpg" alt="Yoga practice" />
                         </div>
                     </motion.div>
                 </div>
@@ -165,7 +165,7 @@ function About() {
                             </ul>
                         </div>
                         <div className="about-info-image">
-                            <img src="/images/yoga/Zsuzsi_Home_111.jpg" alt="Zsuzsanna doing extended side angle pose with full bind next to the river" />
+                            <img src="/images/yoga/yoga5.jpg" alt="Yoga practice" />
                         </div>
                     </motion.div>
                 </div>
@@ -201,7 +201,7 @@ function About() {
                         </div>
 
                         <div className="about-info-image">
-                            <img src="/images/yoga/Zsuzsi_chair.jpg" alt="Zsuzsanna doing chair yoga" />
+                            <img src="/images/yoga/Zsuzsi_About_2.jpg" alt="Yoga practice" />
                         </div>
                     </motion.div>
                 </div>

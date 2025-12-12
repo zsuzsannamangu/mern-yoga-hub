@@ -115,7 +115,7 @@ function YogaTherapy() {
                             </p>
                         </div>
                         <div className="yoga-therapy-info-image">
-                            <img src="/images/yoga/childs-pose.jpg" alt="Yoga therapy practice" />
+                            <img src="/images/yoga/Zsuzsi_Home_4.jpg" alt="Yoga therapy practice" />
                         </div>
                     </motion.div>
                 </div>
@@ -142,7 +142,7 @@ function YogaTherapy() {
                             </p>
                         </div>
                         <div className="yoga-therapy-info-image">
-                            <img src="/images/yoga/yoga5.jpg" alt="Yoga therapy practice" />
+                            <img src="/images/yoga/Zsuzsi_Home_111.jpg" alt="Yoga therapy practice" />
                         </div>
                     </motion.div>
                 </div>
@@ -173,7 +173,7 @@ function YogaTherapy() {
                             </ul>
                         </div>
                         <div className="yoga-therapy-info-image">
-                            <img src="/images/yoga/Zsuzsi_About_2.jpg" alt="Yoga therapy session" />
+                            <img src="/images/yoga/Zsuzsi_chair.jpg" alt="Yoga therapy session" />
                         </div>
                     </motion.div>
                 </div>
@@ -210,7 +210,7 @@ function YogaTherapy() {
                         </div>
 
                         <div className="yoga-therapy-info-image">
-                            <img src="/images/yoga/Zsuzsi_yoga_34.jpg" alt="Yoga therapy practice" />
+                            <img src="/images/yoga/Zsuzsi_chair.jpg" alt="Yoga therapy practice" />
                         </div>
                     </motion.div>
                 </div>
