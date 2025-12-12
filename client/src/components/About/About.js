@@ -108,104 +108,30 @@ function About() {
                 </div>
             </motion.div>
 
-            <div className="three-sections-about-yoga">
-                {/* MY APPROACH SECTION WITH IMAGE */}
-                <div className="about-info-section">
-                    <motion.div
-                        className="about-flex-section"
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1 }}
-                    >
-                        <div className="about-info-text">
-                            <motion.h2 className="section-title" variants={fadeInUp}>My approach</motion.h2>
-                            <div className="title-line"></div>
-                            <p>
-                                I offer weekly group classes, workshops, and private 1:1 yoga sessions.
-                                Group classes follow a consistent theme and are open to all levels.
-                                Private sessions are tailored to your personal needs: physical, emotional, or spiritual.
-                            </p>
-                            <p>
-                                My approach to yoga is rooted in presence and compassion.
-                                I offer trauma-informed and adaptive practices that meet you where you are.
-                                I combine breath science, somatic awareness, and yoga philosophy to support nervous system regulation, emotional resilience, and well-being.
-                            </p>
-                            <p>Classes and sessions are about discovering what it means to be in your body, right now, with curiosity and kindness.</p>
-                        </div>
-                        <div className="about-info-image">
-                            <img src="/images/yoga/childs-pose.jpg" alt="Yoga practice" />
-                        </div>
+            {/* My Classes & Sessions Section */}
+            <motion.div
+                className="about-info-section"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+            >
+                <motion.h2 className="section-title" variants={fadeInUp}>My Classes & Sessions</motion.h2>
+                <div className="title-line"></div>
+                <div className="info-category">
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <ul className="custom-bullet-list">
+                            <li>Trauma-informed and accessible practices</li>
+                            <li>Adaptive options: chair and gentle floor variations</li>
+                            <li>Breath-centered movement and mindfulness</li>
+                            <li>Small-group classes and one-on-one private sessions</li>
+                            <li>Inclusive of all bodies, abilities, and backgrounds</li>
+                            <li>Support for nervous system regulation and emotional well-being</li>
+                            <li>Classes that welcome beginners and challenge experienced practitioners</li>
+                        </ul>
                     </motion.div>
                 </div>
-
-                {/* MY SESSIONS ARE SECTION WITH IMAGE (reverse layout) */}
-                <div className="about-info-section">
-                    <motion.div
-                        className="about-flex-section reverse"
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1 }}
-                    >
-                        <div className="about-info-text">
-                            <motion.h2 className="section-title" variants={fadeInUp}>My Classes & Sessions</motion.h2>
-                            <div className="title-line"></div>
-                            <p>
-                                Whether you're joining a group class or booking a private session, my teaching style emphasizes:
-                            </p>
-                            <ul className="custom-bullet-list">
-                                <li>Trauma-informed and accessible practices</li>
-                                <li>Adaptive options: chair and gentle floor variations</li>
-                                <li>Breath-centered movement and mindfulness</li>
-                                <li>Small-group classes and one-on-one private sessions</li>
-                                <li>Inclusive of all bodies, abilities, and backgrounds</li>
-                                <li>Support for nervous system regulation and emotional well-being</li>
-                                <li>Classes that welcome beginners and challenge experienced practitioners</li>
-                            </ul>
-                        </div>
-                        <div className="about-info-image">
-                            <img src="/images/yoga/yoga5.jpg" alt="Yoga practice" />
-                        </div>
-                    </motion.div>
-                </div>
-
-                <div className="about-info-section">
-                    <motion.div
-                        className="about-flex-section"
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1 }}
-                    >
-                        <div className="about-info-text">
-                            <motion.h2 className="section-title" variants={fadeInUp}>
-                                Who Can Join My Classes
-                            </motion.h2>
-                            <div className="title-line"></div>
-                            <p>
-                                I offer group classes, workshops, and private yoga sessions throughout Portland.
-                            </p>
-                            <p>
-                                All classes and sessions are open to all, regardless of experience, background, or physical ability.
-                                I always strive to create a supportive, welcoming environment for everyone. My classes welcome:
-                            </p>
-                            <ul className="custom-bullet-list">
-                                <li>Complete beginners and experienced practitioners</li>
-                                <li>All bodies - adaptive and accessible options available</li>
-                                <li>Wheelchair users and those with limited mobility</li>
-                                <li>People seeking gentle, restorative practices</li>
-                                <li>Those looking for more dynamic, flowing movement</li>
-                                <li>Anyone wanting to explore yoga in a supportive community</li>
-                            </ul>
-                        </div>
-
-                        <div className="about-info-image">
-                            <img src="/images/yoga/Zsuzsi_About_2.jpg" alt="Yoga practice" />
-                        </div>
-                    </motion.div>
-                </div>
-            </div>
+            </motion.div>
 
             {/* Private Yoga Section */}
             <motion.div
