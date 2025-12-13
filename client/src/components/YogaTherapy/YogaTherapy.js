@@ -130,7 +130,7 @@ function YogaTherapy() {
                         transition={{ duration: 1 }}
                     >
                         <div className="yoga-therapy-info-text">
-                            <motion.h2 className="section-title" variants={fadeInUp}>My Approach & Yoga Therapy Sessions</motion.h2>
+                            <motion.h2 className="section-title" variants={fadeInUp}>My Approach</motion.h2>
                             <div className="title-line"></div>
                             <p>
                                 My approach to yoga therapy is rooted in presence and compassion. I offer trauma-informed and adaptive 
@@ -160,7 +160,7 @@ function YogaTherapy() {
                 {/* WHO I WORK WITH SECTION */}
                 <div className="yoga-therapy-info-section">
                     <motion.div
-                        className="yoga-therapy-flex-section reverse"
+                        className="yoga-therapy-flex-section"
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
