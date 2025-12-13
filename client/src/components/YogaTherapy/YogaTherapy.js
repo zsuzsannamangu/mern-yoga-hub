@@ -80,7 +80,7 @@ function YogaTherapy() {
                 <div className="yoga-therapy-overlay">
                     <div className="yoga-therapy-overlay-text">
                         <h1>Yoga Therapy</h1>
-                        <p>Personalized healing and wellbeing through the wisdom of yoga</p>
+                        <p>Supporting your body, mind, and wellbeing through personalized sessions</p>
                     </div>
                 </div>
             </motion.div>

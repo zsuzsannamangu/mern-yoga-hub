@@ -103,7 +103,7 @@ function About() {
                 <div className="about-overlay">
                     <div className="about-overlay-text">
                         <h1>Yoga Classes & Workshops</h1>
-                        <p>I'm Zsuzsanna, a yoga teacher offering group classes, workshops, and private sessions to support you in finding alignment between body and mind.</p>
+                        <p>I'm Zsuzsanna, a yoga teacher offering group classes, workshops, and private sessions.</p>
                     </div>
                 </div>
             </motion.div>
@@ -120,6 +120,17 @@ function About() {
                 <div className="title-line"></div>
                 <div className="info-category">
                     <motion.div className="info-item" variants={fadeInUp}>
+                        <p>
+                            I teach weekly group classes at various studios throughout Portland, offering a range of practices to meet you where you are. 
+                            Whether you're joining a group class or booking a private session, my teaching style emphasizes connection, accessibility, and support.
+                        </p>
+                        <p>
+                            All classes welcome students of all levels and abilities. I offer modifications and options for every pose, creating an inclusive 
+                            environment where everyone can explore movement and breath at their own pace.
+                        </p>
+                        <p>
+                            My classes and sessions are characterized by:
+                        </p>
                         <ul className="custom-bullet-list">
                             <li>Trauma-informed and accessible practices</li>
                             <li>Adaptive options: chair and gentle floor variations</li>
@@ -149,6 +160,11 @@ function About() {
                             <strong>Individual Yoga Sessions:</strong> Personalized one-on-one sessions designed to meet your unique needs. These sessions offer tailored practices including physical postures, breathwork, meditation, and yoga philosophy.
                         </p>
                         <p>
+                            Private sessions provide focused attention and personalized guidance that group classes cannot offer. Each session is crafted specifically for you, 
+                            taking into account your body, your goals, and where you are in your practice. Whether you're working through an injury, building strength, 
+                            or exploring deeper aspects of yoga, private sessions offer the space and support you need.
+                        </p>
+                        <p>
                             Private sessions are ideal for:
                         </p>
                         <ul className="custom-bullet-list">
@@ -161,10 +177,8 @@ function About() {
                             <strong>Pricing:</strong> $80-$110/hr sliding scale. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked.
                         </p>
                         <p>
-                            Sessions are available in-person in Portland, Oregon, or online via Google Meet.
-                        </p>
-                        <p>
-                            To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available time slots.
+                            Sessions are available in-person in Portland, Oregon, or online via Google Meet. To book a session, please <a href="/register">create an account</a>. 
+                            Once registered, you'll see available time slots.
                         </p>
                     </motion.div>
                 </div>
@@ -192,7 +206,16 @@ function About() {
                             <strong>Pricing:</strong> $30-$45 sliding scale
                         </p>
                         <p>
-                            A grounding New Year's Day practice blending gentle flow with restorative poses. We'll explore intention setting, seasonal well being inspired by Ayurveda, and reflections inspired by the Yoga Sutras.
+                            A grounding New Year's Day practice blending gentle flow with restorative poses.
+                        </p>
+                        <p>
+                            We'll spend some time on intention setting and talk about seasonal well-being using basic ideas from Ayurveda, like how winter and early spring can feel heavier or slower and what kinds of movement, rest, and daily habits can help support energy and balance as we move toward kapha season.
+                        </p>
+                        <p>
+                            We'll also include a few simple reflections inspired by the Yoga Sutras, focusing on themes like clarity, steadiness, and how we relate to our thoughts and habits as we begin a new year.
+                        </p>
+                        <p>
+                            This class is meant to help you feel calm, grounded, and supported as you move into the year ahead.
                         </p>
                     </motion.div>
 
