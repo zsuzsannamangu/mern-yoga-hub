@@ -66,7 +66,7 @@ function YogaTherapy() {
     return (
         <div className='yoga-therapy-page'>
             <Helmet>
-                <title>Yoga Therapy with Zsuzsanna | Personalized Healing & Wellness</title>
+                <title>Yoga Therapy with Zsuzsanna | Personalized Healing & Wellbeing</title>
                 <meta name="description" content="Yoga therapy sessions with Zsuzsanna - personalized, trauma-informed, holistic approach supporting physical, emotional, and mental well-being in Portland and online." />
                 <link rel="canonical" href="https://www.yogaandchocolate.com/yoga-therapy" />
             </Helmet>
@@ -80,7 +80,7 @@ function YogaTherapy() {
                 <div className="yoga-therapy-overlay">
                     <div className="yoga-therapy-overlay-text">
                         <h1>Yoga Therapy</h1>
-                        <p>Personalized healing and wellness through the wisdom of yoga</p>
+                        <p>Personalized healing and wellbeing through the wisdom of yoga</p>
                     </div>
                 </div>
             </motion.div>
@@ -108,7 +108,7 @@ function YogaTherapy() {
                             </p>
                             <p>
                                 <strong>What to expect:</strong> Each session brings together mindful movement, guided breathwork, meditation, and nervous system support. 
-                                Practices are designed to be integrated into your daily life for sustainable wellness.
+                                Practices are designed to be integrated into your daily life for sustainable wellbeing.
                             </p>
                             <p>
                                 To book a session, please <a href="/register" className="register-link">create an account</a>. Once registered, you'll see available sessions.
@@ -120,7 +120,7 @@ function YogaTherapy() {
                     </motion.div>
                 </div>
 
-                {/* MY APPROACH SECTION */}
+                {/* MY APPROACH & SESSIONS SECTION */}
                 <div className="yoga-therapy-info-section">
                     <motion.div
                         className="yoga-therapy-flex-section reverse"
@@ -130,7 +130,7 @@ function YogaTherapy() {
                         transition={{ duration: 1 }}
                     >
                         <div className="yoga-therapy-info-text">
-                            <motion.h2 className="section-title" variants={fadeInUp}>My Approach</motion.h2>
+                            <motion.h2 className="section-title" variants={fadeInUp}>My Approach & Yoga Therapy Sessions</motion.h2>
                             <div className="title-line"></div>
                             <p>
                                 My approach to yoga therapy is rooted in presence and compassion. I offer trauma-informed and adaptive 
@@ -138,29 +138,8 @@ function YogaTherapy() {
                                 awareness, and yoga psychology to support nervous system regulation, emotional resilience, and healing.
                             </p>
                             <p>
-                                Sessions are about discovering what it means to be in your body, right now, with curiosity and kindness.
-                            </p>
-                        </div>
-                        <div className="yoga-therapy-info-image">
-                            <img src="/images/yoga/Zsuzsi_Home_111.jpg" alt="Yoga therapy practice" />
-                        </div>
-                    </motion.div>
-                </div>
-
-                {/* MY SESSIONS ARE SECTION */}
-                <div className="yoga-therapy-info-section">
-                    <motion.div
-                        className="yoga-therapy-flex-section"
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1 }}
-                    >
-                        <div className="yoga-therapy-info-text">
-                            <motion.h2 className="section-title" variants={fadeInUp}>My Yoga Therapy Sessions</motion.h2>
-                            <div className="title-line"></div>
-                            <p>
                                 Yoga therapy sessions are personalized, one-on-one experiences designed to support your unique healing journey.
+                                Sessions are about discovering what it means to be in your body, right now, with curiosity and kindness.
                             </p>
                             <ul className="custom-bullet-list">
                                 <li>Trauma-informed and neurobiologically grounded approaches</li>
@@ -169,11 +148,11 @@ function YogaTherapy() {
                                 <li>One-on-one settings for deeper connection and personalized attention</li>
                                 <li>Inclusive of all bodies, abilities, and backgrounds</li>
                                 <li>Practices designed to support the nervous system and emotional health</li>
-                                <li>Integration of practices into daily life for sustainable wellness</li>
+                                <li>Integration of practices into daily life for sustainable wellbeing</li>
                             </ul>
                         </div>
                         <div className="yoga-therapy-info-image">
-                            <img src="/images/yoga/Zsuzsi_chair.jpg" alt="Yoga therapy session" />
+                            <img src="/images/yoga/Zsuzsi_Home_111.jpg" alt="Yoga therapy practice" />
                         </div>
                     </motion.div>
                 </div>

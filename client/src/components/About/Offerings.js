@@ -51,7 +51,7 @@ const offeringsData = [
         description: `
         Yoga therapy is a personalized, holistic approach that supports physical, emotional, and mental well-being. It combines breath, movement, psychology, neurobiology, mindfulness, and somatic practices to address specific concerns or conditions.
         <br><br><strong>What makes yoga therapy different?</strong> Unlike general yoga classes, yoga therapy sessions are tailored to your individual needs, creating space for healing, resilience, and greater self-awareness. Sessions are designed to meet you exactly where you are.
-        <br><br><strong>What to expect:</strong> Each session brings together mindful movement, guided breathwork, meditation, and nervous system support. Practices are designed to be integrated into your daily life for sustainable wellness.
+        <br><br><strong>What to expect:</strong> Each session brings together mindful movement, guided breathwork, meditation, and nervous system support. Practices are designed to be integrated into your daily life for sustainable wellbeing.
         <br><br><strong>Pricing:</strong> $10-$80/hr sliding scale (offered until June 2026, while I'm in training). Your investment is a personal choice, aligning with your current financial circumstances. No questions asked. 
         <br><br>To book a session, please <a href="/register">create an account</a>. Once registered, you'll see available sessions.
         `,
