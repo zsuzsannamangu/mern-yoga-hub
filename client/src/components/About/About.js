@@ -227,17 +227,6 @@ function About() {
                         <p>
                             As both a chocolatier and yoga teacher, I bring these worlds together with intention. The chocolates we taste are created specifically to reflect the body's energetic centers, the chakras, using organic cacao infused with edible flowers, fruits, and spices.
                         </p>
-                        <p>
-                            This workshop brings together yoga and handmade chocolate to awaken presence, deepen awareness, and open the senses.
-                            Yoga invites us to slow down and reconnect with the body. Chocolate, when made with attention and enjoyed mindfully,
-                            becomes a pathway to taste, texture, and energy that can amplify this inner journey. Together, they create a space where movement, stillness, and sensory experience meet.
-                        </p>
-
-                        <p>
-                            As both a chocolatier and yoga teacher, I bring these worlds together with intention. Since 2020, I have been making small-batch,
-                            80% dark chocolate with organic cacao, maple sugar, vanilla, Oregon sea salt and botanicals. Each bar is made fresh, infused with edible
-                            flowers, fruits, and spices. The chocolates we'll taste in this workshop are created specifically to reflect the body's energetic centers, the chakras:
-                        </p>
 
                         <div className="chakra-chocolate-info">
                             <div className="chakra-image">
