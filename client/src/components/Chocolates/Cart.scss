@@ -68,6 +68,13 @@
                     margin-top: 5px;
                 }
 
+                .cart-item-stock {
+                    font-size: 0.9rem;
+                    color: $text-color;
+                    margin-top: 5px;
+                    font-style: italic;
+                }
+
                 .cart-item-quantity {
                     display: flex;
                     align-items: center;

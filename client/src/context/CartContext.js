@@ -23,10 +23,20 @@ export const CartProvider = ({ children }) => {
         setCartItems((prevItems) => {
             const existingItem = prevItems.find((item) => item._id === product._id);
             if (existingItem) {
+                // Check inventory before updating quantity
+                const newQuantity = existingItem.quantity + 1;
+                if (existingItem.inventory !== undefined && newQuantity > existingItem.inventory) {
+                    // Return unchanged items if exceeding inventory
+                    return prevItems;
+                }
                 // Update quantity if item already exists
                 return prevItems.map((item) =>
-                    item._id === product._id ? { ...item, quantity: item.quantity + 1 } : item
+                    item._id === product._id ? { ...item, quantity: newQuantity } : item
                 );
+            }
+            // Check inventory before adding new item
+            if (product.inventory !== undefined && product.inventory < 1) {
+                return prevItems;
             }
             return [...prevItems, { ...product, quantity: 1 }];
         });
@@ -35,9 +45,15 @@ export const CartProvider = ({ children }) => {
     // Update quantity of an item in the cart
     const updateQuantity = (productId, quantity) => {
         setCartItems((prevItems) =>
-            prevItems.map((item) =>
-                item._id === productId ? { ...item, quantity } : item
-            )
+            prevItems.map((item) => {
+                if (item._id === productId) {
+                    // Validate against inventory
+                    const maxQuantity = item.inventory !== undefined ? item.inventory : Infinity;
+                    const validQuantity = Math.max(1, Math.min(quantity, maxQuantity));
+                    return { ...item, quantity: validQuantity };
+                }
+                return item;
+            })
         );
     };
 

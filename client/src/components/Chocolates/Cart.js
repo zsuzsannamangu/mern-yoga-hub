@@ -65,9 +65,25 @@ function Cart() {
   const totalNumber = discountedSubtotal + shipping;
   const total = totalNumber.toFixed(2); // for display only
 
-  // Updates item quantity in the cart, ensuring it doesn't go below 1.
+  // Updates item quantity in the cart, ensuring it doesn't go below 1 or exceed inventory.
   const handleQuantityChange = (productId, quantity) => {
-    updateQuantity(productId, Math.max(1, quantity));
+    const item = cartItems.find(item => item._id === productId);
+    if (!item) return;
+    
+    // Validate quantity against inventory
+    const maxQuantity = item.inventory !== undefined ? item.inventory : Infinity;
+    const validQuantity = Math.max(1, Math.min(quantity || 1, maxQuantity));
+    
+    if (validQuantity !== quantity && quantity > maxQuantity) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Limited Stock',
+        text: `Only ${maxQuantity} ${maxQuantity === 1 ? 'item' : 'items'} available in stock.`,
+        confirmButtonText: 'OK'
+      });
+    }
+    
+    updateQuantity(productId, validQuantity);
   };
 
   // Initiates PayPal checkout process. Loads PayPal SDK dynamically if not already loaded.
@@ -306,11 +322,19 @@ function Cart() {
               <div className="cart-item-details">
                 <h2 className="cart-item-name">{item.name}</h2>
                 <p className="cart-item-price">${item.price}/tin</p>
+                {item.inventory !== undefined && (
+                  <p className="cart-item-stock">
+                    {item.inventory > 0 
+                      ? `${item.inventory} ${item.inventory === 1 ? 'item' : 'items'} in stock`
+                      : 'Out of stock'}
+                  </p>
+                )}
                 <div className="cart-item-quantity">
                   <input
                     type="number"
                     value={item.quantity}
                     min="1"
+                    max={item.inventory !== undefined ? item.inventory : undefined}
                     className="quantity-input"
                     onChange={(e) =>
                       handleQuantityChange(item._id, parseInt(e.target.value, 10))
