@@ -352,6 +352,12 @@ h1 {
     padding: 20px;
     gap: 12px;
     border-top: 1px solid rgba(139, 75, 140, 0.2);
+    
+    // Ensure all buttons are visible
+    button {
+      display: block;
+      width: 100%;
+    }
   }
 
   .mobile-cart-button {
@@ -388,6 +394,7 @@ h1 {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    display: block; // Ensure button is visible
 
     &:hover {
       background-color: $primary-button-hover-color;
@@ -397,6 +404,9 @@ h1 {
       background-color: transparent;
       color: $purple-primary;
       border: 2px solid $purple-primary;
+      display: block !important; // Ensure login button is visible
+      visibility: visible !important; // Force visibility
+      opacity: 1 !important; // Ensure full opacity
 
       &:hover {
         background-color: rgba(139, 75, 140, 0.1);
