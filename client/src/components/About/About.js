@@ -197,29 +197,6 @@ function About() {
                 <div className="title-line"></div>
                 <div className="info-category">
                     <motion.div className="info-item" variants={fadeInUp}>
-                        <h4><a href="https://www.yogarefugepdx.com/workshops-and-events" target="_blank" rel="noopener noreferrer">New Year's Day Practice and Intention Setting</a></h4>
-                        <p className="class-schedule">
-                            <strong>Date & Time:</strong> 01/01 at 11am-1pm
-                            <br />
-                            <strong>Location:</strong> <a href="https://www.yogarefugepdx.com/workshops-and-events" target="_blank" rel="noopener noreferrer">Yoga Refuge NW</a>, 210 NW 17th Ave #101, Portland, OR 97209
-                            <br />
-                            <strong>Pricing:</strong> $30-$45 sliding scale
-                        </p>
-                        <p>
-                            A grounding New Year's Day practice blending gentle flow with restorative poses.
-                        </p>
-                        <p>
-                            We'll spend some time on intention setting and talk about seasonal well-being using basic ideas from Ayurveda, like how winter and early spring can feel heavier or slower and what kinds of movement, rest, and daily habits can help support energy and balance as we move toward kapha season.
-                        </p>
-                        <p>
-                            We'll also include a few simple reflections inspired by the Yoga Sutras, focusing on themes like clarity, steadiness, and how we relate to our thoughts and habits as we begin a new year.
-                        </p>
-                        <p>
-                            This class is meant to help you feel calm, grounded, and supported as you move into the year ahead.
-                        </p>
-                    </motion.div>
-
-                    <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Awaken the Senses: Restorative Yoga, Handcrafted Chocolate and an Exploration of the Chakras</h4>
                         <p>
                             An immersive experience combining restorative yoga, meditation, and sense awareness. This workshop brings together yoga and handmade chocolate to awaken presence, deepen awareness, and open the senses.

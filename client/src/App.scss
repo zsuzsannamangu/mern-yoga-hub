@@ -206,41 +206,269 @@ h1 {
   }
 }
 
+/* Hamburger button - hidden on desktop */
+.hamburger-button {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: $tertiary-text-color;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $purple-primary;
+  }
+}
+
 @media (max-width: 768px) {
   .navbar {
     display: flex;
-    flex-direction: column; // Stack elements vertically
+    flex-direction: row; // Keep horizontal layout
     align-items: center;
-    gap: 10px;
+    justify-content: space-between;
     padding: 12px 16px;
+    position: relative;
+  }
+
+  /* Show hamburger button on mobile */
+  .hamburger-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .logo {
     font-size: 18px; // Smaller logo size for mobile
     text-align: center;
+    flex: 1;
+    margin: 0 auto;
 
     &::after {
-      content: ''; // Decorative line
-      display: block;
-      width: 90%;
-      height: 1px;
-      background-color: $line-color;
-      margin: 5px auto 0;
+      display: none; // Remove decorative line on mobile
     }
   }
 
+  /* Hide nav-links on mobile (they're in hamburger menu) */
   .nav-links {
-    justify-content: center; // Center links
-    gap: 2px; // Reduce spacing
+    display: none;
   }
 
-  .nav-item {
-    font-size: 14px; // Smaller font for links
-    padding: 5px 8px; // Increase touch target size
-  }
-
+  /* Hide nav-buttons on mobile (they're in hamburger menu) */
   .nav-buttons {
-    justify-content: center; // Center buttons
+    display: none;
+  }
+
+  /* Mobile menu overlay */
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+  }
+
+  /* Mobile menu slide-out */
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    max-width: 85vw;
+    height: 100vh;
+    background-color: $background-color;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 2001;
+    display: flex;
+    flex-direction: column;
+    animation: slideIn 0.3s ease;
+    overflow-y: auto;
+  }
+
+  .mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(139, 75, 140, 0.2);
+  }
+
+  .mobile-logo {
+    font-size: 18px;
+    font-weight: 500;
+    color: $tertiary-text-color;
+  }
+
+  .mobile-menu-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: $tertiary-text-color;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $purple-primary;
+    }
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    flex: 1;
+  }
+
+  .mobile-nav-item {
+    display: block;
+    padding: 16px 20px;
+    font-size: 16px;
+    color: $text-color;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(139, 75, 140, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover,
+    &:focus {
+      background-color: rgba(139, 75, 140, 0.05);
+      color: $purple-primary;
+    }
+
+    &.active {
+      color: $purple-primary;
+      background-color: rgba(139, 75, 140, 0.1);
+    }
+  }
+
+  .mobile-nav-buttons {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 12px;
+    border-top: 1px solid rgba(139, 75, 140, 0.2);
+  }
+
+  .mobile-cart-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background-color: $primary-button-color;
+    color: $button-text-color;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: $primary-button-hover-color;
+    }
+
+    .cart-count {
+      font-size: 14px;
+    }
+  }
+
+  .mobile-button {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: $primary-button-color;
+    border-radius: 4px;
+    color: $button-text-color;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: $primary-button-hover-color;
+    }
+
+    &.login {
+      background-color: transparent;
+      color: $purple-primary;
+      border: 2px solid $purple-primary;
+
+      &:hover {
+        background-color: rgba(139, 75, 140, 0.1);
+      }
+    }
+  }
+
+  .mobile-profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .mobile-profile-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .mobile-profile-link {
+    display: block;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: $text-color;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      background-color: rgba(139, 75, 140, 0.05);
+      color: $purple-primary;
+    }
+  }
+
+  .mobile-logout-button {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: transparent;
+    border: 2px solid $purple-primary;
+    border-radius: 4px;
+    color: $purple-primary;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      background-color: $purple-primary;
+      color: $button-text-color;
+    }
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
   }
 }
 
