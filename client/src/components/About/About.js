@@ -86,7 +86,7 @@ function About() {
             <div className="workshop-announcement newyear-announcement">
                 <div className="announcement-content">
                     <span className="announcement-text">
-                        ✨ <strong>New Year's Day Workshop: New Year's Day Practice and Intention Setting</strong>
+                        ✨ <strong>Awaken the Senses: Chocolate, chakras and restorative yoga</strong>
                     </span>
                     <a href="/yoga?section=classDescriptions" className="announcement-link">
                         View Workshops
@@ -258,13 +258,13 @@ function About() {
                                     <div className="date-header">
                                         <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
-                                            <div className="date-text">Spring 2026</div>
-                                            <div className="time-text">TBA</div>
+                                            <div className="date-text">February 14, 2026</div>
+                                            <div className="time-text">3:00 PM - 5:00 PM</div>
                                         </div>
                                     </div>
                                     <div className="location-text">
                                         <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
-                                        <a href="https://thepeoplesyoga.org/events-and-workshops/" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop in Spring 2026 at The People's Yoga on NE Killingsworth">The People's Yoga, NE Killingsworth</a>
+                                        <a href="https://firelightyoga.com/classes/" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on February 14 at Firelight Yoga, 3:00 PM to 5:00 PM">Firelight Yoga</a>
                                     </div>
                                     <div className="chakra-focus">
                                         
@@ -275,50 +275,16 @@ function About() {
                                     <div className="date-header">
                                         <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
-                                            <div className="date-text">November 8, 2025</div>
-                                            <div className="time-text">11:00 AM - 1:00 PM</div>
+                                            <div className="date-text">Spring 2026</div>
+                                            <div className="time-text">TBA</div>
                                         </div>
                                     </div>
                                     <div className="location-text">
                                         <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
-                                        <a href="https://fullbodiedyoga.union.site/performances/3walcxsp" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on November 8 at Full Bodied Yoga, 11:00 AM to 1:00 PM">Full Bodied Yoga</a>
+                                        <a href="https://thepeoplesyoga.org/events-and-workshops/" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop in Spring 2026 at The People's Yoga on NE Killingsworth">The People's Yoga, NE Killingsworth</a>
                                     </div>
                                     <div className="chakra-focus">
-                                        <strong>Focus:</strong> Solar Plexus (3rd) + Third Eye (6th) Chakras
-                                    </div>
-                                </div>
-
-                                <div className="workshop-date-card">
-                                    <div className="date-header">
-                                        <FaCalendarAlt className="date-icon" aria-hidden="true" />
-                                        <div className="date-info">
-                                            <div className="date-text">November 22, 2025</div>
-                                            <div className="time-text">2:00 PM - 4:00 PM</div>
-                                        </div>
-                                    </div>
-                                    <div className="location-text">
-                                        <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
-                                        <a href="https://www.yogarefugepdx.com/workshops-and-events?mobile=false&options%5Bids%5D=1466&options%5Bsite_id%5D=140907&version=0" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on November 22 at Yoga Refuge NW, 2:00 PM to 4:00 PM, focusing on Root and Heart Chakras">Yoga Refuge NW</a>
-                                    </div>
-                                    <div className="chakra-focus">
-                                        <strong>Focus:</strong> Root (1st) + Heart (4th) Chakras
-                                    </div>
-                                </div>
-
-                                <div className="workshop-date-card">
-                                    <div className="date-header">
-                                        <FaCalendarAlt className="date-icon" aria-hidden="true" />
-                                        <div className="date-info">
-                                            <div className="date-text">November 23, 2025</div>    
-                                            <div className="time-text">2:00 PM - 4:00 PM</div>
-                                        </div>
-                                    </div>
-                                    <div className="location-text">
-                                        <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
-                                        <a href="https://www.thebymc.com/post/awaken-the-senses-where-artisanal-chocolate-and-restorative-yoga-meet" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on November 23 at The Bhakti Yoga Movement Center, 2:00 PM to 4:00 PM, focusing on Sacral and Throat Chakras">The Bhakti Yoga Movement Center</a>
-                                    </div>
-                                    <div className="chakra-focus">
-                                        <strong>Focus:</strong> Sacral (2nd) + Throat (5th) Chakras
+                                        
                                     </div>
                                 </div>
                             </div>

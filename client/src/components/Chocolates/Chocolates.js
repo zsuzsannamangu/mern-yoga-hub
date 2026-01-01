@@ -22,6 +22,18 @@ function Chocolates() {
                 <link rel="canonical" href="https://www.yogaandchocolate.com/chocolates" />
             </Helmet>
 
+            {/* Workshop Announcement Bar */}
+            <div className="workshop-announcement newyear-announcement">
+                <div className="announcement-content">
+                    <span className="announcement-text">
+                        ✨ <strong>Awaken the Senses: Chocolate, chakras and restorative yoga</strong>
+                    </span>
+                    <a href="/yoga?section=classDescriptions" className="announcement-link">
+                        View Workshops
+                    </a>
+                </div>
+            </div>
+
             <motion.div
                 className='chocolates-top'
                 initial={{ opacity: 0, y: 30 }}
