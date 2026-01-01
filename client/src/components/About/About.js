@@ -70,7 +70,8 @@ function About() {
         const section = params.get('section');
 
         if (section === 'classDescriptions' && classDescriptionsRef.current) {
-            classDescriptionsRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Scroll to the start of the Classes and Workshops section
+            classDescriptionsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }, [location]); //'location' is a dependency, the dependencies array is an array of variables that the effect depends on. [location] ensures the effect runs only when the location object changes.
 
