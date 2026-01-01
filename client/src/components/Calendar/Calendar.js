@@ -143,7 +143,7 @@ export default class Calendar extends Component {
         <div className="workshop-announcement newyear-announcement">
           <div className="announcement-content">
             <span className="announcement-text">
-              ✨ <strong>Awaken the Senses: Chocolate, chakras and restorative yoga</strong>
+              ✨ <strong>Awaken the Senses: Chocolate, chakras and restorative yoga on Valentine's Day</strong>
             </span>
             <a href="/yoga?section=classDescriptions" className="announcement-link">
               View Workshops
