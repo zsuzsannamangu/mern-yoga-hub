@@ -50,14 +50,50 @@ function VerifyEmail() {
                     throw new Error('Invalid response: Missing token or userId.');
                 }
             } catch (error) {
-                setMessage(error.response?.data?.message || 'Verification failed.');
+                const errorData = error.response?.data || {};
+                const errorMessage = errorData.message || 'Verification failed.';
+                const isExpired = errorData.expired || false;
+                const isInvalid = errorData.invalid || false;
+                
+                setMessage(errorMessage);
+                
+                // Show helpful error message with action
+                if (isExpired || isInvalid) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Verification Link Invalid',
+                        text: errorMessage,
+                        confirmButtonText: 'Go to Login',
+                        showCancelButton: true,
+                        cancelButtonText: 'Stay Here'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            navigate('/login');
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Verification Failed',
+                        text: errorMessage,
+                        confirmButtonText: 'OK'
+                    });
+                }
             }
         };
 
         if (tokenFromUrl) {
             verifyEmail();
         } else {
-            setMessage('Invalid verification link.');
+            setMessage('Invalid verification link. No token provided.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Link',
+                text: 'This verification link is invalid. Please request a new verification email from the login page.',
+                confirmButtonText: 'Go to Login'
+            }).then(() => {
+                navigate('/login');
+            });
         }
     }, [searchParams, navigate, login]);
 

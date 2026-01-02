@@ -34,24 +34,34 @@ userAxiosInstance.interceptors.response.use(
     async (error) => {
         // Check if the error is due to an expired token
         if (error.response && error.response.status === 401 && !isRefreshing) {
+            // Don't try to refresh on validate-token or login endpoints
+            const url = error.config?.url || '';
+            if (url.includes('/validate-token') || url.includes('/login') || url.includes('/verify-login')) {
+                return Promise.reject(error);
+            }
+
             isRefreshing = true; // Set the refreshing flag
             try {
                 // Request a new token from the refresh endpoint
                 const refreshResponse = await userAxiosInstance.post('/refresh-token');
                 const newAccessToken = refreshResponse.data.accessToken;
 
-                // Save the new token to localStorage
-                localStorage.setItem('userToken', newAccessToken);
+                if (newAccessToken) {
+                    // Save the new token to localStorage
+                    localStorage.setItem('userToken', newAccessToken);
 
-                // Retry the original request with the new token
-                error.config.headers['Authorization'] = `Bearer ${newAccessToken}`;
-                return userAxiosInstance.request(error.config);
+                    // Retry the original request with the new token
+                    error.config.headers['Authorization'] = `Bearer ${newAccessToken}`;
+                    return userAxiosInstance.request(error.config);
+                } else {
+                    throw new Error('No access token received');
+                }
             } catch (refreshError) {
-                // Handle token refresh failure (e.g., log out the user)
-                localStorage.removeItem('userToken'); // Clear the token
-                localStorage.removeItem('user'); // Clear user details
-                window.location.href = '/login'; // Redirect to the login page
-                return Promise.reject(refreshError);
+                // Handle token refresh failure - redirect to login but don't clear everything immediately
+                // Let the user see an error message first
+                console.error('Token refresh failed:', refreshError);
+                // Don't automatically redirect - let the component handle it
+                return Promise.reject(error);
             } finally {
                 isRefreshing = false; // Reset the refreshing flag
             }

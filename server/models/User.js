@@ -69,7 +69,7 @@ UserSchema.methods.generateVerificationToken = function () {
     const token = jwt.sign(
         { email: this.email }, // Include the email in the payload
         process.env.JWT_SECRET, // Use your JWT secret
-        { expiresIn: '1h' } // Set token expiration
+        { expiresIn: '24h' } // Set token expiration
     );
     this.verificationToken = token;
     return token;

@@ -35,29 +35,133 @@ router.post('/register', async (req, res) => {
         newUser.verificationToken = verificationToken;
         await newUser.save();
 
-        // Construct the verification URL
-        const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
+        // Construct the verification URL - ensure FRONTEND_URL is included
+        const frontendUrl = process.env.FRONTEND_URL || 'https://www.yogaandchocolate.com';
+        const verificationUrl = `${frontendUrl}/verify-email?token=${verificationToken}`;
 
         // Prepare the email content
         const emailContent = {
             to: email,
             from: process.env.EMAIL_USER, // Ensure this is correctly set in .env
             subject: 'Complete Your Registration',
-            text: `Dear ${firstName}, \n\nThank you for registering for an account.Please complete your registration and sign in by clicking the following link: \n\n${verificationUrl}`,
+            text: `Dear ${firstName}, \n\nThank you for registering for an account. Please complete your registration and sign in by clicking the following link: \n\n${verificationUrl}\n\nIf the link doesn't work, copy and paste it into your browser.\n\nWarm regards,\nZsuzsanna`,
             html: `
                 <p>Dear ${firstName},</p>
                 <p>Thank you for registering for an account.</p>
                 <p>Please complete your registration and sign in by clicking the link below:</p>
                 <p><a href="${verificationUrl}" style="color: #007BFF; text-decoration: none; font-weight: bold;">Verify Your Account</a></p>
+                <p>If the link above doesn't work, copy and paste this URL into your browser:</p>
+                <p style="word-break: break-all; color: #666; font-size: 12px;">${verificationUrl}</p>
                 <p>Warm regards,<br>Zsuzsanna</p>
             `,
         };
 
         // Send the email using SendGrid
-        await sgMail.send(emailContent);
-        res.status(201).json({ message: 'Registration email sent. Please verify your email to complete registration.' });
+        try {
+            await sgMail.send(emailContent);
+            console.log(`Verification email sent successfully to ${email}`);
+            res.status(201).json({ message: 'Registration email sent. Please check your inbox (and spam folder) to verify your email.' });
+        } catch (emailError) {
+            console.error('SendGrid error during registration:', {
+                message: emailError.message,
+                response: emailError.response?.body,
+                code: emailError.code
+            });
+            // Still save the user, but inform them about email issue
+            res.status(201).json({ 
+                message: 'Account created, but verification email could not be sent. Please use "Resend Verification Email" on the login page.',
+                emailSent: false
+            });
+        }
     } catch (error) {
-        res.status(500).json({ message: 'Server error occurred during registration.' });
+        console.error('Registration error:', error);
+        res.status(500).json({ message: 'Server error occurred during registration. Please try again.' });
+    }
+});
+
+// Resend Verification Email
+router.post('/resend-verification', async (req, res) => {
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({ message: 'Email is required.' });
+    }
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: 'User not found. Please register first.' });
+        }
+
+        if (user.isVerified) {
+            return res.status(400).json({ message: 'Your email is already verified. You can log in now.' });
+        }
+
+        // Generate a new verification token
+        const verificationToken = user.generateVerificationToken();
+        user.verificationToken = verificationToken;
+        await user.save();
+
+        // Construct the verification URL - ensure FRONTEND_URL is included
+        const frontendUrl = process.env.FRONTEND_URL || 'https://www.yogaandchocolate.com';
+        const verificationUrl = `${frontendUrl}/verify-email?token=${verificationToken}`;
+
+        // Prepare the email content
+        const emailContent = {
+            to: email,
+            from: process.env.EMAIL_USER,
+            subject: 'Complete Your Registration - Verification Email',
+            text: `Dear ${user.firstName}, \n\nPlease complete your registration by clicking the following link: \n\n${verificationUrl}\n\nIf the link doesn't work, copy and paste it into your browser.`,
+            html: `
+                <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                <p>Dear ${user.firstName},</p>
+                <p>You requested a new verification email. Please complete your registration by clicking the link below:</p>
+                <p><a href="${verificationUrl}" style="
+                    display: inline-block;
+                    color: #ffffff;
+                    background-color: #007BFF;
+                    padding: 10px 20px;
+                    text-decoration: none;
+                    border-radius: 5px;
+                    font-size: 16px;
+                ">Verify Your Account</a></p>
+                <p>If the link above doesn't work, copy and paste this URL into your browser:</p>
+                <p style="word-break: break-all; color: #666; font-size: 12px;">${verificationUrl}</p>
+                <p>If you didn't request this email, you can safely ignore it.</p>
+                <p>Warm regards,<br>Zsuzsanna</p>
+                </div>
+            `,
+        };
+
+        // Send the email using SendGrid
+        try {
+            await sgMail.send(emailContent);
+            console.log(`Resend verification email sent successfully to ${email}`);
+            res.status(200).json({ message: 'Verification email sent. Please check your inbox and spam folder.' });
+        } catch (emailError) {
+            console.error('SendGrid error during resend verification:', {
+                message: emailError.message,
+                response: emailError.response?.body,
+                code: emailError.code,
+                email: email
+            });
+            
+            // Provide more helpful error message
+            let errorMessage = 'Failed to send verification email. ';
+            if (emailError.response?.body?.errors) {
+                const sendGridError = emailError.response.body.errors[0];
+                if (sendGridError.message) {
+                    errorMessage += sendGridError.message;
+                }
+            } else {
+                errorMessage += 'Please check that your email address is correct and try again later.';
+            }
+            
+            res.status(500).json({ message: errorMessage });
+        }
+    } catch (error) {
+        console.error('Resend verification error:', error);
+        res.status(500).json({ message: 'Failed to send verification email. Please try again later.' });
     }
 });
 
@@ -87,7 +191,7 @@ router.get('/verify-email', async (req, res) => {
                     lastName: user.lastName,
                 },
                 process.env.JWT_SECRET,
-                { expiresIn: '1h' }
+                { expiresIn: '24h' }
             );
 
             return res.status(200).json({
@@ -120,7 +224,7 @@ router.get('/verify-email', async (req, res) => {
                 lastName: user.lastName,
             },
             process.env.JWT_SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: '24h' }
         );
 
         // Return token and success message
@@ -136,7 +240,24 @@ router.get('/verify-email', async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500).json({ message: 'Server error occurred during verification.' });
+        console.error('Email verification error:', error);
+        
+        // Handle specific JWT errors
+        if (error.name === 'TokenExpiredError') {
+            return res.status(400).json({ 
+                message: 'Your verification link has expired. Please request a new verification email from the login page.',
+                expired: true
+            });
+        }
+        
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(400).json({ 
+                message: 'Invalid verification link. Please request a new verification email from the login page.',
+                invalid: true
+            });
+        }
+        
+        res.status(500).json({ message: 'Server error occurred during verification. Please try again or request a new verification email.' });
     }
 });
 
@@ -187,6 +308,10 @@ router.post('/validate-token', async (req, res) => {
 router.post('/login', async (req, res) => {
     const { email } = req.body;
 
+    if (!email) {
+        return res.status(400).json({ message: 'Email is required.' });
+    }
+
     try {
         const user = await User.findOne({ email });
         if (!user) {
@@ -194,10 +319,13 @@ router.post('/login', async (req, res) => {
         }
 
         if (!user.isVerified) {
-            return res.status(400).json({ message: 'Please verify your email before logging in.' });
+            return res.status(400).json({ 
+                message: 'Please verify your email before logging in. Check your inbox for the verification email, or request a new one.',
+                needsVerification: true 
+            });
         }
 
-        const loginToken = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const loginToken = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '24h' });
         const loginUrl = `${process.env.FRONTEND_URL}/verify-login?token=${loginToken}`;
 
         const userName = user.firstName || 'there';
@@ -260,7 +388,7 @@ router.get('/verify-login', async (req, res) => {
         const newToken = jwt.sign(
             { id: user._id, email: user.email },
             process.env.JWT_SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: '24h' }
         );
 
         // Return user data and the new token
@@ -325,7 +453,7 @@ router.post('/refresh-token', (req, res) => {
     try {
         const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
 
-        const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
 
         res.status(200).json({ accessToken: newAccessToken });
     } catch (error) {

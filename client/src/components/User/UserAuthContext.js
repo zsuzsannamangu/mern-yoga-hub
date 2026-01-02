@@ -57,16 +57,13 @@ export const UserAuthProvider = ({ children }) => { // Creating a provider compo
             const token = localStorage.getItem('userToken');
             if (!token) {
                 setLoading(false);
-                //logout(); // If no token exists, log out the user
+                setIsAuthenticated(false);
+                setUser(null);
                 return;
             }
 
             try {
                 const response = await userAxiosInstance.post('/validate-token', { token }); // Validate the token with the backend
-
-                if (response.status === 404) {
-                    return; // Do NOT log out
-                }
 
                 if (response.data.isValid) {
                     // If token is valid, extract user data
@@ -86,9 +83,29 @@ export const UserAuthProvider = ({ children }) => { // Creating a provider compo
 
                     setUser(standardizedUser); // Update user state
                     setIsAuthenticated(true); // Mark user as authenticated
+                } else {
+                    // Token is invalid, clear it but don't force logout immediately
+                    localStorage.removeItem('userToken');
+                    setIsAuthenticated(false);
+                    setUser(null);
                 }
             } catch (error) {
-                logout();
+                // Only log out if it's an authentication error (401), not network errors
+                if (error.response && error.response.status === 401) {
+                    // Token is invalid or expired
+                    localStorage.removeItem('userToken');
+                    localStorage.removeItem('user');
+                    setIsAuthenticated(false);
+                    setUser(null);
+                } else {
+                    // Network error or other issue - keep user logged in with stored data
+                    // Don't log out on network errors
+                    const storedUser = JSON.parse(localStorage.getItem('user'));
+                    if (storedUser) {
+                        setUser(storedUser);
+                        setIsAuthenticated(true);
+                    }
+                }
             }
             setLoading(false); // Ensure loading state is always updated
         };

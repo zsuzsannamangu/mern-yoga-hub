@@ -6,10 +6,13 @@ import './UserLogin.scss';
 
 function UserLogin() {
     const [form, setForm] = useState({ email: '' });
+    const [needsVerification, setNeedsVerification] = useState(false);
+    const [isResending, setIsResending] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
+        setNeedsVerification(false); // Reset when user changes email
     };
 
     const handleSubmit = async (e) => {
@@ -26,19 +29,59 @@ function UserLogin() {
                 confirmButtonText: 'OK',
             });
 
-            // Clear the email field
+            // Clear the email field and reset state
             setForm({ email: '' });
+            setNeedsVerification(false);
         } catch (error) {
+            const errorData = error.response?.data || {};
+            const errorMessage = errorData.message || 'Could not send login email. Please try again.';
+            const needsVerificationFlag = errorData.needsVerification || false;
 
-            const errorMessage =
-                error.response?.data?.message || 'Could not send login email. Please try again.';
+            setNeedsVerification(needsVerificationFlag);
 
             Swal.fire({
                 icon: 'error',
                 title: 'Login Failed',
-                text: errorMessage || 'We couldn’t log you in. Please check your credentials and try again.',
+                text: errorMessage,
                 confirmButtonText: 'OK'
             });
+        }
+    };
+
+    const handleResendVerification = async () => {
+        if (!form.email) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Email Required',
+                text: 'Please enter your email address first.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        setIsResending(true);
+        try {
+            await userAxiosInstance.post('/resend-verification', { email: form.email });
+
+            Swal.fire({
+                title: 'Verification Email Sent!',
+                text: `A new verification email has been sent to ${form.email}. Please check your inbox and spam folder.`,
+                icon: 'success',
+                confirmButtonText: 'OK',
+            });
+
+            setNeedsVerification(false);
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || 'Could not send verification email. Please try again.';
+            
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to Send',
+                text: errorMessage,
+                confirmButtonText: 'OK'
+            });
+        } finally {
+            setIsResending(false);
         }
     };
 
@@ -66,6 +109,21 @@ function UserLogin() {
                     />
                     <button type="submit">Send Login Link</button>
                 </form>
+                {needsVerification && (
+                    <div className="verification-prompt">
+                        <p className="verification-text">
+                            Your email hasn't been verified yet. Please check your inbox for the verification email.
+                        </p>
+                        <button 
+                            type="button" 
+                            className="resend-verification-btn"
+                            onClick={handleResendVerification}
+                            disabled={isResending}
+                        >
+                            {isResending ? 'Sending...' : 'Resend Verification Email'}
+                        </button>
+                    </div>
+                )}
                 <p className="register-link">
                     Don't have an account yet? <Link to="/register">Register!</Link>
                 </p>
@@ -75,4 +133,3 @@ function UserLogin() {
 }
 
 export default UserLogin;
-

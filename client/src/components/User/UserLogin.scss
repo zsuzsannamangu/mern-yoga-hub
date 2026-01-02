@@ -89,6 +89,44 @@ button:hover {
     text-decoration: underline;
 }
 
+.verification-prompt {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: 4px;
+    text-align: center;
+}
+
+.verification-text {
+    font-size: 14px;
+    color: $text-color;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.resend-verification-btn {
+    width: 100%;
+    padding: 10px 16px;
+    background-color: $purple-primary;
+    color: $button-text-color;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover:not(:disabled) {
+        background-color: $primary-button-hover-color;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .login-page {
