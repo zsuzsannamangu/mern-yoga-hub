@@ -20,6 +20,9 @@ const AdminBooking = () => {
     const [passedSlots, setPassedSlots] = useState([]);
     const [newSlot, setNewSlot] = useState({ date: '', time: '' }); // New slot form state
     const [loading, setLoading] = useState(false); // Loading state for API calls
+    const [searchEmail, setSearchEmail] = useState(''); // Search email state
+    const [searchResults, setSearchResults] = useState(null); // Search results state
+    const [searching, setSearching] = useState(false); // Searching state
 
     /**
      * Formats a time string into a human-readable format.
@@ -273,11 +276,149 @@ const AdminBooking = () => {
         fetchSlots();
     }, [fetchSlots]);
 
+    /**
+     * Search for bookings by email using the diagnostic endpoint
+     */
+    const searchBookingsByEmail = async () => {
+        if (!searchEmail.trim()) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Email Required',
+                text: 'Please enter an email address to search.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        setSearching(true);
+        try {
+            const response = await adminAxiosInstance.get(`/api/admin/diagnostics/bookings-by-email?email=${encodeURIComponent(searchEmail.trim())}`);
+            setSearchResults(response.data);
+            
+            if (response.data.bookingsByEmail.length === 0 && 
+                (!response.data.user || response.data.bookingsByUserId.length === 0)) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'No Bookings Found',
+                    html: `
+                        <p>No bookings found for: <strong>${searchEmail}</strong></p>
+                        ${response.data.userFound ? '<p>User account exists but has no bookings.</p>' : '<p>No user account found with this email.</p>'}
+                        ${response.data.allYahooBookings.length > 0 ? 
+                            `<p>Found ${response.data.allYahooBookings.length} other yahoo.com bookings. Check if there's a typo.</p>` : ''}
+                    `,
+                    confirmButtonText: 'OK'
+                });
+            }
+        } catch (error) {
+            console.error('Search error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Search Failed',
+                text: error.response?.data?.message || 'Failed to search bookings. Please try again.',
+                confirmButtonText: 'OK'
+            });
+        } finally {
+            setSearching(false);
+        }
+    };
+
     return (
         <AdminLayout>
             <div className="admin-booking">
             <div className="admin-booking-container">
                 <h3 className="section-title">Manage Bookable Slots</h3>
+                
+                {/* Search by Email Section */}
+                <div className="search-booking-section">
+                    <h3>Search Bookings by Email</h3>
+                    <div className="search-form">
+                        <input
+                            type="email"
+                            placeholder="Enter email address (e.g., mistymansolilli@yahoo.com)"
+                            value={searchEmail}
+                            onChange={(e) => setSearchEmail(e.target.value)}
+                            onKeyPress={(e) => e.key === 'Enter' && searchBookingsByEmail()}
+                            className="search-email-input"
+                        />
+                        <button 
+                            onClick={searchBookingsByEmail} 
+                            disabled={searching}
+                            className="search-button"
+                        >
+                            {searching ? 'Searching...' : 'Search'}
+                        </button>
+                    </div>
+                    
+                    {searchResults && (
+                        <div className="search-results">
+                            <h4>Search Results for: {searchResults.email}</h4>
+                            
+                            {searchResults.userFound && (
+                                <div className="user-info">
+                                    <p><strong>User Account Found:</strong></p>
+                                    <p>Name: {searchResults.user.firstName} {searchResults.user.lastName}</p>
+                                    <p>Email: {searchResults.user.email}</p>
+                                    <p>Verified: {searchResults.user.isVerified ? 'Yes' : 'No'}</p>
+                                    <p>User ID: {searchResults.user.id}</p>
+                                </div>
+                            )}
+                            
+                            {searchResults.bookingsByEmail.length > 0 && (
+                                <div className="bookings-list">
+                                    <h5>Bookings Found by Email ({searchResults.bookingsByEmail.length}):</h5>
+                                    <ul>
+                                        {searchResults.bookingsByEmail.map((booking) => (
+                                            <li key={booking.id} className="booking-result-item">
+                                                <p><strong>Date:</strong> {booking.date} at {booking.time}</p>
+                                                <p><strong>Name:</strong> {booking.firstName} {booking.lastName}</p>
+                                                <p><strong>Email:</strong> {booking.email}</p>
+                                                <p><strong>Session Type:</strong> {booking.sessionType}</p>
+                                                <p><strong>Booking ID:</strong> {booking.id}</p>
+                                                {booking.message && <p><strong>Message:</strong> {booking.message}</p>}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                            
+                            {searchResults.bookingsByUserId.length > 0 && (
+                                <div className="bookings-list">
+                                    <h5>Bookings Found by User ID ({searchResults.bookingsByUserId.length}):</h5>
+                                    <ul>
+                                        {searchResults.bookingsByUserId.map((booking) => (
+                                            <li key={booking.id} className="booking-result-item">
+                                                <p><strong>Date:</strong> {booking.date} at {booking.time}</p>
+                                                <p><strong>Name:</strong> {booking.firstName} {booking.lastName}</p>
+                                                <p><strong>Email:</strong> {booking.email}</p>
+                                                <p><strong>Session Type:</strong> {booking.sessionType}</p>
+                                                <p><strong>Booking ID:</strong> {booking.id}</p>
+                                                {booking.message && <p><strong>Message:</strong> {booking.message}</p>}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                            
+                            {searchResults.allYahooBookings.length > 0 && (
+                                <div className="similar-bookings">
+                                    <h5>Other Yahoo.com Bookings (for typo checking):</h5>
+                                    <ul>
+                                        {searchResults.allYahooBookings.slice(0, 10).map((booking, index) => (
+                                            <li key={index}>
+                                                {booking.email} - {booking.date} {booking.time} - {booking.firstName} {booking.lastName}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                            
+                            {searchResults.bookingsByEmail.length === 0 && 
+                             searchResults.bookingsByUserId.length === 0 && (
+                                <p className="no-results">No bookings found for this email address.</p>
+                            )}
+                        </div>
+                    )}
+                </div>
                 <form className="admin-booking-form" onSubmit={addSlot}>
                     <h3>Add New Slot</h3>
                     <div className="form-group">
