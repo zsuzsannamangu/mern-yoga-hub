@@ -392,11 +392,24 @@ function UserBookNew() {
             const result = await response.json();
 
             if (response.ok && result.success) {
-                // Exit early if successful
+                // Log booking success for debugging
+                console.log('Booking successful:', {
+                    bookingId: result.slot?._id,
+                    slot: result.slot,
+                    emailSent: result.emailSent,
+                    emailErrors: result.emailErrors
+                });
+
+                // Show success message
+                let successMessage = 'Booking confirmed! Check your email for confirmation and details.';
+                if (result.emailErrors && result.emailErrors.length > 0) {
+                    successMessage += ' (Note: Some confirmation emails may not have been sent, but your booking is confirmed.)';
+                }
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Booking Confirmed!',
-                    text: 'Booking successful. Check your email for confirmation and details.',
+                    text: successMessage,
                     confirmButtonText: 'OK'
                 }).then(() => {
                     navigate(`/user/${userId}`);
@@ -417,7 +430,8 @@ function UserBookNew() {
             }
 
             // Only throws if failed
-            throw new Error(result?.message || 'Unknown error');
+            console.error('Booking failed:', result);
+            throw new Error(result?.error || result?.message || 'Unknown error');
 
         } catch (error) {
             // Only shows if the fetch OR the result fails

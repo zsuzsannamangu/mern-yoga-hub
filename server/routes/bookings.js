@@ -16,11 +16,93 @@ module.exports = (io) => {
         try {
             if (email || userId) {
                 // Fetch bookings for a specific user
-                const bookedSlots = await Booking.find({
-                    isBooked: true,
-                    ...(email && { email }),
-                    ...(userId && { userId }),
-                }).select('date time firstName lastName email message sessionType title length location link isAdminCreated status');
+                const query = { isBooked: true };
+                
+                if (email) {
+                    // Try exact match first, then case-insensitive
+                    // Also search for partial matches in case of typos
+                    const exactMatch = await Booking.find({ 
+                        isBooked: true, 
+                        email: email 
+                    });
+                    
+                    const caseInsensitiveMatch = await Booking.find({ 
+                        isBooked: true, 
+                        email: { $regex: new RegExp(`^${email}$`, 'i') } 
+                    });
+                    
+                    // Combine and deduplicate
+                    const allMatches = [...exactMatch, ...caseInsensitiveMatch];
+                    const uniqueMatches = allMatches.filter((booking, index, self) => 
+                        index === self.findIndex(b => b._id.toString() === booking._id.toString())
+                    );
+                    
+                    if (uniqueMatches.length > 0) {
+                        const bookedSlots = uniqueMatches
+                            .map(b => ({
+                                _id: b._id,
+                                date: b.date,
+                                time: b.time,
+                                firstName: b.firstName,
+                                lastName: b.lastName,
+                                email: b.email,
+                                userId: b.userId,
+                                sessionType: b.sessionType,
+                                message: b.message,
+                                isAdminCreated: b.isAdminCreated,
+                                status: b.status
+                            }))
+                            .sort((a, b) => {
+                                const dateCompare = a.date.localeCompare(b.date);
+                                return dateCompare !== 0 ? dateCompare : a.time.localeCompare(b.time);
+                            });
+                        
+                        console.log(`Found ${bookedSlots.length} bookings for email ${email}:`, bookedSlots);
+                        
+                        return res.status(200).json({
+                            success: true,
+                            message: 'Fetched booked slots for user',
+                            bookedSlots,
+                        });
+                    }
+                    
+                    // If no matches found, log all bookings with similar emails for debugging
+                    console.log(`No bookings found for email: ${email}`);
+                    const allBookings = await Booking.find({ isBooked: true }).select('email date time firstName lastName');
+                    console.log('All booked emails in database:', allBookings.map(b => b.email));
+                    
+                    query.email = { $regex: new RegExp(`^${email}$`, 'i') };
+                }
+                
+                if (userId) {
+                    // Handle both string and ObjectId formats
+                    if (mongoose.Types.ObjectId.isValid(userId)) {
+                        query.userId = new mongoose.Types.ObjectId(userId);
+                    } else {
+                        query.userId = userId;
+                    }
+                }
+                
+                // If we get here, it means userId was provided but no email matches
+                // Still execute the query for userId
+                const bookedSlots = await Booking.find(query)
+                    .select('date time firstName lastName email message sessionType title length location link isAdminCreated status userId')
+                    .sort({ date: 1, time: 1 }); // Sort by date and time
+                
+                console.log(`Found ${bookedSlots.length} bookings for query:`, { 
+                    email, 
+                    userId, 
+                    query,
+                    bookings: bookedSlots.map(b => ({
+                        id: b._id,
+                        date: b.date,
+                        time: b.time,
+                        email: b.email,
+                        userId: b.userId,
+                        firstName: b.firstName,
+                        lastName: b.lastName
+                    }))
+                });
 
                 return res.status(200).json({
                     success: true,
@@ -32,7 +114,15 @@ module.exports = (io) => {
             // Fetch all slots (available and booked) if no query params are provided
             const availableSlots = await Booking.find({ isBooked: false });
             const bookedSlots = await Booking.find({ isBooked: true })
-                .select('date time firstName lastName email message sessionType title length location link isAdminCreated status');
+                .select('date time firstName lastName email message sessionType title length location link isAdminCreated status userId')
+                .populate('userId', 'firstName lastName email') // Populate user details if needed
+                .sort({ date: 1, time: 1 }); // Sort by date and time
+            
+            console.log(`Admin fetch: Found ${bookedSlots.length} booked slots`);
+            
+            // Log all unique emails for debugging
+            const uniqueEmails = [...new Set(bookedSlots.map(b => b.email))];
+            console.log(`All booked emails (${uniqueEmails.length} unique):`, uniqueEmails);
 
             return res.status(200).json({
                 success: true,
@@ -110,6 +200,7 @@ module.exports = (io) => {
 
         // Validate input
         if (!userId || !firstName || !lastName || !email) {
+            console.error('Booking validation failed:', { userId, firstName, lastName, email });
             return res.status(400).json({
                 success: false,
                 error: 'User ID, first name, last name, and email are required for booking',
@@ -119,6 +210,7 @@ module.exports = (io) => {
         try {
             const slot = await Booking.findById(id);
             if (!slot) {
+                console.error('Slot not found:', id);
                 return res.status(404).json({
                     success: false,
                     error: 'Slot not found',
@@ -126,21 +218,44 @@ module.exports = (io) => {
             }
 
             if (slot.isBooked) {
+                console.warn('Attempted to book already booked slot:', id);
                 return res.status(400).json({
                     success: false,
                     error: 'Slot is already booked',
                 });
             }
 
+            // Convert userId to ObjectId if it's a string (for consistency)
+            let userIdObjectId = userId;
+            if (mongoose.Types.ObjectId.isValid(userId)) {
+                userIdObjectId = new mongoose.Types.ObjectId(userId);
+            } else {
+                console.warn('Invalid userId format:', userId, typeof userId);
+            }
+
             // Update slot details
             slot.isBooked = true;
-            slot.userId = userId; //store user's ID
+            slot.userId = userIdObjectId; //store user's ID as ObjectId
             slot.firstName = firstName;
             slot.lastName = lastName;
             slot.email = email;
             slot.sessionType = sessionType || 'Yoga Session';
             slot.message = message || '';
-            await slot.save();
+            
+            const savedSlot = await slot.save();
+            
+            // Verify the booking was saved
+            if (!savedSlot || !savedSlot.isBooked) {
+                throw new Error('Failed to save booking');
+            }
+            
+            console.log('Booking saved successfully:', {
+                bookingId: savedSlot._id,
+                userId: savedSlot.userId,
+                email: savedSlot.email,
+                date: savedSlot.date,
+                time: savedSlot.time
+            });
 
             // Emit real-time updates
             io.emit('slotBooked', {
@@ -194,29 +309,71 @@ module.exports = (io) => {
             };
 
             const adminEmail = {
-                to: process.env.EMAIL_RECEIVER,
+                to: process.env.EMAIL_RECEIVER || 'mzsuzsanna10@gmail.com',
                 from: process.env.EMAIL_USER,
                 subject: `New Booking: ${firstName} ${lastName} on ${slot.date} at ${formattedTime}`,
-                text: `A new booking has been made:\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nSession Type: ${slot.sessionType}\nMessage: ${slot.message}\nDate: ${slot.date}\nTime: ${formattedTime}`,
+                html: `
+                    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                        <h2>New Booking Received</h2>
+                        <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>User ID:</strong> ${userId}</p>
+                        <p><strong>Session Type:</strong> ${slot.sessionType}</p>
+                        <p><strong>Date:</strong> ${slot.date}</p>
+                        <p><strong>Time:</strong> ${formattedTime}</p>
+                        ${slot.message ? `<p><strong>Message:</strong> ${slot.message}</p>` : ''}
+                        <p><strong>Booking ID:</strong> ${slot._id}</p>
+                        <p>You can view this booking in the admin dashboard.</p>
+                    </div>
+                `,
+                text: `A new booking has been made:\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nUser ID: ${userId}\nSession Type: ${slot.sessionType}\nMessage: ${slot.message || 'None'}\nDate: ${slot.date}\nTime: ${formattedTime}\nBooking ID: ${slot._id}`,
             };
 
-            // Send email notification
+            // Send email notifications (but don't fail booking if email fails)
+            let emailErrors = [];
+            
             try {
                 await sgMail.send(userEmail);
+                console.log(`User confirmation email sent successfully to ${email}`);
             } catch (error) {
-                console.error('Error sending user email:', error.message);
+                console.error('Error sending user email:', {
+                    message: error.message,
+                    response: error.response?.body,
+                    email: email
+                });
+                emailErrors.push('user email');
             }
 
             try {
                 await sgMail.send(adminEmail);
+                console.log(`Admin notification email sent successfully to ${process.env.EMAIL_RECEIVER || 'mzsuzsanna10@gmail.com'}`);
             } catch (error) {
-                console.error('Error sending admin email:', error.message);
+                console.error('Error sending admin email:', {
+                    message: error.message,
+                    response: error.response?.body,
+                    adminEmail: process.env.EMAIL_RECEIVER || 'mzsuzsanna10@gmail.com',
+                    sendGridError: error.response?.body?.errors
+                });
+                emailErrors.push('admin email');
             }
+
+            // Log booking success even if emails failed
+            console.log(`Booking saved successfully:`, {
+                bookingId: slot._id,
+                userId: userId,
+                email: email,
+                date: slot.date,
+                time: slot.time,
+                sessionType: slot.sessionType,
+                emailErrors: emailErrors.length > 0 ? emailErrors : 'none'
+            });
 
             return res.status(200).json({
                 success: true,
                 message: 'Slot booked successfully',
                 slot,
+                emailSent: emailErrors.length === 0,
+                emailErrors: emailErrors.length > 0 ? emailErrors : undefined
             });
         } catch (error) {
             res.status(500).json({
