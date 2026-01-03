@@ -298,7 +298,7 @@ module.exports = (io) => {
                   Date: ${slot.date}<br/>
                   Time: ${formattedTime}<br/>
                   Session Type: ${slot.sessionType}<br/>
-                  Location: We can meet in North Portland or use Google Meet. I'll email you to confirm.</p>
+                  Location: In-person sessions are at Yoga Refuge NW, 210 NW 17th Ave #101, Portland, OR 97209. We can also meet online.</p>
               
                   <p>Before your first session, please fill out this form:<br/>
                   <a href="https://docs.google.com/forms/d/e/1FAIpQLScvgtnQnBdWWTJqwQbqo98X_vNYpjuH9x-YpsAlced_xKjbSA/viewform?usp=header" target="_blank">New Client Form</a></p>
