@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Booking = require('../models/Booking');
 const { authMiddleware, adminMiddleware } = require('../middlewares/auth');
 const sgMail = require('@sendgrid/mail');
@@ -376,6 +377,13 @@ module.exports = (io) => {
                 emailErrors: emailErrors.length > 0 ? emailErrors : undefined
             });
         } catch (error) {
+            console.error('Error booking slot:', {
+                error: error.message,
+                stack: error.stack,
+                slotId: id,
+                userId: userId,
+                email: email
+            });
             res.status(500).json({
                 success: false,
                 error: 'Failed to book slot',

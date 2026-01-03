@@ -389,9 +389,23 @@ function UserBookNew() {
                 }
             );
 
+            // Check if response is ok before parsing JSON
+            if (!response.ok) {
+                let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.error || errorData.message || errorMessage;
+                } catch (e) {
+                    // If response isn't JSON, use status text
+                    const text = await response.text();
+                    errorMessage = text || errorMessage;
+                }
+                throw new Error(errorMessage);
+            }
+
             const result = await response.json();
 
-            if (response.ok && result.success) {
+            if (result.success) {
                 // Log booking success for debugging
                 console.log('Booking successful:', {
                     bookingId: result.slot?._id,
@@ -431,15 +445,23 @@ function UserBookNew() {
 
             // Only throws if failed
             console.error('Booking failed:', result);
-            throw new Error(result?.error || result?.message || 'Unknown error');
+            throw new Error(result?.error || result?.message || result?.details || 'Unknown error');
 
         } catch (error) {
             // Only shows if the fetch OR the result fails
             console.error('Booking error caught:', error);
+            console.error('Error details:', {
+                message: error.message,
+                stack: error.stack,
+                userId: userId,
+                slotId: selectedSlot?._id,
+                userEmail: user?.email
+            });
+            
             Swal.fire({
                 icon: 'error',
                 title: 'Booking Failed',
-                text: 'We couldn\'t confirm your booking. Please try again or contact support if the issue persists.',
+                text: error.message || 'We couldn\'t confirm your booking. Please try again or contact support if the issue persists.',
                 confirmButtonText: 'OK'
             });
         }

@@ -502,6 +502,100 @@ router.post('/appointments', authMiddleware, adminMiddleware, async (req, res) =
   }
 });
 
+// Diagnostic endpoint to find bookings by email (Admin only)
+router.get('/diagnostics/bookings-by-email', authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { email } = req.query;
+    
+    if (!email) {
+      return res.status(400).json({ message: 'Email parameter is required' });
+    }
+
+    // Find user by email
+    const user = await User.findOne({ email: email });
+    
+    let results = {
+      email: email,
+      userFound: !!user,
+      user: user ? {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        isVerified: user.isVerified
+      } : null,
+      bookingsByEmail: [],
+      bookingsByUserId: [],
+      allYahooBookings: []
+    };
+
+    // Search bookings by email (exact match)
+    const bookingsByEmail = await Booking.find({ 
+      email: email,
+      isBooked: true 
+    }).sort({ date: 1, time: 1 });
+    
+    results.bookingsByEmail = bookingsByEmail.map(b => ({
+      id: b._id,
+      date: b.date,
+      time: b.time,
+      firstName: b.firstName,
+      lastName: b.lastName,
+      email: b.email,
+      userId: b.userId,
+      sessionType: b.sessionType,
+      message: b.message,
+      isBooked: b.isBooked,
+      createdAt: b.createdAt
+    }));
+
+    // Search bookings by userId if user found
+    if (user) {
+      const bookingsByUserId = await Booking.find({ 
+        userId: user._id,
+        isBooked: true 
+      }).sort({ date: 1, time: 1 });
+      
+      results.bookingsByUserId = bookingsByUserId.map(b => ({
+        id: b._id,
+        date: b.date,
+        time: b.time,
+        firstName: b.firstName,
+        lastName: b.lastName,
+        email: b.email,
+        userId: b.userId,
+        sessionType: b.sessionType,
+        message: b.message,
+        isBooked: b.isBooked,
+        createdAt: b.createdAt
+      }));
+    }
+
+    // Also search for all yahoo.com bookings to see if there's a typo
+    const yahooBookings = await Booking.find({
+      email: { $regex: '@yahoo.com', $options: 'i' },
+      isBooked: true
+    }).sort({ date: -1 }).limit(20);
+    
+    results.allYahooBookings = yahooBookings.map(b => ({
+      email: b.email,
+      date: b.date,
+      time: b.time,
+      firstName: b.firstName,
+      lastName: b.lastName
+    }));
+
+    // Get all unique emails in bookings for comparison
+    const allBookedEmails = await Booking.distinct('email', { isBooked: true });
+    results.allBookedEmails = allBookedEmails.filter(e => e && e.includes('yahoo')).slice(0, 20);
+
+    res.status(200).json(results);
+  } catch (error) {
+    console.error('Error in diagnostic search:', error);
+    res.status(500).json({ message: 'Failed to search bookings.', error: error.message });
+  }
+});
+
 // GET appointments for a specific user (Admin only)
 router.get('/users/:userId/appointments', authMiddleware, adminMiddleware, async (req, res) => {
   try {
