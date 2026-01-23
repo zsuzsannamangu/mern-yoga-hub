@@ -237,15 +237,15 @@ function About() {
                                         <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
                                             <div className="date-text">February 14, 2026</div>
-                                            <div className="time-text">3:00 PM - 5:00 PM</div>
+                                            <div className="time-text">3:00 PM - 4:30 PM</div>
                                         </div>
                                     </div>
                                     <div className="location-text">
                                         <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
-                                        <a href="https://firelightyoga.com/yoga-chocolate-chakras/" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on February 14 at Firelight Yoga, 3:00 PM to 5:00 PM">Firelight Yoga</a>
+                                        <a href="https://firelightyoga.com/yoga-chocolate-chakras/" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on February 14 at Firelight Yoga, 3:00 PM to 4:30 PM">Firelight Yoga</a>
                                     </div>
                                     <div className="chakra-focus">
-                                        
+                                        Focus: Root (1st) & Heart (4th) Chakras
                                     </div>
                                 </div>
 
