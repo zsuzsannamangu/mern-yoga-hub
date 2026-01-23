@@ -16,7 +16,8 @@ export default class Calendar extends Component {
     this.state = {
       currentDay: new Date(), // Current displayed date 
       selectedDate: null, // User-selected date
-      events: {} // Store events grouped by date
+      events: {}, // Store events grouped by date
+      loading: true // Loading state for events
     };
   }
 
@@ -81,9 +82,10 @@ export default class Calendar extends Component {
         });
       }
 
-      this.setState({ events: eventsObject }, this.setFirstAvailableEvent);
+      this.setState({ events: eventsObject, loading: false }, this.setFirstAvailableEvent);
     } catch (error) {
       console.error('Failed to fetch events:', error);
+      this.setState({ loading: false });
     }
   };
 
@@ -125,7 +127,7 @@ export default class Calendar extends Component {
   };
 
   render() {
-    const { currentDay, selectedDate, events } = this.state;
+    const { currentDay, selectedDate, events, loading } = this.state;
 
     // Format the selected date for matching events
     const formattedDate = selectedDate
@@ -202,7 +204,9 @@ export default class Calendar extends Component {
                 </h3>
               </div>
               <div className="availability-times">
-                {eventsForDate.length > 0 ? (
+                {loading ? (
+                  <p>Loading...</p>
+                ) : eventsForDate.length > 0 ? (
                   eventsForDate.map((event, index) => {
 
                     // Calculate if the event is in the past
