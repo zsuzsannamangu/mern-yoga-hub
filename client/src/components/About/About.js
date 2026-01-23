@@ -242,7 +242,7 @@ function About() {
                                     </div>
                                     <div className="location-text">
                                         <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
-                                        <a href="https://firelightyoga.com/classes/" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on February 14 at Firelight Yoga, 3:00 PM to 5:00 PM">Firelight Yoga</a>
+                                        <a href="https://firelightyoga.com/yoga-chocolate-chakras/" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on February 14 at Firelight Yoga, 3:00 PM to 5:00 PM">Firelight Yoga</a>
                                     </div>
                                     <div className="chakra-focus">
                                         
