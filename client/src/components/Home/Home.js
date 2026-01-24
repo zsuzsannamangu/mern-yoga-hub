@@ -146,10 +146,6 @@ function Home() {
           </div>
           <div className="right-section">
             <p>
-              I'm a trauma-informed yoga teacher, yoga therapist-in-training, and chocolatier based in Portland, Oregon. I create space for exploration of body and mind through a
-              unique blend of yoga, mindfulness, and sensory experiences.
-            </p>
-            <p>
               My offerings include therapeutic yoga, adaptive yoga, gentle slow flow, hatha, and restorative yoga, somatic movement, breathwork, meditation, and Ayurvedic wisdom. I work with individuals and
               groups, supporting each student in deepening their connection to body, breath, and self-compassion.
             </p>

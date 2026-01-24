@@ -104,7 +104,6 @@ function About() {
                 <div className="about-overlay">
                     <div className="about-overlay-text">
                         <h1>Yoga Classes & Workshops</h1>
-                        <p>I'm Zsuzsanna, a yoga teacher offering group classes, workshops, and private sessions.</p>
                     </div>
                 </div>
             </motion.div>
@@ -123,7 +122,7 @@ function About() {
                     <motion.div className="info-item" variants={fadeInUp}>
                         <p>
                             I teach weekly group classes at various studios throughout Portland, offering a range of practices to meet you where you are. 
-                            Whether you're joining a group class or booking a private session, my teaching style emphasizes connection, accessibility, and support.
+                            My teaching style emphasizes connection and accessibility.
                         </p>
                         <p>
                             All classes welcome students of all levels and abilities. I offer modifications and options for every pose, creating an inclusive 
@@ -158,12 +157,11 @@ function About() {
                 <div className="info-category">
                     <motion.div className="info-item" variants={fadeInUp}>
                         <p>
-                            <strong>Individual Yoga Sessions:</strong> Personalized one-on-one sessions designed to meet your unique needs. These sessions offer tailored practices including physical postures, breathwork, meditation, and yoga philosophy.
+                            Personalized one-on-one sessions designed to meet your unique needs. These sessions offer tailored practices including physical postures, breathwork, meditation, and yoga philosophy.
                         </p>
                         <p>
                             Private sessions provide focused attention and personalized guidance that group classes cannot offer. Each session is crafted specifically for you, 
-                            taking into account your body, your goals, and where you are in your practice. Whether you're working through an injury, building strength, 
-                            or exploring deeper aspects of yoga, private sessions offer the space and support you need.
+                            taking into account your body, your goals, and where you are in your practice.
                         </p>
                         <p>
                             Private sessions are ideal for:
@@ -282,7 +280,6 @@ function About() {
                                     Through guided breathwork, we'll cultivate a sense of calm, helping to lower stress, improve circulation, and support respiratory health. Gentle
                                     movements are designed to improve flexibility, build strength, and enhance range of motion, all while remaining seated.
 
-                                    Mindfulness and meditation will be woven into the practice to foster mental clarity, emotional resilience, and a deeper connection to your body.
                                     All levels are welcome, and no prior experience is needed. Props will be offered.</p>
                             </div>
                             <div className="wheelchair-yoga-image">
@@ -293,7 +290,6 @@ function About() {
 
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Hatha Yoga</h4>
-                        <p className="class-schedule">Mondays 9:30-10:30am at <a href="https://www.dearyogastudio.com/schedule" target="_blank" rel="noopener noreferrer">Dear Yoga</a></p>
                         <p>A grounding practice that blends breath awareness with intentional movement. Hatha Yoga emphasizes steady postures and transitions, creating space for balance,
                             strength, and inner stillness. This class is slower-paced than vinyasa, offering time to explore alignment and deepen into each pose. Ideal for those seeking a
                             more meditative, breath-centered experience. Modifications and props are welcome.
@@ -301,9 +297,11 @@ function About() {
                     </motion.div>
 
                     <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Grounded Alignment</h4>
-                        <p className="class-schedule">Mondays 12:15-1:15pm at <a href="https://fullbodiedyoga.union.site/" target="_blank" rel="noopener noreferrer">Full Bodied Yoga</a> (also available livestream)</p>
-                        <p>Grounded Alignment is a Hatha-inspired yoga class designed to help all bodies move mindfully and confidently. Led by experienced instructors who honor body diversity, this class offers personalized techniques tailored to your needs. You'll build strength, find balance, and embrace your unique capabilities, leaving you grounded both on and off the mat.</p>
+                        <h4>Align and Flow</h4>
+                        <p className="class-schedule">Mondays 12:00-1:00pm at <a href="https://fullbodiedyoga.union.site/" target="_blank" rel="noopener noreferrer">Full Bodied Yoga</a> (also available livestream)</p>
+                        <p>Align + Flow is a yoga class designed to help all bodies move mindfully and confidently. You'll explore alignment that supports your unique body in asana (yoga postures) allowing you to seamlessly coordinate breath with movement, 
+                            yoking the two together for a balanced and empowering practice. Leave feeling grounded, energized, and ready to move through any yoga class with ease.
+                        </p>
                     </motion.div>
 
                     <motion.div className="info-item" variants={fadeInUp}>
@@ -316,13 +314,15 @@ function About() {
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Restorative Yoga</h4>
                         <p className="class-schedule">Thursdays 7:30-8:45pm at <a href="https://www.yogarefugepdx.com/class-schedule" target="_blank" rel="noopener noreferrer">Yoga Refuge, NW location</a></p>
-                        <p>A deeply relaxing class designed to soothe the nervous system and restore balance. Using props to support the body in restful poses, this
-                            practice encourages deep release and stillness.
+                        <p>Restorative Yoga is a slow and sweet practice guided with gentle, prop-supported postures to allow students to release tension, reset the nervous system and experience deep rest.
+                        Poses are held for a longer period of time, with the intention being to settle into stillness and meditation. A variety of props are used to provide support to the physical body so the mind can begin to unwind.
+                        Restorative yoga is perfect for those looking for space to relax and shift the nervous system into a parasympathetic ("rest and digest") state. This can be a powerful practice for our busy and stressful lives.
                         </p>
                     </motion.div>
 
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Vinyasa Flow</h4>
+                        <p className="class-schedule">Thursdays 5:45pm-6:45pm at <a href="https://www.dearyogastudio.com/schedule" target="_blank" rel="noopener noreferrer">Dear Yoga</a></p>
                         <p className="class-schedule">Fridays 4pm-5pm at <a href="https://www.yogarefugepdx.com/class-schedule" target="_blank" rel="noopener noreferrer">Yoga Refuge, NW location</a> (also available livestream)</p>
                         <p>Vinyasa Flow builds strength, flexibility, and focus through creative sequences and mindful transitions. Expect to move, breathe,
                             and sweat while cultivating presence and resilience. Options will be offered to support a variety of experience levels.
@@ -330,15 +330,16 @@ function About() {
                     </motion.div>
 
                     <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Slow Flow</h4>
-                        <p>This class focuses on mindful movement, allowing you to ease into each posture with intention and awareness.
-                            Through gentle flows, we'll explore balance and strength at a pace that honors your body.
-                            This practice is inclusive and adaptive, offering a welcoming space for all levels.</p>
+                        <h4>Rise and Flow</h4>
+                        <p className="class-schedule">Mondays 9:30-10:30am at <a href="https://www.dearyogastudio.com/schedule" target="_blank" rel="noopener noreferrer">Dear Yoga</a></p>
+                        <p>Awaken your body and mind with this uplifting morning practice. We’ll begin with gentle warm-ups and grounding exercises to set the tone for the day, then transition into an invigorating 
+                            Vinyasa flow designed to increase blood circulation, energize your system, and flush out stagnant energy. The practice concludes with a soothing cool-down, leaving you feeling refreshed, 
+                            balanced, and ready to move through your day with clarity and ease. All levels are welcome!</p>
                     </motion.div>
 
                     {/* Additional Classes Note */}
                     <motion.div className="info-item additional-classes-note" variants={fadeInUp}>
-                        <p><em>I also sub at The People's Yoga and Firelight Yoga. For a complete schedule of all classes, including substitute classes and special events, please check the <a href="/calendar">calendar</a>.</em></p>
+                        <p><em>I also sub at The People's Yoga, The Practice Space, Ready Set Grow and Firelight Yoga. For a complete schedule of all classes, including substitute classes and special events, please check the <a href="/calendar">calendar</a>.</em></p>
                     </motion.div>
                 </div>
             </motion.div>
