@@ -12,7 +12,7 @@ const AdminLogin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const { login } = useAdminAuth();
+    const { login, logout } = useAdminAuth();
     const alertShown = useRef(false);
     const [loading, setLoading] = useState(false);
 
@@ -59,6 +59,7 @@ const AdminLogin = () => {
                 });
             }
         } catch (error) {
+            logout(); // Clear any stale admin session so hard refresh doesn't show "signed in"
             const errorMessage =
                 error.response?.data?.message ||
                 error.message ||

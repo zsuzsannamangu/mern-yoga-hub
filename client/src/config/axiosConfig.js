@@ -91,6 +91,11 @@ adminAxiosInstance.interceptors.request.use((config) => {
 adminAxiosInstance.interceptors.response.use(
     (response) => response, // Pass successful responses directly
     async (error) => {
+        // Don't try to refresh on login – 401 means wrong credentials, not expired token
+        const url = error.config?.url || '';
+        if (url.includes('/api/admin/login')) {
+            return Promise.reject(error);
+        }
         // Check if the error is due to an expired token
         if (error.response && error.response.status === 401 && !isRefreshing) {
             isRefreshing = true; // Set the refreshing flag
