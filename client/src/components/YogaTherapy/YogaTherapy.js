@@ -13,7 +13,7 @@ function YogaTherapy() {
         {
             id: 1,
             question: "Do I need to have yoga experience to do yoga therapy?",
-            answer: "Not at all. Sessions are designed to meet you exactly where you are."
+            answer: "Not at all. Sessions are designed to meet you where you are."
         },
         {
             id: 2,
@@ -23,7 +23,7 @@ function YogaTherapy() {
         {
             id: 3,
             question: "What is yoga therapy?",
-            answer: "Yoga therapy is a personalized, holistic approach that supports physical, emotional, and mental well-being. It combines breath, movement, psychology, neurobiology, mindfulness, somatic practices and the ancient wisdom of yoga to address specific concerns or conditions. Sessions are tailored to the individual, creating space for healing, resilience, and greater self-awareness."
+            answer: "Yoga therapy may be defined as the application of Yogic principles to a particular person with the objective of achieving a particular spiritual, psychological, or physiological goal. The means employed are comprised of intelligently conceived steps that include but are not limited to the components of Ashtânga Yoga, which includes the educational teachings of yama, niyama, âsana, prânâyâma, pratyâhâra, dhâranâ, dhyâna, and samâdhi. Also included are the application of meditation, textual study, spiritual or psychological counseling, chanting, imagery, prayer, and ritual to meet the needs of the individual. Yoga therapy respects individual differences in age, culture, religion, philosophy, occupation, and mental and physical health. (Definition from the <a href='https://www.iayt.org/about-yoga-therapy' target='_blank' rel='noopener noreferrer'>International Association of Yoga Therapists</a>)"
         },
         {
             id: 4,
@@ -80,7 +80,6 @@ function YogaTherapy() {
                 <div className="yoga-therapy-overlay">
                     <div className="yoga-therapy-overlay-text">
                         <h1>Yoga Therapy</h1>
-                        <p>Supporting your body, mind, and wellbeing through personalized sessions</p>
                     </div>
                 </div>
             </motion.div>
@@ -104,11 +103,11 @@ function YogaTherapy() {
                             </p>
                             <p>
                                 <strong>What makes yoga therapy different?</strong> Unlike general yoga classes, yoga therapy sessions are tailored to your individual needs, creating space for 
-                                healing, resilience, and greater self-awareness. Sessions are designed to meet you exactly where you are.
+                                healing, resilience, and greater self-awareness. Sessions are designed to meet you where you are.
                             </p>
                             <p>
                                 <strong>What to expect:</strong> Each session brings together mindful movement, guided breathwork, meditation, and nervous system support. 
-                                Practices are designed to be integrated into your daily life for sustainable wellbeing.
+                                Practices are designed to be integrated into your daily life.
                             </p>
                             <p>
                                 To book a session, please <a href="/register" className="register-link">create an account</a>. Once registered, you'll see available sessions.
@@ -134,21 +133,19 @@ function YogaTherapy() {
                             <div className="title-line"></div>
                             <p>
                                 My approach to yoga therapy is rooted in presence and compassion. I offer trauma-informed and adaptive 
-                                practices that meet you where you are. As an aspiring yoga therapist, I combine breath science, somatic 
-                                awareness, and yoga psychology to support nervous system regulation, emotional resilience, and healing.
+                                practices that meet you where you are. I combine breath science, somatic 
+                                awareness, and yoga psychology to support your body and nervous system.
                             </p>
                             <p>
-                                Yoga therapy sessions are personalized, one-on-one experiences designed to support your unique healing journey.
+                                Yoga therapy sessions are personalized, one-on-one experiences designed to support your unique journey.
                                 Sessions are about discovering what it means to be in your body, right now, with curiosity and kindness.
                             </p>
                             <ul className="custom-bullet-list">
                                 <li>Trauma-informed and neurobiologically grounded approaches</li>
                                 <li>Adaptive and accessible: chair and gentle floor options</li>
-                                <li>Rooted in yoga therapy principles and somatic movement</li>
                                 <li>One-on-one settings for deeper connection and personalized attention</li>
                                 <li>Inclusive of all bodies, abilities, and backgrounds</li>
-                                <li>Practices designed to support the nervous system and emotional health</li>
-                                <li>Integration of practices into daily life for sustainable wellbeing</li>
+                                <li>Integration of practices into daily life</li>
                             </ul>
                         </div>
                         <div className="yoga-therapy-info-image">
@@ -172,9 +169,6 @@ function YogaTherapy() {
                             </motion.h2>
                             <div className="title-line"></div>
                             <p>
-                                I offer one-on-one yoga therapy sessions tailored to your specific needs and goals.
-                            </p>
-                            <p>
                                 These sessions are open to all, regardless of experience, background, or physical ability.
                                 I always strive to create a supportive, welcoming environment for everyone. While all are welcome, I specialize in supporting:
                             </p>
@@ -183,7 +177,7 @@ function YogaTherapy() {
                                 <li>People navigating postpartum</li>
                                 <li>Wheelchair users and those with spinal cord injuries</li>
                                 <li>Stay-at-home caregivers navigating identity shifts, overwhelm, and emotional labor</li>
-                                <li>Immigrants and those navigating cultural displacement or loss</li>
+                                <li>Immigrants and those navigating cultural displacement or loss (as an immigrant myself)</li>
                                 <li>Anyone seeking personalized support for physical, emotional, or mental well-being</li>
                             </ul>
                         </div>
