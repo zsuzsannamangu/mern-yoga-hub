@@ -26,7 +26,7 @@ function Chocolates() {
             <div className="workshop-announcement newyear-announcement">
                 <div className="announcement-content">
                     <span className="announcement-text">
-                        ✨ <strong>Awaken the Senses: Chocolate, chakras and restorative yoga on Valentine's Day</strong>
+                        ✨ <strong>Awaken the Senses: Chocolate, chakras and restorative yoga — May 9th at 3pm at The People's Yoga</strong> (just before Mother's Day)
                     </span>
                     <a href="/yoga?section=classDescriptions" className="announcement-link">
                         View Workshops
@@ -87,7 +87,12 @@ function Chocolates() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
             >
-                <VideoBlock videoId="BNDjHWsjHI4" title="How I Make My Chocolates" />
+                <VideoBlock
+                    videoId="BNDjHWsjHI4"
+                    title="How I Make My Chocolates"
+                    creditName="Conrad Kaczor"
+                    creditUrl="https://www.conradkaczor.com/"
+                />
             </motion.div>
 
             <motion.div

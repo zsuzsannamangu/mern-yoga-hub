@@ -35,4 +35,21 @@
   }
 }
 
+.video-credit {
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+  color: $main-title-color;
+  opacity: 0.9;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
 

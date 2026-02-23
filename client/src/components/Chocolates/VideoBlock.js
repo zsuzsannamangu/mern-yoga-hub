@@ -1,7 +1,7 @@
 import React from "react";
 import "./VideoBlock.scss";
 
-export default function VideoBlock({ videoId = "BNDjHWsjHI4", title = "How I Make My Chocolates" }) {
+export default function VideoBlock({ videoId = "BNDjHWsjHI4", title = "How I Make My Chocolates", creditName, creditUrl }) {
   const src =
     `https://www.youtube.com/embed/${videoId}` +
     `?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0`;
@@ -19,6 +19,18 @@ export default function VideoBlock({ videoId = "BNDjHWsjHI4", title = "How I Mak
           loading="lazy"
         />
       </div>
+      {(creditName || creditUrl) && (
+        <p className="video-credit">
+          Video by{" "}
+          {creditName && creditUrl ? (
+            <a href={creditUrl} target="_blank" rel="noopener noreferrer">{creditName}</a>
+          ) : creditUrl ? (
+            <a href={creditUrl} target="_blank" rel="noopener noreferrer">{creditUrl}</a>
+          ) : (
+            creditName
+          )}
+        </p>
+      )}
     </section>
   );
 }
