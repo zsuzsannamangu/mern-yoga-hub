@@ -655,7 +655,7 @@ function UserBookNew() {
             {/* Pricing Information - Outside main booking container */}
             <div className="pricing-info">
                 <p>** Individual yoga sessions are $80-$110/hr sliding scale.</p> 
-                <p> Individualized yoga therapy sessions: Online sessions are $10-$80/hr sliding scale, and in-person sessions in NW Portland are $20-$100/hr sliding scale through June 2026, while I'm in training. Please note that online booking is only available for online sessions. For in-person sessions please contact me directly.</p>
+                <p> Individualized yoga therapy sessions: Online sessions are $10-$80/hr sliding scale, and in-person sessions in NW Portland are $20-$100/hr sliding scale through June 2026, while I'm in training. Please note that online booking is only available for virtual sessions. For in-person sessions please contact me directly.</p>
                 <p> Your investment is a personal choice, aligning with your current financial circumstances.**</p>
                 <p><strong> Committing to at least 8 weeks of yoga therapy gives us time to build trust, personalize your practice, and support meaningful, lasting change in body, mind, and nervous system. </strong></p>
             </div>
