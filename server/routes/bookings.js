@@ -197,7 +197,7 @@ module.exports = (io) => {
     // PUT: Book a slot
     router.put('/:id/book', async (req, res) => {
         const { id } = req.params;
-        const { userId, firstName, lastName, email, sessionType, message } = req.body;
+        const { userId, firstName, lastName, email, sessionType, message, paymentAmount, usedCoupon } = req.body;
 
         // Validate input
         if (!userId || !firstName || !lastName || !email) {
@@ -242,7 +242,9 @@ module.exports = (io) => {
             slot.email = email;
             slot.sessionType = sessionType || 'Yoga Session';
             slot.message = message || '';
-            
+            slot.paymentAmount = paymentAmount != null ? Number(paymentAmount) : undefined;
+            slot.usedCoupon = !!usedCoupon;
+
             const savedSlot = await slot.save();
             
             // Verify the booking was saved
@@ -309,6 +311,12 @@ module.exports = (io) => {
                 `,
             };
 
+            const paymentInfo = usedCoupon
+                ? 'Used YOURJOURNEY coupon (no payment)'
+                : (paymentAmount != null && Number(paymentAmount) > 0)
+                    ? `Paid $${Number(paymentAmount).toFixed(2)} via PayPal`
+                    : 'Payment info not provided';
+
             const adminEmail = {
                 to: process.env.EMAIL_RECEIVER || 'mzsuzsanna10@gmail.com',
                 from: process.env.EMAIL_USER,
@@ -322,12 +330,13 @@ module.exports = (io) => {
                         <p><strong>Session Type:</strong> ${slot.sessionType}</p>
                         <p><strong>Date:</strong> ${slot.date}</p>
                         <p><strong>Time:</strong> ${formattedTime}</p>
+                        <p><strong>Payment:</strong> ${paymentInfo}</p>
                         ${slot.message ? `<p><strong>Message:</strong> ${slot.message}</p>` : ''}
                         <p><strong>Booking ID:</strong> ${slot._id}</p>
                         <p>You can view this booking in the admin dashboard.</p>
                     </div>
                 `,
-                text: `A new booking has been made:\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nUser ID: ${userId}\nSession Type: ${slot.sessionType}\nMessage: ${slot.message || 'None'}\nDate: ${slot.date}\nTime: ${formattedTime}\nBooking ID: ${slot._id}`,
+                text: `A new booking has been made:\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nUser ID: ${userId}\nSession Type: ${slot.sessionType}\nPayment: ${paymentInfo}\nMessage: ${slot.message || 'None'}\nDate: ${slot.date}\nTime: ${formattedTime}\nBooking ID: ${slot._id}`,
             };
 
             // Send email notifications (but don't fail booking if email fails)

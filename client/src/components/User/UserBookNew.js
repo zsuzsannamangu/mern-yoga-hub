@@ -385,6 +385,8 @@ function UserBookNew() {
                         email: user?.email,
                         sessionType,
                         message,
+                        paymentAmount,
+                        usedCoupon: couponCode.trim().toUpperCase() === 'YOURJOURNEY',
                     }),
                 }
             );

@@ -5,6 +5,8 @@ const orderSchema = new mongoose.Schema({
     payerName: { type: String, required: true },
     payerEmail: { type: String, required: true },
     transactionAmount: { type: Number, required: true },
+    isLocalPickup: { type: Boolean, default: false },
+    shippingAddress: { type: String },
     cartItems: [
         {
             name: { type: String, required: true },

@@ -145,7 +145,7 @@ export default class Calendar extends Component {
         <div className="workshop-announcement newyear-announcement">
           <div className="announcement-content">
             <span className="announcement-text">
-              ✨ <strong>Awaken the Senses: Chocolate, chakras and restorative yoga — May 9th at 3pm at The People's Yoga</strong> (just before Mother's Day)
+              ✨ <strong>Chair Yoga: Adapt, Support and Create with Chairs</strong> — March 29th, 2–4pm at Full Bodied Yoga
             </span>
             <a href="/yoga?section=classDescriptions" className="announcement-link">
               View Workshops

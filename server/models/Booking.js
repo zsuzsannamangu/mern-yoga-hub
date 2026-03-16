@@ -10,6 +10,8 @@ const bookingSchema = new mongoose.Schema({
     email: { type: String }, // Add user email for booked slots
     sessionType: { type: String }, // Add session type
     message: { type: String }, // Message from the user
+    paymentAmount: { type: Number }, // Amount paid via PayPal (0 or undefined if coupon used)
+    usedCoupon: { type: Boolean, default: false }, // True if YOURJOURNEY coupon was used
     // New fields for admin-created appointments
     title: { type: String }, // Yoga therapy or private yoga class
     length: { type: String }, // 60 min, 75 min, etc.

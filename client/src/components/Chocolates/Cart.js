@@ -210,6 +210,9 @@ function Cart() {
           }
           console.log("Creating PayPal order for:", amount.toFixed(2));
           return actions.order.create({
+            application_context: {
+              shipping_preference: isLocalPickup ? 'NO_SHIPPING' : 'GET_FROM_FILE',
+            },
             purchase_units: [
               {
                 amount: {
@@ -230,6 +233,21 @@ function Cart() {
               text: 'Transaction completed!',
             });
 
+            // Extract shipping address from PayPal if present (when not local pickup)
+            let shippingAddress = null;
+            const shipping = details.purchase_units?.[0]?.shipping;
+            if (shipping?.address) {
+              const a = shipping.address;
+              const lines = [
+                shipping.name?.full_name,
+                a.address_line_1,
+                a.address_line_2,
+                [a.admin_area_2, a.admin_area_1, a.postal_code].filter(Boolean).join(', '),
+                a.country_code,
+              ].filter(Boolean);
+              shippingAddress = lines.join('\n');
+            }
+
             // Send order details to backend
             fetch(`${process.env.REACT_APP_API}/api/orders`, {
               method: "POST",
@@ -241,6 +259,7 @@ function Cart() {
                 transactionAmount: details.purchase_units[0].amount.value,
                 cartItems,
                 isLocalPickup,
+                shippingAddress,
                 couponCode,
                 discount,
               }),

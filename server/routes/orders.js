@@ -8,7 +8,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Handle new order creation
 router.post("/orders", async (req, res) => {
-    const { orderId, payerName, payerEmail, transactionAmount, cartItems } = req.body;
+    const { orderId, payerName, payerEmail, transactionAmount, cartItems, isLocalPickup, shippingAddress } = req.body;
 
     if (!orderId || !payerName || !payerEmail || !transactionAmount || !cartItems.length) {
         return res.status(400).json({ error: "Missing order details." });
@@ -36,6 +36,8 @@ router.post("/orders", async (req, res) => {
             payerName,
             payerEmail,
             transactionAmount,
+            isLocalPickup: !!isLocalPickup,
+            shippingAddress: shippingAddress || undefined,
             cartItems,
         });
         await newOrder.save();
@@ -57,7 +59,7 @@ router.post("/orders", async (req, res) => {
                     .join("")}
                 </ul>
                 <p><b>Total amount paid including shipping:</b> $${transactionAmount}</p>
-                <p>Your chocolates are being lovingly prepared and will ship within 4–6 days. You'll receive an email when your order is on its way.</p>
+                <p>Your chocolates are being lovingly prepared and ${isLocalPickup ? "ready to be picked up" : "will ship"} within 4–6 days. You'll receive an email when your order is ${isLocalPickup ? "ready for pickup" : "on its way"}.</p>
                 <p>I appreciate your support!</p>
                 <p>As a gift, you're invited to book a <b>free 60-minute yoga therapy session</b> with me. 
                 Just use the code <b>YOURJOURNEY</b> when scheduling, after registering for an account.</p>
@@ -69,6 +71,10 @@ router.post("/orders", async (req, res) => {
         };
 
         // Email to admin
+        const deliveryMethod = isLocalPickup ? "Local Pickup (no shipping fee)" : "Shipping ($5.00)";
+        const shippingSection = shippingAddress
+            ? `<p><b>Shipping address:</b></p><pre style="margin:0;white-space:pre-wrap;font-family:inherit;">${shippingAddress}</pre>`
+            : "";
         const orderEmailToAdmin = {
             to: process.env.EMAIL_RECEIVER,
             from: process.env.EMAIL_USER,
@@ -78,8 +84,10 @@ router.post("/orders", async (req, res) => {
                 <p><b>Name:</b> ${payerName}</p>
                 <p><b>Email:</b> ${payerEmail}</p>
                 <p><b>Order ID:</b> ${orderId}</p>
-                <p><b>Total Amount:</b> ${transactionAmount}</p>
-                <p><b>Order details:</p>
+                <p><b>Total Amount:</b> $${transactionAmount}</p>
+                <p><b>Delivery:</b> ${deliveryMethod}</p>
+                ${shippingSection}
+                <p><b>Order details:</b></p>
                 <ul>
                     ${cartItems
                     .map(
