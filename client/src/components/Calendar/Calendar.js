@@ -145,7 +145,7 @@ export default class Calendar extends Component {
         <div className="workshop-announcement newyear-announcement">
           <div className="announcement-content">
             <span className="announcement-text">
-              ✨ <strong>Chair Yoga: Adapt, Support and Create with Chairs</strong> — March 29th, 2–4pm at Full Bodied Yoga
+              ✨ <strong>Chair Yoga Workshop: Adapt, Support and Create with Chairs</strong> — March 29th, 2–3:30pm at Full Bodied Yoga
             </span>
             <a href="/yoga?section=classDescriptions" className="announcement-link">
               View Workshops
