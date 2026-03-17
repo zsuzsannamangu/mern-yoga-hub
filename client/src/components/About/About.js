@@ -230,11 +230,7 @@ function About() {
                         <p>
                             No prior experience with chair yoga is required. This workshop is suitable for yoga teachers of all styles, yoga students, and anyone curious about making yoga more accessible, functional, and expansive.
                         </p>
-                        <p><strong>Sliding Scale Pricing</strong></p>
-                        <p>
-                            We're committed to making this class accessible while ensuring the sustainability of our offerings. Using the Green Bottle Method, please choose a price that best aligns with your financial situation.
-                        </p>
-                        <p>Pay what you can: $35–$55 per person. Simply choose an amount that feels right for you. Thank you for supporting an inclusive and thriving community!</p>
+                        <p>Pay what you can: $35–$55 per person.</p>
                         <div className="workshop-dates-section">
                             <h5>Upcoming Dates</h5>
                             <div className="workshop-dates-grid">
@@ -246,7 +242,10 @@ function About() {
                                             <div className="time-text">2:00 PM – 3:30 PM</div>
                                         </div>
                                     </div>
-                                    <div className="location-text">Full Bodied Yoga</div>
+                                    <div className="location-text">
+                                        <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
+                                        <a href="https://fullbodiedyoga.union.site/performances/mnbiuj52" target="_blank" rel="noopener noreferrer" aria-label="Register for Chair Yoga workshop on March 29 at Full Bodied Yoga">Full Bodied Yoga</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -308,16 +307,16 @@ function About() {
                                     <div className="date-header">
                                         <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
-                                            <div className="date-text">Spring 2026</div>
-                                            <div className="time-text">TBA</div>
+                                            <div className="date-text">May 9, 2026</div>
+                                            <div className="time-text">3:00 PM – 5:00 PM</div>
                                         </div>
                                     </div>
                                     <div className="location-text">
                                         <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
-                                        <a href="https://thepeoplesyoga.org/events-and-workshops/" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop in Spring 2026 at The People's Yoga on NE Killingsworth">The People's Yoga, NE Killingsworth</a>
+                                        <a href="https://thepeoplesyoga.org/events-and-workshops/" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on May 9 at The People's Yoga on NE Killingsworth">The People's Yoga, NE Killingsworth</a>
                                     </div>
                                     <div className="chakra-focus">
-                                        
+                                        Focus: Root (1st) & Heart (4th) Chakras
                                     </div>
                                 </div>
                             </div>
