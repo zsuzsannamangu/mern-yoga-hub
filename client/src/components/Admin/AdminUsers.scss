@@ -535,6 +535,22 @@
     font-weight: 500;
 }
 
+// Force past appointments to appear muted (must come after base appointment color rules)
+.appointments-table tbody tr.past:not(.cancelled) .appointment-title,
+.appointments-table tbody tr.past:not(.cancelled) .appointment-title strong,
+.appointments-table tbody tr.past:not(.cancelled) .appointment-date,
+.appointments-table tbody tr.past:not(.cancelled) .appointment-time,
+.appointments-table tbody tr.past:not(.cancelled) .appointment-length,
+.appointments-table tbody tr.past:not(.cancelled) .appointment-location,
+.appointments-table tbody tr.past:not(.cancelled) .appointment-location .meeting-link,
+.appointments-table tbody tr.past:not(.cancelled) td {
+    color: $secondary-text-color !important;
+}
+
+.appointments-table tbody tr.past:not(.cancelled) {
+    background-color: lighten($secondary-background-color, 2%) !important;
+}
+
 .appointment-location {
     .meeting-link {
         color: $text-color;
@@ -569,6 +585,10 @@
         border-radius: 12px;
         text-transform: uppercase;
     }
+}
+
+.appointments-table tbody tr.past:not(.cancelled) .appointment-status .active-status {
+    background-color: $secondary-text-color !important;
 }
 
 .appointment-actions {

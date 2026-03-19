@@ -252,7 +252,7 @@ const AdminUsers = () => {
                 .sort((a, b) => {
                     const dateA = new Date(`${a.date}T${a.time}`);
                     const dateB = new Date(`${b.date}T${b.time}`);
-                    return dateA - dateB;
+                    return dateB - dateA;
                 });
             
             console.log('Filtered appointments for userId', userId, ':', sortedBookings);
