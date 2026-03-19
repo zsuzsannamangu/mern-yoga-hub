@@ -434,24 +434,22 @@ router.post('/appointments', authMiddleware, adminMiddleware, async (req, res) =
 
     await newAppointment.save();
 
-    // Format time with timezone
-    const formatTimeWithZone = (dateStr, timeStr, zone) => {
-      const [hour, minute] = timeStr.split(':');
-      const dateTime = DateTime.fromObject(
-        {
-          year: Number(dateStr.split('-')[0]),
-          month: Number(dateStr.split('-')[1]),
-          day: Number(dateStr.split('-')[2]),
-          hour: Number(hour),
-          minute: Number(minute),
-        },
-        { zone }
-      );
-      return dateTime.toLocaleString(DateTime.TIME_SIMPLE) + ' ' + dateTime.offsetNameShort;
-    };
+    // Build the appointment time in Pacific first, then convert that same instant to Central
+    const [hour, minute] = time.split(':');
+    const pacificDateTime = DateTime.fromObject(
+      {
+        year: Number(date.split('-')[0]),
+        month: Number(date.split('-')[1]),
+        day: Number(date.split('-')[2]),
+        hour: Number(hour),
+        minute: Number(minute),
+      },
+      { zone: 'America/Los_Angeles' }
+    );
 
-    const formattedPacificTime = formatTimeWithZone(date, time, 'America/Los_Angeles');
-    const formattedCentralTime = formatTimeWithZone(date, time, 'America/Chicago');
+    const formattedPacificTime = `${pacificDateTime.toLocaleString(DateTime.TIME_SIMPLE)} ${pacificDateTime.offsetNameShort}`;
+    const centralDateTime = pacificDateTime.setZone('America/Chicago');
+    const formattedCentralTime = `${centralDateTime.toLocaleString(DateTime.TIME_SIMPLE)} ${centralDateTime.offsetNameShort}`;
     const formattedTimeWithBothZones = `${formattedPacificTime} / ${formattedCentralTime}`;
 
     // Prepare location/link information for email

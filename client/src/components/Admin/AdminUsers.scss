@@ -482,6 +482,23 @@
                     color: $secondary-text-color;
                 }
             }
+
+            &.past:not(.cancelled) {
+                background-color: lighten($secondary-background-color, 2%);
+
+                td {
+                    color: $secondary-text-color !important;
+                }
+
+                .appointment-title strong,
+                .meeting-link {
+                    color: $secondary-text-color !important;
+                }
+
+                .active-status {
+                    background-color: $secondary-text-color;
+                }
+            }
         }
 
         td {

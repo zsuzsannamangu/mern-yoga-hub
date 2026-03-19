@@ -10,7 +10,7 @@ import { FaTrash, FaPlus, FaEdit, FaTimes } from 'react-icons/fa'; // Icons for 
 const AdminUsers = () => {
     const [users, setUsers] = useState([]); // State to store users
     const [loading, setLoading] = useState(false); // State to track loading status
-    const [sortBy, setSortBy] = useState('date'); // State to track sorting: 'name' or 'date'
+    const [sortBy, setSortBy] = useState('name'); // State to track sorting: 'name' or 'date'
     const [sortOrder, setSortOrder] = useState('asc'); // State to track sort order: 'asc' or 'desc'
     const [showAddForm, setShowAddForm] = useState(false); // State to control form visibility
     const [newClient, setNewClient] = useState({
@@ -74,6 +74,14 @@ const AdminUsers = () => {
             return value * 60;
         }
         return value;
+    };
+
+    const isAppointmentPast = (appointment) => {
+        const now = new Date();
+        const appointmentStart = new Date(`${appointment.date}T${appointment.time}`);
+        const durationMinutes = getAppointmentDurationMinutes(appointment);
+        const appointmentEnd = new Date(appointmentStart.getTime() + durationMinutes * 60 * 1000);
+        return appointmentEnd < now;
     };
 
     // Sort users based on current sort settings
@@ -799,7 +807,10 @@ const AdminUsers = () => {
                                                             </thead>
                                                             <tbody>
                                                                 {appointments[user._id].map((appointment) => (
-                                                                    <tr key={appointment._id} className={`appointment-row ${appointment.status === 'cancelled' ? 'cancelled' : ''}`}>
+                                                                    <tr
+                                                                        key={appointment._id}
+                                                                        className={`appointment-row ${appointment.status === 'cancelled' ? 'cancelled' : ''} ${isAppointmentPast(appointment) ? 'past' : ''}`}
+                                                                    >
                                                                         <td className="appointment-title">
                                                                             <strong>{appointment.title || appointment.sessionType || 'General Session'}</strong>
                                                                         </td>
