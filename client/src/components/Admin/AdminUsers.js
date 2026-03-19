@@ -259,6 +259,24 @@ const AdminUsers = () => {
             return;
         }
 
+        const selectedUser = users.find((u) => u._id === selectedUserId);
+        const selectedUserName = selectedUser
+            ? `${selectedUser.firstName || ''} ${selectedUser.lastName || ''}`.trim()
+            : 'this client';
+
+        const confirmation = await Swal.fire({
+            icon: 'question',
+            title: 'Confirm Appointment',
+            html: `Add appointment for <strong>${selectedUserName}</strong>?`,
+            showCancelButton: true,
+            confirmButtonText: 'Yes, create appointment',
+            cancelButtonText: 'Cancel',
+        });
+
+        if (!confirmation.isConfirmed) {
+            return;
+        }
+
         try {
             const token = localStorage.getItem('adminToken');
             console.log('Creating appointment with data:', {
@@ -632,6 +650,11 @@ const AdminUsers = () => {
         fetchUsers();
     }, [fetchUsers]);
 
+    const selectedUser = users.find((u) => u._id === selectedUserId);
+    const selectedUserName = selectedUser
+        ? `${selectedUser.firstName || ''} ${selectedUser.lastName || ''}`.trim()
+        : '';
+
     return (
         <AdminLayout>
             <div className="admin-users">
@@ -951,7 +974,7 @@ const AdminUsers = () => {
                 <div className="modal-overlay">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h3>Add New Appointment</h3>
+                            <h3>{selectedUserName ? `Add New Appointment for ${selectedUserName}` : 'Add New Appointment'}</h3>
                             <button 
                                 className="close-btn" 
                                 onClick={() => setShowAppointmentForm(false)}
@@ -960,6 +983,12 @@ const AdminUsers = () => {
                             </button>
                         </div>
                         <form onSubmit={handleAddAppointment} className="add-appointment-form">
+                            {selectedUserName && (
+                                <div className="form-group">
+                                    <label>Client</label>
+                                    <input type="text" value={selectedUserName} disabled readOnly />
+                                </div>
+                            )}
                             <div className="form-group">
                                 <label htmlFor="title">Title *</label>
                                 <select

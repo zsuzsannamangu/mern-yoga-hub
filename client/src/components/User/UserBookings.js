@@ -18,6 +18,34 @@ function UserBookings() {
     const [availableSlots, setAvailableSlots] = useState([]);
     const [selectedSlot, setSelectedSlot] = useState(null);
 
+    const getBookingDurationMinutes = (slot) => {
+        const durationText = slot?.length || slot?.duration;
+        if (!durationText) return 60;
+
+        const match = String(durationText).match(/(\d+)\s*(min|mins|minutes|hour|hours|hr|hrs)?/i);
+        if (!match) return 60;
+
+        const value = Number(match[1]);
+        const unit = (match[2] || 'min').toLowerCase();
+        if (Number.isNaN(value) || value <= 0) return 60;
+
+        if (unit.startsWith('hour') || unit === 'hr' || unit === 'hrs') {
+            return value * 60;
+        }
+        return value;
+    };
+
+    const getBookingEndTime = (slot) => {
+        const slotStart = new Date(`${slot.date}T${slot.time}`);
+        const durationMinutes = getBookingDurationMinutes(slot);
+        return new Date(slotStart.getTime() + durationMinutes * 60 * 1000);
+    };
+
+    const isCurrentOrUpcoming = (slot, now) => {
+        const slotEndTime = getBookingEndTime(slot);
+        return slotEndTime >= now;
+    };
+
     useEffect(() => {
         if (!user) return;
         
@@ -46,12 +74,11 @@ function UserBookings() {
                 
                 const sortedBookings = uniqueBookings
                     .filter((slot) => {
-                        const slotDateTime = new Date(`${slot.date}T${slot.time}`);
-                        const isFuture = slotDateTime >= now;
+                        const isFutureOrCurrent = isCurrentOrUpcoming(slot, now);
                         const notCancelled = slot.status !== 'cancelled';
                         const notRescheduled = slot.status !== 'rescheduled'; // Hide rescheduled bookings (old appointments)
-                        console.log('User slot:', slot.date, slot.time, 'isFuture:', isFuture, 'notCancelled:', notCancelled, 'notRescheduled:', notRescheduled, 'status:', slot.status);
-                        return isFuture && notCancelled && notRescheduled; // Only show future/current sessions that aren't cancelled or rescheduled
+                        console.log('User slot:', slot.date, slot.time, 'isFutureOrCurrent:', isFutureOrCurrent, 'notCancelled:', notCancelled, 'notRescheduled:', notRescheduled, 'status:', slot.status);
+                        return isFutureOrCurrent && notCancelled && notRescheduled; // Show upcoming sessions and sessions currently in progress
                     })
                     .sort((a, b) => {
                         const dateA = new Date(`${a.date}T${a.time}`);
@@ -115,11 +142,10 @@ function UserBookings() {
                         
                         const sortedBookings = uniqueBookings
                             .filter((slot) => {
-                                const slotDateTime = new Date(`${slot.date}T${slot.time}`);
-                                const isFuture = slotDateTime >= now;
+                                const isFutureOrCurrent = isCurrentOrUpcoming(slot, now);
                                 const notCancelled = slot.status !== 'cancelled';
                                 const notRescheduled = slot.status !== 'rescheduled';
-                                return isFuture && notCancelled && notRescheduled;
+                                return isFutureOrCurrent && notCancelled && notRescheduled;
                             })
                             .sort((a, b) => {
                                 const dateA = new Date(`${a.date}T${a.time}`);
@@ -290,11 +316,10 @@ function UserBookings() {
                 
                 const sortedBookings = uniqueBookings
                     .filter((slot) => {
-                        const slotDateTime = new Date(`${slot.date}T${slot.time}`);
-                        const isFuture = slotDateTime >= now;
+                        const isFutureOrCurrent = isCurrentOrUpcoming(slot, now);
                         const notCancelled = slot.status !== 'cancelled';
                         const notRescheduled = slot.status !== 'rescheduled';
-                        return isFuture && notCancelled && notRescheduled;
+                        return isFutureOrCurrent && notCancelled && notRescheduled;
                     })
                     .sort((a, b) => {
                         const dateA = new Date(`${a.date}T${a.time}`);
