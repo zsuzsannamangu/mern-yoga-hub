@@ -538,6 +538,14 @@ const AdminFinances = () => {
 
     const groupedData = groupDataByMonth(classData);
     const totalRevenue = classData.reduce((sum, entry) => sum + (entry.receivedRate || entry.rate || 0), 0);
+    const totalRevenue2025 = classData.reduce((sum, entry) => {
+        const year = Number((entry.date || '').split('-')[0]);
+        return year === 2025 ? sum + (entry.receivedRate || entry.rate || 0) : sum;
+    }, 0);
+    const totalRevenue2026 = classData.reduce((sum, entry) => {
+        const year = Number((entry.date || '').split('-')[0]);
+        return year === 2026 ? sum + (entry.receivedRate || entry.rate || 0) : sum;
+    }, 0);
     const monthlyTotals = calculateMonthlyTotals(groupedData, expandedMonths);
 
     return (
@@ -568,6 +576,14 @@ const AdminFinances = () => {
                 <div className="summary-card yearly">
                     <h3>Total Revenue (All Time)</h3>
                     <p className="revenue-amount">{formatCurrency(totalRevenue)}</p>
+                </div>
+                <div className="summary-card yearly">
+                    <h3>Total Revenue (2025)</h3>
+                    <p className="revenue-amount">{formatCurrency(totalRevenue2025)}</p>
+                </div>
+                <div className="summary-card yearly">
+                    <h3>Total Revenue (2026)</h3>
+                    <p className="revenue-amount">{formatCurrency(totalRevenue2026)}</p>
                 </div>
                 <div className="summary-card yearly">
                     <h3>Total Classes (All Time)</h3>

@@ -7,6 +7,34 @@ import Swal from 'sweetalert2';
 import io from 'socket.io-client';
 import './UserBookings.scss';
 
+const getBookingDurationMinutes = (slot) => {
+    const durationText = slot?.length || slot?.duration;
+    if (!durationText) return 60;
+
+    const match = String(durationText).match(/(\d+)\s*(min|mins|minutes|hour|hours|hr|hrs)?/i);
+    if (!match) return 60;
+
+    const value = Number(match[1]);
+    const unit = (match[2] || 'min').toLowerCase();
+    if (Number.isNaN(value) || value <= 0) return 60;
+
+    if (unit.startsWith('hour') || unit === 'hr' || unit === 'hrs') {
+        return value * 60;
+    }
+    return value;
+};
+
+const getBookingEndTime = (slot) => {
+    const slotStart = new Date(`${slot.date}T${slot.time}`);
+    const durationMinutes = getBookingDurationMinutes(slot);
+    return new Date(slotStart.getTime() + durationMinutes * 60 * 1000);
+};
+
+const isCurrentOrUpcoming = (slot, now) => {
+    const slotEndTime = getBookingEndTime(slot);
+    return slotEndTime >= now;
+};
+
 function UserBookings() {
     const { user } = useUserAuth();
     const [bookings, setBookings] = useState([]);
@@ -17,34 +45,6 @@ function UserBookings() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [availableSlots, setAvailableSlots] = useState([]);
     const [selectedSlot, setSelectedSlot] = useState(null);
-
-    const getBookingDurationMinutes = (slot) => {
-        const durationText = slot?.length || slot?.duration;
-        if (!durationText) return 60;
-
-        const match = String(durationText).match(/(\d+)\s*(min|mins|minutes|hour|hours|hr|hrs)?/i);
-        if (!match) return 60;
-
-        const value = Number(match[1]);
-        const unit = (match[2] || 'min').toLowerCase();
-        if (Number.isNaN(value) || value <= 0) return 60;
-
-        if (unit.startsWith('hour') || unit === 'hr' || unit === 'hrs') {
-            return value * 60;
-        }
-        return value;
-    };
-
-    const getBookingEndTime = (slot) => {
-        const slotStart = new Date(`${slot.date}T${slot.time}`);
-        const durationMinutes = getBookingDurationMinutes(slot);
-        return new Date(slotStart.getTime() + durationMinutes * 60 * 1000);
-    };
-
-    const isCurrentOrUpcoming = (slot, now) => {
-        const slotEndTime = getBookingEndTime(slot);
-        return slotEndTime >= now;
-    };
 
     useEffect(() => {
         if (!user) return;
