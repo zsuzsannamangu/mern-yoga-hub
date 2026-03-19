@@ -646,8 +646,8 @@ const AdminUsers = () => {
 
     // Format date consistently
     const formatDate = (dateStr) => {
-        const [, month, day] = dateStr.split('-');
-        return `${month}/${day}`;
+        const [year, month, day] = dateStr.split('-');
+        return `${Number(month)}/${Number(day)}/${year}`;
     };
 
     // Handle sort change

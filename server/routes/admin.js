@@ -448,9 +448,6 @@ router.post('/appointments', authMiddleware, adminMiddleware, async (req, res) =
     );
 
     const formattedPacificTime = `${pacificDateTime.toLocaleString(DateTime.TIME_SIMPLE)} ${pacificDateTime.offsetNameShort}`;
-    const centralDateTime = pacificDateTime.setZone('America/Chicago');
-    const formattedCentralTime = `${centralDateTime.toLocaleString(DateTime.TIME_SIMPLE)} ${centralDateTime.offsetNameShort}`;
-    const formattedTimeWithBothZones = `${formattedPacificTime} / ${formattedCentralTime}`;
 
     // Prepare location/link information for email
     let locationInfoText = '';
@@ -475,12 +472,12 @@ router.post('/appointments', authMiddleware, adminMiddleware, async (req, res) =
       to: user.email,
       from: process.env.EMAIL_USER,
       subject: 'New Appointment Scheduled with Zsuzsanna',
-      text: `Dear ${user.firstName}, \n\nYour "${title}" session with Zsuzsanna Mangu at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedTimeWithBothZones} (${length}) has been scheduled.\n\n${locationInfoText}\n\nPlease log in to your account or 
+      text: `Dear ${user.firstName}, \n\nYour "${title}" session with Zsuzsanna Mangu at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedPacificTime} (${length}) has been scheduled.\n\n${locationInfoText}\n\nPlease log in to your account or 
       email me to make changes.\n\nOnline sessions are $10-$80 sliding scale and in-person sessions are $20-$100 sliding scale through June 2026, while I'm in training. Payments are accepted via Venmo @Zsuzsanna-Mangu.\n\nI'm looking forward to working with you!\n\nWarm regards,\nZsuzsanna`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <p>Dear ${user.firstName},</p>
-          <p>Your "${title}" session with Zsuzsanna Mangu at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedTimeWithBothZones} (${length}) has been scheduled.</p>
+          <p>Your "${title}" session with Zsuzsanna Mangu at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedPacificTime} (${length}) has been scheduled.</p>
           <p><strong>${locationInfoHtml}</strong></p>
           <p>Please log in to your account or email me to make changes.</p>
           <p>Online sessions are $10-$80 sliding scale and in-person sessions are $20-$100 sliding scale through June 2026, while I'm in training. Payments are accepted via Venmo @Zsuzsanna-Mangu.</p>

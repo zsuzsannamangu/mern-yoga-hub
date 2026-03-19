@@ -485,19 +485,6 @@
 
             &.past:not(.cancelled) {
                 background-color: lighten($secondary-background-color, 2%);
-
-                td {
-                    color: $secondary-text-color !important;
-                }
-
-                .appointment-title strong,
-                .meeting-link {
-                    color: $secondary-text-color !important;
-                }
-
-                .active-status {
-                    background-color: $secondary-text-color;
-                }
             }
         }
 
@@ -507,6 +494,20 @@
             font-size: 14px;
             vertical-align: middle;
             color: $text-color !important;
+        }
+
+        // Keep past appointments visibly muted even with later td color rules.
+        tr.past:not(.cancelled) td {
+            color: $secondary-text-color !important;
+        }
+
+        tr.past:not(.cancelled) .appointment-title strong,
+        tr.past:not(.cancelled) .meeting-link {
+            color: $secondary-text-color !important;
+        }
+
+        tr.past:not(.cancelled) .active-status {
+            background-color: $secondary-text-color;
         }
     }
 }
