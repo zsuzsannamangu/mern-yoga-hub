@@ -59,6 +59,23 @@ const AdminUsers = () => {
         link: ''
     });
 
+    const getAppointmentDurationMinutes = (appointment) => {
+        const durationText = appointment?.length || appointment?.duration;
+        if (!durationText) return 60;
+
+        const match = String(durationText).match(/(\d+)\s*(min|mins|minutes|hour|hours|hr|hrs)?/i);
+        if (!match) return 60;
+
+        const value = Number(match[1]);
+        const unit = (match[2] || 'min').toLowerCase();
+        if (Number.isNaN(value) || value <= 0) return 60;
+
+        if (unit.startsWith('hour') || unit === 'hr' || unit === 'hrs') {
+            return value * 60;
+        }
+        return value;
+    };
+
     // Sort users based on current sort settings
     const sortUsers = useCallback((userList) => {
         return [...userList].sort((a, b) => {
@@ -216,11 +233,13 @@ const AdminUsers = () => {
             
             const sortedBookings = uniqueBookings
                 .filter((slot) => {
-                    const slotDateTime = new Date(`${slot.date}T${slot.time}`);
-                    const isFuture = slotDateTime >= now;
+                    const slotStartTime = new Date(`${slot.date}T${slot.time}`);
+                    const durationMinutes = getAppointmentDurationMinutes(slot);
+                    const slotEndTime = new Date(slotStartTime.getTime() + durationMinutes * 60 * 1000);
+                    const isFutureOrInProgress = slotEndTime >= now;
                     const notRescheduled = slot.status !== 'rescheduled'; // Hide rescheduled bookings (old appointments)
-                    console.log('Slot:', slot.date, slot.time, 'isFuture:', isFuture, 'status:', slot.status, 'notRescheduled:', notRescheduled);
-                    return isFuture && notRescheduled; // Show future/current sessions (excluding rescheduled ones)
+                    console.log('Slot:', slot.date, slot.time, 'isFutureOrInProgress:', isFutureOrInProgress, 'status:', slot.status, 'notRescheduled:', notRescheduled);
+                    return isFutureOrInProgress && notRescheduled; // Show future sessions and in-progress sessions (excluding rescheduled ones)
                 })
                 .sort((a, b) => {
                     const dateA = new Date(`${a.date}T${a.time}`);
