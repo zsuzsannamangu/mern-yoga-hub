@@ -473,14 +473,14 @@ router.post('/appointments', authMiddleware, adminMiddleware, async (req, res) =
       from: process.env.EMAIL_USER,
       subject: 'New Appointment Scheduled with Zsuzsanna',
       text: `Dear ${user.firstName}, \n\nYour "${title}" session with Zsuzsanna Mangu is scheduled at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedPacificTime} (${length}).\n\n${locationInfoText}\n\nPlease log in to your account or 
-      email me to make changes.\n\nOnline sessions are $10-$80 sliding scale and in-person sessions are $20-$100 sliding scale through June 2026, while I'm in training. Payments are accepted via Venmo @Zsuzsanna-Mangu.\n\nI'm looking forward to working with you!\n\nWarm regards,\nZsuzsanna\n\nThis is an automated email. Please reply directly if you have any questions.`,
+      email me to make changes.\n\nCurrently, online sessions are $10-$80 sliding scale and in-person sessions are $20-$100 sliding scale through June 2026. Payments are accepted via Venmo @Zsuzsanna-Mangu.\n\nI'm looking forward to working with you!\n\nWarm regards,\nZsuzsanna\n\nThis is an automated email. Please reply directly if you have any questions.`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <p>Dear ${user.firstName},</p>
           <p>Your "${title}" session with Zsuzsanna Mangu is scheduled at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedPacificTime} (${length}).</p>
           <p><strong>${locationInfoHtml}</strong></p>
           <p>Please log in to your account or email me to make changes.</p>
-          <p>Online sessions are $10-$80 sliding scale and in-person sessions are $20-$100 sliding scale through June 2026, while I'm in training. Payments are accepted via Venmo @Zsuzsanna-Mangu.</p>
+          <p>Currently, online sessions are $10-$80 sliding scale and in-person sessions are $20-$100 sliding scale through June 2026. Payments are accepted via Venmo @Zsuzsanna-Mangu.</p>
           <p>I'm looking forward to working with you!</p>
           <p>Warm regards,<br>Zsuzsanna</p>
           <p style="font-size: 12px; color: #666;">This is an automated email. Please reply directly if you have any questions.</p>
