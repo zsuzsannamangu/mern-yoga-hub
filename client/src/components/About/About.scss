@@ -205,11 +205,11 @@
   }
 
   .about-overlay {
-    background-color: rgba(255, 255, 255, 0.65);
-    padding: 25px;
-    border-radius: 20px;
-    width: 75%;
-    max-width: 550px;
+    background-color: rgba(255, 255, 255, 0.38);
+    padding: 0.85rem 1.15rem;
+    border-radius: 12px;
+    width: auto;
+    max-width: min(92vw, 28rem);
     text-align: center;
     color: $text-color;
     display: flex;
@@ -220,66 +220,73 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-    backdrop-filter: blur(15px);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.55);
     z-index: 2;
-    transition: all 0.3s ease;
-    animation: gentleFloat 6s ease-in-out infinite;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
 
     &:hover {
-      transform: translate(-50%, -50%) scale(1.02);
-      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.12);
+      transform: translate(-50%, -50%);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+      border-color: rgba(255, 255, 255, 0.75);
     }
 
     @media (min-width: 768px) {
-      width: 65%;
-      max-width: 600px;
-      padding: 35px;
+      padding: 1rem 1.35rem;
+      max-width: min(90vw, 32rem);
+      border-radius: 14px;
     }
 
     @media (min-width: 1024px) {
-      width: 55%;
-      max-width: 650px;
-      padding: 40px;
-    }
-
-    @media (max-width: 768px) {
-      width: 80%;
-      padding: 20px;
-      top: 50%;
-      border-radius: 15px;
-    }
-
-    @media (max-width: 480px) {
-      width: 85%;
-      padding: 18px;
-      top: 50%;
-      border-radius: 12px;
+      padding: 1.1rem 1.5rem;
     }
   }
 
   .about-overlay-text h1 {
-    font-size: 2rem;
+    font-size: 1.55rem;
     font-family: $font-elegant;
-    font-weight: 300;
+    font-weight: 400;
     color: $text-color;
-    margin: 0 0 1.2rem 0;
+    margin: 0 0 0.45rem 0;
     text-align: center;
     width: 100%;
     font-style: italic;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
+    line-height: 1.2;
 
     @media (min-width: 768px) {
-      font-size: 2.4rem;
+      font-size: 1.85rem;
+      margin-bottom: 0.5rem;
     }
 
     @media (min-width: 1024px) {
-      font-size: 2.8rem;
+      font-size: 2.05rem;
     }
   }
 
-  .about-overlay-text p {
+  .about-hero-tagline {
+    margin: 0;
+    font-size: 0.88rem;
+    font-family: $font-secondary;
+    line-height: 1.55;
+    color: $secondary-text-color;
+    text-align: center;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+
+    @media (min-width: 768px) {
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    @media (min-width: 1024px) {
+      font-size: 1rem;
+    }
+  }
+
+  .about-overlay-text p:not(.about-hero-tagline) {
     margin: 0 0 1.2rem;
     font-size: 1.1rem;
     font-family: $font-secondary;

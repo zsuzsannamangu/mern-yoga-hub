@@ -106,7 +106,10 @@ function About() {
             >
                 <div className="about-overlay">
                     <div className="about-overlay-text">
-                        <h1>Yoga Classes & Workshops</h1>
+                        <h1>Group classes &amp; workshops</h1>
+                        <p className="about-hero-tagline">
+                            Chair &amp; wheelchair yoga, yoga for hypermobility &amp; EDS, vinyasa and restorative classes, chocolate &amp; chakra workshops, and more — in Portland and online.
+                        </p>
                     </div>
                 </div>
             </motion.div>
@@ -395,12 +398,6 @@ function About() {
                                 <p>
                                     This chair and wheelchair yoga class will explore breath awareness, gentle mobility, and simple strengthening movements that support joint comfort, circulation, posture, and ease in the body. Movements are adaptable, and options are offered so students can participate in ways that feel supportive and safe.
                                 </p>
-                                <p>No prior yoga experience is required.</p>
-                                <p><strong>Mark your calendar for chair and wheelchair yoga</strong></p>
-                                <p><strong>Dates:</strong> Held every Wednesday</p>
-                                <p><strong>Time:</strong> 9:00 AM – 10:00 AM</p>
-                                <p><strong>Extras:</strong> Chairs and props provided</p>
-                                <p><strong>Cost:</strong> $25 per session</p>
                             </div>
                             <div className="wheelchair-yoga-image">
                                 <img src="/images/yoga/wheelchairyoga.png" alt="Chair and wheelchair yoga practice" />
@@ -439,6 +436,9 @@ function About() {
                             </a>
                             )
                         </p>
+                        <p className="class-schedule">
+                            Saturdays — April 11, April 25, May 9, May 23, June 6, June 20
+                        </p>
                         <p>
                             This class is designed for people with hypermobile bodies, including those living with Ehlers-Danlos Syndrome (EDS) or hypermobility spectrum disorders.
                         </p>
@@ -461,10 +461,6 @@ function About() {
                             <li><strong>Week 5: Nervous System Regulation</strong> — Practices that support recovery and reduce tension in the body. This class includes breathwork, restorative postures, and pacing strategies to support nervous system balance.</li>
                             <li><strong>Week 6: Integration &amp; Personal Practice</strong> — Bringing the elements together into a sustainable yoga practice. Students learn how to modify yoga safely and apply the tools from the series in everyday movement.</li>
                         </ul>
-                        <p><strong>Mark your calendar</strong></p>
-                        <p>Saturdays — April 11, April 25, May 9, May 23, June 6, June 20 · 6:30–7:45 PM</p>
-                        <p><strong>Cost:</strong> $30 per session</p>
-                        <p><strong>Extras:</strong> Chairs and props provided.</p>
                     </motion.div>
 
                     {/* Additional Classes Note */}

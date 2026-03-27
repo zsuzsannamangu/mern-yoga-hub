@@ -80,6 +80,9 @@ function YogaTherapy() {
                 <div className="yoga-therapy-overlay">
                     <div className="yoga-therapy-overlay-text">
                         <h1>Yoga Therapy</h1>
+                        <p className="yoga-therapy-hero-tagline">
+                            One-on-one sessions tailored to you — breath, movement, and nervous-system support for stress, chronic pain, mobility, and whole-person wellbeing.
+                        </p>
                     </div>
                 </div>
             </motion.div>
