@@ -108,7 +108,7 @@ function About() {
                     <div className="about-overlay-text">
                         <h1>Group classes &amp; workshops</h1>
                         <p className="about-hero-tagline">
-                            Chair &amp; wheelchair yoga, yoga for hypermobility &amp; EDS, vinyasa and restorative classes, chocolate &amp; chakra workshops, and more — in Portland and online.
+                            Chair &amp; wheelchair yoga, yoga for hypermobility &amp; EDS, vinyasa and restorative classes, chocolate &amp; chakra workshops — in Portland and online.
                         </p>
                     </div>
                 </div>
