@@ -319,7 +319,7 @@ function About() {
                                     </div>
                                     <div className="location-text">
                                         <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
-                                        <a href="https://thepeoplesyoga.org/events-and-workshops/" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on May 9 at The People's Yoga on NE Killingsworth">The People's Yoga, NE Killingsworth</a>
+                                        <a href="https://thepeoplesyoga.org/events-and-workshops/" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on May 9 at The People's Yoga NE">The People's Yoga NE</a>
                                     </div>
                                     <div className="chakra-focus">
                                         Focus: Root (1st) & Heart (4th) Chakras
