@@ -549,11 +549,6 @@ function About() {
                 <div className="info-category">
                     <h3>Other Yoga Trainings</h3>
                     <div className="info-item">
-                        <h4>20hr "Postpartum Yoga" Teacher Training</h4>
-                        <p><em>with <strong><a href="https://www.awakenedspirityoga.com/product/postnatal-yoga-teacher-training-virtual/" target='_blank' rel="noopener noreferrer">Julia Forest</a></strong>, online</em><br />
-                            October, 2025</p>
-                    </div>
-                    <div className="info-item">
                         <h4>10hr "Yoga for Disabled Folks" Training</h4>
                         <p><em>with <strong><a href="https://www.allihopayoga.com/about" target='_blank' rel="noopener noreferrer">Rodrigo Souza</a></strong>, live via Accessible Yoga</em><br />
                             December 9-19, 2024</p>
