@@ -11,6 +11,7 @@ import { FaCalendarAlt, FaExternalLinkAlt, FaChevronDown, FaChevronUp } from 're
 function About() {
     const location = useLocation(); // React Router hook to access current location (current URL, such as the path or query parameters)
     const classDescriptionsRef = useRef(null); // Reference for the "Class Descriptions" section to enable scrolling.
+    const regularClassesRef = useRef(null); // Scroll target for Regular Classes (calendar "More Info")
     const [openFAQ, setOpenFAQ] = useState(null); // State for managing which FAQ item is open
 
     // FAQ data focused on general yoga classes
@@ -69,7 +70,9 @@ function About() {
         const params = new URLSearchParams(location.search);
         const section = params.get('section');
 
-        if (section === 'classDescriptions' && classDescriptionsRef.current) {
+        if (section === 'regularClasses' && regularClassesRef.current) {
+            regularClassesRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (section === 'classDescriptions' && classDescriptionsRef.current) {
             // Scroll to the start of the Classes and Workshops section
             classDescriptionsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -323,25 +326,15 @@ function About() {
                         </div>
                     </motion.div>
 
-                    {/* Regular Classes Section */}
-                    <motion.h3 className="classes-subtitle" variants={fadeInUp}>Regular Classes</motion.h3>
+                    {/* Regular Classes Section (alphabetical by class title) */}
+                    <motion.h3 ref={regularClassesRef} className="classes-subtitle" variants={fadeInUp}>Regular Classes</motion.h3>
 
                     <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Yoga for Wheelchair Users</h4>
-                        <p className="class-schedule">Every other Saturday 6-7pm at The People's Yoga NE, Studio 3 - entrance on 30th · <a href="/calendar">Sign up</a></p>
-                        <div className="wheelchair-yoga-content">
-                            <div className="wheelchair-yoga-text">
-                                <p>A yoga practice tailored for individuals who use wheelchairs, focusing on enhancing well-being through breath, gentle movement, and mindfulness.
-
-                                    Through guided breathwork, we'll cultivate a sense of calm, helping to lower stress, improve circulation, and support respiratory health. Gentle
-                                    movements are designed to improve flexibility, build strength, and enhance range of motion, all while remaining seated.
-
-                                    All levels are welcome, and no prior experience is needed. Props will be offered.</p>
-                            </div>
-                            <div className="wheelchair-yoga-image">
-                                <img src="/images/yoga/wheelchairyoga.png" alt="Wheelchair yoga practice" />
-                            </div>
-                        </div>
+                        <h4>Align and Flow</h4>
+                        <p className="class-schedule">Mondays 12:00-1:00pm at <a href="https://fullbodiedyoga.union.site/" target="_blank" rel="noopener noreferrer">Full Bodied Yoga</a> (also available livestream)</p>
+                        <p>Align + Flow is a yoga class designed to help all bodies move mindfully and confidently. You'll explore alignment that supports your unique body in asana (yoga postures) allowing you to seamlessly coordinate breath with movement, 
+                            yoking the two together for a balanced and empowering practice. Leave feeling grounded, energized, and ready to move through any yoga class with ease.
+                        </p>
                     </motion.div>
 
                     <motion.div className="info-item" variants={fadeInUp}>
@@ -349,14 +342,6 @@ function About() {
                         <p>A grounding practice that blends breath awareness with intentional movement. Hatha Yoga emphasizes steady postures and transitions, creating space for balance,
                             strength, and inner stillness. This class is slower-paced than vinyasa, offering time to explore alignment and deepen into each pose. Ideal for those seeking a
                             more meditative, breath-centered experience. Modifications and props are welcome.
-                        </p>
-                    </motion.div>
-
-                    <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Align and Flow</h4>
-                        <p className="class-schedule">Mondays 12:00-1:00pm at <a href="https://fullbodiedyoga.union.site/" target="_blank" rel="noopener noreferrer">Full Bodied Yoga</a> (also available livestream)</p>
-                        <p>Align + Flow is a yoga class designed to help all bodies move mindfully and confidently. You'll explore alignment that supports your unique body in asana (yoga postures) allowing you to seamlessly coordinate breath with movement, 
-                            yoking the two together for a balanced and empowering practice. Leave feeling grounded, energized, and ready to move through any yoga class with ease.
                         </p>
                     </motion.div>
 
@@ -377,6 +362,53 @@ function About() {
                     </motion.div>
 
                     <motion.div className="info-item" variants={fadeInUp}>
+                        <h4>Rise and Flow</h4>
+                        <p className="class-schedule">Mondays 9:30-10:30am at <a href="https://www.dearyogastudio.com/schedule" target="_blank" rel="noopener noreferrer">Dear Yoga</a></p>
+                        <p>Awaken your body and mind with this uplifting morning practice. We’ll begin with gentle warm-ups and grounding exercises to set the tone for the day, then transition into an invigorating 
+                            Vinyasa flow designed to increase blood circulation, energize your system, and flush out stagnant energy. The practice concludes with a soothing cool-down, leaving you feeling refreshed, 
+                            balanced, and ready to move through your day with clarity and ease. All levels are welcome!</p>
+                    </motion.div>
+
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <h4>Supportive &amp; Safe Chair Yoga</h4>
+                        <p className="class-schedule">
+                            Wednesdays 9:00 AM – 10:00 AM · $25 per session ·{' '}
+                            <a
+                                href="https://heartspringhealth.com/event/chair-and-wheelchair-yoga/2026-04-01/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Heart Spring Health
+                            </a>
+                            , 7886 SE 13th Ave, Portland, OR 97202 (
+                            <a
+                                href="https://www.google.com/maps/search/?api=1&query=7886+SE+13th+Ave+Portland+OR+97202"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                map
+                            </a>
+                            )
+                        </p>
+                        <div className="wheelchair-yoga-content">
+                            <div className="wheelchair-yoga-text">
+                                <p>
+                                    This chair and wheelchair yoga class will explore breath awareness, gentle mobility, and simple strengthening movements that support joint comfort, circulation, posture, and ease in the body. Movements are adaptable, and options are offered so students can participate in ways that feel supportive and safe.
+                                </p>
+                                <p>No prior yoga experience is required.</p>
+                                <p><strong>Mark your calendar for chair and wheelchair yoga</strong></p>
+                                <p><strong>Dates:</strong> Held every Wednesday</p>
+                                <p><strong>Time:</strong> 9:00 AM – 10:00 AM</p>
+                                <p><strong>Extras:</strong> Chairs and props provided</p>
+                                <p><strong>Cost:</strong> $25 per session</p>
+                            </div>
+                            <div className="wheelchair-yoga-image">
+                                <img src="/images/yoga/wheelchairyoga.png" alt="Chair and wheelchair yoga practice" />
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Vinyasa Flow</h4>
                         <p className="class-schedule">Thursdays 5:45pm-6:45pm at <a href="https://www.dearyogastudio.com/schedule" target="_blank" rel="noopener noreferrer">Dear Yoga</a></p>
                         <p className="class-schedule">Fridays 4pm-5pm at <a href="https://www.yogarefugepdx.com/class-schedule" target="_blank" rel="noopener noreferrer">Yoga Refuge, NW location</a> (also available livestream)</p>
@@ -386,11 +418,53 @@ function About() {
                     </motion.div>
 
                     <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Rise and Flow</h4>
-                        <p className="class-schedule">Mondays 9:30-10:30am at <a href="https://www.dearyogastudio.com/schedule" target="_blank" rel="noopener noreferrer">Dear Yoga</a></p>
-                        <p>Awaken your body and mind with this uplifting morning practice. We’ll begin with gentle warm-ups and grounding exercises to set the tone for the day, then transition into an invigorating 
-                            Vinyasa flow designed to increase blood circulation, energize your system, and flush out stagnant energy. The practice concludes with a soothing cool-down, leaving you feeling refreshed, 
-                            balanced, and ready to move through your day with clarity and ease. All levels are welcome!</p>
+                        <h4>Yoga for Hypermobility &amp; EDS</h4>
+                        <p><strong>Building Stability and Body Awareness</strong></p>
+                        <p className="class-schedule">
+                            Saturdays 6:30–7:45 PM · $30 per session ·{' '}
+                            <a
+                                href="https://heartspringhealth.com/event/yoga-for-hypermobility-eds/2026-04-11/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Heart Spring Health
+                            </a>
+                            , 7886 SE 13th Ave, Portland, OR 97202 (
+                            <a
+                                href="https://www.google.com/maps/search/?api=1&query=7886+SE+13th+Ave+Portland+OR+97202"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                map
+                            </a>
+                            )
+                        </p>
+                        <p>
+                            This class is designed for people with hypermobile bodies, including those living with Ehlers-Danlos Syndrome (EDS) or hypermobility spectrum disorders.
+                        </p>
+                        <p>
+                            We’ll explore slow, controlled yoga movements that build joint stability, strength, and body awareness. Practices emphasize working within supportive ranges of motion, improving proprioception, and developing muscular support around joints.
+                        </p>
+                        <p>
+                            Classes are primarily movement-based yoga practice, with brief guidance to help students understand how to move safely and effectively in hypermobile bodies.
+                        </p>
+                        <p>
+                            Students are welcome to attend the full 6-week series or join individual classes as drop-ins.
+                        </p>
+                        <p>No prior yoga experience is required.</p>
+                        <p><strong>Series focus</strong></p>
+                        <ul>
+                            <li><strong>Week 1: Understanding Hypermobility in Movement</strong> — Learning how to work within supportive ranges of motion. We explore neutral joint alignment, micro-bends, and the difference between mobility and stability through slow, simple yoga poses.</li>
+                            <li><strong>Week 2: Proprioception &amp; Body Awareness</strong> — Practices that improve awareness of joint position and movement. We use slow transitions, small-range movements, and props such as blocks or the wall to support body awareness.</li>
+                            <li><strong>Week 3: Joint Stability &amp; Co-Contraction</strong> — Developing muscular support around joints through gentle strengthening and co-contraction. The practice includes low-load strength work and isometric holds that stabilize shoulders and hips.</li>
+                            <li><strong>Week 4: Moving with Control</strong> — Learning to move with precision rather than momentum. We explore slow transitions, coordination patterns, and controlled flowing movements.</li>
+                            <li><strong>Week 5: Nervous System Regulation</strong> — Practices that support recovery and reduce tension in the body. This class includes breathwork, restorative postures, and pacing strategies to support nervous system balance.</li>
+                            <li><strong>Week 6: Integration &amp; Personal Practice</strong> — Bringing the elements together into a sustainable yoga practice. Students learn how to modify yoga safely and apply the tools from the series in everyday movement.</li>
+                        </ul>
+                        <p><strong>Mark your calendar</strong></p>
+                        <p>Saturdays — April 11, April 25, May 9, May 23, June 6, June 20 · 6:30–7:45 PM</p>
+                        <p><strong>Cost:</strong> $30 per session</p>
+                        <p><strong>Extras:</strong> Chairs and props provided.</p>
                     </motion.div>
 
                     {/* Additional Classes Note */}

@@ -672,6 +672,10 @@
   }
   
   .workshop-date-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
     background: linear-gradient(135deg, rgba(139, 75, 140, 0.03) 0%, rgba(139, 75, 140, 0.01) 100%);
     border: 1.5px solid rgba(139, 75, 140, 0.2);
     border-radius: 8px;
@@ -725,7 +729,7 @@
     
     .location-text {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 5px;
       font-size: 0.85rem;
       color: $text-color;
@@ -739,6 +743,7 @@
         font-size: 12px;
         color: $purple-primary;
         flex-shrink: 0;
+        margin-top: 3px;
       }
       
       a {
@@ -754,7 +759,13 @@
       }
     }
     
+    &:has(.chakra-focus) .location-text {
+      flex: 1 1 auto;
+      margin-bottom: 0;
+    }
+
     .chakra-focus {
+      flex-shrink: 0;
       margin-top: 8px;
       padding-top: 8px;
       border-top: 1px solid rgba(139, 75, 140, 0.15);
