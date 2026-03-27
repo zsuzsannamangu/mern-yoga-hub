@@ -82,7 +82,7 @@ function About() {
         <div className='about-page'>
             <Helmet>
                 <title>Yoga Classes with Zsuzsanna | Group Classes, Workshops & Private Sessions</title>
-                <meta name="description" content="Explore group yoga classes, workshops, and private sessions with Zsuzsanna, offering slow flow, restorative, chair, and wheelchair yoga in Portland and online." />
+                <meta name="description" content="Explore group yoga classes, workshops, and private sessions with Zsuzsanna — trauma-informed chair and wheelchair yoga, hypermobility and EDS, vinyasa, restorative, and chocolate and chakra workshops in Portland and online." />
                 <link rel="canonical" href="https://www.yogaandchocolate.com/yoga" />
             </Helmet>
 
@@ -108,7 +108,7 @@ function About() {
                     <div className="about-overlay-text">
                         <h1>Group classes &amp; workshops</h1>
                         <p className="about-hero-tagline">
-                            Chair &amp; wheelchair yoga, yoga for hypermobility &amp; EDS, vinyasa and restorative classes, chocolate &amp; chakra workshops — in Portland and online.
+                            Trauma-informed chair and wheelchair yoga, adaptive yoga for hypermobility and EDS, slow vinyasa and restorative practices, and integrative chocolate &amp; chakra workshops offered in Portland and online.
                         </p>
                     </div>
                 </div>

@@ -209,7 +209,7 @@
     padding: 0.85rem 1.15rem;
     border-radius: 12px;
     width: auto;
-    max-width: min(92vw, 28rem);
+    max-width: min(94vw, 36rem);
     text-align: center;
     color: $text-color;
     display: flex;
@@ -235,7 +235,7 @@
 
     @media (min-width: 768px) {
       padding: 1rem 1.35rem;
-      max-width: min(90vw, 32rem);
+      max-width: min(92vw, 38rem);
       border-radius: 14px;
     }
 

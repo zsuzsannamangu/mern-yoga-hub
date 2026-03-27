@@ -67,7 +67,7 @@ function YogaTherapy() {
         <div className='yoga-therapy-page'>
             <Helmet>
                 <title>Yoga Therapy with Zsuzsanna | Personalized Healing & Wellbeing</title>
-                <meta name="description" content="Yoga therapy sessions with Zsuzsanna - personalized, trauma-informed, holistic approach supporting physical, emotional, and mental well-being in Portland and online." />
+                <meta name="description" content="Yoga therapy with Zsuzsanna: one-on-one breathwork, somatic movement, and adaptive practices for anxiety, depression, and chronic pain; hypermobility-aware and accessible approaches including chair and wheelchair yoga. Portland and online." />
                 <link rel="canonical" href="https://www.yogaandchocolate.com/yoga-therapy" />
             </Helmet>
 
@@ -81,7 +81,7 @@ function YogaTherapy() {
                     <div className="yoga-therapy-overlay-text">
                         <h1>Yoga Therapy</h1>
                         <p className="yoga-therapy-hero-tagline">
-                            One-on-one sessions tailored to you — breath, movement, and nervous-system support for stress, chronic pain, mobility, and whole-person wellbeing.
+                            One-on-one sessions integrating breathwork, somatic movement, and gentle, adaptive practices to support anxiety, depression and chronic pain. Sessions also draw on functional movement, hypermobility-aware strengthening, and accessible approaches (including chair and wheelchair yoga).
                         </p>
                     </div>
                 </div>
