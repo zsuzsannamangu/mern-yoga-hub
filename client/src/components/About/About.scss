@@ -589,6 +589,15 @@
             }
           }
         }
+
+        /* Breathing room before the next workshop (chair) after yoga + chocolate */
+        &:has(.chakra-chocolate-info) {
+          margin-bottom: 3.5rem;
+
+          @media (min-width: 768px) {
+            margin-bottom: 4.75rem;
+          }
+        }
       }
     }
   }
