@@ -90,7 +90,7 @@ function About() {
             <div className="workshop-announcement newyear-announcement">
                 <div className="announcement-content">
                     <span className="announcement-text">
-                        ✨ <strong>Yoga and chocolate workshop</strong> at The People&apos;s Yoga
+                        ✨ <strong>Yoga and chocolate workshop</strong> — May 9th at The People&apos;s Yoga
                     </span>
                     <a href="/yoga?section=classDescriptions" className="announcement-link">
                         View Workshops
@@ -202,62 +202,6 @@ function About() {
                 <div className="title-line"></div>
                 <div className="info-category">
                     <motion.div className="info-item" variants={fadeInUp}>
-                        <h4>Reimagine Yoga: Adapt, Support, and Create with Chairs</h4>
-                        <p>
-                            Chairs can radically expand what yoga looks like, and who it is for. In this 2-hour workshop, we'll explore how chairs can be used to adapt, support, and reimagine yoga poses for a wide range of bodies, needs, and experiences. This workshop is designed for yoga teachers who want practical tools for inclusive teaching, as well as yoga practitioners who want to use chairs in their own practice.
-                        </p>
-                        <p>We will work with chairs as:</p>
-                        <ul>
-                            <li>Support for balance and strength</li>
-                            <li>A bridge to standing poses</li>
-                            <li>A way to make yoga accessible for people who cannot bear weight through the legs</li>
-                            <li>A creative partner, not a limitation, even for students without mobility restrictions</li>
-                        </ul>
-                        <p>We will specifically explore:</p>
-                        <ul>
-                            <li>How to adapt familiar yoga poses using a chair</li>
-                            <li>Teaching standing poses with chair support</li>
-                            <li>Chair-based approaches to common yoga poses</li>
-                            <li>Working with seated practice for wheelchair users</li>
-                            <li>Adaptations for people with limited or no leg use, or reduced mobility</li>
-                            <li>How to cue clearly and respectfully for mixed-ability classes</li>
-                            <li>How to think creatively rather than prescriptively when adapting poses</li>
-                        </ul>
-                        <p>
-                            This workshop draws from nearly two years of study in adaptive and chair yoga with Sarahjoy Marsh, as well as over a year of teaching wheelchair yoga for people with spinal cord injuries. The emphasis is on real-world teaching, embodied understanding, and practical skills you can use immediately.
-                        </p>
-                        <p>You'll leave with:</p>
-                        <ul>
-                            <li>Concrete adaptations you can bring into any class</li>
-                            <li>Greater confidence teaching chair and adaptive yoga</li>
-                            <li>New ways of seeing chairs as tools for exploration, not just accommodation</li>
-                            <li>A deeper understanding of access, inclusion, and creativity in yoga</li>
-                        </ul>
-                        <p>
-                            No prior experience with chair yoga is required. This workshop is suitable for yoga teachers of all styles, yoga students, and anyone curious about making yoga more accessible, functional, and expansive.
-                        </p>
-                        <p>Pay what you can: $35–$55 per person.</p>
-                        <div className="workshop-dates-section">
-                            <h5>Upcoming Dates</h5>
-                            <div className="workshop-dates-grid">
-                                <div className="workshop-date-card">
-                                    <div className="date-header">
-                                        <FaCalendarAlt className="date-icon" aria-hidden="true" />
-                                        <div className="date-info">
-                                            <div className="date-text">March 29, 2026</div>
-                                            <div className="time-text">2:00 PM – 3:30 PM</div>
-                                        </div>
-                                    </div>
-                                    <div className="location-text">
-                                        <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
-                                        <a href="https://fullbodiedyoga.union.site/performances/mnbiuj52" target="_blank" rel="noopener noreferrer" aria-label="Register for Chair Yoga workshop on March 29 at Full Bodied Yoga">Full Bodied Yoga</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Awaken the Senses: Restorative Yoga, Handcrafted Chocolate and an Exploration of the Chakras</h4>
                         <p>
                             An immersive experience combining restorative yoga, meditation, and sense awareness. This workshop brings together yoga and handmade chocolate to awaken presence, deepen awareness, and open the senses.
@@ -323,6 +267,62 @@ function About() {
                                     </div>
                                     <div className="chakra-focus">
                                         Focus: Root (1st) & Heart (4th) Chakras
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <motion.div className="info-item" variants={fadeInUp}>
+                        <h4>Reimagine Yoga: Adapt, Support, and Create with Chairs</h4>
+                        <p>
+                            Chairs can radically expand what yoga looks like, and who it is for. In this 2-hour workshop, we'll explore how chairs can be used to adapt, support, and reimagine yoga poses for a wide range of bodies, needs, and experiences. This workshop is designed for yoga teachers who want practical tools for inclusive teaching, as well as yoga practitioners who want to use chairs in their own practice.
+                        </p>
+                        <p>We will work with chairs as:</p>
+                        <ul>
+                            <li>Support for balance and strength</li>
+                            <li>A bridge to standing poses</li>
+                            <li>A way to make yoga accessible for people who cannot bear weight through the legs</li>
+                            <li>A creative partner, not a limitation, even for students without mobility restrictions</li>
+                        </ul>
+                        <p>We will specifically explore:</p>
+                        <ul>
+                            <li>How to adapt familiar yoga poses using a chair</li>
+                            <li>Teaching standing poses with chair support</li>
+                            <li>Chair-based approaches to common yoga poses</li>
+                            <li>Working with seated practice for wheelchair users</li>
+                            <li>Adaptations for people with limited or no leg use, or reduced mobility</li>
+                            <li>How to cue clearly and respectfully for mixed-ability classes</li>
+                            <li>How to think creatively rather than prescriptively when adapting poses</li>
+                        </ul>
+                        <p>
+                            This workshop draws from nearly two years of study in adaptive and chair yoga with Sarahjoy Marsh, as well as over a year of teaching wheelchair yoga for people with spinal cord injuries. The emphasis is on real-world teaching, embodied understanding, and practical skills you can use immediately.
+                        </p>
+                        <p>You'll leave with:</p>
+                        <ul>
+                            <li>Concrete adaptations you can bring into any class</li>
+                            <li>Greater confidence teaching chair and adaptive yoga</li>
+                            <li>New ways of seeing chairs as tools for exploration, not just accommodation</li>
+                            <li>A deeper understanding of access, inclusion, and creativity in yoga</li>
+                        </ul>
+                        <p>
+                            No prior experience with chair yoga is required. This workshop is suitable for yoga teachers of all styles, yoga students, and anyone curious about making yoga more accessible, functional, and expansive.
+                        </p>
+                        <p>Pay what you can: $35–$55 per person.</p>
+                        <div className="workshop-dates-section">
+                            <h5>Upcoming Dates</h5>
+                            <div className="workshop-dates-grid">
+                                <div className="workshop-date-card">
+                                    <div className="date-header">
+                                        <FaCalendarAlt className="date-icon" aria-hidden="true" />
+                                        <div className="date-info">
+                                            <div className="date-text">March 29, 2026</div>
+                                            <div className="time-text">2:00 PM – 3:30 PM</div>
+                                        </div>
+                                    </div>
+                                    <div className="location-text">
+                                        <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
+                                        <a href="https://fullbodiedyoga.union.site/performances/mnbiuj52" target="_blank" rel="noopener noreferrer" aria-label="Register for Chair Yoga workshop on March 29 at Full Bodied Yoga">Full Bodied Yoga</a>
                                     </div>
                                 </div>
                             </div>
