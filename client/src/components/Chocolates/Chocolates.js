@@ -26,7 +26,7 @@ function Chocolates() {
             <div className="workshop-announcement newyear-announcement">
                 <div className="announcement-content">
                     <span className="announcement-text">
-                        ✨ <strong>Chair Yoga Workshop: Adapt, Support and Create with Chairs</strong> — March 29th, 2–3:30pm at Full Bodied Yoga
+                        ✨ <strong>Yoga and chocolate workshop</strong> at The People&apos;s Yoga
                     </span>
                     <a href="/yoga?section=classDescriptions" className="announcement-link">
                         View Workshops
