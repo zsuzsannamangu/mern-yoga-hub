@@ -113,21 +113,6 @@ const AdminSubscribers = () => {
         <div className="no-subscribers">No subscribers yet.</div>
       ) : (
         <>
-        <div className="emails-bulk-block">
-          <label className="emails-bulk-label" htmlFor="subscriber-emails-bulk">
-            All emails (one per line)
-          </label>
-          <textarea
-            id="subscriber-emails-bulk"
-            className="emails-bulk-textarea"
-            readOnly
-            rows={Math.min(Math.max(subscribers.length, 3), 18)}
-            value={allEmailsOnePerLine}
-            onFocus={(e) => e.target.select()}
-            onClick={(e) => e.target.select()}
-            spellCheck={false}
-          />
-        </div>
         <div className="subscribers-actions">
           <button
             type="button"
