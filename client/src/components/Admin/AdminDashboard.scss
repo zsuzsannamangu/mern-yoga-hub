@@ -477,6 +477,10 @@
             margin-left: 8px;
             box-sizing: border-box;
             color: $button-text-color;
+
+            svg {
+                font-size: 1.05rem;
+            }
         }
 
         .event-action-button--update {
@@ -489,6 +493,10 @@
 
         .event-action-button--delete {
             background-color: $delete-button;
+
+            svg {
+                font-size: 1.1rem;
+            }
 
             &:hover {
                 background-color: $delete-button-hover;
