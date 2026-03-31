@@ -301,8 +301,8 @@ $class-table-grid-cols:
     minmax(72px, 0.55fr)
     100px
     60px
-    minmax(96px, 1.2fr)
-    minmax(88px, 0.95fr)
+    minmax(84px, 0.82fr)
+    minmax(88px, 1.02fr)
     72px
     72px
     50px
@@ -310,15 +310,15 @@ $class-table-grid-cols:
     minmax(56px, 0.42fr)
     48px
     48px
-    52px;
+    68px;
 
 $class-table-grid-cols-md:
     36px
     minmax(62px, 0.5fr)
     92px
     54px
-    minmax(80px, 1.1fr)
-    minmax(74px, 0.85fr)
+    minmax(72px, 0.88fr)
+    minmax(74px, 0.98fr)
     64px
     64px
     46px
@@ -326,15 +326,15 @@ $class-table-grid-cols-md:
     minmax(48px, 0.38fr)
     44px
     44px
-    48px;
+    60px;
 
 $class-table-grid-cols-sm:
     34px
     minmax(56px, 0.46fr)
     86px
     50px
-    minmax(74px, 1.02fr)
-    minmax(68px, 0.8fr)
+    minmax(66px, 0.84fr)
+    minmax(68px, 0.96fr)
     58px
     58px
     40px
@@ -342,12 +342,12 @@ $class-table-grid-cols-sm:
     minmax(44px, 0.34fr)
     38px
     38px
-    44px;
+    54px;
 
 .class-table-container {
     background: white;
     border-radius: 8px;
-    padding: 25px clamp(16px, 3vw, 28px) 25px 15px;
+    padding: 25px max(22px, clamp(18px, 3.5vw, 36px)) 25px 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow-x: auto;
     box-sizing: border-box;
@@ -605,6 +605,8 @@ $class-table-grid-cols-sm:
                 gap: 5px;
                 justify-content: center;
                 align-items: center;
+                padding-right: 8px;
+                box-sizing: border-box;
 
                 .edit-btn, .delete-btn, .save-btn, .cancel-btn {
                     border: none;
@@ -698,7 +700,7 @@ $class-table-grid-cols-sm:
     }
 
     .class-table-container {
-        padding: 15px;
+        padding: 15px 18px 15px 15px;
         overflow-x: auto;
     }
 

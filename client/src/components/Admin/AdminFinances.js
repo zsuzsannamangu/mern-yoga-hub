@@ -1509,8 +1509,7 @@ const AdminFinances = () => {
                             </button>
                         </div>
                         <p className="location-stats-meta">
-                            {locationReport.entryCount} finance {locationReport.entryCount === 1 ? 'row' : 'rows'} at this location (all categories). Yoga
-                            classes = category &ldquo;yoga teaching&rdquo; only.
+                            {locationReport.entryCount} finance {locationReport.entryCount === 1 ? 'row' : 'rows'} at this location (all categories).
                         </p>
 
                         <div className="location-stats-section">
