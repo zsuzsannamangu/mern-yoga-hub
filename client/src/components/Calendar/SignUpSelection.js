@@ -24,6 +24,16 @@ const SignUpSelection = () => {
     const eventTitle = queryParams.get('title'); // Extract the title
     const eventDate = queryParams.get('date'); // Extract the date
     const eventLocation = queryParams.get('location'); // Extract the location
+    const durationMinutes = queryParams.get('durationMinutes'); // Extract duration (optional)
+
+    const formatTitleWithLength = (title, minutes) => {
+        const baseTitle = String(title || '').trim();
+        const m = Number(minutes);
+        if (!baseTitle) return '';
+        if (!Number.isFinite(m) || m <= 0) return baseTitle;
+        if (/\b\d+\s*min\b/i.test(baseTitle)) return baseTitle;
+        return `${baseTitle} – ${m} min`;
+    };
 
     // Handles signup process for returning students. Sends an email to check if they are already registered for the class.
     const handleReturningStudent = async () => {
@@ -107,7 +117,7 @@ const SignUpSelection = () => {
 
     return (
         <div className="signup-selection-container">
-            <h2>Sign Up for {eventTitle}</h2>
+            <h2>Sign Up for {formatTitleWithLength(eventTitle, durationMinutes)}</h2>
             <p><FaCalendarAlt className="icon" /> {eventDate}</p>
             <p> <FaLocationArrow className="icon" /> {eventLocation}</p>
             <div className="signup-options">

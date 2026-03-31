@@ -72,12 +72,13 @@ export default class Calendar extends Component {
         }
 
         eventsObject[dateKey].push({
-          title: event.title,
+          title: event.title, // raw title (used for signup + class status matching)
           time: formatTime(event.time), // Formatted time for display
           rawTime: event.time, // Raw time for calculations
           location: event.location,
           signUpLink: event.signUpLink,
           isExternal: event.isExternal || false,
+          durationMinutes: event.durationMinutes,
           isFull, // Store class full status
         });
       }
@@ -128,6 +129,15 @@ export default class Calendar extends Component {
 
   render() {
     const { currentDay, selectedDate, events, loading } = this.state;
+    const formatTitleWithLength = (title, durationMinutes) => {
+      const baseTitle = String(title || '').trim();
+      const minutes = Number(durationMinutes);
+      if (!baseTitle) return '';
+      if (!Number.isFinite(minutes) || minutes <= 0) return baseTitle;
+      // Avoid double-appending if user already included a duration in the title
+      if (/\b\d+\s*min\b/i.test(baseTitle)) return baseTitle;
+      return `${baseTitle} – ${minutes} min`;
+    };
 
     // Format the selected date for matching events
     const formattedDate = selectedDate
@@ -218,7 +228,7 @@ export default class Calendar extends Component {
                         key={index}
                         className={`event-details ${isPast ? 'past-event' : ''}`}
                       >
-                        <p>{event.title}</p>
+                        <p>{formatTitleWithLength(event.title, event.durationMinutes)}</p>
                         <p>{event.time}</p>
                         <p>at {event.location}</p>
                         <p>
@@ -240,7 +250,7 @@ export default class Calendar extends Component {
                               </a>
                             ) : (
                               <Link
-                                to={`/signup-selection?date=${formattedDate}&title=${encodeURIComponent(event.title)}&location=${encodeURIComponent(event.location)}`}
+                                to={`/signup-selection?date=${formattedDate}&title=${encodeURIComponent(event.title)}&location=${encodeURIComponent(event.location)}&durationMinutes=${encodeURIComponent(event.durationMinutes ?? '')}`}
                               >
                                 Sign Up
                               </Link>

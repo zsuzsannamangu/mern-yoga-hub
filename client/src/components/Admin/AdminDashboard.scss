@@ -373,9 +373,11 @@
 
         /* Short numeric field for class length */
         input[name='durationMinutes'].events-input {
-            min-width: 70px;
-            width: 70px;
-            text-align: center;
+            min-width: 64px;
+            width: 64px;
+            text-align: left;
+            padding-left: 10px;
+            padding-right: 6px; // leave room for spinner
         }
 
         /* Force consistent typography for native date/time controls */
