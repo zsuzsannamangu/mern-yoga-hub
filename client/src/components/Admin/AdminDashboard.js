@@ -62,24 +62,31 @@ const AdminDashboard = () => {
     const orderedEvents = sortEvents(events);
 
     const matchesFilters = (event) => {
-        if (!bulkStartDate && !bulkEndDate) return true;
-        const d = new Date(`${event.date}T00:00:00`);
-        if (bulkStartDate) {
-            const start = new Date(`${bulkStartDate}T00:00:00`);
-            if (d < start) return false;
+        // Date range (optional)
+        if (bulkStartDate || bulkEndDate) {
+            const d = new Date(`${event.date}T00:00:00`);
+            if (bulkStartDate) {
+                const start = new Date(`${bulkStartDate}T00:00:00`);
+                if (d < start) return false;
+            }
+            if (bulkEndDate) {
+                const end = new Date(`${bulkEndDate}T23:59:59`);
+                if (d > end) return false;
+            }
         }
-        if (bulkEndDate) {
-            const end = new Date(`${bulkEndDate}T23:59:59`);
-            if (d > end) return false;
-        }
+
+        // Location substring (optional)
         if (filterLocation) {
             const loc = (event.location || '').toLowerCase();
             if (!loc.includes(filterLocation.toLowerCase())) return false;
         }
+
+        // Title substring (optional)
         if (filterTitle) {
             const t = (event.title || '').toLowerCase();
             if (!t.includes(filterTitle.toLowerCase())) return false;
         }
+
         return true;
     };
 
@@ -576,8 +583,8 @@ const AdminDashboard = () => {
                     <p>Loading events...</p>
                 ) : events.length > 0 ? (
                     <>
-                        <div className="bulk-controls-title">Filter, select, and manage</div>
                         <div className="bulk-controls">
+                            <div className="bulk-controls-label">Filter by</div>
                             <div className="bulk-controls__dates">
                                 <label>
                                     From
