@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import AdminLayout from './AdminLayout';
 import './AdminDashboard.scss';
 import '../../App.scss';
-import { FaTrash, FaExternalLinkAlt, FaSave, FaRedoAlt } from 'react-icons/fa'; // icons
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 
