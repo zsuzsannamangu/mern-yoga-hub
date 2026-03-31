@@ -600,7 +600,7 @@ const AdminFinances = () => {
             </div>
 
             <div className="finances-summary">
-                <div className="finances-summary-grid">
+                <div className="finances-summary__row finances-summary__row--top">
                     <div className="summary-card yearly">
                         <h3>Total Revenue (All Time)</h3>
                         <p className="revenue-amount">{formatCurrency(totalRevenue)}</p>
@@ -628,6 +628,9 @@ const AdminFinances = () => {
                             <p className="month-list">{monthlyTotals.monthNames.join(', ')}</p>
                         )}
                     </div>
+                </div>
+
+                <div className="finances-summary__row finances-summary__row--bottom">
                     <div className="summary-card yearly">
                         <h3>Total Classes (All Time)</h3>
                         <p className="revenue-amount">{classData.filter(entry => entry.category === 'yoga teaching').length}</p>

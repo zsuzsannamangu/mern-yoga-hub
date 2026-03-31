@@ -103,8 +103,6 @@ const AdminSubscribers = () => {
     copyToClipboard(emails.join(', '), `Copied ${emails.length} email${emails.length === 1 ? '' : 's'} (comma separated)`);
   };
 
-  const allEmailsOnePerLine = subscribers.map((s) => s.email).filter(Boolean).join('\n');
-
   return (
     <AdminLayout>
       <div className="admin-subscribers">
@@ -121,7 +119,7 @@ const AdminSubscribers = () => {
             data-tooltip="Copy all (one per line)"
             aria-label="Copy all emails, one per line"
           >
-            <span aria-hidden="true">📋</span> Copy list
+            <span aria-hidden="true">📋</span> Copy email list
           </button>
           <button
             type="button"
@@ -130,7 +128,7 @@ const AdminSubscribers = () => {
             data-tooltip="For BCC / To field"
             aria-label="Copy all emails comma separated"
           >
-            <span aria-hidden="true">📋</span> Copy comma-separated
+            <span aria-hidden="true">📋</span> Copy comma-separated email list
           </button>
         </div>
         <table>
