@@ -39,6 +39,8 @@ const AdminDashboard = () => {
     const alertShown = useRef(false);
     const [bulkStartDate, setBulkStartDate] = useState('');
     const [bulkEndDate, setBulkEndDate] = useState('');
+    const [filterLocation, setFilterLocation] = useState('');
+    const [filterTitle, setFilterTitle] = useState('');
     const [bulkLocationPreset, setBulkLocationPreset] = useState('');
     const [bulkLocationOther, setBulkLocationOther] = useState('');
     const [bulkLink, setBulkLink] = useState('');
@@ -59,7 +61,7 @@ const AdminDashboard = () => {
 
     const orderedEvents = sortEvents(events);
 
-    const withinBulkRange = (event) => {
+    const matchesFilters = (event) => {
         if (!bulkStartDate && !bulkEndDate) return true;
         const d = new Date(`${event.date}T00:00:00`);
         if (bulkStartDate) {
@@ -70,10 +72,18 @@ const AdminDashboard = () => {
             const end = new Date(`${bulkEndDate}T23:59:59`);
             if (d > end) return false;
         }
+        if (filterLocation) {
+            const loc = (event.location || '').toLowerCase();
+            if (!loc.includes(filterLocation.toLowerCase())) return false;
+        }
+        if (filterTitle) {
+            const t = (event.title || '').toLowerCase();
+            if (!t.includes(filterTitle.toLowerCase())) return false;
+        }
         return true;
     };
 
-    const filteredEvents = orderedEvents.filter(withinBulkRange);
+    const filteredEvents = orderedEvents.filter(matchesFilters);
     const filteredIds = filteredEvents.map((e) => e._id);
     const allFilteredSelected = filteredIds.length > 0 && filteredIds.every((id) => selectedEvents.includes(id));
 
@@ -584,6 +594,30 @@ const AdminDashboard = () => {
                                         onChange={(e) => setBulkEndDate(e.target.value)}
                                     />
                                 </label>
+                                <label>
+                                    Location
+                                    <input
+                                        type="text"
+                                        value={filterLocation}
+                                        onChange={(e) => setFilterLocation(e.target.value)}
+                                        placeholder="e.g. Yoga Refuge NW"
+                                        list="admin-location-suggestions"
+                                    />
+                                </label>
+                                <datalist id="admin-location-suggestions">
+                                    {[...new Set(events.map((e) => (e.location || '').trim()).filter(Boolean))].sort().map((loc) => (
+                                        <option key={loc} value={loc} />
+                                    ))}
+                                </datalist>
+                                <label>
+                                    Title
+                                    <input
+                                        type="text"
+                                        value={filterTitle}
+                                        onChange={(e) => setFilterTitle(e.target.value)}
+                                        placeholder="e.g. Vinyasa"
+                                    />
+                                </label>
                             </div>
                             <div className="bulk-controls__actions">
                                 <button
@@ -620,12 +654,14 @@ const AdminDashboard = () => {
                                     onClick={() => {
                                         setBulkStartDate('');
                                         setBulkEndDate('');
+                                        setFilterLocation('');
+                                        setFilterTitle('');
                                         setSelectedEvents([]);
                                         setShowBulkUpdate(false);
                                     }}
-                                    disabled={!bulkStartDate && !bulkEndDate}
+                                    disabled={!bulkStartDate && !bulkEndDate && !filterLocation && !filterTitle}
                                 >
-                                    Clear dates
+                                    Clear filters
                                 </button>
                                 <button
                                     type="button"
