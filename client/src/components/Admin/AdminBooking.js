@@ -542,7 +542,7 @@ const AdminBooking = () => {
                                                 <button
                                                     onClick={() => deleteSession(slot._id)}
                                                     className="delete-slot-button"
-                                                    title="Delete session"
+                                                    title="Delete"
                                                 >
                                                     <span aria-hidden="true">🗑️</span>
                                                 </button>
@@ -583,10 +583,19 @@ const AdminBooking = () => {
                                             <td>{slot.email}</td>
                                             <td>{slot.message || ''}</td>
                                             <td>
+                                                <input
+                                                    className="notes-added-checkbox"
+                                                    type="checkbox"
+                                                    checked={Boolean((slot.adminNotes || slot.notes || '').trim())}
+                                                    readOnly
+                                                    disabled
+                                                    title="Notes added"
+                                                    aria-label="Notes added"
+                                                />
                                                 <button
                                                     onClick={() => deleteSession(slot._id)}
                                                     className="delete-slot-button"
-                                                    title="Delete session"
+                                                    title="Delete"
                                                 >
                                                     <span aria-hidden="true">🗑️</span>
                                                 </button>
