@@ -338,9 +338,10 @@
             font-size: 12px;
             color: $primary-button-color;
             font-weight: bold;
-            justify-self: center;
+            justify-self: start;
             grid-column: 2;
             z-index: 1;
+            margin-left: 14px; // place triangle just left of month label
         }
 
         .month-name {
@@ -351,7 +352,7 @@
             min-width: 0;
             grid-column: 2;
             justify-self: start;
-            padding-left: 26px; // keep triangle next to month name
+            padding-left: 34px; // space for triangle + a small gap
         }
 
         .month-count {

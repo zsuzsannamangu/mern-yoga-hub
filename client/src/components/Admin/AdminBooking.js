@@ -428,22 +428,24 @@ const AdminBooking = () => {
 
                 {/* Search by Email Section */}
                 <div className="search-booking-section">
-                    <h4>Search bookings by email</h4>
                     <div className="search-form">
                         <input
                             type="email"
-                            placeholder="Search email"
+                            placeholder="Search…"
                             value={searchEmail}
                             onChange={(e) => setSearchEmail(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && searchBookingsByEmail()}
                             className="search-email-input"
+                            aria-label="Search email"
                         />
                         <button
                             onClick={searchBookingsByEmail}
                             disabled={searching}
                             className="search-button"
+                            aria-label="Search"
+                            title="Search"
                         >
-                            {searching ? 'Searching...' : 'Search'}
+                            <span aria-hidden="true">🔍</span>
                         </button>
                     </div>
 

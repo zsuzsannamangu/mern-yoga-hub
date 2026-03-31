@@ -51,7 +51,7 @@ const AdminDashboard = () => {
     const [bulkTime, setBulkTime] = useState('');
     const [bulkDurationMinutes, setBulkDurationMinutes] = useState('');
     const [showBulkUpdate, setShowBulkUpdate] = useState(false);
-    const ACTION_ICON_SIZE = 22;
+    // Using emoji icons (matches AdminFinances)
 
     const toDateTime = (e) => {
         // ensure time is always "HH:MM"
@@ -769,7 +769,7 @@ const AdminDashboard = () => {
                                     title={selectedEvents.length > 0 ? `Delete selected classes/events (${selectedEvents.length})` : 'Delete selected classes/events'}
                                     aria-label={selectedEvents.length > 0 ? `Delete selected classes/events (${selectedEvents.length})` : 'Delete selected classes/events'}
                                 >
-                                    <FaTrash className="icon" aria-hidden="true" size={ACTION_ICON_SIZE} />
+                                    <span className="icon" aria-hidden="true">🗑️</span>
                                     Delete selected classes/events
                                 </button>
                                 <button
@@ -965,57 +965,59 @@ const AdminDashboard = () => {
                                                         aria-label="Open link"
                                                         data-tooltip="Open link"
                                                     >
-                                                        <FaExternalLinkAlt aria-hidden="true" size={ACTION_ICON_SIZE} />
+                                                        <span aria-hidden="true">🔗</span>
                                                     </a>
                                                 ) : (
                                                     <span className="events-open-link events-open-link--placeholder" aria-hidden="true">
-                                                        <FaExternalLinkAlt aria-hidden="true" size={ACTION_ICON_SIZE} />
+                                                        <span aria-hidden="true">🔗</span>
                                                     </span>
                                                 )}
                                             </td>
                                             <td className="events-td-actions">
-                                                <button
-                                                    type="button"
-                                                    className="event-action-button event-action-button--update"
-                                                    onClick={(e) => {
-                                                        const row = e.currentTarget.closest('tr');
-                                                        if (!row) return;
-                                                        const updatedData = {
-                                                            title: row.querySelector('input[name="title"]')?.value || '',
-                                                            date: row.querySelector('input[name="date"]')?.value || '',
-                                                            time: row.querySelector('input[name="time"]')?.value || '',
-                                                            durationMinutes: Number(row.querySelector('input[name="durationMinutes"]')?.value) || 60,
-                                                            location: row.querySelector('input[name="location"]')?.value || '',
-                                                            signUpLink: row.querySelector('input[name="signUpLink"]')?.value || '',
-                                                        };
-                                                        updateEvent(event._id, updatedData);
-                                                    }}
-                                                    title="Update"
-                                                    aria-label="Update"
-                                                    data-tooltip="Update"
-                                                >
-                                                    <FaSave aria-hidden="true" size={ACTION_ICON_SIZE} />
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="event-action-button event-action-button--renew"
-                                                    onClick={() => handleRenew(event)}
-                                                    title="Renew"
-                                                    aria-label="Renew"
-                                                    data-tooltip="Renew"
-                                                >
-                                                    <FaRedoAlt aria-hidden="true" size={ACTION_ICON_SIZE} />
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="event-action-button event-action-button--delete"
-                                                    onClick={() => deleteEvent(event._id)}
-                                                    title="Delete"
-                                                    aria-label="Delete"
-                                                    data-tooltip="Delete"
-                                                >
-                                                    <FaTrash aria-hidden="true" size={ACTION_ICON_SIZE} />
-                                                </button>
+                                                <div className="events-actions">
+                                                    <button
+                                                        type="button"
+                                                        className="event-action-button event-action-button--update"
+                                                        onClick={(e) => {
+                                                            const row = e.currentTarget.closest('tr');
+                                                            if (!row) return;
+                                                            const updatedData = {
+                                                                title: row.querySelector('input[name="title"]')?.value || '',
+                                                                date: row.querySelector('input[name="date"]')?.value || '',
+                                                                time: row.querySelector('input[name="time"]')?.value || '',
+                                                                durationMinutes: Number(row.querySelector('input[name="durationMinutes"]')?.value) || 60,
+                                                                location: row.querySelector('input[name="location"]')?.value || '',
+                                                                signUpLink: row.querySelector('input[name="signUpLink"]')?.value || '',
+                                                            };
+                                                            updateEvent(event._id, updatedData);
+                                                        }}
+                                                        title="Update"
+                                                        aria-label="Update"
+                                                        data-tooltip="Update"
+                                                    >
+                                                        <span aria-hidden="true">✏️</span>
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        className="event-action-button event-action-button--renew"
+                                                        onClick={() => handleRenew(event)}
+                                                        title="Renew"
+                                                        aria-label="Renew"
+                                                        data-tooltip="Renew"
+                                                    >
+                                                        <span aria-hidden="true">🔁</span>
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        className="event-action-button event-action-button--delete"
+                                                        onClick={() => deleteEvent(event._id)}
+                                                        title="Delete"
+                                                        aria-label="Delete"
+                                                        data-tooltip="Delete"
+                                                    >
+                                                        <span aria-hidden="true">🗑️</span>
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}

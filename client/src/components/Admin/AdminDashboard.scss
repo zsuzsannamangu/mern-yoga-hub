@@ -442,21 +442,17 @@
             font-size: $admin-action-icon-font-size;
             font-weight: 700;
             font-family: $font-main;
-            background-color: $primary-button-color;
-            color: $button-text-color;
+            background-color: transparent;
+            color: $text-color;
             text-decoration: none;
             white-space: nowrap;
             box-sizing: border-box;
             position: relative;
 
             &:hover {
-                background-color: $primary-button-hover-color;
-                color: $button-text-color;
+                background: $admin-action-icon-hover-bg;
+                color: $text-color;
                 text-decoration: none;
-            }
-
-            svg {
-                display: block;
             }
         }
 
@@ -471,6 +467,12 @@
             padding-left: 4px;
         }
 
+        .events-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .event-action-button {
             display: inline-flex;
             align-items: center;
@@ -483,18 +485,14 @@
             font-weight: 700;
             font-family: $font-main;
             cursor: pointer;
-            margin-left: 6px;
+            margin-left: 0;
             box-sizing: border-box;
-            color: $button-text-color;
+            color: $text-color;
             position: relative;
-            background-color: $primary-button-color;
+            background: transparent;
 
             &:hover {
-                background-color: $primary-button-hover-color;
-            }
-
-            svg {
-                display: block;
+                background: $admin-action-icon-hover-bg;
             }
         }
 
@@ -545,26 +543,16 @@
         }
 
         .event-action-button--update {
-            background-color: $primary-button-color;
-
-            &:hover {
-                background-color: $primary-button-hover-color;
-            }
+            // inherits hover
         }
 
         .event-action-button--renew {
-            background-color: $primary-button-color;
-
-            &:hover {
-                background-color: $primary-button-hover-color;
-            }
+            // inherits hover
         }
 
         .event-action-button--delete {
-            background-color: $delete-button;
-
             &:hover {
-                background-color: $delete-button-hover;
+                background: $admin-action-icon-hover-danger-bg;
             }
         }
     }

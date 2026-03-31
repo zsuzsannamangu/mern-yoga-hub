@@ -8,13 +8,19 @@ import '@sweetalert2/theme-material-ui/material-ui.css';
 
 const AdminFinances = () => {
     const LOCATION_PRESETS = [
+        { id: 'bhakti', label: 'The Bhakti Yoga Movement Center', location: 'The Bhakti Yoga Movement Center' },
+        { id: 'dear', label: 'Dear Yoga', location: 'Dear Yoga' },
+        { id: 'firelight', label: 'Firelight Yoga', location: 'Firelight Yoga' },
+        { id: 'fullbodied', label: 'Full Bodied Yoga', location: 'Full Bodied Yoga' },
         { id: 'yoga-refuge-nw', label: 'Yoga Refuge, NW location', location: 'Yoga Refuge, NW location' },
         { id: 'yoga-refuge-se', label: 'Yoga Refuge, SE location', location: 'Yoga Refuge, SE location' },
         { id: 'peoples-yoga-nw', label: "The People's Yoga, NW location", location: "The People's Yoga, NW location" },
         { id: 'peoples-yoga-se', label: "The People's Yoga, SE location", location: "The People's Yoga, SE location" },
-        { id: 'heart-spring', label: 'Heart Spring Health', location: 'Heart Spring Health' },
+        { id: 'heartspring', label: 'Heart Spring Health', location: 'Heart Spring Health' },
+        { id: 'practice-space', label: 'The Practice Space', location: 'The Practice Space' },
+        { id: 'ready-set-grow', label: 'Ready Set Grow', location: 'Ready Set Grow' },
         { id: 'online', label: 'Online', location: 'Online' },
-        { id: 'other', label: 'Other', location: '' },
+        { id: 'other', label: 'Other (new location)', location: '' },
     ];
     const [classData, setClassData] = useState([]);
     const [expandedMonths, setExpandedMonths] = useState(new Set());
