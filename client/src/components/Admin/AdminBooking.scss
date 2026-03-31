@@ -321,8 +321,8 @@
     .search-form {
         display: flex;
         align-items: center;
-        width: 100%;
-        max-width: 380px;
+        width: 360px; // fixed, stable pill width
+        max-width: 100%;
         margin: 0 0 6px 0;
         height: 40px;
         border: 1px solid $border-color;
@@ -340,6 +340,7 @@
             color: $text-color;
             font-family: $font-main;
             background: transparent;
+            min-width: 0; // prevent overflow pushing the icon out
 
             &::placeholder {
                 color: rgba($secondary-text-color, 0.65);
