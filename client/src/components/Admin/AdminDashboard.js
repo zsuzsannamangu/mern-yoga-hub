@@ -278,7 +278,7 @@ const AdminDashboard = () => {
                 ...prev,
                 locationPreset: preset.id,
                 location: '',
-                signUpLink: prev.signUpLink || '',
+                signUpLink: '',
             }));
             return;
         }
