@@ -48,12 +48,13 @@ const AdminBooking = () => {
         // Parse the date string directly to avoid timezone issues
         const [year, month, day] = dateString.split('-').map(Number);
         const date = new Date(year, month - 1, day); // month is 0-indexed
-        return date.toLocaleDateString('en-US', { 
-            weekday: 'short', 
-            year: 'numeric', 
-            month: 'short', 
-            day: 'numeric' 
+        const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
+        const numericDate = date.toLocaleDateString('en-US', {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric',
         });
+        return `${weekday} ${numericDate}`;
     };
 
     /**
