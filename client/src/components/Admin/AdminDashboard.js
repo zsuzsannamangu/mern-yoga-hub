@@ -51,7 +51,7 @@ const AdminDashboard = () => {
     const [bulkTime, setBulkTime] = useState('');
     const [bulkDurationMinutes, setBulkDurationMinutes] = useState('');
     const [showBulkUpdate, setShowBulkUpdate] = useState(false);
-    const ACTION_ICON_SIZE = 18;
+    const ACTION_ICON_SIZE = 22;
 
     const toDateTime = (e) => {
         // ensure time is always "HH:MM"
