@@ -197,8 +197,10 @@
 
     h2 {
         color: $main-title-color;
-        font-family: $font-title;
-        font-size: 1.4rem;
+        font-family: $font-main;
+        font-size: 1.1rem;
+        font-weight: 500;
+        line-height: 1.25;
         margin: 0 0 25px 0;
         border-bottom: 2px solid $line-color;
         padding-bottom: 10px;
@@ -236,19 +238,19 @@
         flex-direction: column;
 
         label {
-            font-family: $font-main;
+            font-family: $admin-table-font-family;
             font-weight: 500;
             color: $text-color;
             margin-bottom: 5px;
-            font-size: 0.9rem;
+            font-size: $admin-table-font-size;
         }
 
         input, select {
             padding: 10px;
             border: 1px solid $border-color;
             border-radius: 4px;
-            font-family: $font-secondary;
-            font-size: 0.9rem;
+            font-family: $admin-table-font-family;
+            font-size: $admin-table-font-size;
             color: $text-color;
             
             &:focus {
