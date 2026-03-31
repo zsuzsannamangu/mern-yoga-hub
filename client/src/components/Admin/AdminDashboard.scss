@@ -136,9 +136,16 @@
             font-size: 0.95rem;
         }
 
+        .bulk-update__hint {
+            margin-top: -4px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            color: $secondary-text-color;
+        }
+
         .bulk-update__row {
             display: grid;
-            grid-template-columns: 1.2fr 1.2fr auto;
+            grid-template-columns: 1.4fr 0.8fr 0.8fr 1.2fr 1.2fr auto;
             gap: 12px;
             align-items: end;
 
@@ -167,19 +174,6 @@
                 height: 34px;
                 box-sizing: border-box;
                 background: $background-color;
-            }
-        }
-
-        .bulk-update__checkbox {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: $secondary-text-color;
-
-            input[type='checkbox'] {
-                width: 15px;
-                height: 15px;
             }
         }
 
