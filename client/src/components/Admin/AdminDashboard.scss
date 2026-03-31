@@ -451,6 +451,10 @@
                 color: $button-text-color;
                 text-decoration: none;
             }
+
+            svg {
+                font-size: 1.2rem;
+            }
         }
 
         .events-open-link--placeholder {
@@ -481,7 +485,7 @@
             position: relative;
 
             svg {
-                font-size: 1.05rem;
+                font-size: 1.2rem;
             }
         }
 
@@ -541,10 +545,6 @@
 
         .event-action-button--delete {
             background-color: $delete-button;
-
-            svg {
-                font-size: 1.1rem;
-            }
 
             &:hover {
                 background-color: $delete-button-hover;

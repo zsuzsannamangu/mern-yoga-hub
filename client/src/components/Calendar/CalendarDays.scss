@@ -33,6 +33,16 @@
       margin: 0;
     }
 
+    &:hover {
+      background-color: lighten($background-color, 5%);
+      border-color: darken($border-color, 10%);
+      color: $text-color !important;
+
+      p {
+        color: $text-color !important;
+      }
+    }
+
     @media (max-width: 768px) {
       width: 30px;
       height: 30px;
