@@ -102,32 +102,49 @@
             color: $text-color;
             font-size: 0.95rem;
             white-space: nowrap;
+            padding-right: 2px;
         }
 
         .bulk-controls__dates {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(150px, 1fr));
+            gap: 10px 12px;
             flex: 1 1 auto;
-            flex-wrap: wrap;
-            gap: 10px 14px;
+
+            @media (max-width: 900px) {
+                grid-template-columns: repeat(2, minmax(150px, 1fr));
+            }
+
+            @media (max-width: 520px) {
+                grid-template-columns: 1fr;
+            }
 
             label {
-                display: flex;
-                flex-direction: column;
+                display: grid;
+                grid-template-rows: auto auto;
                 gap: 6px;
-                font-size: 0.8rem;
+                padding: 8px 10px;
+                border-radius: 8px;
+                border: 1px solid $border-color;
+                background: $background-color;
                 color: $secondary-text-color;
-                min-width: 140px;
+                font-size: 0.78rem;
+                line-height: 1.1;
+                min-width: 0;
 
                 input[type='date'],
                 input[type='text'] {
-                    padding: 8px 10px;
-                    border: 1px solid $border-color;
-                    border-radius: 6px;
+                    padding: 0;
+                    border: 0;
+                    border-radius: 0;
                     font-family: $font-main;
-                    color: $secondary-text-color;
+                    color: $text-color;
                     height: 34px;
                     box-sizing: border-box;
-                    background: $background-color;
+                    background: transparent;
+                    outline: none;
+                    font-size: 0.9rem;
+                    font-weight: 500;
                 }
             }
         }
