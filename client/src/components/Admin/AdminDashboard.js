@@ -615,19 +615,26 @@ const AdminDashboard = () => {
                                     </label>
                                     <label>
                                         Location
-                                        <input
-                                            type="text"
+                                        <select
                                             value={filterLocation}
                                             onChange={(e) => setFilterLocation(e.target.value)}
-                                            placeholder="e.g. Yoga Refuge, NW location"
-                                            list="admin-location-suggestions"
-                                        />
+                                        >
+                                            <option value="">All</option>
+                                            {[
+                                                ...new Set([
+                                                    ...LOCATION_PRESETS.filter((p) => p.id !== 'other').map((p) => p.location),
+                                                    ...events.map((e) => (e.location || '').trim()).filter(Boolean),
+                                                ]),
+                                            ]
+                                                .filter(Boolean)
+                                                .sort()
+                                                .map((loc) => (
+                                                    <option key={loc} value={loc}>
+                                                        {loc}
+                                                    </option>
+                                                ))}
+                                        </select>
                                     </label>
-                                    <datalist id="admin-location-suggestions">
-                                        {[...new Set(events.map((e) => (e.location || '').trim()).filter(Boolean))].sort().map((loc) => (
-                                            <option key={loc} value={loc} />
-                                        ))}
-                                    </datalist>
                                     <label>
                                         Title
                                         <input

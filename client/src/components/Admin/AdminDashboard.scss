@@ -85,7 +85,7 @@
             display: flex;
             flex-direction: column;
             align-items: stretch;
-            gap: 10px;
+            gap: 14px;
             margin: 10px 0 14px 0;
             padding: 4px 0;
             border-radius: 0;
@@ -100,7 +100,7 @@
         .bulk-controls__filters {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 18px;
 
             @media (max-width: 900px) {
                 align-items: flex-start;
@@ -126,7 +126,7 @@
         .bulk-controls__dates {
             display: grid;
             grid-template-columns: repeat(4, minmax(190px, 1fr));
-            gap: 10px 12px;
+            gap: 14px 16px;
             flex: 1 1 auto;
 
             // Keep filters in a single row on desktop
@@ -158,7 +158,8 @@
                 min-width: 0;
 
                 input[type='date'],
-                input[type='text'] {
+                input[type='text'],
+                select {
                     padding: 0;
                     border: 0;
                     border-radius: 0;
@@ -171,6 +172,19 @@
                     font-size: 0.9rem;
                     font-weight: 500;
                 }
+
+                select {
+                    appearance: none;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    background-image: linear-gradient(45deg, transparent 50%, $secondary-text-color 50%),
+                        linear-gradient(135deg, $secondary-text-color 50%, transparent 50%);
+                    background-position: calc(100% - 14px) calc(50% - 2px), calc(100% - 9px) calc(50% - 2px);
+                    background-size: 6px 6px, 6px 6px;
+                    background-repeat: no-repeat;
+                    padding-right: 26px;
+                    cursor: pointer;
+                }
             }
         }
 
@@ -182,12 +196,18 @@
             width: 100%;
             margin-top: 0;
             margin-left: calc(70px + 12px); // align buttons with "From" field start
+            padding-top: 2px;
+            row-gap: 12px;
 
             @media (max-width: 900px) {
                 width: 100%;
                 justify-content: flex-start;
                 margin-left: 0;
             }
+        }
+
+        .events-table-wrap {
+            margin-top: 22px;
         }
 
         .bulk-update {
