@@ -138,12 +138,10 @@
             }
         }
 
-        // Available slots (3-column table): Date/Time/Actions compact (must use `> table` here — not
-        // `.available-slots-table > table`, which would require a nested wrapper and never matched.)
+        // Available slots (3-column table): keep roomy spacing, but push 🗑️ to the far right
         > table:not(.sessions-table) {
-            table-layout: auto !important;
-            width: auto !important;
-            max-width: 100%;
+            table-layout: fixed;
+            width: 100%;
 
             th,
             td {
@@ -152,20 +150,22 @@
 
             th:nth-child(1),
             td:nth-child(1) {
-                width: 155px;
                 white-space: nowrap;
             }
 
             th:nth-child(2),
             td:nth-child(2) {
-                width: 120px;
                 white-space: nowrap;
             }
 
             th:nth-child(3),
             td:nth-child(3) {
-                width: 74px;
-                text-align: center;
+                width: 96px;
+                text-align: right;
+            }
+
+            thead th:nth-child(3) {
+                text-align: right;
             }
         }
 

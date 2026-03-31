@@ -126,10 +126,14 @@ const AdminFinances = () => {
             if (!grouped[monthKey]) {
                 grouped[monthKey] = {
                     name: monthName,
-                    entries: []
+                    entries: [],
+                    yogaTeachingCount: 0,
+                    yogaTherapyCount: 0,
                 };
             }
             grouped[monthKey].entries.push(entry);
+            if (entry.category === 'yoga teaching') grouped[monthKey].yogaTeachingCount += 1;
+            if (entry.category === 'yoga therapy') grouped[monthKey].yogaTherapyCount += 1;
         });
         
         return grouped;
