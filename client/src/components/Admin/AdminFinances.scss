@@ -280,7 +280,7 @@
 
     .month-header {
         display: grid;
-        grid-template-columns: 40px 28px 1fr auto;
+        grid-template-columns: 40px 28px 1fr 132px;
         align-items: center;
         background: $secondary-background-color;
         padding: 14px 12px;
@@ -323,7 +323,7 @@
             color: $secondary-text-color;
             font-size: 0.85rem;
             font-family: $font-secondary;
-            justify-self: end;
+            justify-self: start;
             white-space: nowrap;
         }
     }

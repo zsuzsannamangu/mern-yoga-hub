@@ -45,9 +45,17 @@ const AdminBooking = () => {
      */
     const formatDate = (dateString) => {
         if (!dateString) return '';
-        // Parse the date string directly to avoid timezone issues
-        const [year, month, day] = dateString.split('-').map(Number);
-        const date = new Date(year, month - 1, day); // month is 0-indexed
+        // Accept either "YYYY-MM-DD" or a pre-formatted/parseable date string.
+        let date;
+        if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+            // Parse the date string directly to avoid timezone issues
+            const [year, month, day] = dateString.split('-').map(Number);
+            date = new Date(year, month - 1, day); // month is 0-indexed
+        } else {
+            date = new Date(dateString);
+        }
+
+        if (Number.isNaN(date.getTime())) return dateString;
         const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
         const numericDate = date.toLocaleDateString('en-US', {
             month: '2-digit',
