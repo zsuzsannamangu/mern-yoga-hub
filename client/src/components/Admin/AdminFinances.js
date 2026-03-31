@@ -941,10 +941,12 @@ const AdminFinances = () => {
                                         }
                                     }}
                                 />
-                                <span className="expand-icon">
-                                    {expandedMonths.has(monthKey) ? '▼' : '▶'}
+                                <span className="month-label">
+                                    <span className="expand-icon" aria-hidden="true">
+                                        {expandedMonths.has(monthKey) ? '▼' : '▶'}
+                                    </span>
+                                    <span className="month-name">{monthData.name}</span>
                                 </span>
-                                <span className="month-name">{monthData.name}</span>
                                 <span className="month-count">({monthData.entries.length} classes)</span>
                             </div>
                             
