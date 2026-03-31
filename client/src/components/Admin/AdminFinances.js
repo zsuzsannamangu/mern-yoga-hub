@@ -121,7 +121,7 @@ const AdminFinances = () => {
             const [year, month, day] = entry.date.split('-');
             const date = new Date(year, month - 1, day); // month is 0-indexed
             const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-            const monthName = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+            const monthName = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
             
             if (!grouped[monthKey]) {
                 grouped[monthKey] = {
