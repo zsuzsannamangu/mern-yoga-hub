@@ -267,6 +267,40 @@ const AdminFinances = () => {
         return { monthsByYear: byYear, sortedYears: years };
     }, [groupedData]);
 
+    /** Prior calendar year: totals + per-location miles/gas for tax summary. */
+    const priorYearDriveAggregates = useMemo(() => {
+        const taxYear = new Date().getFullYear() - 1;
+        const byLoc = new Map();
+        let totalMiles = 0;
+        let totalGas = 0;
+
+        classData.forEach((entry) => {
+            const year = Number((entry.date || '').split('-')[0]);
+            if (year !== taxYear || Number.isNaN(year)) return;
+            const loc = normalizeFinanceLocation(entry.location);
+            const trip = computeTripMilesAndGasForRow(loc, milesOverrides, travelSettings);
+            let m = 0;
+            let g = 0;
+            if (trip.tripMiles != null && !Number.isNaN(Number(trip.tripMiles))) {
+                m = Number(trip.tripMiles);
+            }
+            if (trip.tripGasCost != null && !Number.isNaN(Number(trip.tripGasCost))) {
+                g = Number(trip.tripGasCost);
+            }
+            totalMiles += m;
+            totalGas += g;
+            const cur = byLoc.get(loc) || { miles: 0, gas: 0 };
+            byLoc.set(loc, { miles: cur.miles + m, gas: cur.gas + g });
+        });
+
+        const byLocationSorted = Array.from(byLoc.entries()).sort((a, b) => {
+            if (b[1].miles !== a[1].miles) return b[1].miles - a[1].miles;
+            return a[0].localeCompare(b[0]);
+        });
+
+        return { taxYear, totalMiles, totalGas, byLocationSorted };
+    }, [classData, milesOverrides, travelSettings]);
+
     useEffect(() => {
         if (loading) return;
         if (classData.length === 0) {
@@ -1312,10 +1346,11 @@ const AdminFinances = () => {
                                         <span className="month-name">{yearStr}</span>
                                     </span>
                                     <div className="month-count">
-                                        <div className="month-count__line">{yearTeaching} classes</div>
-                                        <div className="month-count__line month-count__line--secondary">
-                                            {yearTherapy} therapy
-                                        </div>
+                                        <span className="month-count__teach">{yearTeaching} classes</span>
+                                        <span className="month-count__sep" aria-hidden="true">
+                                            {' · '}
+                                        </span>
+                                        <span className="month-count__therapy">{yearTherapy} therapy</span>
                                     </div>
                                 </div>
                                 {yearOpen &&
@@ -1349,10 +1384,11 @@ const AdminFinances = () => {
                                     <span className="month-name">{monthData.name}</span>
                                 </span>
                                 <div className="month-count">
-                                    <div className="month-count__line">{monthData.yogaTeachingCount} classes</div>
-                                    <div className="month-count__line month-count__line--secondary">
-                                        {monthData.yogaTherapyCount} therapy
-                                    </div>
+                                    <span className="month-count__teach">{monthData.yogaTeachingCount} classes</span>
+                                    <span className="month-count__sep" aria-hidden="true">
+                                        {' · '}
+                                    </span>
+                                    <span className="month-count__therapy">{monthData.yogaTherapyCount} therapy</span>
                                 </div>
                             </div>
                             

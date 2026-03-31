@@ -463,27 +463,27 @@ $class-table-grid-cols-sm:
         .month-count {
             grid-column: 3;
             justify-self: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.25em;
+            align-self: center;
             min-width: 0;
+            max-width: 100%;
+            padding: 0 4px;
+            box-sizing: border-box;
             color: $secondary-text-color;
             font-size: $admin-table-font-size;
             font-family: $admin-table-font-family;
-            line-height: 1.2;
+            line-height: 1.35;
+            text-align: center;
             white-space: normal;
+            overflow-wrap: break-word;
 
-            .month-count__line {
-                display: block;
-                width: 100%;
-                text-align: center;
+            .month-count__sep {
+                opacity: 0.55;
+                font-weight: 500;
             }
 
-            .month-count__line--secondary {
-                font-size: 0.78em;
-                opacity: 0.9;
+            .month-count__therapy {
+                font-size: 0.88em;
+                opacity: 0.92;
             }
         }
 
@@ -553,27 +553,27 @@ $class-table-grid-cols-sm:
         .month-count {
             grid-column: 3;
             justify-self: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.25em;
+            align-self: center;
             min-width: 0;
+            max-width: 100%;
+            padding: 0 4px;
+            box-sizing: border-box;
             color: $secondary-text-color;
             font-size: $admin-table-font-size;
             font-family: $admin-table-font-family;
-            line-height: 1.2;
+            line-height: 1.35;
+            text-align: center;
             white-space: normal;
+            overflow-wrap: break-word;
 
-            .month-count__line {
-                display: block;
-                width: 100%;
-                text-align: center;
+            .month-count__sep {
+                opacity: 0.55;
+                font-weight: 500;
             }
 
-            .month-count__line--secondary {
-                font-size: 0.78em;
-                opacity: 0.9;
+            .month-count__therapy {
+                font-size: 0.88em;
+                opacity: 0.92;
             }
         }
     }
