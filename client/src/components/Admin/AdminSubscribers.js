@@ -97,6 +97,14 @@ const AdminSubscribers = () => {
     copyToClipboard(emails.join('\n'), `Copied ${emails.length} email${emails.length === 1 ? '' : 's'}`);
   };
 
+  const handleCopyCommaSeparated = () => {
+    const emails = subscribers.map((s) => s.email).filter(Boolean);
+    if (emails.length === 0) return;
+    copyToClipboard(emails.join(', '), `Copied ${emails.length} email${emails.length === 1 ? '' : 's'} (comma separated)`);
+  };
+
+  const allEmailsOnePerLine = subscribers.map((s) => s.email).filter(Boolean).join('\n');
+
   return (
     <AdminLayout>
       <div className="admin-subscribers">
@@ -105,15 +113,42 @@ const AdminSubscribers = () => {
         <div className="no-subscribers">No subscribers yet.</div>
       ) : (
         <>
+        <p className="copy-help">
+          <strong>Quick copy:</strong> click the box below, then press <kbd>⌘</kbd>+<kbd>A</kbd> (Mac) or <kbd>Ctrl</kbd>+<kbd>A</kbd> (Windows), then <kbd>⌘</kbd>+<kbd>C</kbd> / <kbd>Ctrl</kbd>+<kbd>C</kbd>. Or use the copy buttons.
+        </p>
+        <div className="emails-bulk-block">
+          <label className="emails-bulk-label" htmlFor="subscriber-emails-bulk">
+            All emails (one per line)
+          </label>
+          <textarea
+            id="subscriber-emails-bulk"
+            className="emails-bulk-textarea"
+            readOnly
+            rows={Math.min(Math.max(subscribers.length, 3), 18)}
+            value={allEmailsOnePerLine}
+            onFocus={(e) => e.target.select()}
+            onClick={(e) => e.target.select()}
+            spellCheck={false}
+          />
+        </div>
         <div className="subscribers-actions">
           <button
             type="button"
             className="copy-all-button"
             onClick={handleCopyAllEmails}
-            data-tooltip="Copy all emails"
-            aria-label="Copy all emails"
+            data-tooltip="Copy all (one per line)"
+            aria-label="Copy all emails, one per line"
           >
-            <span aria-hidden="true">📋</span> Copy all emails
+            <span aria-hidden="true">📋</span> Copy list
+          </button>
+          <button
+            type="button"
+            className="copy-all-button"
+            onClick={handleCopyCommaSeparated}
+            data-tooltip="For BCC / To field"
+            aria-label="Copy all emails comma separated"
+          >
+            <span aria-hidden="true">📋</span> Copy comma-separated
           </button>
         </div>
         <table>
@@ -137,6 +172,7 @@ const AdminSubscribers = () => {
                     readOnly
                     onFocus={(e) => e.target.select()}
                     onClick={(e) => e.target.select()}
+                    onDoubleClick={(e) => e.target.select()}
                     aria-label={`Subscriber email ${sub.email || ''}`}
                   />
                 </td>

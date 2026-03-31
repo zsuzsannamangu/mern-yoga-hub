@@ -6,16 +6,76 @@
     background-color: $background-color;
     max-width: 1200px;
     margin: 0 auto;
+    user-select: text;
+    -webkit-user-select: text;
 
     h3 {
         color: $secondary-text-color;
         margin-bottom: 20px;
     }
 
+    .copy-help {
+        margin: 0 0 12px 0;
+        font-size: 0.9rem;
+        color: $secondary-text-color;
+        line-height: 1.5;
+        max-width: 720px;
+
+        kbd {
+            display: inline-block;
+            padding: 1px 6px;
+            margin: 0 1px;
+            border: 1px solid $border-color;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-family: $font-main;
+            background: $secondary-background-color;
+        }
+    }
+
+    .emails-bulk-block {
+        margin-bottom: 14px;
+        max-width: 560px;
+    }
+
+    .emails-bulk-label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: $text-color;
+        margin-bottom: 6px;
+    }
+
+    .emails-bulk-textarea {
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 88px;
+        padding: 10px 12px;
+        font-family: $font-main;
+        font-size: 0.9rem;
+        color: $text-color;
+        border: 1px solid $border-color;
+        border-radius: 6px;
+        background: white;
+        resize: vertical;
+        line-height: 1.45;
+        cursor: text;
+        user-select: text;
+        -webkit-user-select: text;
+
+        &:focus {
+            outline: none;
+            border-color: $primary-button-color;
+            box-shadow: 0 0 0 2px rgba(170, 157, 18, 0.2);
+        }
+    }
+
     .subscribers-actions {
         display: flex;
-        justify-content: flex-end;
-        margin: 10px 0 0 0;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 10px;
+        margin: 0 0 8px 0;
     }
 
     .copy-all-button {
@@ -103,6 +163,8 @@
                 color: $text-color;
                 cursor: text;
                 outline: none;
+                user-select: text;
+                -webkit-user-select: text;
             }
 
             a {

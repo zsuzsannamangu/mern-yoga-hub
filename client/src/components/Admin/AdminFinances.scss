@@ -643,7 +643,6 @@
 
         .table-header {
             grid-template-columns: 40px 100px 100px 65px 120px 120px 90px 90px 100px 60px 60px 60px;
-            font-size: 0.75rem;
 
             .header-cell {
                 padding: 12px 8px;
@@ -652,14 +651,6 @@
 
         .month-header {
             padding: 12px 8px 12px 12px;
-
-            .month-name {
-                font-size: 0.9rem;
-            }
-
-            .month-count {
-                font-size: 0.75rem;
-            }
         }
 
         .month-entries .table-row {
@@ -667,7 +658,6 @@
 
             .table-cell {
                 padding: 10px 8px;
-                font-size: 0.75rem;
             }
         }
     }
@@ -689,7 +679,6 @@
 
         .table-header {
             grid-template-columns: 35px 90px 90px 55px 110px 110px 80px 80px 90px 50px 50px 50px;
-            font-size: 0.7rem;
 
             .header-cell {
                 padding: 10px 6px;
@@ -698,14 +687,6 @@
 
         .month-header {
             padding: 10px 6px 10px 10px;
-
-            .month-name {
-                font-size: 0.85rem;
-            }
-
-            .month-count {
-                font-size: 0.7rem;
-            }
         }
 
         .month-entries .table-row {
@@ -713,7 +694,6 @@
 
             .table-cell {
                 padding: 8px 6px;
-                font-size: 0.7rem;
             }
         }
     }
