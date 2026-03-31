@@ -153,18 +153,17 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            height: 30px;
-            width: 38px;
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.2s ease;
             font-family: $font-main;
             background-color: $delete-button;
             color: $button-text-color;
+            padding: 5px 10px;
 
             svg {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
                 color: $button-text-color;
             }
 
