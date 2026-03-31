@@ -157,12 +157,19 @@
             background: $background-color;
         }
 
+        td.events-td-link .events-input {
+            flex: 1 1 auto;
+            min-width: 180px;
+        }
+
         td.events-td-link {
             min-width: 260px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .events-open-link {
-            margin-left: 10px;
             font-size: 0.85rem;
             color: $primary-button-color;
             text-decoration: none;
