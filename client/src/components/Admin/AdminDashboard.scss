@@ -99,7 +99,7 @@
 
         .bulk-controls__filters {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
 
             @media (max-width: 900px) {
@@ -114,6 +114,13 @@
             font-size: 0.95rem;
             white-space: nowrap;
             padding-right: 2px;
+            width: 70px;
+            margin-top: 6px; // align with field-box labels
+
+            @media (max-width: 900px) {
+                width: auto;
+                margin-top: 0;
+            }
         }
 
         .bulk-controls__dates {
@@ -174,10 +181,12 @@
             justify-content: flex-start;
             width: 100%;
             margin-top: 0;
+            margin-left: calc(70px + 12px); // align buttons with "From" field start
 
             @media (max-width: 900px) {
                 width: 100%;
                 justify-content: flex-start;
+                margin-left: 0;
             }
         }
 

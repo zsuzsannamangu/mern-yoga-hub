@@ -653,11 +653,11 @@ const AdminDashboard = () => {
                                     onClick={handleBulkDelete}
                                     disabled={selectedEvents.length === 0}
                                     className="bulk-delete-action-button"
-                                    title={selectedEvents.length > 0 ? `Delete selected (${selectedEvents.length})` : 'Delete selected'}
-                                    aria-label={selectedEvents.length > 0 ? `Delete selected (${selectedEvents.length})` : 'Delete selected'}
+                                    title={selectedEvents.length > 0 ? `Delete selected classes/events (${selectedEvents.length})` : 'Delete selected classes/events'}
+                                    aria-label={selectedEvents.length > 0 ? `Delete selected classes/events (${selectedEvents.length})` : 'Delete selected classes/events'}
                                 >
                                     <FaTrash className="icon" aria-hidden="true" />
-                                    Delete selected
+                                    Delete selected classes/events
                                 </button>
                                 <button
                                     type="button"
