@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import AdminLayout from './AdminLayout';
 import './AdminDashboard.scss';
 import '../../App.scss';
-import { FaTrash } from 'react-icons/fa'; //Trash icon for delete button
+import { FaTrash, FaExternalLinkAlt, FaSave } from 'react-icons/fa'; // icons
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 
@@ -855,19 +855,21 @@ const AdminDashboard = () => {
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="events-open-link"
+                                                        title="Open link"
+                                                        aria-label="Open link"
                                                     >
-                                                        Open
+                                                        <FaExternalLinkAlt aria-hidden="true" />
                                                     </a>
                                                 ) : (
                                                     <span className="events-open-link events-open-link--placeholder" aria-hidden="true">
-                                                        Open
+                                                        <FaExternalLinkAlt aria-hidden="true" />
                                                     </span>
                                                 )}
                                             </td>
                                             <td className="events-td-actions">
                                                 <button
                                                     type="button"
-                                                    className="update-event-button"
+                                                    className="event-action-button event-action-button--update"
                                                     onClick={(e) => {
                                                         const row = e.currentTarget.closest('tr');
                                                         if (!row) return;
@@ -881,15 +883,19 @@ const AdminDashboard = () => {
                                                         };
                                                         updateEvent(event._id, updatedData);
                                                     }}
+                                                    title="Update"
+                                                    aria-label="Update"
                                                 >
-                                                    Update
+                                                    <FaSave aria-hidden="true" />
                                                 </button>
                                                 <button
                                                     type="button"
-                                                    className="delete-single-event-button"
+                                                    className="event-action-button event-action-button--delete"
                                                     onClick={() => deleteEvent(event._id)}
+                                                    title="Delete"
+                                                    aria-label="Delete"
                                                 >
-                                                    Delete
+                                                    <FaTrash aria-hidden="true" />
                                                 </button>
                                             </td>
                                         </tr>

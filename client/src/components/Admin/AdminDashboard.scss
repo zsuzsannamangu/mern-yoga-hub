@@ -434,7 +434,7 @@
             align-items: center;
             justify-content: center;
             height: 30px;
-            padding: 0 12px;
+            width: 38px;
             border-radius: 6px;
             font-size: 0.85rem;
             font-weight: 700;
@@ -462,35 +462,33 @@
             min-width: 170px;
         }
 
-        .update-event-button,
-        .delete-single-event-button {
+        .event-action-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             height: 30px;
+            width: 38px;
             border: none;
-            padding: 0 12px;
             border-radius: 6px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 700;
             font-family: $font-main;
             cursor: pointer;
             margin-left: 8px;
             box-sizing: border-box;
+            color: $button-text-color;
         }
 
-        .update-event-button {
+        .event-action-button--update {
             background-color: $primary-button-color;
-            color: $button-text-color;
 
             &:hover {
                 background-color: $primary-button-hover-color;
             }
         }
 
-        .delete-single-event-button {
+        .event-action-button--delete {
             background-color: $delete-button;
-            color: $button-text-color;
 
             &:hover {
                 background-color: $delete-button-hover;
