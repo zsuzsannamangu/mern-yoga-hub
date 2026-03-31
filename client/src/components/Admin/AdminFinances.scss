@@ -463,6 +463,24 @@ $class-table-grid-cols-sm:
         .month-count {
             grid-column: 3;
             justify-self: center;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2em;
+            color: $secondary-text-color;
+            font-size: $admin-table-font-size;
+            font-family: $admin-table-font-family;
+            line-height: 1.15;
+            white-space: normal;
+
+            .month-count__line {
+                display: block;
+            }
+
+            .month-count__line--secondary {
+                font-size: 0.78em;
+                opacity: 0.9;
+            }
         }
 
         .month-name {
