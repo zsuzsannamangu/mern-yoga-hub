@@ -98,7 +98,7 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
 
         h3 {
             color: $text-color;
@@ -106,6 +106,7 @@
             font-size: 1.1rem;
             margin: 0 0 8px 0;
             font-weight: 500;
+            min-height: 2.6em; // keep amounts aligned even when titles wrap
         }
 
         .revenue-amount {

@@ -138,6 +138,33 @@
             }
         }
 
+        // Available slots (3-column table): keep Date/Time/Actions close together
+        table:not(.sessions-table) {
+            table-layout: auto;
+            width: auto;
+
+            th,
+            td {
+                padding: 10px 10px;
+            }
+
+            th:nth-child(1),
+            td:nth-child(1) {
+                width: 140px;
+            }
+
+            th:nth-child(2),
+            td:nth-child(2) {
+                width: 120px;
+            }
+
+            th:nth-child(3),
+            td:nth-child(3) {
+                width: 70px;
+                text-align: center;
+            }
+        }
+
         // Booked + passed sessions: keep columns aligned
         table.sessions-table {
             th:nth-child(1), td:nth-child(1) { width: 120px; } // Date
