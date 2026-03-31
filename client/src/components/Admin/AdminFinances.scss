@@ -780,7 +780,7 @@
     cursor: pointer;
 
     &:hover {
-        color: $primary-button-hover-color;
+        color: mix(#fff, $primary-button-color, 38%);
     }
 }
 
@@ -1021,13 +1021,22 @@
     &--save {
         .location-stats-save-btn {
             margin-left: 0;
-            flex: 1 1 220px;
-            min-width: 200px;
+            flex: 0 0 12rem;
+            width: 12rem;
             max-width: 100%;
+            padding: 8px 10px;
+            font-size: 0.82rem;
+            line-height: 1.25;
+            text-align: center;
+            box-sizing: border-box;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         input[type='number'] {
-            flex: 1 1 100px;
+            flex: 1 1 80px;
+            max-width: 130px;
         }
     }
 }

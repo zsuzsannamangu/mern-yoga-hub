@@ -732,7 +732,7 @@ const AdminFinances = () => {
         }
         try {
             await persistFinanceTravelSettings(nextMiles, travelSettings);
-            toastTravelSaved('Saved distance for this location');
+            toastTravelSaved('Added miles for this location');
         } catch (error) {
             console.error(error);
             Swal.fire({
@@ -769,7 +769,7 @@ const AdminFinances = () => {
             });
             setStatsMpgDraft(String(mpgParsed));
             setStatsGasDraft(String(gasParsed));
-            toastTravelSaved('Saved vehicle settings');
+            toastTravelSaved('Added vehicle');
         } catch (error) {
             console.error(error);
             Swal.fire({
@@ -1433,7 +1433,7 @@ const AdminFinances = () => {
                                             <th>Gross</th>
                                             <th>Received</th>
                                             <th>Drive miles (RT)</th>
-                                            <th>Gas (est.)</th>
+                                            <th>Gas spent (est.)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1538,7 +1538,7 @@ const AdminFinances = () => {
                                                     className="submit-btn location-stats-save-btn"
                                                     onClick={handleSaveLocationMiles}
                                                 >
-                                                    Save for this location
+                                                    Add miles for this location
                                                 </button>
                                             </div>
                                             <span className="location-stats-hint">
@@ -1577,7 +1577,7 @@ const AdminFinances = () => {
                                                     className="submit-btn location-stats-save-btn"
                                                     onClick={handleSaveTravelSettingsFromModal}
                                                 >
-                                                    Save vehicle
+                                                    Add vehicle
                                                 </button>
                                             </div>
                                             <span className="location-stats-hint">Stored in your database for all locations.</span>
