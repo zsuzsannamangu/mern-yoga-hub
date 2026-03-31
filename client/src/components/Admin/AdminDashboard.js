@@ -576,6 +576,7 @@ const AdminDashboard = () => {
                     <p>Loading events...</p>
                 ) : events.length > 0 ? (
                     <>
+                        <div className="bulk-controls-title">Filter, select, and manage</div>
                         <div className="bulk-controls">
                             <div className="bulk-controls__dates">
                                 <label>

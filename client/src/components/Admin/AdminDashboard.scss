@@ -77,6 +77,13 @@
             margin-bottom: 30px;
         }
 
+        .bulk-controls-title {
+            font-weight: 700;
+            color: $text-color;
+            margin: 0 0 8px 0;
+            font-size: 0.95rem;
+        }
+
         .bulk-delete-button {
             display: none;
         }
