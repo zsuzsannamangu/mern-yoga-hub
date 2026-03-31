@@ -226,11 +226,15 @@
     margin: 26px 0 26px;
     background: transparent;
     border: none;
+    padding: 0 20px; // match .slots-table-container horizontal gutter
+    display: flex;
+    justify-content: flex-end;
 
     .search-form {
         position: relative;
+        width: 100%;
         max-width: 380px;
-        margin: 0 0 6px auto; // right align
+        margin: 0 0 6px 0;
 
         .search-email-input {
             width: 100%;

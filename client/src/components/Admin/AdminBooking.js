@@ -500,7 +500,7 @@ const AdminBooking = () => {
                 </div>
 
                 <div className="slots-table-container">
-                    <h3>Booked Slots</h3>
+                    <h3>Booked Sessions</h3>
                     {loading ? (
                         <p>Loading...</p>
                     ) : upcomingSlots.length > 0 ? (
@@ -539,7 +539,7 @@ const AdminBooking = () => {
                             </table>
                         </div>
                     ) : (
-                        <p>No booked slots</p>
+                        <p>No booked sessions</p>
                     )}
                 </div>
 
