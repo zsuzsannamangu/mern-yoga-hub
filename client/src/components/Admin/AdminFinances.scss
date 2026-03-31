@@ -447,6 +447,19 @@
             white-space: nowrap;
             grid-column: 3; // align with Date column
             justify-self: center; // sit in the middle of the Date column
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.15;
+
+            .month-count__line {
+                display: block;
+            }
+
+            .month-count__line--secondary {
+                font-size: 0.78em;
+                opacity: 0.9;
+            }
         }
     }
 

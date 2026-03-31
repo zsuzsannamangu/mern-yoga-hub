@@ -953,7 +953,12 @@ const AdminFinances = () => {
                                     </span>
                                     <span className="month-name">{monthData.name}</span>
                                 </span>
-                                <span className="month-count">{monthData.entries.length} classes</span>
+                                <span className="month-count">
+                                    <span className="month-count__line">{monthData.yogaTeachingCount} classes</span>
+                                    <span className="month-count__line month-count__line--secondary">
+                                        {monthData.yogaTherapyCount} therapy
+                                    </span>
+                                </span>
                             </div>
                             
                             {expandedMonths.has(monthKey) && (
