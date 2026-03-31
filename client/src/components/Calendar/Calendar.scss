@@ -344,6 +344,21 @@
   a {
     color: $tertiary-text-color;
   }
+
+  p {
+    margin: 0 0 10px 0;
+  }
+
+  .event-title {
+    margin: 0;
+  }
+
+  .event-duration {
+    margin: 2px 0 14px 0; // tight to title, but separates from time/location
+    font-size: 0.95rem;
+    color: $secondary-text-color;
+    font-weight: 500;
+  }
 }
 
 .past-event {

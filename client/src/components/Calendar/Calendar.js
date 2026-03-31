@@ -129,14 +129,14 @@ export default class Calendar extends Component {
 
   render() {
     const { currentDay, selectedDate, events, loading } = this.state;
-    const formatTitleWithLength = (title, durationMinutes) => {
+    const shouldShowDuration = (title, durationMinutes) => {
       const baseTitle = String(title || '').trim();
       const minutes = Number(durationMinutes);
-      if (!baseTitle) return '';
-      if (!Number.isFinite(minutes) || minutes <= 0) return baseTitle;
-      // Avoid double-appending if user already included a duration in the title
-      if (/\b\d+\s*min\b/i.test(baseTitle)) return baseTitle;
-      return `${baseTitle} – ${minutes} min`;
+      if (!baseTitle) return false;
+      if (!Number.isFinite(minutes) || minutes <= 0) return false;
+      // Avoid double showing if user already included a duration in the title
+      if (/\b\d+\s*min\b/i.test(baseTitle)) return false;
+      return true;
     };
 
     // Format the selected date for matching events
@@ -228,7 +228,10 @@ export default class Calendar extends Component {
                         key={index}
                         className={`event-details ${isPast ? 'past-event' : ''}`}
                       >
-                        <p>{formatTitleWithLength(event.title, event.durationMinutes)}</p>
+                        <p className="event-title">{event.title}</p>
+                        {shouldShowDuration(event.title, event.durationMinutes) ? (
+                          <p className="event-duration">{event.durationMinutes} min</p>
+                        ) : null}
                         <p>{event.time}</p>
                         <p>at {event.location}</p>
                         <p>
