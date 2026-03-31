@@ -130,6 +130,8 @@
 
                         &:last-child {
                             text-align: center;
+                            overflow: visible;
+                            text-overflow: clip;
                         }
                     }
                 }
