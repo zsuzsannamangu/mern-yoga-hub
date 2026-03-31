@@ -316,6 +316,7 @@
         transition: background-color 0.2s ease;
         border-bottom: 1px solid $border-color;
         column-gap: 0;
+        position: relative;
 
         &:hover {
             background: $content-background-color-hover;
@@ -339,6 +340,7 @@
             font-weight: bold;
             justify-self: center;
             grid-column: 2;
+            z-index: 1;
         }
 
         .month-name {
@@ -347,8 +349,9 @@
             font-family: $font-title;
             font-size: 1rem;
             min-width: 0;
-            grid-column: 2 / 4;
-            padding-left: 26px; // space so name doesn't collide with expand icon in same column
+            grid-column: 2;
+            justify-self: start;
+            padding-left: 26px; // keep triangle next to month name
         }
 
         .month-count {
@@ -357,7 +360,8 @@
             font-family: $font-secondary;
             justify-self: start;
             white-space: nowrap;
-            grid-column: 4; // align with Time column start
+            grid-column: 3; // align with Date column
+            justify-self: center; // sit in the middle of the Date column
         }
     }
 

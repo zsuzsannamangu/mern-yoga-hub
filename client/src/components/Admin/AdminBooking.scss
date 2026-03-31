@@ -219,20 +219,20 @@
 
 // Search booking section
 .search-booking-section {
-    padding: 10px 12px;
-    border-radius: 8px;
+    padding: 0;
+    border-radius: 0;
     box-shadow: none;
     max-width: 100%;
-    margin: 6px 0 22px;
+    margin: 10px 0 22px;
     background: transparent;
-    border: 1px solid $border-color;
+    border: none;
 
     h3,
     h4 {
         margin: 0 0 10px 0;
         color: $secondary-text-color;
         font-family: $admin-table-font-family;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         font-weight: 700;
     }
 
@@ -240,16 +240,18 @@
         display: flex;
         gap: 10px;
         margin-bottom: 0;
+        align-items: center;
 
         .search-email-input {
             flex: 1;
-            padding: 8px 10px;
+            padding: 6px 10px;
             border: 1px solid $border-color;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: $admin-table-font-size;
             color: $secondary-text-color;
             font-family: $font-main;
-            height: 34px;
+            height: 32px;
+            background: $background-color;
         }
 
         .search-button {
@@ -257,12 +259,12 @@
             background-color: $primary-button-color;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: $admin-table-font-size;
             cursor: pointer;
             transition: background-color 0.3s;
             font-family: $font-main;
-            height: 34px;
+            height: 32px;
 
             &:hover:not(:disabled) {
                 background-color: $primary-button-hover-color;

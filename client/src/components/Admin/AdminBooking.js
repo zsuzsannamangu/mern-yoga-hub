@@ -432,7 +432,7 @@ const AdminBooking = () => {
                     <div className="search-form">
                         <input
                             type="email"
-                            placeholder="Enter email address"
+                            placeholder="Search email"
                             value={searchEmail}
                             onChange={(e) => setSearchEmail(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && searchBookingsByEmail()}
