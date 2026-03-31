@@ -5,6 +5,7 @@ import './AdminBooking.scss';
 import '../../App.scss';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
+import { FaTrash } from 'react-icons/fa';
 
 /**
  * AdminBooking Component:
@@ -495,7 +496,7 @@ const AdminBooking = () => {
                                                         className="delete-slot-button"
                                                         title="Delete slot"
                                                     >
-                                                        🗑️
+                                                        <FaTrash aria-hidden="true" />
                                                     </button>
                                                 </td>
                                             </tr>
@@ -508,49 +509,89 @@ const AdminBooking = () => {
                     )}
                 </div>
 
-                <div className="slots-list">
+                <div className="slots-table-container">
                     <h3>Booked Slots</h3>
                     {loading ? (
                         <p>Loading...</p>
                     ) : upcomingSlots.length > 0 ? (
-                        <ul>
-                            {upcomingSlots.map((slot) => (
-                                <li key={slot._id} className="slot-item">
-                                    <p>
-                                        <strong>{slot.date}</strong> at {formatTime(slot.time)} - Booked by {slot.firstName} {slot.lastName} ({slot.email})
-                                    </p>
-                                    <p>Client's Message: {slot.message}</p>
-                                    <button onClick={() => deleteSession(slot._id)} className="delete-slot-button">
-                                        Delete session
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
+                        <div className="available-slots-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Message</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {upcomingSlots.map((slot) => (
+                                        <tr key={slot._id}>
+                                            <td>{formatDate(slot.date)}</td>
+                                            <td>{formatTime(slot.time)}</td>
+                                            <td>{slot.firstName} {slot.lastName}</td>
+                                            <td>{slot.email}</td>
+                                            <td>{slot.message || ''}</td>
+                                            <td>
+                                                <button
+                                                    onClick={() => deleteSession(slot._id)}
+                                                    className="delete-slot-button"
+                                                    title="Delete session"
+                                                >
+                                                    <FaTrash aria-hidden="true" />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     ) : (
                         <p>No booked slots</p>
                     )}
                 </div>
 
-                <div className="slots-list">
+                <div className="slots-table-container">
                     <h3>Passed Sessions</h3>
                     {loading ? (
                         <p>Loading...</p>
                     ) : passedSlots.length > 0 ? (
-                        <ul>
-                            {passedSlots.map((slot) => (
-                                <li key={slot._id} className="slot-item">
-                                    <p>
-                                        <strong>{slot.date}</strong> at {formatTime(slot.time)} - Booked by {slot.firstName} {slot.lastName} ({slot.email})
-                                    </p>
-                                    <p>Client's Message: {slot.message}</p>
-                                    <div className="button-group">
-                                        <button onClick={() => deleteSession(slot._id)} className="delete-slot-button">
-                                            Delete session
-                                        </button>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
+                        <div className="available-slots-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Message</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {passedSlots.map((slot) => (
+                                        <tr key={slot._id}>
+                                            <td>{formatDate(slot.date)}</td>
+                                            <td>{formatTime(slot.time)}</td>
+                                            <td>{slot.firstName} {slot.lastName}</td>
+                                            <td>{slot.email}</td>
+                                            <td>{slot.message || ''}</td>
+                                            <td>
+                                                <button
+                                                    onClick={() => deleteSession(slot._id)}
+                                                    className="delete-slot-button"
+                                                    title="Delete session"
+                                                >
+                                                    <FaTrash aria-hidden="true" />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     ) : (
                         <p>No passed sessions</p>
                     )}
