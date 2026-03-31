@@ -363,13 +363,15 @@ const AdminDashboard = () => {
                             </option>
                         ))}
                     </select>
-                    <input
-                        type="text"
-                        placeholder={newEvent.locationPreset === 'other' ? 'Enter a new location name' : ''}
-                        value={newEvent.location}
-                        onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
-                        readOnly={newEvent.locationPreset !== 'other'}
-                    />
+                    {newEvent.locationPreset === 'other' && (
+                        <input
+                            className="location-other-input"
+                            type="text"
+                            placeholder="Enter a new location name"
+                            value={newEvent.location}
+                            onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
+                        />
+                    )}
                 </div>
                 <div className="form-group">
                     <label>Sign-Up Link</label>
