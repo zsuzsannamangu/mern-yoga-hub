@@ -395,8 +395,8 @@ const AdminDashboard = () => {
 
             Swal.fire({
                 icon: 'success',
-                title: 'Bulk update complete',
-                text: `Updated ${selected.length} event(s).`,
+                title: 'Updated successfully',
+                text: `Updated ${selected.length} event(s) successfully.`,
                 confirmButtonText: 'OK'
             });
 
@@ -407,6 +407,7 @@ const AdminDashboard = () => {
             setBulkDate('');
             setBulkTime('');
             setShowBulkUpdate(false);
+            setSelectedEvents([]);
             fetchEvents();
         } catch (error) {
             Swal.fire({
@@ -611,7 +612,7 @@ const AdminDashboard = () => {
                                     disabled={selectedEvents.length === 0}
                                     aria-expanded={showBulkUpdate}
                                 >
-                                    {showBulkUpdate ? 'Close update selected' : `Update selected (${selectedEvents.length})`}
+                                    {showBulkUpdate ? 'Close update selected' : `Update selected classes/events (${selectedEvents.length})`}
                                 </button>
                                 <button
                                     type="button"
@@ -639,7 +640,7 @@ const AdminDashboard = () => {
                         {showBulkUpdate ? (
                             <div className="bulk-update">
                                 <div className="bulk-update__title">
-                                    Update selected ({selectedEvents.length})
+                                    Update selected classes/events ({selectedEvents.length})
                                 </div>
                                 <div className="bulk-update__hint">
                                     Leave a field blank to keep its current value.
@@ -727,7 +728,8 @@ const AdminDashboard = () => {
                                                 type="checkbox"
                                                 checked={allFilteredSelected}
                                                 onChange={(e) => toggleSelectAllFiltered(e.target.checked)}
-                                                aria-label="Select all filtered rows"
+                                                aria-label="Select all"
+                                                title="Select all"
                                             />
                                         </th>
                                         <th>Title</th>
