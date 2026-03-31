@@ -571,14 +571,22 @@ const AdminDashboard = () => {
                             <div className="bulk-controls__actions">
                                 <button
                                     type="button"
+                                    className="bulk-action-button"
+                                    onClick={() => toggleSelectAllFiltered(true)}
+                                    disabled={filteredIds.length === 0}
+                                >
+                                    Select filtered
+                                </button>
+                                <button
+                                    type="button"
                                     onClick={handleBulkDelete}
                                     disabled={selectedEvents.length === 0}
                                     className="bulk-delete-action-button"
-                                    title={selectedEvents.length > 0 ? `Bulk delete (${selectedEvents.length})` : 'Bulk delete'}
-                                    aria-label={selectedEvents.length > 0 ? `Bulk delete (${selectedEvents.length})` : 'Bulk delete'}
+                                    title={selectedEvents.length > 0 ? `Delete selected (${selectedEvents.length})` : 'Delete selected'}
+                                    aria-label={selectedEvents.length > 0 ? `Delete selected (${selectedEvents.length})` : 'Delete selected'}
                                 >
                                     <FaTrash className="icon" aria-hidden="true" />
-                                    Bulk delete
+                                    Delete selected
                                 </button>
                                 <button
                                     type="button"
@@ -591,14 +599,6 @@ const AdminDashboard = () => {
                                     disabled={!bulkStartDate && !bulkEndDate}
                                 >
                                     Clear dates
-                                </button>
-                                <button
-                                    type="button"
-                                    className="bulk-action-button"
-                                    onClick={() => toggleSelectAllFiltered(true)}
-                                    disabled={filteredIds.length === 0}
-                                >
-                                    Select filtered
                                 </button>
                                 <button
                                     type="button"
