@@ -179,29 +179,6 @@ module.exports = (io) => {
                     success: false,
                     error: 'Slot not found',
                 });
-
-  // Admin: toggle notesAdded flag
-  router.patch('/:id/notes-added', authMiddleware, adminMiddleware, async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { notesAdded } = req.body;
-
-      const updated = await Booking.findByIdAndUpdate(
-        id,
-        { $set: { notesAdded: Boolean(notesAdded) } },
-        { new: true }
-      ).select('_id notesAdded');
-
-      if (!updated) {
-        return res.status(404).json({ success: false, message: 'Booking not found' });
-      }
-
-      return res.status(200).json({ success: true, booking: updated });
-    } catch (error) {
-      console.error('Failed to update notesAdded:', error);
-      return res.status(500).json({ success: false, message: 'Failed to update notes flag' });
-    }
-  });
             }
 
             return res.status(200).json({
@@ -214,6 +191,29 @@ module.exports = (io) => {
                 error: 'Failed to delete slot',
                 details: error.message,
             });
+        }
+    });
+
+    // Admin: toggle notesAdded flag
+    router.patch('/:id/notes-added', authMiddleware, adminMiddleware, async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { notesAdded } = req.body;
+
+            const updated = await Booking.findByIdAndUpdate(
+                id,
+                { $set: { notesAdded: Boolean(notesAdded) } },
+                { new: true }
+            ).select('_id notesAdded');
+
+            if (!updated) {
+                return res.status(404).json({ success: false, message: 'Booking not found' });
+            }
+
+            return res.status(200).json({ success: true, booking: updated });
+        } catch (error) {
+            console.error('Failed to update notesAdded:', error);
+            return res.status(500).json({ success: false, message: 'Failed to update notes flag' });
         }
     });
 

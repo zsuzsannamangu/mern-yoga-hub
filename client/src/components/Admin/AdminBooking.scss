@@ -166,9 +166,10 @@
             height: $admin-icon-btn-height;
             padding: 0;
             font-size: $admin-action-icon-font-size;
+            position: relative;
 
             &:hover {
-                background: $admin-action-icon-hover-danger-bg;
+                background: $admin-action-icon-hover-bg;
             }
         }
 

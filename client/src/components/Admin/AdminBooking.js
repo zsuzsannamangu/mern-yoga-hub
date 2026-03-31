@@ -510,7 +510,7 @@ const AdminBooking = () => {
 
                             {searchResults.bookingsByEmail.length > 0 && (
                                 <div className="bookings-list">
-                                    <h5>Bookings Found by Email ({searchResults.bookingsByEmail.length}):</h5>
+                                    <h5>Bookings Found ({searchResults.bookingsByEmail.length}):</h5>
                                     <ul>
                                         {searchResults.bookingsByEmail.map((booking) => (
                                             <li key={booking.id} className="booking-result-item">
@@ -518,7 +518,6 @@ const AdminBooking = () => {
                                                 <p><strong>Name:</strong> {booking.firstName} {booking.lastName}</p>
                                                 <p><strong>Email:</strong> {booking.email}</p>
                                                 <p><strong>Session Type:</strong> {booking.sessionType}</p>
-                                                <p><strong>Booking ID:</strong> {booking.id}</p>
                                                 {booking.message && <p><strong>Message:</strong> {booking.message}</p>}
                                             </li>
                                         ))}
