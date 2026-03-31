@@ -121,6 +121,77 @@
             flex-wrap: wrap;
         }
 
+        .bulk-update {
+            margin: 8px 0 14px 0;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid $border-color;
+            background: $secondary-background-color;
+        }
+
+        .bulk-update__title {
+            font-weight: 700;
+            color: $text-color;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .bulk-update__row {
+            display: grid;
+            grid-template-columns: 1.2fr 1.2fr auto;
+            gap: 12px;
+            align-items: end;
+
+            @media (max-width: 900px) {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .bulk-update__field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            label {
+                font-size: 0.9rem;
+                color: $secondary-text-color;
+            }
+
+            input,
+            select {
+                padding: 8px 10px;
+                border: 1px solid $border-color;
+                border-radius: 6px;
+                font-family: $font-main;
+                color: $secondary-text-color;
+                height: 34px;
+                box-sizing: border-box;
+                background: $background-color;
+            }
+        }
+
+        .bulk-update__checkbox {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: $secondary-text-color;
+
+            input[type='checkbox'] {
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+        .bulk-update__actions {
+            display: flex;
+            justify-content: flex-end;
+
+            @media (max-width: 900px) {
+                justify-content: flex-start;
+            }
+        }
+
         .bulk-delete-action-button {
             height: 34px;
             padding: 0 12px;
@@ -275,6 +346,7 @@
             border-radius: 6px;
             font-size: 0.85rem;
             font-weight: 700;
+            font-family: $font-main;
             background-color: $primary-button-color;
             color: $button-text-color;
             text-decoration: none;
@@ -309,6 +381,7 @@
             border-radius: 6px;
             font-size: 0.85rem;
             font-weight: 700;
+            font-family: $font-main;
             cursor: pointer;
             margin-left: 8px;
             box-sizing: border-box;

@@ -39,6 +39,10 @@ const AdminDashboard = () => {
     const alertShown = useRef(false);
     const [bulkStartDate, setBulkStartDate] = useState('');
     const [bulkEndDate, setBulkEndDate] = useState('');
+    const [bulkLocationPreset, setBulkLocationPreset] = useState('');
+    const [bulkLocationOther, setBulkLocationOther] = useState('');
+    const [bulkLink, setBulkLink] = useState('');
+    const [bulkKeepExistingLink, setBulkKeepExistingLink] = useState(false);
 
     const toDateTime = (e) => {
         // ensure time is always "HH:MM"
@@ -314,6 +318,90 @@ const AdminDashboard = () => {
         }
     };
 
+    const buildUpdatePayload = (event, patch) => ({
+        title: patch.title ?? event.title,
+        date: patch.date ?? event.date,
+        time: patch.time ?? event.time,
+        location: patch.location ?? event.location,
+        signUpLink: patch.signUpLink ?? event.signUpLink,
+    });
+
+    const handleBulkUpdate = async () => {
+        if (selectedEvents.length === 0) return;
+
+        const selectedSet = new Set(selectedEvents);
+        const eventsById = new Map(events.map((e) => [e._id, e]));
+        const selected = events.filter((e) => selectedSet.has(e._id));
+
+        const preset = LOCATION_PRESETS.find((p) => p.id === bulkLocationPreset);
+        const isOther = bulkLocationPreset === 'other';
+
+        const locationValue = isOther ? bulkLocationOther.trim() : (preset?.location || '');
+        if (!bulkLocationPreset) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Bulk update needs a location',
+                text: 'Choose a location preset (or Other) before applying bulk update.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+        if (isOther && !locationValue) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Missing location name',
+                text: 'Enter a location name for Other.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        // Determine which link to apply
+        const linkFromPreset = preset?.signUpLink || '';
+        const linkOverride = bulkLink.trim();
+        const shouldChangeLink = !bulkKeepExistingLink;
+        const linkToApply = linkOverride || linkFromPreset;
+
+        try {
+            const token = localStorage.getItem('adminToken');
+            // Update selected events sequentially to keep API simple/reliable
+            for (const ev of selected) {
+                const original = eventsById.get(ev._id);
+                if (!original) continue;
+
+                const patch = {
+                    location: locationValue,
+                    ...(shouldChangeLink ? { signUpLink: linkToApply } : {}),
+                };
+
+                const payload = buildUpdatePayload(original, patch);
+                await adminAxiosInstance.put(`/api/events/${ev._id}`, payload, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+            }
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Bulk update complete',
+                text: `Updated ${selected.length} event(s).`,
+                confirmButtonText: 'OK'
+            });
+
+            setBulkLocationPreset('');
+            setBulkLocationOther('');
+            setBulkLink('');
+            setBulkKeepExistingLink(false);
+            fetchEvents();
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Bulk update failed',
+                text: error.message,
+                confirmButtonText: 'OK'
+            });
+        }
+    };
+
     const handleLocationPresetChange = (presetId) => {
         const preset = LOCATION_PRESETS.find((p) => p.id === presetId);
         if (!preset) return;
@@ -498,6 +586,7 @@ const AdminDashboard = () => {
                                     onClick={() => {
                                         setBulkStartDate('');
                                         setBulkEndDate('');
+                                        setSelectedEvents([]);
                                     }}
                                     disabled={!bulkStartDate && !bulkEndDate}
                                 >
@@ -519,6 +608,75 @@ const AdminDashboard = () => {
                                 >
                                     Clear selection
                                 </button>
+                            </div>
+                        </div>
+                        <div className="bulk-update">
+                            <div className="bulk-update__title">
+                                Bulk update selected ({selectedEvents.length})
+                            </div>
+                            <div className="bulk-update__row">
+                                <div className="bulk-update__field">
+                                    <label>New location</label>
+                                    <select
+                                        value={bulkLocationPreset}
+                                        onChange={(e) => {
+                                            const presetId = e.target.value;
+                                            setBulkLocationPreset(presetId);
+                                            const preset = LOCATION_PRESETS.find((p) => p.id === presetId);
+                                            if (presetId === 'other') {
+                                                setBulkLocationOther('');
+                                                setBulkLink('');
+                                                return;
+                                            }
+                                            // auto-fill link from preset unless user chooses keep existing
+                                            setBulkLocationOther('');
+                                            setBulkLink(preset?.signUpLink || '');
+                                        }}
+                                    >
+                                        <option value="">Select a location</option>
+                                        {LOCATION_PRESETS.map((p) => (
+                                            <option key={p.id} value={p.id}>
+                                                {p.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {bulkLocationPreset === 'other' ? (
+                                        <input
+                                            type="text"
+                                            placeholder="Enter location name"
+                                            value={bulkLocationOther}
+                                            onChange={(e) => setBulkLocationOther(e.target.value)}
+                                        />
+                                    ) : null}
+                                </div>
+                                <div className="bulk-update__field">
+                                    <label>Link</label>
+                                    <input
+                                        type="url"
+                                        placeholder={bulkKeepExistingLink ? 'Keeping each event’s current link' : 'Auto-filled from location (editable)'}
+                                        value={bulkLink}
+                                        onChange={(e) => setBulkLink(e.target.value)}
+                                        disabled={bulkKeepExistingLink}
+                                    />
+                                    <label className="bulk-update__checkbox">
+                                        <input
+                                            type="checkbox"
+                                            checked={bulkKeepExistingLink}
+                                            onChange={(e) => setBulkKeepExistingLink(e.target.checked)}
+                                        />
+                                        Keep existing link (don’t change)
+                                    </label>
+                                </div>
+                                <div className="bulk-update__actions">
+                                    <button
+                                        type="button"
+                                        className="bulk-action-button"
+                                        onClick={handleBulkUpdate}
+                                        disabled={selectedEvents.length === 0}
+                                    >
+                                        Apply bulk update
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div className="events-table-wrap">
