@@ -49,6 +49,7 @@ const AdminDashboard = () => {
     const [bulkTitle, setBulkTitle] = useState('');
     const [bulkDate, setBulkDate] = useState('');
     const [bulkTime, setBulkTime] = useState('');
+    const [bulkDurationMinutes, setBulkDurationMinutes] = useState('');
     const [showBulkUpdate, setShowBulkUpdate] = useState(false);
 
     const toDateTime = (e) => {
@@ -365,11 +366,15 @@ const AdminDashboard = () => {
         const dateValue = bulkDate.trim();
         const timeValue = bulkTime.trim();
         const linkValue = bulkLink.trim();
+        const durationValueRaw = String(bulkDurationMinutes).trim();
+        const durationValue = durationValueRaw ? Number(durationValueRaw) : null;
+        const wantsDurationChange = Number.isFinite(durationValue) && durationValue > 0;
 
         const wantsAnyChange =
             Boolean(titleValue) ||
             Boolean(dateValue) ||
             Boolean(timeValue) ||
+            Boolean(wantsDurationChange) ||
             Boolean(wantsLocationChange) ||
             Boolean(linkValue);
 
@@ -394,6 +399,7 @@ const AdminDashboard = () => {
                 if (titleValue) patch.title = titleValue;
                 if (dateValue) patch.date = dateValue;
                 if (timeValue) patch.time = timeValue;
+                if (wantsDurationChange) patch.durationMinutes = durationValue;
                 if (wantsLocationChange) patch.location = locationValue;
                 if (linkValue) patch.signUpLink = linkValue;
 
@@ -415,6 +421,7 @@ const AdminDashboard = () => {
             setBulkTitle('');
             setBulkDate('');
             setBulkTime('');
+            setBulkDurationMinutes('');
             setShowBulkUpdate(false);
             setSelectedEvents([]);
             fetchEvents();
@@ -718,6 +725,18 @@ const AdminDashboard = () => {
                                             type="time"
                                             value={bulkTime}
                                             onChange={(e) => setBulkTime(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="bulk-update__field">
+                                        <label>Length (minutes)</label>
+                                        <input
+                                            type="number"
+                                            min="5"
+                                            max="600"
+                                            step="5"
+                                            value={bulkDurationMinutes}
+                                            onChange={(e) => setBulkDurationMinutes(e.target.value)}
+                                            placeholder="(leave blank to keep)"
                                         />
                                     </div>
                                     <div className="bulk-update__field">
