@@ -94,6 +94,77 @@
                 background-color: $delete-button-hover;
             }
         }
+
+        .bulk-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 16px;
+            align-items: flex-end;
+            margin: 10px 0 14px 0;
+            padding-right: 70px; // leave room for the trash button
+        }
+
+        .bulk-controls__dates {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 14px;
+
+            label {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                font-size: 0.9rem;
+                color: $secondary-text-color;
+
+                input[type='date'] {
+                    padding: 8px 10px;
+                    border: 1px solid $border-color;
+                    border-radius: 6px;
+                    font-family: $font-main;
+                    color: $secondary-text-color;
+                    height: 34px;
+                    box-sizing: border-box;
+                    background: $background-color;
+                }
+            }
+        }
+
+        .bulk-controls__actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .bulk-action-button {
+            height: 34px;
+            padding: 0 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            background-color: $primary-button-color;
+            color: $button-text-color;
+
+            &:hover {
+                background-color: $primary-button-hover-color;
+            }
+
+            &:disabled {
+                opacity: 0.55;
+                cursor: not-allowed;
+            }
+        }
+
+        .bulk-action-button--outline {
+            background: transparent;
+            color: $primary-button-color;
+            border: 1px solid $primary-button-color;
+
+            &:hover {
+                background: rgba(188, 104, 190, 0.08);
+            }
+        }
     }
 
     .events-table-wrap {
@@ -210,12 +281,18 @@
 
         .update-event-button,
         .delete-single-event-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 34px;
             border: none;
-            padding: 7px 10px;
+            padding: 0 12px;
             border-radius: 6px;
             font-size: 0.85rem;
+            font-weight: 700;
             cursor: pointer;
             margin-left: 8px;
+            box-sizing: border-box;
         }
 
         .update-event-button {

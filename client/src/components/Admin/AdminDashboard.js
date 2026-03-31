@@ -37,6 +37,8 @@ const AdminDashboard = () => {
     }); // State for new event form
     const [loading, setLoading] = useState(false); // State for loading indicator
     const alertShown = useRef(false);
+    const [bulkStartDate, setBulkStartDate] = useState('');
+    const [bulkEndDate, setBulkEndDate] = useState('');
 
     const toDateTime = (e) => {
         // ensure time is always "HH:MM"
@@ -49,6 +51,35 @@ const AdminDashboard = () => {
         [...list].sort((a, b) => toDateTime(a) - toDateTime(b));
 
     const orderedEvents = sortEvents(events);
+
+    const withinBulkRange = (event) => {
+        if (!bulkStartDate && !bulkEndDate) return true;
+        const d = new Date(`${event.date}T00:00:00`);
+        if (bulkStartDate) {
+            const start = new Date(`${bulkStartDate}T00:00:00`);
+            if (d < start) return false;
+        }
+        if (bulkEndDate) {
+            const end = new Date(`${bulkEndDate}T23:59:59`);
+            if (d > end) return false;
+        }
+        return true;
+    };
+
+    const filteredEvents = orderedEvents.filter(withinBulkRange);
+    const filteredIds = filteredEvents.map((e) => e._id);
+    const allFilteredSelected = filteredIds.length > 0 && filteredIds.every((id) => selectedEvents.includes(id));
+
+    const toggleSelectAllFiltered = (checked) => {
+        setSelectedEvents((prev) => {
+            if (checked) {
+                const set = new Set(prev);
+                filteredIds.forEach((id) => set.add(id));
+                return Array.from(set);
+            }
+            return prev.filter((id) => !filteredIds.includes(id));
+        });
+    };
 
     // Fetch events from the backend
     const fetchEvents = async () => {
@@ -437,11 +468,56 @@ const AdminDashboard = () => {
                         >
                             <FaTrash className="icon" />
                         </button>
+                        <div className="bulk-controls">
+                            <div className="bulk-controls__dates">
+                                <label>
+                                    From
+                                    <input
+                                        type="date"
+                                        value={bulkStartDate}
+                                        onChange={(e) => setBulkStartDate(e.target.value)}
+                                    />
+                                </label>
+                                <label>
+                                    To
+                                    <input
+                                        type="date"
+                                        value={bulkEndDate}
+                                        onChange={(e) => setBulkEndDate(e.target.value)}
+                                    />
+                                </label>
+                            </div>
+                            <div className="bulk-controls__actions">
+                                <button
+                                    type="button"
+                                    className="bulk-action-button"
+                                    onClick={() => toggleSelectAllFiltered(true)}
+                                    disabled={filteredIds.length === 0}
+                                >
+                                    Select filtered
+                                </button>
+                                <button
+                                    type="button"
+                                    className="bulk-action-button bulk-action-button--outline"
+                                    onClick={() => setSelectedEvents([])}
+                                    disabled={selectedEvents.length === 0}
+                                >
+                                    Clear selection
+                                </button>
+                            </div>
+                        </div>
                         <div className="events-table-wrap">
                             <table className="events-table">
                                 <thead>
                                     <tr>
-                                        <th aria-label="Select for bulk delete"></th>
+                                        <th aria-label="Select for bulk delete">
+                                            <input
+                                                type="checkbox"
+                                                checked={allFilteredSelected}
+                                                onChange={(e) => toggleSelectAllFiltered(e.target.checked)}
+                                                aria-label="Select all filtered rows"
+                                            />
+                                        </th>
                                         <th>Title</th>
                                         <th>Date</th>
                                         <th>Time</th>
@@ -451,7 +527,7 @@ const AdminDashboard = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {orderedEvents.map((event) => (
+                                    {filteredEvents.map((event) => (
                                         <tr key={event._id}>
                                             <td className="events-td-check">
                                                 <input
