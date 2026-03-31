@@ -67,9 +67,11 @@
 
     .finances-summary-grid {
         display: grid;
-        gap: 20px;
+        column-gap: 28px;
+        row-gap: 28px;
         align-items: stretch;
         grid-template-columns: repeat(3, minmax(0, 1fr));
+        padding: 2px 0; // keep box-shadows from visually “touching”
     }
 
     .summary-card {
