@@ -570,10 +570,11 @@ const AdminBooking = () => {
                                             <td>{slot.message || ''}</td>
                                             <td>
                                                 <button
+                                                    type="button"
                                                     onClick={() => deleteSession(slot._id)}
                                                     className="delete-slot-button"
-                                                    title="Delete"
                                                     data-tooltip="Delete"
+                                                    aria-label="Delete"
                                                 >
                                                     <span aria-hidden="true">🗑️</span>
                                                 </button>
@@ -615,7 +616,7 @@ const AdminBooking = () => {
                                             <td>{slot.message || ''}</td>
                                             <td>
                                                 <div className="session-actions">
-                                                    <label className="notes-added" title="Notes added" data-tooltip="Notes added">
+                                                    <label className="notes-added" data-tooltip="Notes added">
                                                         <input
                                                             className="notes-added-checkbox"
                                                             type="checkbox"
@@ -626,10 +627,11 @@ const AdminBooking = () => {
                                                         />
                                                     </label>
                                                 <button
+                                                    type="button"
                                                     onClick={() => deleteSession(slot._id)}
                                                     className="delete-slot-button"
-                                                    title="Delete"
                                                     data-tooltip="Delete"
+                                                    aria-label="Delete"
                                                 >
                                                     <span aria-hidden="true">🗑️</span>
                                                 </button>
