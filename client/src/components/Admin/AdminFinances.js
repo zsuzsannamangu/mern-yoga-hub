@@ -7,6 +7,15 @@ import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 
 const AdminFinances = () => {
+    const LOCATION_PRESETS = [
+        { id: 'yoga-refuge-nw', label: 'Yoga Refuge, NW location', location: 'Yoga Refuge, NW location' },
+        { id: 'yoga-refuge-se', label: 'Yoga Refuge, SE location', location: 'Yoga Refuge, SE location' },
+        { id: 'peoples-yoga-nw', label: "The People's Yoga, NW location", location: "The People's Yoga, NW location" },
+        { id: 'peoples-yoga-se', label: "The People's Yoga, SE location", location: "The People's Yoga, SE location" },
+        { id: 'heart-spring', label: 'Heart Spring Health', location: 'Heart Spring Health' },
+        { id: 'online', label: 'Online', location: 'Online' },
+        { id: 'other', label: 'Other', location: '' },
+    ];
     const [classData, setClassData] = useState([]);
     const [expandedMonths, setExpandedMonths] = useState(new Set());
     const [showAddForm, setShowAddForm] = useState(false);
@@ -26,6 +35,7 @@ const AdminFinances = () => {
         time: '',
         class: '',
         location: '',
+        locationPreset: '',
         category: 'other',
         grossRate: '',
         receivedRate: '',
@@ -38,6 +48,17 @@ const AdminFinances = () => {
         repeatCount: 1,
         repeatFrequency: 'weekly'
     });
+
+    const handleLocationPresetChange = (presetId) => {
+        const preset = LOCATION_PRESETS.find((p) => p.id === presetId);
+        if (!preset) return;
+
+        setNewEntry((prev) => ({
+            ...prev,
+            locationPreset: presetId,
+            location: presetId === 'other' ? '' : preset.location,
+        }));
+    };
 
     const fetchClassData = useCallback(async () => {
         try {
@@ -264,6 +285,7 @@ const AdminFinances = () => {
                 time: '',
                 class: '',
                 location: '',
+                locationPreset: '',
                 category: 'other',
                 grossRate: '',
                 receivedRate: '',
@@ -662,14 +684,29 @@ const AdminFinances = () => {
                         <div className="form-row">
                             <div className="form-group">
                                 <label>Location</label>
-                                <input
-                                    type="text"
-                                    name="location"
-                                    value={newEntry.location}
-                                    onChange={handleInputChange}
-                                    placeholder="e.g., Studio A, Online, Private Home"
+                                <select
+                                    value={newEntry.locationPreset}
+                                    onChange={(e) => handleLocationPresetChange(e.target.value)}
                                     required
-                                />
+                                >
+                                    <option value="">Select a location</option>
+                                    {LOCATION_PRESETS.map((p) => (
+                                        <option key={p.id} value={p.id}>
+                                            {p.label}
+                                        </option>
+                                    ))}
+                                </select>
+                                {newEntry.locationPreset === 'other' && (
+                                    <input
+                                        type="text"
+                                        name="location"
+                                        value={newEntry.location}
+                                        onChange={handleInputChange}
+                                        placeholder="Enter a location name"
+                                        required
+                                        className="location-other-input"
+                                    />
+                                )}
                             </div>
                             <div className="form-group">
                                 <label>Category</label>

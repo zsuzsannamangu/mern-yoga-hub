@@ -40,19 +40,6 @@ $admin-icon-btn-width: 38px;
 $admin-icon-btn-radius: 6px;
 $admin-icon-size: 22px;
 
-// Admin tables (shared typography)
-$admin-table-font-family: $font-main;
-$admin-table-font-size: 0.9rem;
-$admin-table-header-font-size: 0.9rem;
-
-// Admin action icons (Finances-style)
-$admin-action-icon-font-size: 18px;
-$admin-action-icon-padding-y: 4px;
-$admin-action-icon-padding-x: 6px;
-$admin-action-icon-radius: 3px;
-$admin-action-icon-hover-bg: rgba(0, 0, 0, 0.10);
-$admin-action-icon-hover-danger-bg: rgba(220, 53, 69, 0.10);
-
 // Accent Colors
 $line-color: #a37ba4;
 $border-color: #e0e0e0;
@@ -81,6 +68,19 @@ $font-main: 'Avenir Light';
 $font-secondary: 'Times New Roman';
 $font-title: 'Roboto';
 $font-elegant: 'Georgia', 'Times New Roman', serif; // Elegant serif for special headings
+
+// Admin tables (shared typography)
+$admin-table-font-family: $font-main;
+$admin-table-font-size: 0.9rem;
+$admin-table-header-font-size: 0.9rem;
+
+// Admin action icons (Finances-style)
+$admin-action-icon-font-size: 18px;
+$admin-action-icon-padding-y: 4px;
+$admin-action-icon-padding-x: 6px;
+$admin-action-icon-radius: 3px;
+$admin-action-icon-hover-bg: rgba(0, 0, 0, 0.10);
+$admin-action-icon-hover-danger-bg: rgba(220, 53, 69, 0.10);
 
 //Global breakpoints for website responsiveness for smaller screens
 $breakpoint-lg: 1024px; // Large screens (e.g., tablets)
