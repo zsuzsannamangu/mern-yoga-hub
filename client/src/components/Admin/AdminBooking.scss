@@ -80,7 +80,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-family: $font-secondary;
+            font-family: $admin-table-font-family;
             background: white;
             table-layout: fixed;
 
@@ -93,8 +93,8 @@
                     font-weight: bold;
                     color: $text-color;
                     border-bottom: 2px solid $border-color;
-                    font-size: 1.02rem;
-                    font-family: $font-main;
+                    font-size: $admin-table-header-font-size;
+                    font-family: $admin-table-font-family;
                     white-space: nowrap;
 
                     &:last-child {
@@ -118,7 +118,7 @@
 
                     td {
                         padding: 12px;
-                        font-size: 1rem;
+                        font-size: $admin-table-font-size;
                         color: $text-color;
                         vertical-align: middle;
                         overflow: hidden;
@@ -154,17 +154,21 @@
             align-items: center;
             justify-content: center;
             border: none;
-            border-radius: 5px;
+            border-radius: $admin-icon-btn-radius;
             cursor: pointer;
             transition: background-color 0.2s ease;
             font-family: $font-main;
             background-color: $delete-button;
             color: $button-text-color;
-            padding: 5px 10px;
+            width: $admin-icon-btn-width;
+            height: $admin-icon-btn-height;
+            padding: 0;
 
             svg {
-                font-size: 1.1rem;
+                width: $admin-icon-size;
+                height: $admin-icon-size;
                 color: $button-text-color;
+                display: block;
             }
 
             &:hover {

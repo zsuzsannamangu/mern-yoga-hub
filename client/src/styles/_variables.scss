@@ -34,6 +34,17 @@ $secondary-button-hover-color: #b81e17;
 $delete-button: #d14249;
 $delete-button-hover: #b93a40;
 
+// Admin icon buttons (shared sizing)
+$admin-icon-btn-height: 30px;
+$admin-icon-btn-width: 38px;
+$admin-icon-btn-radius: 6px;
+$admin-icon-size: 22px;
+
+// Admin tables (shared typography)
+$admin-table-font-family: $font-main;
+$admin-table-font-size: 0.9rem;
+$admin-table-header-font-size: 0.9rem;
+
 // Accent Colors
 $line-color: #a37ba4;
 $border-color: #e0e0e0;

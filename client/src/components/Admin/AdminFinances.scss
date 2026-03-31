@@ -279,14 +279,15 @@
     }
 
     .month-header {
-        display: flex;
+        display: grid;
+        grid-template-columns: 40px 28px 1fr auto;
         align-items: center;
         background: $secondary-background-color;
-        padding: 15px 10px 15px 15px;
+        padding: 14px 12px;
         cursor: pointer;
         transition: background-color 0.2s ease;
         border-bottom: 1px solid $border-color;
-        gap: 15px;
+        column-gap: 12px;
 
         &:hover {
             background: $content-background-color-hover;
@@ -300,13 +301,14 @@
             width: 18px;
             height: 18px;
             cursor: pointer;
+            justify-self: center;
         }
 
         .expand-icon {
             font-size: 12px;
-            margin-right: 8px;
             color: $primary-button-color;
             font-weight: bold;
+            justify-self: center;
         }
 
         .month-name {
@@ -314,12 +316,15 @@
             color: $main-title-color;
             font-family: $font-title;
             font-size: 1rem;
+            min-width: 0;
         }
 
         .month-count {
             color: $secondary-text-color;
             font-size: 0.85rem;
             font-family: $font-secondary;
+            justify-self: end;
+            white-space: nowrap;
         }
     }
 

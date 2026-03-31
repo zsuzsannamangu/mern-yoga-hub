@@ -71,16 +71,35 @@
             .edit-button,
             .add-appointment-btn,
             .delete-button {
-                background-color: $tertiary-text-color;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: $admin-icon-btn-width;
+                height: $admin-icon-btn-height;
+                padding: 0;
+                background-color: $primary-button-color;
                 color: $button-text-color;
                 border: none;
-                border-radius: 5px;
-                padding: 5px 10px;
+                border-radius: $admin-icon-btn-radius;
                 cursor: pointer;
                 transition: background-color 0.3s ease;
 
                 &:hover {
-                    background-color: darken($secondary-text-color, 10%);
+                    background-color: $primary-button-hover-color;
+                }
+
+                svg {
+                    width: $admin-icon-size;
+                    height: $admin-icon-size;
+                    display: block;
+                }
+            }
+
+            .delete-button {
+                background-color: $delete-button;
+
+                &:hover {
+                    background-color: $delete-button-hover;
                 }
             }
         }

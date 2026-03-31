@@ -346,7 +346,7 @@
     .events-table {
         width: 100%;
         border-collapse: collapse;
-        font-family: $font-main;
+        font-family: $admin-table-font-family;
 
         thead th {
             text-align: left;
@@ -355,6 +355,7 @@
             color: $text-color;
             border-bottom: 1px solid $border-color;
             font-weight: 700;
+            font-size: $admin-table-header-font-size;
             position: sticky;
             top: 0;
             z-index: 1;
@@ -365,6 +366,7 @@
             padding: 8px 10px;
             border-bottom: 1px solid $border-color;
             vertical-align: middle;
+            font-size: $admin-table-font-size;
         }
 
         tbody tr:nth-child(even) {
@@ -391,8 +393,8 @@
             padding: 6px 8px;
             border: 1px solid $border-color;
             border-radius: 6px;
-            font-size: 0.9rem;
-            font-family: $font-main;
+            font-size: $admin-table-font-size;
+            font-family: $admin-table-font-family;
             color: $secondary-text-color;
             background: $background-color;
             height: 30px;
@@ -412,8 +414,8 @@
         /* Force consistent typography for native date/time controls */
         input[type='date'].events-input,
         input[type='time'].events-input {
-            font-family: $font-main;
-            font-size: 0.9rem;
+            font-family: $admin-table-font-family;
+            font-size: $admin-table-font-size;
             color: $secondary-text-color;
         }
 
@@ -433,9 +435,9 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            height: 30px;
-            width: 38px;
-            border-radius: 6px;
+            height: $admin-icon-btn-height;
+            width: $admin-icon-btn-width;
+            border-radius: $admin-icon-btn-radius;
             font-size: 0.85rem;
             font-weight: 700;
             font-family: $font-main;
@@ -471,10 +473,10 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            height: 30px;
-            width: 38px;
+            height: $admin-icon-btn-height;
+            width: $admin-icon-btn-width;
             border: none;
-            border-radius: 6px;
+            border-radius: $admin-icon-btn-radius;
             font-size: 0.9rem;
             font-weight: 700;
             font-family: $font-main;
