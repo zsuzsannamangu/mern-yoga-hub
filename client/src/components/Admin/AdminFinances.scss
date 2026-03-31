@@ -433,7 +433,7 @@
 $class-table-grid-cols:
     40px
     minmax(72px, 0.55fr)
-    100px
+    118px
     60px
     minmax(84px, 0.82fr)
     minmax(88px, 1.02fr)
@@ -449,7 +449,7 @@ $class-table-grid-cols:
 $class-table-grid-cols-md:
     36px
     minmax(62px, 0.5fr)
-    92px
+    108px
     54px
     minmax(72px, 0.88fr)
     minmax(74px, 0.98fr)
@@ -465,7 +465,7 @@ $class-table-grid-cols-md:
 $class-table-grid-cols-sm:
     34px
     minmax(56px, 0.46fr)
-    86px
+    100px
     50px
     minmax(66px, 0.84fr)
     minmax(68px, 0.96fr)
@@ -597,11 +597,16 @@ $class-table-grid-cols-sm:
             line-height: 1.35;
             text-align: center;
             white-space: normal;
-            overflow-wrap: break-word;
+            overflow-wrap: normal;
 
             .month-count__sep {
                 opacity: 0.55;
                 font-weight: 500;
+            }
+
+            .month-count__teach,
+            .month-count__therapy {
+                white-space: nowrap;
             }
 
             .month-count__therapy {
@@ -687,11 +692,16 @@ $class-table-grid-cols-sm:
             line-height: 1.35;
             text-align: center;
             white-space: normal;
-            overflow-wrap: break-word;
+            overflow-wrap: normal;
 
             .month-count__sep {
                 opacity: 0.55;
                 font-weight: 500;
+            }
+
+            .month-count__teach,
+            .month-count__therapy {
+                white-space: nowrap;
             }
 
             .month-count__therapy {
