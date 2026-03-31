@@ -296,22 +296,21 @@ const AdminBooking = () => {
         setSearching(true);
         try {
             const response = await adminAxiosInstance.get(`/api/admin/diagnostics/bookings-by-email?email=${encodeURIComponent(searchEmail.trim())}`);
-            setSearchResults(response.data);
-            
-            if (response.data.bookingsByEmail.length === 0 && 
-                (!response.data.user || response.data.bookingsByUserId.length === 0)) {
-                Swal.fire({
+            const data = response.data;
+
+            if (!data?.bookingsByEmail || data.bookingsByEmail.length === 0) {
+                await Swal.fire({
                     icon: 'info',
-                    title: 'No Bookings Found',
-                    html: `
-                        <p>No bookings found for: <strong>${searchEmail}</strong></p>
-                        ${response.data.userFound ? '<p>User account exists but has no bookings.</p>' : '<p>No user account found with this email.</p>'}
-                        ${response.data.allYahooBookings.length > 0 ? 
-                            `<p>Found ${response.data.allYahooBookings.length} other yahoo.com bookings. Check if there's a typo.</p>` : ''}
-                    `,
+                    title: 'No bookings found',
+                    text: 'No bookings found by this email address.',
                     confirmButtonText: 'OK'
                 });
+                setSearchResults(null);
+                setSearchEmail('');
+                return;
             }
+
+            setSearchResults(data);
         } catch (error) {
             console.error('Search error:', error);
             Swal.fire({
@@ -397,10 +396,7 @@ const AdminBooking = () => {
                                 </div>
                             )}
                             
-                            {searchResults.bookingsByEmail.length === 0 && 
-                             (!searchResults.bookingsByUserId || searchResults.bookingsByUserId.length === 0) && (
-                                <p className="no-results">No bookings found by this email address.</p>
-                            )}
+                            {/* No-results state handled via SweetAlert to avoid duplicate messaging */}
                         </div>
                     )}
                 </div>
