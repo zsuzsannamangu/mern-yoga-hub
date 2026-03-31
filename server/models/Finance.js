@@ -43,7 +43,11 @@ const financeSchema = new mongoose.Schema({
         required: true,
         enum: ['yes', 'no'],
         default: 'no'
-    }
+    },
+    // Round-trip miles for this row (tax deduction help); from home → studio × 2 when saved
+    tripMiles: { type: Number, required: false, default: null },
+    // Estimated gas $ for this trip (personal tracking); MPG + $/gal from client when saved
+    tripGasCost: { type: Number, required: false, default: null }
 }, {
     timestamps: true // Adds createdAt and updatedAt fields
 });

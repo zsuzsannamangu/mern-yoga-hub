@@ -1,15 +1,17 @@
 /**
- * Drive estimates for finances: one-way miles per canonical location (browser localStorage).
- * Defaults tuned for Hyundai Tucson Hybrid (~37–38 mpg combined EPA).
+ * Drive estimates for finances (miles + gas). Canonical values load from API in AdminFinances;
+ * this module holds Tucson defaults, pure helpers, and one-time legacy localStorage migration.
  */
 
 const LS_TRAVEL = 'yogasavor_finance_travel';
 const LS_MILES = 'yogasavor_finance_location_miles';
 
-/** EPA combined MPG ballpark for Tucson Hybrid (user can override in UI). */
-export const DEFAULT_TUCSON_HYBRID_MPG = 38;
+/**
+ * Hyundai Tucson Hybrid (2024–25): EPA combined 38 mpg (FWD) / 37 mpg (AWD). Midpoint for a reasonable default.
+ */
+export const DEFAULT_TUCSON_HYBRID_MPG = 37.5;
 
-/** Optional default $/gal ; user should set to their area. */
+/** Placeholder $/gal when none stored yet (update in Finances → location stats). */
 export const DEFAULT_GAS_PRICE_PER_GALLON = 3.65;
 
 export function isOnlineCanonicalLocation(canonical) {
@@ -24,10 +26,17 @@ function safeParseJson(raw, fallback) {
     }
 }
 
-export function loadTravelSettings() {
+/** Old browser-only storage; used only to migrate into MongoDB once. */
+export function readLegacyLocationMiles() {
+    const parsed = safeParseJson(localStorage.getItem(LS_MILES), {});
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? { ...parsed } : {};
+}
+
+export function readLegacyTravelSettings() {
     const parsed = safeParseJson(localStorage.getItem(LS_TRAVEL), {});
     return {
-        mpg: typeof parsed.mpg === 'number' && parsed.mpg > 0 ? parsed.mpg : DEFAULT_TUCSON_HYBRID_MPG,
+        mpg:
+            typeof parsed.mpg === 'number' && parsed.mpg > 0 ? parsed.mpg : DEFAULT_TUCSON_HYBRID_MPG,
         gasPricePerGallon:
             typeof parsed.gasPricePerGallon === 'number' && parsed.gasPricePerGallon >= 0
                 ? parsed.gasPricePerGallon
@@ -35,31 +44,21 @@ export function loadTravelSettings() {
     };
 }
 
-export function saveTravelSettings({ mpg, gasPricePerGallon }) {
-    const prev = loadTravelSettings();
-    const next = {
-        mpg: typeof mpg === 'number' && mpg > 0 ? mpg : prev.mpg,
-        gasPricePerGallon:
-            typeof gasPricePerGallon === 'number' && gasPricePerGallon >= 0
-                ? gasPricePerGallon
-                : prev.gasPricePerGallon,
-    };
-    localStorage.setItem(LS_TRAVEL, JSON.stringify(next));
-    return next;
-}
-
-export function loadMilesOverrides() {
-    const parsed = safeParseJson(localStorage.getItem(LS_MILES), {});
-    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? { ...parsed } : {};
-}
-
-export function saveMilesOverrides(overrides) {
-    localStorage.setItem(LS_MILES, JSON.stringify(overrides));
+export function clearLegacyFinanceTravelLocalStorage() {
+    try {
+        localStorage.removeItem(LS_TRAVEL);
+        localStorage.removeItem(LS_MILES);
+    } catch {
+        /* ignore */
+    }
 }
 
 export function getOneWayMilesForLocation(canonicalLocation, overridesRaw) {
     if (isOnlineCanonicalLocation(canonicalLocation)) return 0;
-    const overrides = overridesRaw || loadMilesOverrides();
+    const overrides =
+        overridesRaw != null && typeof overridesRaw === 'object' && !Array.isArray(overridesRaw)
+            ? overridesRaw
+            : {};
     const v = overrides[canonicalLocation];
     if (typeof v === 'number' && v >= 0) return v;
     if (typeof v === 'string' && v.trim() !== '') {

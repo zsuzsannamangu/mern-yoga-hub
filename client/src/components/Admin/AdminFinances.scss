@@ -263,6 +263,14 @@
         .location-other-input {
             margin-top: 10px;
         }
+
+        .location-trip-hint {
+            margin: 8px 0 0 0;
+            font-size: 0.82rem;
+            color: $secondary-text-color;
+            font-family: $admin-table-font-family;
+            line-height: 1.35;
+        }
     }
 
     // Repeat section uses default form styling
@@ -318,7 +326,7 @@
 
 .class-table {
     width: 100%;
-    min-width: 1320px;
+    min-width: 1500px;
     font-family: $admin-table-font-family;
     font-size: $admin-table-font-size;
 
@@ -333,9 +341,11 @@
             1.6fr  /* location */
             120px  /* gross */
             120px  /* received */
+            82px   /* trip miles */
+            88px   /* gas */
             130px  /* payment method */
-            80px   /* request sent */
-            70px   /* paid */
+            80px   /* paid */
+            70px   /* taxed */
             70px;  /* actions */
         background: $content-background-color;
         border-radius: 6px 6px 0 0;
@@ -388,6 +398,8 @@
             1.6fr
             120px
             120px
+            82px
+            88px
             130px
             80px
             70px
@@ -477,6 +489,8 @@
                 1.6fr
                 120px
                 120px
+                82px
+                88px
                 130px
                 80px
                 70px
@@ -567,6 +581,11 @@
                 &:nth-child(5), /* Class */
                 &:nth-child(6) { /* Location */
                     text-align: left;
+                }
+
+                &.table-cell--trip-preview {
+                    font-size: 0.8em;
+                    color: $secondary-text-color;
                 }
             }
 
@@ -676,7 +695,7 @@
         min-width: 800px;
 
         .table-header {
-            grid-template-columns: 40px 100px 100px 65px 120px 120px 90px 90px 100px 60px 60px 60px;
+            grid-template-columns: 40px 100px 100px 65px 120px 120px 90px 90px 52px 52px 100px 60px 60px 60px;
 
             .header-cell {
                 padding: 12px 8px;
@@ -685,10 +704,11 @@
 
         .month-header {
             padding: 12px 8px 12px 12px;
+            grid-template-columns: 40px 100px 100px 65px 120px 120px 90px 90px 52px 52px 100px 60px 60px 60px;
         }
 
         .month-entries .table-row {
-            grid-template-columns: 40px 100px 100px 65px 120px 120px 90px 90px 100px 60px 60px 60px;
+            grid-template-columns: 40px 100px 100px 65px 120px 120px 90px 90px 52px 52px 100px 60px 60px 60px;
 
             .table-cell {
                 padding: 10px 8px;
@@ -712,7 +732,7 @@
         min-width: 700px;
 
         .table-header {
-            grid-template-columns: 35px 90px 90px 55px 110px 110px 80px 80px 90px 50px 50px 50px;
+            grid-template-columns: 35px 90px 90px 55px 110px 110px 72px 72px 46px 46px 90px 50px 50px 50px;
 
             .header-cell {
                 padding: 10px 6px;
@@ -721,10 +741,11 @@
 
         .month-header {
             padding: 10px 6px 10px 10px;
+            grid-template-columns: 35px 90px 90px 55px 110px 110px 72px 72px 46px 46px 90px 50px 50px 50px;
         }
 
         .month-entries .table-row {
-            grid-template-columns: 35px 90px 90px 55px 110px 110px 80px 80px 90px 50px 50px 50px;
+            grid-template-columns: 35px 90px 90px 55px 110px 110px 72px 72px 46px 46px 90px 50px 50px 50px;
 
             .table-cell {
                 padding: 8px 6px;
@@ -942,6 +963,19 @@
     }
 }
 
+.location-stats-tucson-note {
+    margin: 0 0 14px 0;
+    font-size: 0.85rem;
+    color: $secondary-text-color;
+    line-height: 1.45;
+    font-family: $admin-table-font-family;
+
+    strong {
+        color: $text-color;
+        font-weight: 600;
+    }
+}
+
 .location-stats-travel-grid {
     display: flex;
     flex-direction: column;
@@ -983,6 +1017,24 @@
     .submit-btn {
         margin-left: auto;
     }
+
+    &--save {
+        .location-stats-save-btn {
+            margin-left: 0;
+            flex: 1 1 220px;
+            min-width: 200px;
+            max-width: 100%;
+        }
+
+        input[type='number'] {
+            flex: 1 1 100px;
+        }
+    }
+}
+
+.location-stats-field-row--split.location-stats-field-row--save input[type='number'] {
+    flex: 0 0 88px;
+    width: 88px;
 }
 
 .location-stats-hint {

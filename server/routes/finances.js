@@ -1,7 +1,132 @@
 const express = require('express');
 const router = express.Router();
 const Finance = require('../models/Finance');
+const FinanceTravelSettings = require('../models/FinanceTravelSettings');
 const { authMiddleware, adminMiddleware } = require('../middlewares/auth');
+
+const TRAVEL_SINGLETON_ID = 'singleton';
+const DEFAULT_TRAVEL_MPG = 37.5;
+const DEFAULT_TRAVEL_GAS = 3.65;
+
+function sanitizeLocationMilesForSave(raw) {
+    const out = {};
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return out;
+    for (const [k, v] of Object.entries(raw)) {
+        if (typeof k !== 'string' || !k.trim()) continue;
+        const n = parseFloat(v);
+        if (!Number.isNaN(n) && n >= 0) out[k] = n;
+    }
+    return out;
+}
+
+// GET /api/finances/travel-settings — must be before /:id routes
+router.get('/travel-settings', authMiddleware, adminMiddleware, async (req, res) => {
+    try {
+        const doc = await FinanceTravelSettings.findById(TRAVEL_SINGLETON_ID).lean();
+        if (!doc) {
+            return res.status(200).json({
+                success: true,
+                settings: {
+                    locationMiles: {},
+                    mpg: DEFAULT_TRAVEL_MPG,
+                    gasPricePerGallon: DEFAULT_TRAVEL_GAS,
+                },
+            });
+        }
+        const lm = doc.locationMiles && typeof doc.locationMiles === 'object' && !Array.isArray(doc.locationMiles)
+            ? sanitizeLocationMilesForSave(doc.locationMiles)
+            : {};
+        return res.status(200).json({
+            success: true,
+            settings: {
+                locationMiles: lm,
+                mpg: typeof doc.mpg === 'number' && doc.mpg > 0 ? doc.mpg : DEFAULT_TRAVEL_MPG,
+                gasPricePerGallon:
+                    typeof doc.gasPricePerGallon === 'number' && doc.gasPricePerGallon >= 0
+                        ? doc.gasPricePerGallon
+                        : DEFAULT_TRAVEL_GAS,
+            },
+        });
+    } catch (error) {
+        console.error('Error fetching finance travel settings:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Server error while fetching travel settings',
+        });
+    }
+});
+
+// PUT /api/finances/travel-settings — full replace of locationMiles + mpg + gas
+router.put('/travel-settings', authMiddleware, adminMiddleware, async (req, res) => {
+    try {
+        const { locationMiles, mpg, gasPricePerGallon } = req.body;
+        if (locationMiles === undefined || typeof locationMiles !== 'object' || Array.isArray(locationMiles)) {
+            return res.status(400).json({
+                success: false,
+                message: 'locationMiles must be an object',
+            });
+        }
+        const m = parseFloat(mpg);
+        const g = parseFloat(gasPricePerGallon);
+        if (Number.isNaN(m) || m <= 0) {
+            return res.status(400).json({ success: false, message: 'mpg must be a positive number' });
+        }
+        if (Number.isNaN(g) || g < 0) {
+            return res.status(400).json({ success: false, message: 'gasPricePerGallon must be a non-negative number' });
+        }
+        const cleanMiles = sanitizeLocationMilesForSave(locationMiles);
+        const doc = await FinanceTravelSettings.findByIdAndUpdate(
+            TRAVEL_SINGLETON_ID,
+            {
+                _id: TRAVEL_SINGLETON_ID,
+                locationMiles: cleanMiles,
+                mpg: m,
+                gasPricePerGallon: g,
+            },
+            { upsert: true, new: true, runValidators: true }
+        );
+        const lm =
+            doc.locationMiles && typeof doc.locationMiles === 'object' && !Array.isArray(doc.locationMiles)
+                ? sanitizeLocationMilesForSave(doc.locationMiles)
+                : {};
+        return res.status(200).json({
+            success: true,
+            message: 'Travel settings saved',
+            settings: {
+                locationMiles: lm,
+                mpg: doc.mpg,
+                gasPricePerGallon: doc.gasPricePerGallon,
+            },
+        });
+    } catch (error) {
+        console.error('Error saving finance travel settings:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Server error while saving travel settings',
+        });
+    }
+});
+
+function parseOptionalTripFields(body) {
+    const { tripMiles, tripGasCost } = body;
+    let tripMilesVal = null;
+    if (tripMiles !== undefined && tripMiles !== null && tripMiles !== '') {
+        const t = parseFloat(tripMiles);
+        if (isNaN(t) || t < 0) {
+            return { error: 'tripMiles must be a non-negative number or empty' };
+        }
+        tripMilesVal = t;
+    }
+    let tripGasCostVal = null;
+    if (tripGasCost !== undefined && tripGasCost !== null && tripGasCost !== '') {
+        const g = parseFloat(tripGasCost);
+        if (isNaN(g) || g < 0) {
+            return { error: 'tripGasCost must be a non-negative number or empty' };
+        }
+        tripGasCostVal = g;
+    }
+    return { tripMiles: tripMilesVal, tripGasCost: tripGasCostVal };
+}
 
 // GET: Fetch all finance entries (admin only)
 router.get('/', authMiddleware, adminMiddleware, async (req, res) => {
@@ -69,6 +194,11 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
             });
         }
 
+        const tripParsed = parseOptionalTripFields(req.body);
+        if (tripParsed.error) {
+            return res.status(400).json({ success: false, message: tripParsed.error });
+        }
+
         const newFinanceEntry = new Finance({
             date,
             time,
@@ -82,7 +212,9 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
             paymentMethod: paymentMethod || 'cash',
             paymentRequestSent: paymentRequestSent || 'no',
             paid: paid || 'no',
-            taxed: taxed || 'no'
+            taxed: taxed || 'no',
+            tripMiles: tripParsed.tripMiles,
+            tripGasCost: tripParsed.tripGasCost
         });
 
         const savedEntry = await newFinanceEntry.save();
@@ -158,6 +290,11 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
             });
         }
 
+        const tripParsedPut = parseOptionalTripFields(req.body);
+        if (tripParsedPut.error) {
+            return res.status(400).json({ success: false, message: tripParsedPut.error });
+        }
+
         const updatedEntry = await Finance.findByIdAndUpdate(
             id,
             {
@@ -173,7 +310,9 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
                 paymentMethod,
                 paymentRequestSent,
                 paid,
-                taxed
+                taxed,
+                tripMiles: tripParsedPut.tripMiles,
+                tripGasCost: tripParsedPut.tripGasCost
             },
             { new: true, runValidators: true }
         );

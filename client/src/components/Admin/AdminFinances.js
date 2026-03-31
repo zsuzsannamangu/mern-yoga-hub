@@ -8,15 +8,15 @@ import '@sweetalert2/theme-material-ui/material-ui.css';
 import { normalizeFinanceLocation } from '../../utils/normalizeFinanceLocation';
 import { buildLocationFinanceReport } from '../../utils/locationFinanceReport';
 import {
-    loadTravelSettings,
-    saveTravelSettings,
-    loadMilesOverrides,
-    saveMilesOverrides,
     getOneWayMilesForLocation,
     DEFAULT_TUCSON_HYBRID_MPG,
     DEFAULT_GAS_PRICE_PER_GALLON,
     isOnlineCanonicalLocation,
+    readLegacyLocationMiles,
+    readLegacyTravelSettings,
+    clearLegacyFinanceTravelLocalStorage,
 } from '../../utils/financeLocationTravel';
+import { computeTripMilesAndGasForRow } from '../../utils/financeTripCompute';
 
 const AdminFinances = () => {
     const LOCATION_PRESETS = [
@@ -51,8 +51,11 @@ const AdminFinances = () => {
         paymentMethod: ''
     });
     const [locationStatsCanonical, setLocationStatsCanonical] = useState(null);
-    const [travelSettings, setTravelSettings] = useState(() => loadTravelSettings());
-    const [milesOverrides, setMilesOverrides] = useState(() => loadMilesOverrides());
+    const [travelSettings, setTravelSettings] = useState(() => ({
+        mpg: DEFAULT_TUCSON_HYBRID_MPG,
+        gasPricePerGallon: DEFAULT_GAS_PRICE_PER_GALLON,
+    }));
+    const [milesOverrides, setMilesOverrides] = useState(() => ({}));
     const [statsMilesDraft, setStatsMilesDraft] = useState('');
     const [statsMpgDraft, setStatsMpgDraft] = useState('');
     const [statsGasDraft, setStatsGasDraft] = useState('');
@@ -122,9 +125,78 @@ const AdminFinances = () => {
         }
     }, []);
 
+    const fetchFinanceTravelSettings = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('adminToken');
+            if (!token) return;
+            const response = await adminAxiosInstance.get('/api/finances/travel-settings', {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            if (!response.data.success) return;
+            let locationMiles = response.data.settings.locationMiles || {};
+            let mpg = response.data.settings.mpg;
+            let gasPricePerGallon = response.data.settings.gasPricePerGallon;
+            const legacyMiles = readLegacyLocationMiles();
+            if (Object.keys(locationMiles).length === 0 && Object.keys(legacyMiles).length > 0) {
+                locationMiles = { ...legacyMiles };
+                await adminAxiosInstance.put(
+                    '/api/finances/travel-settings',
+                    { locationMiles, mpg, gasPricePerGallon },
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
+            }
+            setMilesOverrides(
+                locationMiles && typeof locationMiles === 'object' ? { ...locationMiles } : {}
+            );
+            setTravelSettings({
+                mpg: typeof mpg === 'number' && mpg > 0 ? mpg : DEFAULT_TUCSON_HYBRID_MPG,
+                gasPricePerGallon:
+                    typeof gasPricePerGallon === 'number' && gasPricePerGallon >= 0
+                        ? gasPricePerGallon
+                        : DEFAULT_GAS_PRICE_PER_GALLON,
+            });
+            clearLegacyFinanceTravelLocalStorage();
+        } catch (error) {
+            console.error('Error fetching finance travel settings:', error);
+            setMilesOverrides(readLegacyLocationMiles());
+            setTravelSettings(readLegacyTravelSettings());
+        }
+    }, []);
+
+    const persistFinanceTravelSettings = useCallback(async (nextMiles, nextTravel) => {
+        const token = localStorage.getItem('adminToken');
+        const response = await adminAxiosInstance.put(
+            '/api/finances/travel-settings',
+            {
+                locationMiles: nextMiles,
+                mpg: nextTravel.mpg,
+                gasPricePerGallon: nextTravel.gasPricePerGallon,
+            },
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+        if (!response.data.success) {
+            throw new Error(response.data.message || 'Failed to save travel settings');
+        }
+        const s = response.data.settings;
+        setMilesOverrides(s.locationMiles && typeof s.locationMiles === 'object' ? { ...s.locationMiles } : {});
+        setTravelSettings({
+            mpg: typeof s.mpg === 'number' && s.mpg > 0 ? s.mpg : DEFAULT_TUCSON_HYBRID_MPG,
+            gasPricePerGallon:
+                typeof s.gasPricePerGallon === 'number' && s.gasPricePerGallon >= 0
+                    ? s.gasPricePerGallon
+                    : DEFAULT_GAS_PRICE_PER_GALLON,
+        });
+        clearLegacyFinanceTravelLocalStorage();
+        return response.data.settings;
+    }, []);
+
     useEffect(() => {
         fetchClassData();
     }, [fetchClassData]);
+
+    useEffect(() => {
+        fetchFinanceTravelSettings();
+    }, [fetchFinanceTravelSettings]);
 
     useEffect(() => {
         if (!locationStatsCanonical) return;
@@ -265,11 +337,13 @@ const AdminFinances = () => {
                 
                 // Create entry for each date
                 dates.forEach(date => {
+                    const loc = normalizeFinanceLocation(newEntry.location);
+                    const trip = computeTripMilesAndGasForRow(loc, milesOverrides, travelSettings);
                     entriesToCreate.push({
                         date,
                         time: newEntry.time,
                         class: newEntry.class,
-                        location: normalizeFinanceLocation(newEntry.location),
+                        location: loc,
                         category: newEntry.category,
                         grossRate: newEntry.grossRate,
                         receivedRate: newEntry.receivedRate,
@@ -277,16 +351,19 @@ const AdminFinances = () => {
                         paymentMethod: newEntry.paymentMethod,
                         paymentRequestSent: newEntry.paymentRequestSent,
                         paid: newEntry.paid,
-                        taxed: newEntry.taxed
+                        taxed: newEntry.taxed,
+                        tripMiles: trip.tripMiles,
+                        tripGasCost: trip.tripGasCost,
                     });
                 });
             } else {
-                // Single entry
+                const loc = normalizeFinanceLocation(newEntry.location);
+                const trip = computeTripMilesAndGasForRow(loc, milesOverrides, travelSettings);
                 entriesToCreate.push({
                     date: newEntry.date,
                     time: newEntry.time,
                     class: newEntry.class,
-                    location: normalizeFinanceLocation(newEntry.location),
+                    location: loc,
                     category: newEntry.category,
                     grossRate: newEntry.grossRate,
                     receivedRate: newEntry.receivedRate,
@@ -294,7 +371,9 @@ const AdminFinances = () => {
                     paymentMethod: newEntry.paymentMethod,
                     paymentRequestSent: newEntry.paymentRequestSent,
                     paid: newEntry.paid,
-                    taxed: newEntry.taxed
+                    taxed: newEntry.taxed,
+                    tripMiles: trip.tripMiles,
+                    tripGasCost: trip.tripGasCost,
                 });
             }
 
@@ -360,7 +439,14 @@ const AdminFinances = () => {
     };
 
     const formatCurrency = (amount) => {
-        return `$${amount.toFixed(2)}`;
+        const n = Number(amount);
+        if (amount == null || Number.isNaN(n)) return '—';
+        return `$${n.toFixed(2)}`;
+    };
+
+    const formatTripMiles = (v) => {
+        if (v == null) return '—';
+        return `${Math.round(Number(v)).toLocaleString()} mi`;
     };
 
     const formatDate = (dateString) => {
@@ -396,9 +482,13 @@ const AdminFinances = () => {
     const handleSaveEdit = async () => {
         try {
             const token = localStorage.getItem('adminToken');
+            const loc = normalizeFinanceLocation(editingData.location);
+            const trip = computeTripMilesAndGasForRow(loc, milesOverrides, travelSettings);
             const payload = {
                 ...editingData,
-                location: normalizeFinanceLocation(editingData.location),
+                location: loc,
+                tripMiles: trip.tripMiles,
+                tripGasCost: trip.tripGasCost,
             };
             const response = await adminAxiosInstance.put(`/api/finances/${editingId}`, payload, {
                 headers: { Authorization: `Bearer ${token}` },
@@ -498,17 +588,23 @@ const AdminFinances = () => {
 
                 // Construct the update payload with all required fields
                 // Use existing entry values and override with bulk updates
+                const loc = normalizeFinanceLocation(entry.location);
+                const trip = computeTripMilesAndGasForRow(loc, milesOverrides, travelSettings);
                 const updatedEntry = {
                     date: entry.date,
                     time: entry.time,
                     class: entry.class || entry.className, // Handle both field names
-                    location: normalizeFinanceLocation(entry.location),
+                    location: loc,
                     category: updates.category || entry.category || 'other',
                     grossRate: entry.grossRate || entry.rate || 0,
                     receivedRate: entry.receivedRate || entry.rate || 0,
+                    paymentFrequency: entry.paymentFrequency || 'per-class',
                     paymentMethod: updates.paymentMethod || entry.paymentMethod || 'cash',
+                    paymentRequestSent: entry.paymentRequestSent || 'no',
                     paid: updates.paid || entry.paid || 'no',
-                    taxed: updates.taxed || entry.taxed || 'no'
+                    taxed: updates.taxed || entry.taxed || 'no',
+                    tripMiles: trip.tripMiles,
+                    tripGasCost: trip.tripGasCost,
                 };
 
                 const response = await adminAxiosInstance.put(`/api/finances/${entryId}`, updatedEntry, {
@@ -604,42 +700,61 @@ const AdminFinances = () => {
 
     const closeLocationStats = () => setLocationStatsCanonical(null);
 
-    const handleSaveLocationMiles = () => {
-        if (!locationStatsCanonical || isOnlineCanonicalLocation(locationStatsCanonical)) return;
-        const raw = statsMilesDraft.trim();
-        if (raw === '') {
-            const next = { ...milesOverrides };
-            delete next[locationStatsCanonical];
-            saveMilesOverrides(next);
-            setMilesOverrides(next);
-            return;
-        }
-        const n = parseFloat(raw);
-        if (Number.isNaN(n) || n < 0) {
-            Swal.fire({
-                title: 'Invalid miles',
-                text: 'Enter a non-negative number, or leave blank to clear saved miles.',
-                icon: 'warning',
-            });
-            return;
-        }
-        const next = { ...milesOverrides, [locationStatsCanonical]: n };
-        saveMilesOverrides(next);
-        setMilesOverrides(next);
+    const toastTravelSaved = (title) => {
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title,
+            showConfirmButton: false,
+            timer: 2200,
+            timerProgressBar: true,
+        });
     };
 
-    const handleSaveTravelSettingsFromModal = () => {
-        const mpg = parseFloat(statsMpgDraft);
-        const gas = parseFloat(statsGasDraft);
-        if (Number.isNaN(mpg) || mpg <= 0) {
+    const handleSaveLocationMiles = async () => {
+        if (!locationStatsCanonical || isOnlineCanonicalLocation(locationStatsCanonical)) return;
+        const raw = statsMilesDraft.trim();
+        let nextMiles = { ...milesOverrides };
+        if (raw === '') {
+            delete nextMiles[locationStatsCanonical];
+        } else {
+            const n = parseFloat(raw);
+            if (Number.isNaN(n) || n < 0) {
+                Swal.fire({
+                    title: 'Invalid miles',
+                    text: 'Enter a non-negative number, or leave blank to clear saved miles.',
+                    icon: 'warning',
+                });
+                return;
+            }
+            nextMiles = { ...nextMiles, [locationStatsCanonical]: n };
+        }
+        try {
+            await persistFinanceTravelSettings(nextMiles, travelSettings);
+            toastTravelSaved('Saved distance for this location');
+        } catch (error) {
+            console.error(error);
+            Swal.fire({
+                title: 'Not saved',
+                text: error.response?.data?.message || error.message || 'Could not save to server',
+                icon: 'error',
+            });
+        }
+    };
+
+    const handleSaveTravelSettingsFromModal = async () => {
+        const mpgParsed = parseFloat(statsMpgDraft);
+        const gasParsed = parseFloat(statsGasDraft);
+        if (Number.isNaN(mpgParsed) || mpgParsed <= 0) {
             Swal.fire({
                 title: 'Invalid MPG',
-                text: 'MPG must be a positive number (Hyundai Tucson Hybrid is often ~37–38 combined).',
+                text: `Use a positive number. Hyundai Tucson Hybrid EPA combined is 38 (FWD) or 37 (AWD); default here is ${DEFAULT_TUCSON_HYBRID_MPG}.`,
                 icon: 'warning',
             });
             return;
         }
-        if (Number.isNaN(gas) || gas < 0) {
+        if (Number.isNaN(gasParsed) || gasParsed < 0) {
             Swal.fire({
                 title: 'Invalid gas price',
                 text: 'Enter price per gallon in dollars.',
@@ -647,8 +762,22 @@ const AdminFinances = () => {
             });
             return;
         }
-        const next = saveTravelSettings({ mpg, gasPricePerGallon: gas });
-        setTravelSettings(next);
+        try {
+            await persistFinanceTravelSettings(milesOverrides, {
+                mpg: mpgParsed,
+                gasPricePerGallon: gasParsed,
+            });
+            setStatsMpgDraft(String(mpgParsed));
+            setStatsGasDraft(String(gasParsed));
+            toastTravelSaved('Saved vehicle settings');
+        } catch (error) {
+            console.error(error);
+            Swal.fire({
+                title: 'Not saved',
+                text: error.response?.data?.message || error.message || 'Could not save to server',
+                icon: 'error',
+            });
+        }
     };
 
     if (loading) {
@@ -812,6 +941,10 @@ const AdminFinances = () => {
                                         className="location-other-input"
                                     />
                                 )}
+                                <p className="location-trip-hint">
+                                    Trip miles and gas fill in when this location has a one-way distance saved (click a location
+                                    in the table → set miles and Tucson mpg/$/gal; settings are stored on the server).
+                                </p>
                             </div>
                             <div className="form-group">
                                 <label>Category</label>
@@ -1013,6 +1146,12 @@ const AdminFinances = () => {
                         </div>
                         <div className="header-cell">Gross Rate</div>
                         <div className="header-cell">Received Rate</div>
+                        <div className="header-cell" title="Round-trip miles; set one-way distance per location in Location stats">
+                            Trip (mi)
+                        </div>
+                        <div className="header-cell" title="Est. gas for this trip (MPG & $/gal in Location stats)">
+                            Gas
+                        </div>
                         <div className="header-cell">Payment Method</div>
                         <div className="header-cell">Paid</div>
                         <div className="header-cell">Taxed</div>
@@ -1058,7 +1197,16 @@ const AdminFinances = () => {
                             
                             {expandedMonths.has(monthKey) && (
                                 <div className="month-entries">
-                                    {monthData.entries.map(entry => (
+                                    {monthData.entries.map((entry) => {
+                                        const editingThis = editingId === entry.id;
+                                        const liveTrip = editingThis
+                                            ? computeTripMilesAndGasForRow(
+                                                  normalizeFinanceLocation(editingData.location || ''),
+                                                  milesOverrides,
+                                                  travelSettings
+                                              )
+                                            : null;
+                                        return (
                                         <div key={entry.id} className={`table-row ${selectedEntries.has(entry.id) ? 'selected' : ''}`}>
                                             <div className="table-cell checkbox-cell">
                                                 <input
@@ -1155,6 +1303,12 @@ const AdminFinances = () => {
                                                             min="0"
                                                         />
                                                     </div>
+                                                    <div className="table-cell table-cell--trip-preview" title="Saved on ✓ from current location & travel settings">
+                                                        {formatTripMiles(liveTrip.tripMiles)}
+                                                    </div>
+                                                    <div className="table-cell table-cell--trip-preview" title="Saved on ✓ from current location & travel settings">
+                                                        {formatCurrency(liveTrip.tripGasCost)}
+                                                    </div>
                                                     <div className="table-cell">
                                                         <select
                                                             name="paymentMethod"
@@ -1224,6 +1378,8 @@ const AdminFinances = () => {
                                                     </div>
                                                     <div className="table-cell">{formatCurrency(entry.grossRate || entry.rate || 0)}</div>
                                                     <div className="table-cell">{formatCurrency(entry.receivedRate || entry.rate || 0)}</div>
+                                                    <div className="table-cell">{formatTripMiles(entry.tripMiles)}</div>
+                                                    <div className="table-cell">{formatCurrency(entry.tripGasCost)}</div>
                                                     <div className="table-cell">{entry.paymentMethod}</div>
                                                     <div className={`table-cell status-${entry.paid}`}>
                                                         {entry.paid}
@@ -1238,7 +1394,8 @@ const AdminFinances = () => {
                                                 </>
                                             )}
                                         </div>
-                                    ))}
+                                        );
+                                    })}
                                 </div>
                             )}
                         </div>
@@ -1357,12 +1514,17 @@ const AdminFinances = () => {
 
                         <div className="location-stats-section location-stats-section--travel">
                             <h4>Driving &amp; gas (Hyundai Tucson Hybrid)</h4>
+                            <p className="location-stats-tucson-note">
+                                EPA combined mpg: <strong>38</strong> (FWD) / <strong>37</strong> (AWD). Default below is{' '}
+                                <strong>{DEFAULT_TUCSON_HYBRID_MPG}</strong> (midpoint). Change if your trim matches one side or
+                                your real-world mileage differs.
+                            </p>
                             {!isOnlineCanonicalLocation(locationStatsCanonical) ? (
                                 <>
                                     <div className="location-stats-travel-grid">
                                         <label className="location-stats-field">
                                             <span>One-way miles (home → studio)</span>
-                                            <div className="location-stats-field-row">
+                                            <div className="location-stats-field-row location-stats-field-row--save">
                                                 <input
                                                     type="number"
                                                     min="0"
@@ -1371,24 +1533,29 @@ const AdminFinances = () => {
                                                     onChange={(e) => setStatsMilesDraft(e.target.value)}
                                                     placeholder="e.g. 8.2"
                                                 />
-                                                <button type="button" className="submit-btn" onClick={handleSaveLocationMiles}>
+                                                <button
+                                                    type="button"
+                                                    className="submit-btn location-stats-save-btn"
+                                                    onClick={handleSaveLocationMiles}
+                                                >
                                                     Save for this location
                                                 </button>
                                             </div>
                                             <span className="location-stats-hint">
-                                                Saved in this browser only. Each finance row counts as one round trip ({' '}
+                                                Stored in your database (same on any device you use to log in). Each finance row
+                                                counts as one round trip (
                                                 {locationReport.roundTripMilesPerSession == null
                                                     ? 'set miles to calculate'
-                                                    : `${Math.round(locationReport.roundTripMilesPerSession)} mi RT`}).
-                                                Same-day multi-class trips may slightly over-count.
+                                                    : `${Math.round(locationReport.roundTripMilesPerSession)} mi RT`}
+                                                ). Same-day multi-class trips may slightly over-count.
                                             </span>
                                         </label>
                                         <label className="location-stats-field">
                                             <span>
-                                                MPG (combined, default {DEFAULT_TUCSON_HYBRID_MPG}) &amp; gas ($/gal, default{' '}
-                                                {DEFAULT_GAS_PRICE_PER_GALLON.toFixed(2)})
+                                                MPG &amp; gas price ($/gal) — default mpg {DEFAULT_TUCSON_HYBRID_MPG}, gas{' '}
+                                                {DEFAULT_GAS_PRICE_PER_GALLON.toFixed(2)}
                                             </span>
-                                            <div className="location-stats-field-row location-stats-field-row--split">
+                                            <div className="location-stats-field-row location-stats-field-row--split location-stats-field-row--save">
                                                 <input
                                                     type="number"
                                                     min="0.1"
@@ -1405,11 +1572,15 @@ const AdminFinances = () => {
                                                     onChange={(e) => setStatsGasDraft(e.target.value)}
                                                     aria-label="Dollars per gallon"
                                                 />
-                                                <button type="button" className="submit-btn" onClick={handleSaveTravelSettingsFromModal}>
+                                                <button
+                                                    type="button"
+                                                    className="submit-btn location-stats-save-btn"
+                                                    onClick={handleSaveTravelSettingsFromModal}
+                                                >
                                                     Save vehicle
                                                 </button>
                                             </div>
-                                            <span className="location-stats-hint">Applies to all locations in this browser.</span>
+                                            <span className="location-stats-hint">Stored in your database for all locations.</span>
                                         </label>
                                     </div>
                                 </>
