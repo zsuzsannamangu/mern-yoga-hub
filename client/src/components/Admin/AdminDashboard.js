@@ -51,6 +51,7 @@ const AdminDashboard = () => {
     const [bulkTime, setBulkTime] = useState('');
     const [bulkDurationMinutes, setBulkDurationMinutes] = useState('');
     const [showBulkUpdate, setShowBulkUpdate] = useState(false);
+    const ACTION_ICON_SIZE = 18;
 
     const toDateTime = (e) => {
         // ensure time is always "HH:MM"
@@ -964,11 +965,11 @@ const AdminDashboard = () => {
                                                         aria-label="Open link"
                                                         data-tooltip="Open link"
                                                     >
-                                                        <FaExternalLinkAlt aria-hidden="true" />
+                                                        <FaExternalLinkAlt aria-hidden="true" size={ACTION_ICON_SIZE} />
                                                     </a>
                                                 ) : (
                                                     <span className="events-open-link events-open-link--placeholder" aria-hidden="true">
-                                                        <FaExternalLinkAlt aria-hidden="true" />
+                                                        <FaExternalLinkAlt aria-hidden="true" size={ACTION_ICON_SIZE} />
                                                     </span>
                                                 )}
                                             </td>
@@ -993,7 +994,7 @@ const AdminDashboard = () => {
                                                     aria-label="Update"
                                                     data-tooltip="Update"
                                                 >
-                                                    <FaSave aria-hidden="true" />
+                                                    <FaSave aria-hidden="true" size={ACTION_ICON_SIZE} />
                                                 </button>
                                                 <button
                                                     type="button"
@@ -1003,7 +1004,7 @@ const AdminDashboard = () => {
                                                     aria-label="Renew"
                                                     data-tooltip="Renew"
                                                 >
-                                                    <FaRedoAlt aria-hidden="true" />
+                                                    <FaRedoAlt aria-hidden="true" size={ACTION_ICON_SIZE} />
                                                 </button>
                                                 <button
                                                     type="button"
@@ -1013,7 +1014,7 @@ const AdminDashboard = () => {
                                                     aria-label="Delete"
                                                     data-tooltip="Delete"
                                                 >
-                                                    <FaTrash aria-hidden="true" />
+                                                    <FaTrash aria-hidden="true" size={ACTION_ICON_SIZE} />
                                                 </button>
                                             </td>
                                         </tr>

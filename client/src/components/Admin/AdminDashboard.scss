@@ -453,7 +453,7 @@
             }
 
             svg {
-                font-size: 1.05rem;
+                display: block;
             }
         }
 
@@ -485,8 +485,6 @@
             position: relative;
 
             svg {
-                font-size: 1.45rem !important;
-                line-height: 1;
                 display: block;
             }
         }
