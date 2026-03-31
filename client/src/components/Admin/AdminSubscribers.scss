@@ -92,12 +92,17 @@
                 text-align: left;
             }
 
-            .email-text {
-                user-select: text;
-                cursor: text;
+            .email-input {
+                width: 100%;
+                border: none;
+                background: transparent;
+                padding: 0;
+                margin: 0;
                 font-family: $font-main;
+                font-size: inherit;
                 color: $text-color;
-                word-break: break-word;
+                cursor: text;
+                outline: none;
             }
 
             a {

@@ -285,6 +285,8 @@
 .class-table {
     width: 100%;
     min-width: 1320px;
+    font-family: $admin-table-font-family;
+    font-size: $admin-table-font-size;
 
     .table-header {
         display: grid;
@@ -305,8 +307,8 @@
         border-radius: 6px 6px 0 0;
         font-weight: bold;
         color: $text-color;
-        font-family: $font-main;
-        font-size: 0.85rem;
+        font-family: $admin-table-font-family;
+        font-size: $admin-table-header-font-size;
 
         .header-cell {
             padding: 15px 10px;
@@ -400,15 +402,15 @@
         .month-name {
             font-weight: bold;
             color: $main-title-color;
-            font-family: $font-title;
-            font-size: 1rem;
+            font-family: $admin-table-font-family;
+            font-size: $admin-table-header-font-size;
             min-width: 0;
         }
 
         .month-count {
             color: $secondary-text-color;
-            font-size: 0.85rem;
-            font-family: $font-secondary;
+            font-size: $admin-table-font-size;
+            font-family: $admin-table-font-family;
             justify-self: start;
             white-space: nowrap;
             grid-column: 3; // align with Date column
@@ -449,8 +451,8 @@
 
             .table-cell {
                 padding: 12px 12px;
-                font-family: $font-secondary;
-                font-size: 0.85rem;
+                font-family: $admin-table-font-family;
+                font-size: $admin-table-font-size;
                 color: $text-color;
                 text-align: center;
 

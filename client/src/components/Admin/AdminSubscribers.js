@@ -130,7 +130,15 @@ const AdminSubscribers = () => {
               <tr key={sub._id}>
                 <td>{index + 1}</td>
                 <td className="email-cell">
-                  <span className="email-text">{sub.email}</span>
+                  <input
+                    className="email-input"
+                    type="text"
+                    value={sub.email || ''}
+                    readOnly
+                    onFocus={(e) => e.target.select()}
+                    onClick={(e) => e.target.select()}
+                    aria-label={`Subscriber email ${sub.email || ''}`}
+                  />
                 </td>
                 <td>{new Date(sub.subscribedAt).toLocaleString()}</td>
                 <td>
