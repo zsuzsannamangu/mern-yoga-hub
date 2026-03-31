@@ -254,12 +254,14 @@ const AdminFinances = () => {
     const groupedData = useMemo(() => groupDataByMonth(classData), [classData]);
 
     const { monthsByYear, sortedYears } = useMemo(() => {
-        const entries = Object.entries(groupedData).sort(([a], [b]) => b.localeCompare(a));
         const byYear = new Map();
-        entries.forEach(([mk, md]) => {
+        Object.entries(groupedData).forEach(([mk, md]) => {
             const y = mk.slice(0, 4);
             if (!byYear.has(y)) byYear.set(y, []);
             byYear.get(y).push([mk, md]);
+        });
+        byYear.forEach((monthList) => {
+            monthList.sort(([ka], [kb]) => ka.localeCompare(kb));
         });
         const years = [...byYear.keys()].sort((a, b) => b.localeCompare(a));
         return { monthsByYear: byYear, sortedYears: years };

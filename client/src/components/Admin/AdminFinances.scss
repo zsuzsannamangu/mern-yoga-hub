@@ -17,6 +17,17 @@
         font-size: 18px;
         color: $secondary-text-color;
     }
+
+    // This page imports App.scss, which applies a global `button:hover { background: $primary-button-hover-color }`
+    // to every `<button>`. That was overriding our table controls (location links, ✏️/🗑️). Silence hover inside the grid only.
+    .class-table button:hover {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+
+    .class-table button.location-cell--clickable:hover {
+        color: $primary-button-color !important;
+    }
 }
 
 .finances-header {
