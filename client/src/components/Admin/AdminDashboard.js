@@ -857,6 +857,7 @@ const AdminDashboard = () => {
                                                         className="events-open-link"
                                                         title="Open link"
                                                         aria-label="Open link"
+                                                        data-tooltip="Open link"
                                                     >
                                                         <FaExternalLinkAlt aria-hidden="true" />
                                                     </a>
@@ -885,6 +886,7 @@ const AdminDashboard = () => {
                                                     }}
                                                     title="Update"
                                                     aria-label="Update"
+                                                    data-tooltip="Update"
                                                 >
                                                     <FaSave aria-hidden="true" />
                                                 </button>
@@ -894,6 +896,7 @@ const AdminDashboard = () => {
                                                     onClick={() => deleteEvent(event._id)}
                                                     title="Delete"
                                                     aria-label="Delete"
+                                                    data-tooltip="Delete"
                                                 >
                                                     <FaTrash aria-hidden="true" />
                                                 </button>

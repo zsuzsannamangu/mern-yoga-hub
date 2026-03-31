@@ -444,6 +444,7 @@
             text-decoration: none;
             white-space: nowrap;
             box-sizing: border-box;
+            position: relative;
 
             &:hover {
                 background-color: $primary-button-hover-color;
@@ -477,10 +478,57 @@
             margin-left: 8px;
             box-sizing: border-box;
             color: $button-text-color;
+            position: relative;
 
             svg {
                 font-size: 1.05rem;
             }
+        }
+
+        .events-open-link[data-tooltip]::after,
+        .event-action-button[data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 8px);
+            transform: translateX(-50%);
+            background: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.12s ease;
+            z-index: 10;
+        }
+
+        .events-open-link[data-tooltip]::before,
+        .event-action-button[data-tooltip]::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 3px);
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: rgba(44, 62, 80, 0.95);
+            opacity: 0;
+            transition: opacity 0.12s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .events-open-link:hover::after,
+        .events-open-link:focus-visible::after,
+        .event-action-button:hover::after,
+        .event-action-button:focus-visible::after,
+        .events-open-link:hover::before,
+        .events-open-link:focus-visible::before,
+        .event-action-button:hover::before,
+        .event-action-button:focus-visible::before {
+            opacity: 1;
         }
 
         .event-action-button--update {
