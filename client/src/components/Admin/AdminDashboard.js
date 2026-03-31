@@ -587,48 +587,50 @@ const AdminDashboard = () => {
                 ) : events.length > 0 ? (
                     <>
                         <div className="bulk-controls">
-                            <div className="bulk-controls-label">Filter by</div>
-                            <div className="bulk-controls__dates">
-                                <label>
-                                    From
-                                    <input
-                                        type="date"
-                                        value={bulkStartDate}
-                                        onChange={(e) => setBulkStartDate(e.target.value)}
-                                    />
-                                </label>
-                                <label>
-                                    To
-                                    <input
-                                        type="date"
-                                        value={bulkEndDate}
-                                        onChange={(e) => setBulkEndDate(e.target.value)}
-                                    />
-                                </label>
-                                <label>
-                                    Location
-                                    <input
-                                        type="text"
-                                        value={filterLocation}
-                                        onChange={(e) => setFilterLocation(e.target.value)}
-                                        placeholder="e.g. Yoga Refuge, NW location"
-                                        list="admin-location-suggestions"
-                                    />
-                                </label>
-                                <datalist id="admin-location-suggestions">
-                                    {[...new Set(events.map((e) => (e.location || '').trim()).filter(Boolean))].sort().map((loc) => (
-                                        <option key={loc} value={loc} />
-                                    ))}
-                                </datalist>
-                                <label>
-                                    Title
-                                    <input
-                                        type="text"
-                                        value={filterTitle}
-                                        onChange={(e) => setFilterTitle(e.target.value)}
-                                        placeholder="e.g. Vinyasa"
-                                    />
-                                </label>
+                            <div className="bulk-controls__filters">
+                                <div className="bulk-controls-label">Filter by</div>
+                                <div className="bulk-controls__dates">
+                                    <label>
+                                        From
+                                        <input
+                                            type="date"
+                                            value={bulkStartDate}
+                                            onChange={(e) => setBulkStartDate(e.target.value)}
+                                        />
+                                    </label>
+                                    <label>
+                                        To
+                                        <input
+                                            type="date"
+                                            value={bulkEndDate}
+                                            onChange={(e) => setBulkEndDate(e.target.value)}
+                                        />
+                                    </label>
+                                    <label>
+                                        Location
+                                        <input
+                                            type="text"
+                                            value={filterLocation}
+                                            onChange={(e) => setFilterLocation(e.target.value)}
+                                            placeholder="e.g. Yoga Refuge, NW location"
+                                            list="admin-location-suggestions"
+                                        />
+                                    </label>
+                                    <datalist id="admin-location-suggestions">
+                                        {[...new Set(events.map((e) => (e.location || '').trim()).filter(Boolean))].sort().map((loc) => (
+                                            <option key={loc} value={loc} />
+                                        ))}
+                                    </datalist>
+                                    <label>
+                                        Title
+                                        <input
+                                            type="text"
+                                            value={filterTitle}
+                                            onChange={(e) => setFilterTitle(e.target.value)}
+                                            placeholder="e.g. Vinyasa"
+                                        />
+                                    </label>
+                                </div>
                             </div>
                             <div className="bulk-controls__actions">
                                 <button

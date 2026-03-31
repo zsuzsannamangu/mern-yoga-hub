@@ -83,8 +83,9 @@
 
         .bulk-controls {
             display: flex;
-            align-items: center;
-            gap: 12px;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
             margin: 10px 0 14px 0;
             padding: 4px 0;
             border-radius: 0;
@@ -92,8 +93,18 @@
             background: transparent;
 
             @media (max-width: 900px) {
-                align-items: stretch;
-                flex-wrap: wrap;
+                gap: 12px;
+            }
+        }
+
+        .bulk-controls__filters {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            @media (max-width: 900px) {
+                align-items: flex-start;
+                flex-direction: column;
             }
         }
 
@@ -107,11 +118,18 @@
 
         .bulk-controls__dates {
             display: grid;
-            grid-template-columns: repeat(4, minmax(150px, 1fr));
+            grid-template-columns: repeat(4, minmax(190px, 1fr));
             gap: 10px 12px;
             flex: 1 1 auto;
 
+            // Keep filters in a single row on desktop
+            @media (min-width: 901px) {
+                grid-template-columns: repeat(4, minmax(160px, 1fr));
+            }
+
+            // Wrap on smaller screens
             @media (max-width: 900px) {
+                width: 100%;
                 grid-template-columns: repeat(2, minmax(150px, 1fr));
             }
 
@@ -123,7 +141,7 @@
                 display: grid;
                 grid-template-rows: auto auto;
                 gap: 6px;
-                padding: 8px 10px;
+                padding: 10px 12px;
                 border-radius: 8px;
                 border: 1px solid $border-color;
                 background: $background-color;
@@ -139,11 +157,11 @@
                     border-radius: 0;
                     font-family: $font-main;
                     color: $text-color;
-                    height: 34px;
+                    height: 36px;
                     box-sizing: border-box;
                     background: transparent;
                     outline: none;
-                    font-size: 0.9rem;
+                    font-size: 0.95rem;
                     font-weight: 500;
                 }
             }
@@ -155,7 +173,7 @@
             flex-wrap: wrap;
             justify-content: flex-start;
             width: 100%;
-            margin-top: 10px;
+            margin-top: 0;
 
             @media (max-width: 900px) {
                 width: 100%;
