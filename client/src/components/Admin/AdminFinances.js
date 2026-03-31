@@ -798,6 +798,7 @@ const AdminFinances = () => {
     }
 
     const groupedData = groupDataByMonth(classData);
+    const currentYear = new Date().getFullYear();
     const totalRevenue = classData.reduce((sum, entry) => sum + (entry.receivedRate || entry.rate || 0), 0);
     const totalRevenue2025 = classData.reduce((sum, entry) => {
         const year = Number((entry.date || '').split('-')[0]);
@@ -807,6 +808,27 @@ const AdminFinances = () => {
         const year = Number((entry.date || '').split('-')[0]);
         return year === 2026 ? sum + (entry.receivedRate || entry.rate || 0) : sum;
     }, 0);
+
+    const { totalDriveMilesCurrentYear, totalGasDriveCurrentYear } = classData.reduce(
+        (acc, entry) => {
+            const year = Number((entry.date || '').split('-')[0]);
+            if (year !== currentYear || Number.isNaN(year)) return acc;
+            const trip = computeTripMilesAndGasForRow(
+                normalizeFinanceLocation(entry.location),
+                milesOverrides,
+                travelSettings
+            );
+            if (trip.tripMiles != null && !Number.isNaN(Number(trip.tripMiles))) {
+                acc.totalDriveMilesCurrentYear += Number(trip.tripMiles);
+            }
+            if (trip.tripGasCost != null && !Number.isNaN(Number(trip.tripGasCost))) {
+                acc.totalGasDriveCurrentYear += Number(trip.tripGasCost);
+            }
+            return acc;
+        },
+        { totalDriveMilesCurrentYear: 0, totalGasDriveCurrentYear: 0 }
+    );
+
     const monthlyTotals = calculateMonthlyTotals(groupedData, expandedMonths);
 
     return (
@@ -880,6 +902,20 @@ const AdminFinances = () => {
                         {monthlyTotals.hasExpandedMonths && monthlyTotals.monthNames.length > 1 && (
                             <p className="month-list">{monthlyTotals.monthNames.join(', ')}</p>
                         )}
+                    </div>
+                    <div
+                        className="summary-card yearly"
+                        title={`Total round-trip drive miles for all entries dated in ${currentYear}, using the same locations and travel settings as the table below.`}
+                    >
+                        <h3>Drive Miles (RT) ({currentYear})</h3>
+                        <p className="revenue-amount">{formatTripMiles(totalDriveMilesCurrentYear)}</p>
+                    </div>
+                    <div
+                        className="summary-card yearly"
+                        title={`Estimated gas cost to drive those round trips in ${currentYear} (MPG and price per gallon from travel settings).`}
+                    >
+                        <h3>Gas — Driving ({currentYear})</h3>
+                        <p className="revenue-amount">{formatCurrency(totalGasDriveCurrentYear)}</p>
                     </div>
                 </div>
             </div>
