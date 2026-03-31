@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { adminAxiosInstance } from '../../config/axiosConfig';
 import AdminLayout from './AdminLayout';
 import './AdminFinances.scss';
@@ -6,6 +6,17 @@ import '../../App.scss';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 import { normalizeFinanceLocation } from '../../utils/normalizeFinanceLocation';
+import { buildLocationFinanceReport } from '../../utils/locationFinanceReport';
+import {
+    loadTravelSettings,
+    saveTravelSettings,
+    loadMilesOverrides,
+    saveMilesOverrides,
+    getOneWayMilesForLocation,
+    DEFAULT_TUCSON_HYBRID_MPG,
+    DEFAULT_GAS_PRICE_PER_GALLON,
+    isOnlineCanonicalLocation,
+} from '../../utils/financeLocationTravel';
 
 const AdminFinances = () => {
     const LOCATION_PRESETS = [
@@ -39,6 +50,12 @@ const AdminFinances = () => {
         taxed: '',
         paymentMethod: ''
     });
+    const [locationStatsCanonical, setLocationStatsCanonical] = useState(null);
+    const [travelSettings, setTravelSettings] = useState(() => loadTravelSettings());
+    const [milesOverrides, setMilesOverrides] = useState(() => loadMilesOverrides());
+    const [statsMilesDraft, setStatsMilesDraft] = useState('');
+    const [statsMpgDraft, setStatsMpgDraft] = useState('');
+    const [statsGasDraft, setStatsGasDraft] = useState('');
     const [newEntry, setNewEntry] = useState({
         date: '',
         time: '',
@@ -108,6 +125,16 @@ const AdminFinances = () => {
     useEffect(() => {
         fetchClassData();
     }, [fetchClassData]);
+
+    useEffect(() => {
+        if (!locationStatsCanonical) return;
+        const miles = getOneWayMilesForLocation(locationStatsCanonical, milesOverrides);
+        setStatsMilesDraft(miles == null ? '' : String(miles));
+        setStatsMpgDraft(String(travelSettings.mpg));
+        setStatsGasDraft(String(travelSettings.gasPricePerGallon));
+        // Only re-fill drafts when switching which location is open
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [locationStatsCanonical]);
 
     const sortClassData = (data) => {
         return data.sort((a, b) => {
@@ -566,6 +593,64 @@ const AdminFinances = () => {
         }));
     };
 
+    const locationReport = useMemo(() => {
+        if (!locationStatsCanonical) return null;
+        return buildLocationFinanceReport(classData, locationStatsCanonical, {
+            milesOverrides,
+            mpg: travelSettings.mpg,
+            gasPricePerGallon: travelSettings.gasPricePerGallon,
+        });
+    }, [locationStatsCanonical, classData, milesOverrides, travelSettings]);
+
+    const closeLocationStats = () => setLocationStatsCanonical(null);
+
+    const handleSaveLocationMiles = () => {
+        if (!locationStatsCanonical || isOnlineCanonicalLocation(locationStatsCanonical)) return;
+        const raw = statsMilesDraft.trim();
+        if (raw === '') {
+            const next = { ...milesOverrides };
+            delete next[locationStatsCanonical];
+            saveMilesOverrides(next);
+            setMilesOverrides(next);
+            return;
+        }
+        const n = parseFloat(raw);
+        if (Number.isNaN(n) || n < 0) {
+            Swal.fire({
+                title: 'Invalid miles',
+                text: 'Enter a non-negative number, or leave blank to clear saved miles.',
+                icon: 'warning',
+            });
+            return;
+        }
+        const next = { ...milesOverrides, [locationStatsCanonical]: n };
+        saveMilesOverrides(next);
+        setMilesOverrides(next);
+    };
+
+    const handleSaveTravelSettingsFromModal = () => {
+        const mpg = parseFloat(statsMpgDraft);
+        const gas = parseFloat(statsGasDraft);
+        if (Number.isNaN(mpg) || mpg <= 0) {
+            Swal.fire({
+                title: 'Invalid MPG',
+                text: 'MPG must be a positive number (Hyundai Tucson Hybrid is often ~37–38 combined).',
+                icon: 'warning',
+            });
+            return;
+        }
+        if (Number.isNaN(gas) || gas < 0) {
+            Swal.fire({
+                title: 'Invalid gas price',
+                text: 'Enter price per gallon in dollars.',
+                icon: 'warning',
+            });
+            return;
+        }
+        const next = saveTravelSettings({ mpg, gasPricePerGallon: gas });
+        setTravelSettings(next);
+    };
+
     if (loading) {
         return (
             <AdminLayout>
@@ -923,7 +1008,9 @@ const AdminFinances = () => {
                         <div className="header-cell">Date</div>
                         <div className="header-cell">Time</div>
                         <div className="header-cell">Class</div>
-                        <div className="header-cell">Location</div>
+                        <div className="header-cell header-cell--hint" title="Click a location in a row for yearly totals, pay per class, and drive estimates">
+                            Location
+                        </div>
                         <div className="header-cell">Gross Rate</div>
                         <div className="header-cell">Received Rate</div>
                         <div className="header-cell">Payment Method</div>
@@ -1024,7 +1111,7 @@ const AdminFinances = () => {
                                                             className="edit-input"
                                                         />
                                                     </div>
-                                                    <div className="table-cell">
+                                                    <div className="table-cell table-cell--location-edit">
                                                         <input
                                                             type="text"
                                                             name="location"
@@ -1032,6 +1119,19 @@ const AdminFinances = () => {
                                                             onChange={handleEditInputChange}
                                                             className="edit-input"
                                                         />
+                                                        <button
+                                                            type="button"
+                                                            className="location-stats-inline-btn"
+                                                            title="Open stats for this location"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                setLocationStatsCanonical(
+                                                                    normalizeFinanceLocation(editingData.location)
+                                                                );
+                                                            }}
+                                                        >
+                                                            ⓘ
+                                                        </button>
                                                     </div>
                                                     <div className="table-cell">
                                                         <input
@@ -1107,7 +1207,21 @@ const AdminFinances = () => {
                                                     <div className="table-cell">{formatDate(entry.date)}</div>
                                                     <div className="table-cell">{formatTime(entry.time)}</div>
                                                     <div className="table-cell">{entry.class}</div>
-                                                    <div className="table-cell">{normalizeFinanceLocation(entry.location)}</div>
+                                                    <div className="table-cell table-cell--location-wrap">
+                                                        <button
+                                                            type="button"
+                                                            className="location-cell--clickable"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                setLocationStatsCanonical(
+                                                                    normalizeFinanceLocation(entry.location)
+                                                                );
+                                                            }}
+                                                            title="Tax & mileage stats for this location"
+                                                        >
+                                                            {normalizeFinanceLocation(entry.location)}
+                                                        </button>
+                                                    </div>
                                                     <div className="table-cell">{formatCurrency(entry.grossRate || entry.rate || 0)}</div>
                                                     <div className="table-cell">{formatCurrency(entry.receivedRate || entry.rate || 0)}</div>
                                                     <div className="table-cell">{entry.paymentMethod}</div>
@@ -1131,6 +1245,187 @@ const AdminFinances = () => {
                     ))}
                 </div>
             </div>
+
+            {locationStatsCanonical && locationReport && (
+                <div className="location-stats-modal" onClick={closeLocationStats} role="presentation">
+                    <div
+                        className="location-stats-content"
+                        onClick={(e) => e.stopPropagation()}
+                        role="dialog"
+                        aria-labelledby="location-stats-title"
+                    >
+                        <div className="location-stats-header">
+                            <h3 id="location-stats-title">{locationReport.canonicalLocation}</h3>
+                            <button type="button" className="location-stats-close" onClick={closeLocationStats} aria-label="Close">
+                                ✕
+                            </button>
+                        </div>
+                        <p className="location-stats-meta">
+                            {locationReport.entryCount} finance {locationReport.entryCount === 1 ? 'row' : 'rows'} at this location (all categories). Yoga
+                            classes = category &ldquo;yoga teaching&rdquo; only.
+                        </p>
+
+                        <div className="location-stats-section">
+                            <h4>By year (tax & teaching)</h4>
+                            <div className="location-stats-table-wrap">
+                                <table className="location-stats-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Year</th>
+                                            <th>Yoga classes</th>
+                                            <th>Gross</th>
+                                            <th>Received</th>
+                                            <th>Drive miles (RT)</th>
+                                            <th>Gas (est.)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {locationReport.years.length === 0 ? (
+                                            <tr>
+                                                <td colSpan={6} className="location-stats-empty">
+                                                    No rows for this location yet.
+                                                </td>
+                                            </tr>
+                                        ) : (
+                                            locationReport.years.map((y) => (
+                                                <tr key={y.year}>
+                                                    <td>{y.year}</td>
+                                                    <td>{y.teachingCount}</td>
+                                                    <td>{formatCurrency(y.grossTotal)}</td>
+                                                    <td>{formatCurrency(y.receivedTotal)}</td>
+                                                    <td>
+                                                        {y.roundTripMilesTotal == null
+                                                            ? '—'
+                                                            : `${Math.round(y.roundTripMilesTotal).toLocaleString()} mi`}
+                                                    </td>
+                                                    <td>
+                                                        {y.gasCost == null ? '—' : formatCurrency(y.gasCost)}
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        )}
+                                    </tbody>
+                                    {locationReport.years.length > 0 && (
+                                        <tfoot>
+                                            <tr>
+                                                <td>All years</td>
+                                                <td>{locationReport.allTime.teachingCount}</td>
+                                                <td>{formatCurrency(locationReport.allTime.grossTotal)}</td>
+                                                <td>{formatCurrency(locationReport.allTime.receivedTotal)}</td>
+                                                <td>
+                                                    {locationReport.allTime.roundTripMilesTotal == null
+                                                        ? '—'
+                                                        : `${Math.round(
+                                                              locationReport.allTime.roundTripMilesTotal
+                                                          ).toLocaleString()} mi`}
+                                                </td>
+                                                <td>
+                                                    {locationReport.allTime.gasCost == null
+                                                        ? '—'
+                                                        : formatCurrency(locationReport.allTime.gasCost)}
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    )}
+                                </table>
+                            </div>
+                        </div>
+
+                        <div className="location-stats-section">
+                            <h4>Gross pay per yoga class (this location)</h4>
+                            <ul className="location-stats-gross-list">
+                                <li>
+                                    <span>Average gross / class</span>
+                                    <strong>
+                                        {locationReport.allTime.avgGrossPerTeachingClass == null
+                                            ? '—'
+                                            : formatCurrency(locationReport.allTime.avgGrossPerTeachingClass)}
+                                    </strong>
+                                </li>
+                                <li>
+                                    <span>Low / high gross (yoga teaching)</span>
+                                    <strong>
+                                        {locationReport.allTime.minGrossTeaching == null
+                                            ? '—'
+                                            : `${formatCurrency(locationReport.allTime.minGrossTeaching)} – ${formatCurrency(
+                                                  locationReport.allTime.maxGrossTeaching
+                                              )}`}
+                                    </strong>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div className="location-stats-section location-stats-section--travel">
+                            <h4>Driving &amp; gas (Hyundai Tucson Hybrid)</h4>
+                            {!isOnlineCanonicalLocation(locationStatsCanonical) ? (
+                                <>
+                                    <div className="location-stats-travel-grid">
+                                        <label className="location-stats-field">
+                                            <span>One-way miles (home → studio)</span>
+                                            <div className="location-stats-field-row">
+                                                <input
+                                                    type="number"
+                                                    min="0"
+                                                    step="0.1"
+                                                    value={statsMilesDraft}
+                                                    onChange={(e) => setStatsMilesDraft(e.target.value)}
+                                                    placeholder="e.g. 8.2"
+                                                />
+                                                <button type="button" className="submit-btn" onClick={handleSaveLocationMiles}>
+                                                    Save for this location
+                                                </button>
+                                            </div>
+                                            <span className="location-stats-hint">
+                                                Saved in this browser only. Each finance row counts as one round trip ({' '}
+                                                {locationReport.roundTripMilesPerSession == null
+                                                    ? 'set miles to calculate'
+                                                    : `${Math.round(locationReport.roundTripMilesPerSession)} mi RT`}).
+                                                Same-day multi-class trips may slightly over-count.
+                                            </span>
+                                        </label>
+                                        <label className="location-stats-field">
+                                            <span>
+                                                MPG (combined, default {DEFAULT_TUCSON_HYBRID_MPG}) &amp; gas ($/gal, default{' '}
+                                                {DEFAULT_GAS_PRICE_PER_GALLON.toFixed(2)})
+                                            </span>
+                                            <div className="location-stats-field-row location-stats-field-row--split">
+                                                <input
+                                                    type="number"
+                                                    min="0.1"
+                                                    step="0.1"
+                                                    value={statsMpgDraft}
+                                                    onChange={(e) => setStatsMpgDraft(e.target.value)}
+                                                    aria-label="Miles per gallon"
+                                                />
+                                                <input
+                                                    type="number"
+                                                    min="0"
+                                                    step="0.01"
+                                                    value={statsGasDraft}
+                                                    onChange={(e) => setStatsGasDraft(e.target.value)}
+                                                    aria-label="Dollars per gallon"
+                                                />
+                                                <button type="button" className="submit-btn" onClick={handleSaveTravelSettingsFromModal}>
+                                                    Save vehicle
+                                                </button>
+                                            </div>
+                                            <span className="location-stats-hint">Applies to all locations in this browser.</span>
+                                        </label>
+                                    </div>
+                                </>
+                            ) : (
+                                <p className="location-stats-hint">No drive miles for Online.</p>
+                            )}
+                        </div>
+
+                        <div className="location-stats-actions">
+                            <button type="button" className="cancel-btn" onClick={closeLocationStats}>
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Bulk Edit Modal */}
             {showBulkEdit && (
