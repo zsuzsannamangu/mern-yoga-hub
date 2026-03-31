@@ -12,6 +12,31 @@
         margin-bottom: 20px;
     }
 
+    .subscribers-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin: 10px 0 0 0;
+    }
+
+    .copy-all-button {
+        border: none;
+        background: transparent;
+        color: $text-color;
+        border-radius: $admin-action-icon-radius;
+        padding: 6px 10px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-family: $font-main;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+
+        &:hover {
+            background: $admin-action-icon-hover-bg;
+        }
+    }
+
     table {
         width: 100%;
         border-collapse: collapse;
@@ -25,7 +50,13 @@
             padding: 10px;
             border: 1px solid $border-color;
 
+            .row-actions {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+            }
 
+            .copy-button,
             .delete-button {
                 border: none;
                 background: transparent;
@@ -34,9 +65,10 @@
                 padding: $admin-action-icon-padding-y $admin-action-icon-padding-x;
                 cursor: pointer;
                 font-size: $admin-action-icon-font-size;
+                position: relative;
 
                 &:hover {
-                    background: $admin-action-icon-hover-danger-bg;
+                    background: $admin-action-icon-hover-bg;
                 }
             }
         }
@@ -56,6 +88,18 @@
         }
 
         td {
+            &.email-cell {
+                text-align: left;
+            }
+
+            .email-text {
+                user-select: text;
+                cursor: text;
+                font-family: $font-main;
+                color: $text-color;
+                word-break: break-word;
+            }
+
             a {
                 color: $tertiary-text-color;
                 text-decoration: none;
@@ -73,9 +117,10 @@
                 padding: $admin-action-icon-padding-y $admin-action-icon-padding-x;
                 cursor: pointer;
                 font-size: $admin-action-icon-font-size;
+                position: relative;
 
                 &:hover {
-                    background: $admin-action-icon-hover-danger-bg;
+                    background: $admin-action-icon-hover-bg;
                 }
             }
 
@@ -135,6 +180,50 @@
                 color: $delete-button-hover;
             }
         }
+    }
+
+    // Tooltip (matches other admin pages that use data-tooltip)
+    [data-tooltip]::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        top: -44px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #2c3e50;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-family: $font-main;
+        white-space: nowrap;
+        z-index: 10;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+    }
+
+    [data-tooltip]::before {
+        content: '';
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: #2c3e50;
+        z-index: 10;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.15s ease, visibility 0.15s ease;
+    }
+
+    [data-tooltip]:hover::after,
+    [data-tooltip]:focus-visible::after,
+    [data-tooltip]:hover::before,
+    [data-tooltip]:focus-visible::before {
+        opacity: 1;
+        visibility: visible;
     }
 }
 

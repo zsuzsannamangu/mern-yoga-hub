@@ -83,7 +83,7 @@
 
     .summary-card {
         background: $secondary-background-color;
-        padding: 25px;
+        padding: 16px 18px;
         border-radius: 8px;
         text-align: center;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -97,7 +97,7 @@
             color: $text-color;
             font-family: $font-main;
             font-size: 1.1rem;
-            margin: 0 0 15px 0;
+            margin: 0 0 8px 0;
             font-weight: 500;
         }
 
@@ -112,7 +112,7 @@
         .month-list {
             color: $secondary-text-color;
             font-size: 0.85rem;
-            margin: 10px 0 0 0;
+            margin: 6px 0 0 0;
             font-family: $font-secondary;
             font-style: italic;
         }
