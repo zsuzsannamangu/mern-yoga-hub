@@ -173,14 +173,14 @@ router.get('/verify', authMiddleware, adminMiddleware, (req, res) => {
 
 // Post events
 router.post('/events', authMiddleware, adminMiddleware, async (req, res) => {
-    const { title, date, time, location, signUpLink } = req.body;
+    const { title, date, time, location, signUpLink, durationMinutes } = req.body;
 
     if (!title || !date || !time || !location) {
         return res.status(400).json({ error: 'All fields are required.' });
     }
 
     try {
-        const newEvent = new Event({ title, date, time, location, signUpLink });
+        const newEvent = new Event({ title, date, time, location, signUpLink, durationMinutes });
         const savedEvent = await newEvent.save();
         res.status(201).json({ message: 'Event created successfully', event: savedEvent });
     } catch (error) {

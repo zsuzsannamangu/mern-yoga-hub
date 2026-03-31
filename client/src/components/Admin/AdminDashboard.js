@@ -18,12 +18,12 @@ const AdminDashboard = () => {
         { id: 'firelight', label: 'Firelight Yoga', location: 'Firelight Yoga', signUpLink: 'https://firelightyoga.com/' },
         { id: 'fullbodied', label: 'Full Bodied Yoga', location: 'Full Bodied Yoga', signUpLink: 'https://fullbodiedyoga.union.site/' },
         { id: 'heartspring', label: 'Heart Spring Health', location: 'Heart Spring Health', signUpLink: 'https://heartspringhealth.com/events/' },
-        { id: 'peoples-ne', label: "The People's Yoga NE", location: "The People's Yoga NE", signUpLink: 'https://thepeoplesyoga.org/events-and-workshops/' },
-        { id: 'peoples-se', label: "The People's Yoga SE", location: "The People's Yoga SE", signUpLink: 'https://thepeoplesyoga.org/events-and-workshops/' },
+        { id: 'peoples-nw', label: "The People's Yoga, NW location", location: "The People's Yoga, NW location", signUpLink: 'https://thepeoplesyoga.org/events-and-workshops/' },
+        { id: 'peoples-se', label: "The People's Yoga, SE location", location: "The People's Yoga, SE location", signUpLink: 'https://thepeoplesyoga.org/events-and-workshops/' },
         { id: 'practice-space', label: 'The Practice Space', location: 'The Practice Space', signUpLink: 'https://thepracticespacepdx.com/' },
         { id: 'ready-set-grow', label: 'Ready Set Grow', location: 'Ready Set Grow', signUpLink: 'https://readysetgrowpdx.com/' },
-        { id: 'yoga-refuge-nw', label: 'Yoga Refuge NW', location: 'Yoga Refuge NW', signUpLink: 'https://www.yogarefugepdx.com/class-schedule' },
-        { id: 'yoga-refuge-se', label: 'Yoga Refuge SE', location: 'Yoga Refuge SE', signUpLink: 'https://www.yogarefugepdx.com/class-schedule' },
+        { id: 'yoga-refuge-nw', label: 'Yoga Refuge, NW location', location: 'Yoga Refuge, NW location', signUpLink: 'https://www.yogarefugepdx.com/class-schedule' },
+        { id: 'yoga-refuge-se', label: 'Yoga Refuge, SE location', location: 'Yoga Refuge, SE location', signUpLink: 'https://www.yogarefugepdx.com/class-schedule' },
         { id: 'other', label: 'Other (new location)', location: '', signUpLink: '' },
     ];
 
@@ -31,6 +31,7 @@ const AdminDashboard = () => {
         title: '',
         date: '',
         time: '',
+        durationMinutes: 60,
         locationPreset: '',
         location: '',
         signUpLink: '',
@@ -159,6 +160,7 @@ const AdminDashboard = () => {
                 time: newEvent.time,
                 location: newEvent.location,
                 signUpLink: newEvent.signUpLink,
+                durationMinutes: Number(newEvent.durationMinutes) || 60,
             };
 
             if (hasRepeat) {
@@ -210,6 +212,7 @@ const AdminDashboard = () => {
                 title: '',
                 date: '',
                 time: '',
+                durationMinutes: 60,
                 locationPreset: '',
                 location: '',
                 signUpLink: '',
@@ -343,6 +346,7 @@ const AdminDashboard = () => {
         title: patch.title ?? event.title,
         date: patch.date ?? event.date,
         time: patch.time ?? event.time,
+        durationMinutes: patch.durationMinutes ?? event.durationMinutes,
         location: patch.location ?? event.location,
         signUpLink: patch.signUpLink ?? event.signUpLink,
     });
@@ -506,6 +510,17 @@ const AdminDashboard = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label>Length (minutes)</label>
+                    <input
+                        type="number"
+                        min="5"
+                        max="600"
+                        step="5"
+                        value={newEvent.durationMinutes}
+                        onChange={(e) => setNewEvent({ ...newEvent, durationMinutes: e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
                     <label>Location</label>
                     <select
                         value={newEvent.locationPreset}
@@ -596,7 +611,7 @@ const AdminDashboard = () => {
                                         type="text"
                                         value={filterLocation}
                                         onChange={(e) => setFilterLocation(e.target.value)}
-                                        placeholder="e.g. Yoga Refuge NW"
+                                        placeholder="e.g. Yoga Refuge, NW location"
                                         list="admin-location-suggestions"
                                     />
                                 </label>
@@ -764,6 +779,7 @@ const AdminDashboard = () => {
                                         <th>Title</th>
                                         <th>Date</th>
                                         <th>Time</th>
+                                        <th>Length</th>
                                         <th>Location</th>
                                         <th>Link</th>
                                         <th aria-label="Actions"></th>
@@ -788,6 +804,17 @@ const AdminDashboard = () => {
                                             </td>
                                             <td>
                                                 <input type="time" name="time" defaultValue={event.time} className="events-input" />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="number"
+                                                    name="durationMinutes"
+                                                    defaultValue={event.durationMinutes ?? 60}
+                                                    min="5"
+                                                    max="600"
+                                                    step="5"
+                                                    className="events-input"
+                                                />
                                             </td>
                                             <td>
                                                 <input type="text" name="location" defaultValue={event.location} className="events-input" />
@@ -820,6 +847,7 @@ const AdminDashboard = () => {
                                                             title: row.querySelector('input[name="title"]')?.value || '',
                                                             date: row.querySelector('input[name="date"]')?.value || '',
                                                             time: row.querySelector('input[name="time"]')?.value || '',
+                                                            durationMinutes: Number(row.querySelector('input[name="durationMinutes"]')?.value) || 60,
                                                             location: row.querySelector('input[name="location"]')?.value || '',
                                                             signUpLink: row.querySelector('input[name="signUpLink"]')?.value || '',
                                                         };

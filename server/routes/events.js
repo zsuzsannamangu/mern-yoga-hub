@@ -5,7 +5,7 @@ const { authMiddleware, adminMiddleware } = require('../middlewares/auth');
 
 // POST: Create a new event (admin-only)
 router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
-    const { title, date, time, location, signUpLink } = req.body;
+    const { title, date, time, location, signUpLink, durationMinutes } = req.body;
 
     if (!title || !date || !time) {
         return res.status(400).json({ error: 'Title, date, and time are required.' });
@@ -16,6 +16,7 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
             title,
             date,
             time,
+            durationMinutes,
             location,
             signUpLink: signUpLink || '', // Default to an empty string
         });
@@ -75,12 +76,12 @@ router.delete('/:id', authMiddleware, adminMiddleware, async (req, res) => {
 // PUT: Update an event (admin-only)
 router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
     const { id } = req.params;
-    const { title, date, time, location, signUpLink, isExternal } = req.body; // Add isExternal
+    const { title, date, time, location, signUpLink, isExternal, durationMinutes } = req.body; // Add isExternal
 
     try {
         const updatedEvent = await Event.findByIdAndUpdate(
             id,
-            { title, date, time, location, signUpLink, isExternal }, // Update with isExternal
+            { title, date, time, location, signUpLink, isExternal, durationMinutes }, // Update with isExternal
             { new: true } // Return the updated document
         );
         if (!updatedEvent) {
