@@ -1151,15 +1151,24 @@ const AdminFinances = () => {
                         <div className="header-cell header-cell--hint" title="Click a location in a row for yearly totals, pay per class, and drive estimates">
                             Location
                         </div>
-                        <div className="header-cell">Gross Rate</div>
-                        <div className="header-cell">Received</div>
-                        <div className="header-cell" title="Round-trip miles; set one-way distance per location in Location stats">
-                            Trip (mi)
+                        <div className="header-cell" title="Gross rate">
+                            Gross
+                        </div>
+                        <div className="header-cell" title="Received rate">
+                            Received
+                        </div>
+                        <div
+                            className="header-cell"
+                            title="Drive miles for the round trip (there and back). One-way distance is set per location in Location stats."
+                        >
+                            Drive (RT)
                         </div>
                         <div className="header-cell" title="Est. gas for this trip (MPG & $/gal in Location stats)">
                             Gas
                         </div>
-                        <div className="header-cell">Payment Method</div>
+                        <div className="header-cell" title="Payment method">
+                            Pay
+                        </div>
                         <div className="header-cell">Paid</div>
                         <div className="header-cell">Taxed</div>
                         <div className="header-cell">Actions</div>
@@ -1257,7 +1266,7 @@ const AdminFinances = () => {
                                                             className="edit-input"
                                                         />
                                                     </div>
-                                                    <div className="table-cell">
+                                                    <div className="table-cell table-cell--class-col">
                                                         <input
                                                             type="text"
                                                             name="class"
@@ -1288,7 +1297,7 @@ const AdminFinances = () => {
                                                             ⓘ
                                                         </button>
                                                     </div>
-                                                    <div className="table-cell">
+                                                    <div className="table-cell table-cell--rate">
                                                         <input
                                                             type="number"
                                                             name="grossRate"
@@ -1299,7 +1308,7 @@ const AdminFinances = () => {
                                                             min="0"
                                                         />
                                                     </div>
-                                                    <div className="table-cell">
+                                                    <div className="table-cell table-cell--rate">
                                                         <input
                                                             type="number"
                                                             name="receivedRate"
@@ -1310,13 +1319,19 @@ const AdminFinances = () => {
                                                             min="0"
                                                         />
                                                     </div>
-                                                    <div className="table-cell table-cell--trip-preview" title="Saved on ✓ from current location & travel settings">
+                                                    <div
+                                                        className="table-cell table-cell--trip-preview"
+                                                        title="Round-trip drive miles; saved on ✓ from current location & travel settings"
+                                                    >
                                                         {formatTripMiles(tripForRow.tripMiles)}
                                                     </div>
-                                                    <div className="table-cell table-cell--trip-preview" title="Saved on ✓ from current location & travel settings">
+                                                    <div
+                                                        className="table-cell table-cell--trip-preview"
+                                                        title="Est. gas for this round trip; saved on ✓ from travel settings"
+                                                    >
                                                         {formatCurrency(tripForRow.tripGasCost)}
                                                     </div>
-                                                    <div className="table-cell">
+                                                    <div className="table-cell table-cell--payment-col">
                                                         <select
                                                             name="paymentMethod"
                                                             value={editingData.paymentMethod}
@@ -1362,12 +1377,20 @@ const AdminFinances = () => {
                                             ) : (
                                                 // View mode
                                                 <>
-                                                    <div className={`table-cell category-cell category-${(entry.category || 'other').replace(/\s+/g, '-')}`}>
+                                                    <div
+                                                        className={`table-cell category-cell table-cell--truncate category-${(entry.category || 'other').replace(/\s+/g, '-')}`}
+                                                        title={entry.category || 'other'}
+                                                    >
                                                         {entry.category || 'other'}
                                                     </div>
                                                     <div className="table-cell">{formatDate(entry.date)}</div>
                                                     <div className="table-cell">{formatTime(entry.time)}</div>
-                                                    <div className="table-cell">{entry.class}</div>
+                                                    <div
+                                                        className="table-cell table-cell--class-col table-cell--truncate"
+                                                        title={entry.class || ''}
+                                                    >
+                                                        {entry.class}
+                                                    </div>
                                                     <div className="table-cell table-cell--location-wrap">
                                                         <button
                                                             type="button"
@@ -1378,26 +1401,41 @@ const AdminFinances = () => {
                                                                     normalizeFinanceLocation(entry.location)
                                                                 );
                                                             }}
-                                                            title="Tax & mileage stats for this location"
+                                                            title={`${normalizeFinanceLocation(entry.location)} — tax & mileage stats`}
                                                         >
                                                             {normalizeFinanceLocation(entry.location)}
                                                         </button>
                                                     </div>
-                                                    <div className="table-cell">{formatCurrency(entry.grossRate || entry.rate || 0)}</div>
-                                                    <div className="table-cell">{formatCurrency(entry.receivedRate || entry.rate || 0)}</div>
+                                                    <div
+                                                        className="table-cell table-cell--rate"
+                                                        title={formatCurrency(entry.grossRate || entry.rate || 0)}
+                                                    >
+                                                        {formatCurrency(entry.grossRate || entry.rate || 0)}
+                                                    </div>
+                                                    <div
+                                                        className="table-cell table-cell--rate"
+                                                        title={formatCurrency(entry.receivedRate || entry.rate || 0)}
+                                                    >
+                                                        {formatCurrency(entry.receivedRate || entry.rate || 0)}
+                                                    </div>
                                                     <div
                                                         className="table-cell table-cell--trip-preview"
-                                                        title="From travel settings & location (stored when you save the row)"
+                                                        title="Round-trip drive miles from travel settings & location (stored on row when you save)"
                                                     >
                                                         {formatTripMiles(tripForRow.tripMiles)}
                                                     </div>
                                                     <div
                                                         className="table-cell table-cell--trip-preview"
-                                                        title="From travel settings & location (stored when you save the row)"
+                                                        title="Est. gas for this round trip from travel settings (stored on row when you save)"
                                                     >
                                                         {formatCurrency(tripForRow.tripGasCost)}
                                                     </div>
-                                                    <div className="table-cell">{entry.paymentMethod}</div>
+                                                    <div
+                                                        className="table-cell table-cell--payment-col table-cell--truncate"
+                                                        title={entry.paymentMethod || ''}
+                                                    >
+                                                        {entry.paymentMethod}
+                                                    </div>
                                                     <div className={`table-cell status-${entry.paid}`}>
                                                         {entry.paid}
                                                     </div>

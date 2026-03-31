@@ -317,6 +317,55 @@
 }
 
 // Expandable Table Styles
+// Shared column track list: keep header, month band, and rows identical so rows stay on-screen.
+$class-table-grid-cols:
+    40px
+    minmax(72px, 0.55fr)
+    100px
+    60px
+    minmax(96px, 1.2fr)
+    minmax(88px, 0.95fr)
+    72px
+    72px
+    50px
+    54px
+    minmax(56px, 0.42fr)
+    48px
+    48px
+    52px;
+
+$class-table-grid-cols-md:
+    36px
+    minmax(62px, 0.5fr)
+    92px
+    54px
+    minmax(80px, 1.1fr)
+    minmax(74px, 0.85fr)
+    64px
+    64px
+    46px
+    48px
+    minmax(48px, 0.38fr)
+    44px
+    44px
+    48px;
+
+$class-table-grid-cols-sm:
+    34px
+    minmax(56px, 0.46fr)
+    86px
+    50px
+    minmax(74px, 1.02fr)
+    minmax(68px, 0.8fr)
+    58px
+    58px
+    40px
+    42px
+    minmax(44px, 0.34fr)
+    38px
+    38px
+    44px;
+
 .class-table-container {
     background: white;
     border-radius: 8px;
@@ -329,27 +378,14 @@
 
 .class-table {
     width: 100%;
-    min-width: 1500px;
+    min-width: 0;
+    max-width: 100%;
     font-family: $admin-table-font-family;
     font-size: $admin-table-font-size;
 
     .table-header {
         display: grid;
-        grid-template-columns:
-            40px   /* checkbox */
-            120px  /* category */
-            120px  /* date */
-            90px   /* time */
-            2.2fr  /* title/class */
-            1.6fr  /* location */
-            120px  /* gross */
-            120px  /* received */
-            82px   /* trip miles */
-            88px   /* gas */
-            130px  /* payment method */
-            80px   /* paid */
-            70px   /* taxed */
-            70px;  /* actions */
+        grid-template-columns: $class-table-grid-cols;
         background: $content-background-color;
         border-radius: 6px 6px 0 0;
         font-weight: bold;
@@ -358,9 +394,12 @@
         font-size: $admin-table-header-font-size;
 
         .header-cell {
-            padding: 15px 10px;
+            padding: 11px 6px;
             text-align: center;
             border-right: 1px solid $border-color;
+            font-size: 0.78rem;
+            line-height: 1.2;
+            min-width: 0;
 
             &:last-child {
                 border-right: none;
@@ -392,21 +431,7 @@
 
     .month-header {
         display: grid;
-        grid-template-columns:
-            40px
-            120px
-            120px
-            90px
-            2.2fr
-            1.6fr
-            120px
-            120px
-            82px
-            88px
-            130px
-            80px
-            70px
-            70px;
+        grid-template-columns: $class-table-grid-cols;
         align-items: center;
         background: $secondary-background-color;
         padding: 14px 12px;
@@ -455,6 +480,9 @@
             font-family: $admin-table-font-family;
             font-size: $admin-table-header-font-size;
             min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .month-count {
@@ -484,21 +512,7 @@
     .month-entries {
         .table-row {
             display: grid;
-            grid-template-columns:
-                40px
-                120px
-                120px
-                90px
-                2.2fr
-                1.6fr
-                120px
-                120px
-                82px
-                88px
-                130px
-                80px
-                70px
-                70px;
+            grid-template-columns: $class-table-grid-cols;
             border-bottom: 1px solid rgba(204, 204, 204, 0.3);
             transition: background-color 0.2s ease;
 
@@ -515,11 +529,12 @@
             }
 
             .table-cell {
-                padding: 12px 12px;
+                padding: 8px 6px;
                 font-family: $admin-table-font-family;
                 font-size: $admin-table-font-size;
                 color: $text-color;
                 text-align: center;
+                min-width: 0;
 
                 &.checkbox-cell {
                     display: flex;
@@ -581,15 +596,29 @@
                     font-style: italic;
                 }
 
-                // Give long text columns more breathing room
-                &:nth-child(5), /* Class */
-                &:nth-child(6) { /* Location */
+                &.table-cell--class-col,
+                &.table-cell--location-wrap {
                     text-align: left;
                 }
 
+                &.table-cell--truncate {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                &.table-cell--rate {
+                    font-variant-numeric: tabular-nums;
+                    font-size: 0.86em;
+                    padding-left: 4px;
+                    padding-right: 4px;
+                }
+
                 &.table-cell--trip-preview {
-                    font-size: 0.8em;
+                    font-size: 0.75em;
                     color: $secondary-text-color;
+                    padding-left: 4px;
+                    padding-right: 4px;
                 }
             }
 
@@ -696,26 +725,27 @@
     }
 
     .class-table {
-        min-width: 800px;
+        min-width: 0;
 
         .table-header {
-            grid-template-columns: 40px 100px 100px 65px 120px 120px 90px 90px 52px 52px 100px 60px 60px 60px;
+            grid-template-columns: $class-table-grid-cols-md;
 
             .header-cell {
-                padding: 12px 8px;
+                padding: 10px 5px;
+                font-size: 0.74rem;
             }
         }
 
         .month-header {
-            padding: 12px 8px 12px 12px;
-            grid-template-columns: 40px 100px 100px 65px 120px 120px 90px 90px 52px 52px 100px 60px 60px 60px;
+            padding: 12px 8px 12px 10px;
+            grid-template-columns: $class-table-grid-cols-md;
         }
 
         .month-entries .table-row {
-            grid-template-columns: 40px 100px 100px 65px 120px 120px 90px 90px 52px 52px 100px 60px 60px 60px;
+            grid-template-columns: $class-table-grid-cols-md;
 
             .table-cell {
-                padding: 10px 8px;
+                padding: 8px 5px;
             }
         }
     }
@@ -733,26 +763,28 @@
     }
 
     .class-table {
-        min-width: 700px;
+        min-width: 0;
 
         .table-header {
-            grid-template-columns: 35px 90px 90px 55px 110px 110px 72px 72px 46px 46px 90px 50px 50px 50px;
+            grid-template-columns: $class-table-grid-cols-sm;
 
             .header-cell {
-                padding: 10px 6px;
+                padding: 9px 4px;
+                font-size: 0.68rem;
             }
         }
 
         .month-header {
-            padding: 10px 6px 10px 10px;
-            grid-template-columns: 35px 90px 90px 55px 110px 110px 72px 72px 46px 46px 90px 50px 50px 50px;
+            padding: 10px 6px 10px 8px;
+            grid-template-columns: $class-table-grid-cols-sm;
         }
 
         .month-entries .table-row {
-            grid-template-columns: 35px 90px 90px 55px 110px 110px 72px 72px 46px 46px 90px 50px 50px 50px;
+            grid-template-columns: $class-table-grid-cols-sm;
 
             .table-cell {
-                padding: 8px 6px;
+                padding: 7px 4px;
+                font-size: 0.82rem;
             }
         }
     }
@@ -767,9 +799,14 @@
     text-align: left !important;
 }
 
+.table-cell--payment-col {
+    min-width: 0;
+}
+
 .location-cell--clickable {
     display: block;
     width: 100%;
+    max-width: 100%;
     margin: 0;
     padding: 0;
     border: none;
@@ -782,6 +819,9 @@
     text-decoration: underline;
     text-underline-offset: 2px;
     cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     &:hover {
         color: mix(#fff, $primary-button-color, 38%);
