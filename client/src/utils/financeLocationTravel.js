@@ -3,6 +3,13 @@
  * this module holds Tucson defaults, pure helpers, and one-time legacy localStorage migration.
  */
 
+import {
+    PEOPLES_YOGA_NE,
+    PEOPLES_YOGA_SE,
+    YOGA_REFUGE_NW,
+    YOGA_REFUGE_SE,
+} from './normalizeFinanceLocation';
+
 const LS_TRAVEL = 'yogasavor_finance_travel';
 const LS_MILES = 'yogasavor_finance_location_miles';
 
@@ -53,18 +60,63 @@ export function clearLegacyFinanceTravelLocalStorage() {
     }
 }
 
+/** Older finance / travel keys → still resolve miles saved before NE/SE rename */
+const MILES_KEY_ALIASES = {
+    [PEOPLES_YOGA_NE]: ["The People's Yoga, NW location", "The People's Yoga"],
+    [PEOPLES_YOGA_SE]: ["The People's Yoga, SE location"],
+    [YOGA_REFUGE_NW]: ['Yoga Refuge, NW location', 'Yoga Refuge'],
+    [YOGA_REFUGE_SE]: ['Yoga Refuge, SE location'],
+};
+
+function readMilesValue(overrides, key) {
+    if (key == null) return null;
+    const v = overrides[key];
+    if (typeof v === 'number' && v >= 0) return v;
+    if (typeof v === 'string' && v.trim() !== '') {
+        const n = parseFloat(v);
+        if (!Number.isNaN(n) && n >= 0) return n;
+    }
+    return null;
+}
+
 export function getOneWayMilesForLocation(canonicalLocation, overridesRaw) {
     if (isOnlineCanonicalLocation(canonicalLocation)) return 0;
     const overrides =
         overridesRaw != null && typeof overridesRaw === 'object' && !Array.isArray(overridesRaw)
             ? overridesRaw
             : {};
-    const v = overrides[canonicalLocation];
-    if (typeof v === 'number' && v >= 0) return v;
-    if (typeof v === 'string' && v.trim() !== '') {
-        const n = parseFloat(v);
-        if (!Number.isNaN(n) && n >= 0) return n;
+
+    const direct = readMilesValue(overrides, canonicalLocation);
+    if (direct != null) return direct;
+
+    const aliasKeys = MILES_KEY_ALIASES[canonicalLocation];
+    if (aliasKeys) {
+        for (const k of aliasKeys) {
+            const found = readMilesValue(overrides, k);
+            if (found != null) return found;
+        }
     }
+
+    const legacyCanon = {
+        "The People's Yoga, NW location": PEOPLES_YOGA_NE,
+        "The People's Yoga": PEOPLES_YOGA_NE,
+        "The People's Yoga, SE location": PEOPLES_YOGA_SE,
+        'Yoga Refuge, NW location': YOGA_REFUGE_NW,
+        'Yoga Refuge, SE location': YOGA_REFUGE_SE,
+        'Yoga Refuge': YOGA_REFUGE_NW,
+    }[canonicalLocation];
+    if (legacyCanon) {
+        const fromNew = readMilesValue(overrides, legacyCanon);
+        if (fromNew != null) return fromNew;
+        const als = MILES_KEY_ALIASES[legacyCanon];
+        if (als) {
+            for (const k of als) {
+                const f = readMilesValue(overrides, k);
+                if (f != null) return f;
+            }
+        }
+    }
+
     return null;
 }
 

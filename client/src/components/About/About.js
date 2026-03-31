@@ -357,7 +357,7 @@ function About() {
 
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Restorative Yoga</h4>
-                        <p className="class-schedule">Thursdays 7:30-8:45pm at <a href="https://www.yogarefugepdx.com/class-schedule" target="_blank" rel="noopener noreferrer">Yoga Refuge, NW location</a></p>
+                        <p className="class-schedule">Thursdays 7:30-8:45pm at <a href="https://www.yogarefugepdx.com/class-schedule" target="_blank" rel="noopener noreferrer">Yoga Refuge NW</a></p>
                         <p>Restorative Yoga is a slow and sweet practice guided with gentle, prop-supported postures to allow students to release tension, reset the nervous system and experience deep rest.
                         Poses are held for a longer period of time, with the intention being to settle into stillness and meditation. A variety of props are used to provide support to the physical body so the mind can begin to unwind.
                         Restorative yoga is perfect for those looking for space to relax and shift the nervous system into a parasympathetic ("rest and digest") state. This can be a powerful practice for our busy and stressful lives.
@@ -408,7 +408,7 @@ function About() {
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Vinyasa Flow</h4>
                         <p className="class-schedule">Thursdays 5:45pm-6:45pm at <a href="https://www.dearyogastudio.com/schedule" target="_blank" rel="noopener noreferrer">Dear Yoga</a></p>
-                        <p className="class-schedule">Fridays 4pm-5pm at <a href="https://www.yogarefugepdx.com/class-schedule" target="_blank" rel="noopener noreferrer">Yoga Refuge, NW location</a> (also available livestream)</p>
+                        <p className="class-schedule">Fridays 4pm-5pm at <a href="https://www.yogarefugepdx.com/class-schedule" target="_blank" rel="noopener noreferrer">Yoga Refuge NW</a> (also available livestream)</p>
                         <p>Vinyasa Flow builds strength, flexibility, and focus through creative sequences and mindful transitions. Expect to move, breathe,
                             and sweat while cultivating presence and resilience. Options will be offered to support a variety of experience levels.
                         </p>

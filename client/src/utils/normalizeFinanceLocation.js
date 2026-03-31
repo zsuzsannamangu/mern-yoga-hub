@@ -3,9 +3,26 @@
  * Unknown strings are returned trimmed (spacing collapsed) unchanged.
  */
 
-const PEOPLES_NW = "The People's Yoga, NW location";
-const PEOPLES_SE = "The People's Yoga, SE location";
-const PEOPLES_GENERIC = "The People's Yoga";
+/** Northeast studio — generic "The People's Yoga" / TPY maps here. */
+export const PEOPLES_YOGA_NE = "The People's Yoga NE";
+
+/** Southeast studio */
+export const PEOPLES_YOGA_SE = "The People's Yoga SE";
+
+/** Northwest — generic “Yoga Refuge” maps here */
+export const YOGA_REFUGE_NW = 'Yoga Refuge NW';
+
+/** Southeast */
+export const YOGA_REFUGE_SE = 'Yoga Refuge SE';
+
+/** @deprecated use PEOPLES_YOGA_NE — for legacy miles-key lookup only */
+const PEOPLES_LEGACY_NW_LABEL = "The People's Yoga, NW location";
+const PEOPLES_LEGACY_SE_LABEL = "The People's Yoga, SE location";
+const PEOPLES_LEGACY_GENERIC = "The People's Yoga";
+
+const REFUGE_LEGACY_NW_LABEL = 'Yoga Refuge, NW location';
+const REFUGE_LEGACY_SE_LABEL = 'Yoga Refuge, SE location';
+const REFUGE_LEGACY_GENERIC = 'Yoga Refuge';
 
 const PRESET_CANONICAL = [
     'The Bhakti Yoga Movement Center',
@@ -14,15 +31,27 @@ const PRESET_CANONICAL = [
     'Danner Boots',
     'Firelight Yoga',
     'Full Bodied Yoga',
-    'Yoga Refuge, NW location',
-    'Yoga Refuge, SE location',
-    PEOPLES_NW,
-    PEOPLES_SE,
+    YOGA_REFUGE_NW,
+    YOGA_REFUGE_SE,
+    PEOPLES_YOGA_NE,
+    PEOPLES_YOGA_SE,
     'Heart Spring Health',
     'The Practice Space',
     'Ready Set Grow',
     'Online',
 ];
+
+const LEGACY_PEOPLES_LOWERCASE = {
+    [PEOPLES_LEGACY_NW_LABEL.toLowerCase()]: PEOPLES_YOGA_NE,
+    [PEOPLES_LEGACY_SE_LABEL.toLowerCase()]: PEOPLES_YOGA_SE,
+    [PEOPLES_LEGACY_GENERIC.toLowerCase()]: PEOPLES_YOGA_NE,
+};
+
+const LEGACY_REFUGE_LOWERCASE = {
+    [REFUGE_LEGACY_NW_LABEL.toLowerCase()]: YOGA_REFUGE_NW,
+    [REFUGE_LEGACY_SE_LABEL.toLowerCase()]: YOGA_REFUGE_SE,
+    [REFUGE_LEGACY_GENERIC.toLowerCase()]: YOGA_REFUGE_NW,
+};
 
 function collapseWhitespace(str) {
     return String(str || '')
@@ -41,12 +70,21 @@ export function normalizeFinanceLocation(raw) {
     const lower = s.toLowerCase();
     const lettersOnly = lower.replace(/[^a-z]/g, '');
 
-    // Compact abbreviations (FLY, FBY, TPY, TPY-NW, …)
+    const legacyPeoples = LEGACY_PEOPLES_LOWERCASE[lower];
+    if (legacyPeoples) return legacyPeoples;
+
+    const legacyRefuge = LEGACY_REFUGE_LOWERCASE[lower];
+    if (legacyRefuge) return legacyRefuge;
+
+    // Compact abbreviations (FLY, FBY, TPY, TPY-NE, TPY-SE, …)
     if (lettersOnly === 'fly') return 'Firelight Yoga';
     if (lettersOnly === 'fby') return 'Full Bodied Yoga';
-    if (lettersOnly === 'tpynw') return PEOPLES_NW;
-    if (lettersOnly === 'tpyse') return PEOPLES_SE;
-    if (lettersOnly === 'tpy') return PEOPLES_GENERIC;
+    if (lettersOnly === 'tpyne' || lettersOnly === 'tpynw') return PEOPLES_YOGA_NE;
+    if (lettersOnly === 'tpyse') return PEOPLES_YOGA_SE;
+    if (lettersOnly === 'tpy') return PEOPLES_YOGA_NE;
+    if (lettersOnly === 'yrnw') return YOGA_REFUGE_NW;
+    if (lettersOnly === 'yrse') return YOGA_REFUGE_SE;
+    if (lettersOnly === 'yr') return YOGA_REFUGE_NW;
     if (lettersOnly === 'blhc') return 'BLHC';
     if (lettersOnly === 'db') return 'Danner Boots';
 
@@ -58,7 +96,7 @@ export function normalizeFinanceLocation(raw) {
     if (lower === 'fby' || /\bf\.?\s*b\.?\s*y\.?\b/i.test(s)) return 'Full Bodied Yoga';
     if (lower.includes('full') && lower.includes('bodied')) return 'Full Bodied Yoga';
 
-    // The People's Yoga (name + optional NW / SE)
+    // The People's Yoga (NE vs SE — no unqualified third bucket; plain name → NE)
     const looksPeoples =
         /^tpy\b/i.test(s) ||
         lower.includes("people's yoga") ||
@@ -69,20 +107,53 @@ export function normalizeFinanceLocation(raw) {
 
     if (lower.includes('danner') && lower.includes('boot')) return 'Danner Boots';
 
-    if (looksPeoples) {
-        const nw =
-            /\bnw\b/.test(lower) ||
-            lower.includes('northwest') ||
-            lower.includes('nw location') ||
-            /^tpy[\s-]+nw\b/i.test(s);
-        const se =
+    const looksRefuge =
+        /^yr\b/i.test(s) ||
+        lower.includes('yoga refuge') ||
+        (lower.includes('refuge') && lower.includes('yoga'));
+
+    if (looksRefuge) {
+        const hasSE =
             /\bse\b/.test(lower) ||
             lower.includes('southeast') ||
             lower.includes('se location') ||
-            /^tpy[\s-]+se\b/i.test(s);
-        if (nw && !se) return PEOPLES_NW;
-        if (se && !nw) return PEOPLES_SE;
-        return PEOPLES_GENERIC;
+            /^yr[\s-]+se\b/i.test(s) ||
+            /\byoga\s+refuge\s+se\b/i.test(lower);
+        const hasNW =
+            /\bnw\b/.test(lower) ||
+            lower.includes('northwest') ||
+            lower.includes('nw location') ||
+            /^yr[\s-]+nw\b/i.test(s) ||
+            /\byoga\s+refuge\s+nw\b/i.test(lower);
+
+        if (hasSE && !hasNW) return YOGA_REFUGE_SE;
+        if (hasNW && !hasSE) return YOGA_REFUGE_NW;
+        return YOGA_REFUGE_NW;
+    }
+
+    if (looksPeoples) {
+        const hasSE =
+            /\bse\b/.test(lower) ||
+            lower.includes('southeast') ||
+            lower.includes('se location') ||
+            /^tpy[\s-]+se\b/i.test(s) ||
+            /\bpeople'?s?\s+yoga\s+se\b/i.test(lower);
+        const hasNE =
+            /\bne\b/.test(lower) ||
+            lower.includes('northeast') ||
+            lower.includes('ne location') ||
+            /^tpy[\s-]+ne\b/i.test(s) ||
+            /\bpeople'?s?\s+yoga\s+ne\b/i.test(lower) ||
+            // Legacy NW wording → NE (studio uses NE + SE)
+            /\bnw\b/.test(lower) ||
+            lower.includes('northwest') ||
+            lower.includes('nw location') ||
+            /^tpy[\s-]+nw\b/i.test(s) ||
+            /\bpeople'?s?\s+yoga\s+nw\b/i.test(lower);
+
+        if (hasSE && !hasNE) return PEOPLES_YOGA_SE;
+        if (hasNE && !hasSE) return PEOPLES_YOGA_NE;
+        return PEOPLES_YOGA_NE;
     }
 
     const presetHit = PRESET_CANONICAL.find((p) => p.toLowerCase() === lower);

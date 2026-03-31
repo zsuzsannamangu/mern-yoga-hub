@@ -5,7 +5,13 @@ import './AdminFinances.scss';
 import '../../App.scss';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
-import { normalizeFinanceLocation } from '../../utils/normalizeFinanceLocation';
+import {
+    normalizeFinanceLocation,
+    PEOPLES_YOGA_NE,
+    PEOPLES_YOGA_SE,
+    YOGA_REFUGE_NW,
+    YOGA_REFUGE_SE,
+} from '../../utils/normalizeFinanceLocation';
 import { buildLocationFinanceReport } from '../../utils/locationFinanceReport';
 import {
     getOneWayMilesForLocation,
@@ -26,10 +32,10 @@ const AdminFinances = () => {
         { id: 'danner-boots', label: 'Danner Boots', location: 'Danner Boots' },
         { id: 'firelight', label: 'Firelight Yoga', location: 'Firelight Yoga' },
         { id: 'fullbodied', label: 'Full Bodied Yoga', location: 'Full Bodied Yoga' },
-        { id: 'yoga-refuge-nw', label: 'Yoga Refuge, NW location', location: 'Yoga Refuge, NW location' },
-        { id: 'yoga-refuge-se', label: 'Yoga Refuge, SE location', location: 'Yoga Refuge, SE location' },
-        { id: 'peoples-yoga-nw', label: "The People's Yoga, NW location", location: "The People's Yoga, NW location" },
-        { id: 'peoples-yoga-se', label: "The People's Yoga, SE location", location: "The People's Yoga, SE location" },
+        { id: 'yoga-refuge-nw', label: YOGA_REFUGE_NW, location: YOGA_REFUGE_NW },
+        { id: 'yoga-refuge-se', label: YOGA_REFUGE_SE, location: YOGA_REFUGE_SE },
+        { id: 'peoples-yoga-ne', label: PEOPLES_YOGA_NE, location: PEOPLES_YOGA_NE },
+        { id: 'peoples-yoga-se', label: PEOPLES_YOGA_SE, location: PEOPLES_YOGA_SE },
         { id: 'heartspring', label: 'Heart Spring Health', location: 'Heart Spring Health' },
         { id: 'practice-space', label: 'The Practice Space', location: 'The Practice Space' },
         { id: 'ready-set-grow', label: 'Ready Set Grow', location: 'Ready Set Grow' },

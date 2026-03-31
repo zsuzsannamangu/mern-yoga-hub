@@ -17,12 +17,12 @@ const AdminDashboard = () => {
         { id: 'firelight', label: 'Firelight Yoga', location: 'Firelight Yoga', signUpLink: 'https://firelightyoga.com/' },
         { id: 'fullbodied', label: 'Full Bodied Yoga', location: 'Full Bodied Yoga', signUpLink: 'https://fullbodiedyoga.union.site/' },
         { id: 'heartspring', label: 'Heart Spring Health', location: 'Heart Spring Health', signUpLink: 'https://heartspringhealth.com/events/' },
-        { id: 'peoples-nw', label: "The People's Yoga, NW location", location: "The People's Yoga, NW location", signUpLink: 'https://thepeoplesyoga.org/events-and-workshops/' },
-        { id: 'peoples-se', label: "The People's Yoga, SE location", location: "The People's Yoga, SE location", signUpLink: 'https://thepeoplesyoga.org/events-and-workshops/' },
+        { id: 'peoples-ne', label: "The People's Yoga NE", location: "The People's Yoga NE", signUpLink: 'https://thepeoplesyoga.org/events-and-workshops/' },
+        { id: 'peoples-se', label: "The People's Yoga SE", location: "The People's Yoga SE", signUpLink: 'https://thepeoplesyoga.org/events-and-workshops/' },
         { id: 'practice-space', label: 'The Practice Space', location: 'The Practice Space', signUpLink: 'https://thepracticespacepdx.com/' },
         { id: 'ready-set-grow', label: 'Ready Set Grow', location: 'Ready Set Grow', signUpLink: 'https://readysetgrowpdx.com/' },
-        { id: 'yoga-refuge-nw', label: 'Yoga Refuge, NW location', location: 'Yoga Refuge, NW location', signUpLink: 'https://www.yogarefugepdx.com/class-schedule' },
-        { id: 'yoga-refuge-se', label: 'Yoga Refuge, SE location', location: 'Yoga Refuge, SE location', signUpLink: 'https://www.yogarefugepdx.com/class-schedule' },
+        { id: 'yoga-refuge-nw', label: 'Yoga Refuge NW', location: 'Yoga Refuge NW', signUpLink: 'https://www.yogarefugepdx.com/class-schedule' },
+        { id: 'yoga-refuge-se', label: 'Yoga Refuge SE', location: 'Yoga Refuge SE', signUpLink: 'https://www.yogarefugepdx.com/class-schedule' },
         { id: 'other', label: 'Other (new location)', location: '', signUpLink: '' },
     ];
 
