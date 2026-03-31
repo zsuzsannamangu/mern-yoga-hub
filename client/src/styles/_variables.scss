@@ -45,6 +45,14 @@ $admin-table-font-family: $font-main;
 $admin-table-font-size: 0.9rem;
 $admin-table-header-font-size: 0.9rem;
 
+// Admin action icons (Finances-style)
+$admin-action-icon-font-size: 18px;
+$admin-action-icon-padding-y: 4px;
+$admin-action-icon-padding-x: 6px;
+$admin-action-icon-radius: 3px;
+$admin-action-icon-hover-bg: rgba(0, 0, 0, 0.10);
+$admin-action-icon-hover-danger-bg: rgba(220, 53, 69, 0.10);
+
 // Accent Colors
 $line-color: #a37ba4;
 $border-color: #e0e0e0;

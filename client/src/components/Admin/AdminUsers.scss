@@ -77,29 +77,22 @@
                 width: $admin-icon-btn-width;
                 height: $admin-icon-btn-height;
                 padding: 0;
-                background-color: $primary-button-color;
-                color: $button-text-color;
+                background: transparent;
+                color: $text-color;
                 border: none;
-                border-radius: $admin-icon-btn-radius;
+                border-radius: $admin-action-icon-radius;
                 cursor: pointer;
                 transition: background-color 0.3s ease;
+                font-size: $admin-action-icon-font-size;
 
                 &:hover {
-                    background-color: $primary-button-hover-color;
-                }
-
-                svg {
-                    width: $admin-icon-size;
-                    height: $admin-icon-size;
-                    display: block;
+                    background: $admin-action-icon-hover-bg;
                 }
             }
 
             .delete-button {
-                background-color: $delete-button;
-
                 &:hover {
-                    background-color: $delete-button-hover;
+                    background: $admin-action-icon-hover-danger-bg;
                 }
             }
         }

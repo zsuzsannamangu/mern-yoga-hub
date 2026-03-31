@@ -54,15 +54,16 @@
             }
 
             .delete-button {
-                background-color: $delete-button;
-                color: $button-text-color;
+                background: transparent;
+                color: $text-color;
                 border: none;
-                border-radius: 5px;
-                padding: 5px 10px;
+                border-radius: $admin-action-icon-radius;
+                padding: $admin-action-icon-padding-y $admin-action-icon-padding-x;
                 cursor: pointer;
+                font-size: $admin-action-icon-font-size;
 
                 &:hover {
-                    background-color: $delete-button-hover;
+                    background: $admin-action-icon-hover-danger-bg;
                 }
             }
 

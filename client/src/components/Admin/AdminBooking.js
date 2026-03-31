@@ -5,7 +5,7 @@ import './AdminBooking.scss';
 import '../../App.scss';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
-import { FaTrash } from 'react-icons/fa';
+// Using emoji icons (matches AdminFinances)
 
 /**
  * AdminBooking Component:
@@ -476,7 +476,7 @@ const AdminBooking = () => {
                                                         className="delete-slot-button"
                                                         title="Delete slot"
                                                     >
-                                                        <FaTrash aria-hidden="true" />
+                                                        <span aria-hidden="true">🗑️</span>
                                                     </button>
                                                 </td>
                                             </tr>
@@ -520,7 +520,7 @@ const AdminBooking = () => {
                                                     className="delete-slot-button"
                                                     title="Delete session"
                                                 >
-                                                    <FaTrash aria-hidden="true" />
+                                                    <span aria-hidden="true">🗑️</span>
                                                 </button>
                                             </td>
                                         </tr>
@@ -564,7 +564,7 @@ const AdminBooking = () => {
                                                     className="delete-slot-button"
                                                     title="Delete session"
                                                 >
-                                                    <FaTrash aria-hidden="true" />
+                                                    <span aria-hidden="true">🗑️</span>
                                                 </button>
                                             </td>
                                         </tr>

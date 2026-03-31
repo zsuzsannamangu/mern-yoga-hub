@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { adminAxiosInstance } from '../../config/axiosConfig';
-import { FaTrash } from 'react-icons/fa'; // Trash icon for delete button
+// Using emoji icons (matches AdminFinances)
 import './AdminSignups.scss';
 import '../../App.scss';
 import AdminLayout from './AdminLayout';
@@ -107,7 +107,7 @@ const AdminSignups = () => {
                                         className="delete-button"
                                         onClick={() => deleteSignup(signup._id)}
                                     >
-                                        <FaTrash />
+                                        <span aria-hidden="true">🗑️</span>
                                     </button>
                                 </td>
                             </tr>

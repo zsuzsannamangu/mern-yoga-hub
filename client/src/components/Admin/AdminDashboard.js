@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import AdminLayout from './AdminLayout';
 import './AdminDashboard.scss';
 import '../../App.scss';
-import { FaTrash, FaExternalLinkAlt, FaSave, FaRedoAlt } from 'react-icons/fa'; // icons
+// Using emoji icons (matches AdminFinances)
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 
@@ -51,7 +51,7 @@ const AdminDashboard = () => {
     const [bulkTime, setBulkTime] = useState('');
     const [bulkDurationMinutes, setBulkDurationMinutes] = useState('');
     const [showBulkUpdate, setShowBulkUpdate] = useState(false);
-    const ACTION_ICON_SIZE = 22;
+    // Icon sizing is handled via emoji + CSS (Finances-style)
 
     const toDateTime = (e) => {
         // ensure time is always "HH:MM"
@@ -769,7 +769,7 @@ const AdminDashboard = () => {
                                     title={selectedEvents.length > 0 ? `Delete selected classes/events (${selectedEvents.length})` : 'Delete selected classes/events'}
                                     aria-label={selectedEvents.length > 0 ? `Delete selected classes/events (${selectedEvents.length})` : 'Delete selected classes/events'}
                                 >
-                                    <FaTrash className="icon" aria-hidden="true" />
+                                                    <span className="icon" aria-hidden="true">🗑️</span>
                                     Delete selected classes/events
                                 </button>
                                 <button
@@ -965,11 +965,11 @@ const AdminDashboard = () => {
                                                         aria-label="Open link"
                                                         data-tooltip="Open link"
                                                     >
-                                                        <FaExternalLinkAlt aria-hidden="true" size={ACTION_ICON_SIZE} />
+                                                        <span aria-hidden="true">🔗</span>
                                                     </a>
                                                 ) : (
                                                     <span className="events-open-link events-open-link--placeholder" aria-hidden="true">
-                                                        <FaExternalLinkAlt aria-hidden="true" size={ACTION_ICON_SIZE} />
+                                                        <span aria-hidden="true">🔗</span>
                                                     </span>
                                                 )}
                                             </td>
@@ -994,7 +994,7 @@ const AdminDashboard = () => {
                                                     aria-label="Update"
                                                     data-tooltip="Update"
                                                 >
-                                                    <FaSave aria-hidden="true" size={ACTION_ICON_SIZE} />
+                                                    <span aria-hidden="true">✏️</span>
                                                 </button>
                                                 <button
                                                     type="button"
@@ -1004,7 +1004,7 @@ const AdminDashboard = () => {
                                                     aria-label="Renew"
                                                     data-tooltip="Renew"
                                                 >
-                                                    <FaRedoAlt aria-hidden="true" size={ACTION_ICON_SIZE} />
+                                                    <span aria-hidden="true">🔁</span>
                                                 </button>
                                                 <button
                                                     type="button"
@@ -1014,7 +1014,7 @@ const AdminDashboard = () => {
                                                     aria-label="Delete"
                                                     data-tooltip="Delete"
                                                 >
-                                                    <FaTrash aria-hidden="true" size={ACTION_ICON_SIZE} />
+                                                    <span aria-hidden="true">🗑️</span>
                                                 </button>
                                             </td>
                                         </tr>

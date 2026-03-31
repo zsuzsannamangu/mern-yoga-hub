@@ -5,7 +5,7 @@ import '../../App.scss';
 import AdminLayout from './AdminLayout';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
-import { FaTrash, FaPlus, FaEdit, FaTimes } from 'react-icons/fa'; // Icons for buttons
+// Using emoji icons (matches AdminFinances)
 
 const AdminUsers = () => {
     const [users, setUsers] = useState([]); // State to store users
@@ -760,7 +760,7 @@ const AdminUsers = () => {
                                                 }}
                                                 title="Edit User"
                                             >
-                                                <FaEdit />
+                                                <span aria-hidden="true">✏️</span>
                                             </button>
                                             <button 
                                                 className="add-appointment-btn" 
@@ -771,7 +771,7 @@ const AdminUsers = () => {
                                                 }}
                                                 title="Add Appointment"
                                             >
-                                                <FaPlus />
+                                                <span aria-hidden="true">➕</span>
                                             </button>
                                             <button 
                                                 className="delete-button" 
@@ -781,7 +781,7 @@ const AdminUsers = () => {
                                                 }}
                                                 title="Delete User"
                                             >
-                                                <FaTrash />
+                                                <span aria-hidden="true">🗑️</span>
                                             </button>
                                         </div>
                                     </td>
@@ -847,7 +847,7 @@ const AdminUsers = () => {
                                                                                     onClick={() => handleDeleteAppointment(appointment._id)}
                                                                                     title="Delete Appointment"
                                                                                 >
-                                                                                    <FaTrash />
+                                                                                    <span aria-hidden="true">🗑️</span>
                                                                                 </button>
                                                                             ) : (
                                                                                 <>
@@ -856,14 +856,14 @@ const AdminUsers = () => {
                                                                                         onClick={() => handleEditAppointment(appointment)}
                                                                                         title="Edit Appointment"
                                                                                     >
-                                                                                        <FaEdit />
+                                                                                        <span aria-hidden="true">✏️</span>
                                                                                     </button>
                                                                                     <button 
                                                                                         className="cancel-btn"
                                                                                         onClick={() => handleCancelAppointment(appointment._id)}
                                                                                         title="Cancel"
                                                                                     >
-                                                                                        <FaTimes />
+                                                                                        <span aria-hidden="true">✕</span>
                                                                                     </button>
                                                                                 </>
                                                                             )}

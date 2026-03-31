@@ -158,21 +158,15 @@
             cursor: pointer;
             transition: background-color 0.2s ease;
             font-family: $font-main;
-            background-color: $delete-button;
-            color: $button-text-color;
+            background: transparent;
+            color: $text-color;
             width: $admin-icon-btn-width;
             height: $admin-icon-btn-height;
             padding: 0;
-
-            svg {
-                width: $admin-icon-size;
-                height: $admin-icon-size;
-                color: $button-text-color;
-                display: block;
-            }
+            font-size: $admin-action-icon-font-size;
 
             &:hover {
-                background-color: $delete-button-hover;
+                background: $admin-action-icon-hover-danger-bg;
             }
         }
     }
