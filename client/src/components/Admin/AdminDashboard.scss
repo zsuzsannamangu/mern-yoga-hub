@@ -453,7 +453,7 @@
             }
 
             svg {
-                font-size: 1.2rem;
+                font-size: 1.05rem;
             }
         }
 
@@ -485,7 +485,7 @@
             position: relative;
 
             svg {
-                font-size: 1.2rem;
+                font-size: 1.25rem !important;
             }
         }
 
@@ -536,6 +536,14 @@
         }
 
         .event-action-button--update {
+            background-color: $primary-button-color;
+
+            &:hover {
+                background-color: $primary-button-hover-color;
+            }
+        }
+
+        .event-action-button--renew {
             background-color: $primary-button-color;
 
             &:hover {

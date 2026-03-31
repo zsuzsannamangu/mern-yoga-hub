@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import AdminLayout from './AdminLayout';
 import './AdminDashboard.scss';
 import '../../App.scss';
-import { FaTrash, FaExternalLinkAlt, FaSave } from 'react-icons/fa'; // icons
+import { FaTrash, FaExternalLinkAlt, FaSave, FaRedoAlt } from 'react-icons/fa'; // icons
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 
@@ -337,6 +337,108 @@ const AdminDashboard = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Failed to update event.',
+                text: error.message,
+                confirmButtonText: 'OK'
+            });
+        }
+    };
+
+    const addRenewedEvents = async ({ baseEvent, interval, count }) => {
+        const token = localStorage.getItem('adminToken');
+        const existingKeys = new Set(
+            events.map((e) => `${e.title}__${e.date}__${e.time}__${e.location}`.toLowerCase())
+        );
+
+        const eventsToAdd = [];
+        let currentDate = new Date(baseEvent.date);
+
+        const bump = () => {
+            if (interval === 'weekly') currentDate.setDate(currentDate.getDate() + 7);
+            if (interval === 'biweekly') currentDate.setDate(currentDate.getDate() + 14);
+            if (interval === 'monthly') currentDate.setMonth(currentDate.getMonth() + 1);
+        };
+
+        // Start AFTER the current event date
+        bump();
+
+        for (let i = 0; i < count; i++) {
+            const dateStr = currentDate.toISOString().split('T')[0];
+            const key = `${baseEvent.title}__${dateStr}__${baseEvent.time}__${baseEvent.location}`.toLowerCase();
+            if (!existingKeys.has(key)) {
+                eventsToAdd.push({ ...baseEvent, date: dateStr });
+                existingKeys.add(key);
+            }
+            bump();
+        }
+
+        for (const ev of eventsToAdd) {
+            await adminAxiosInstance.post('/api/admin/events', ev, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+        }
+
+        return { attempted: count, added: eventsToAdd.length, skipped: count - eventsToAdd.length };
+    };
+
+    const handleRenew = async (event) => {
+        const result = await Swal.fire({
+            title: 'Renew this class/event',
+            html: `
+              <div style="text-align:left; display:grid; gap:12px;">
+                <div>
+                  <label for="renew-interval" style="display:block; margin-bottom:6px;">Repeat</label>
+                  <select id="renew-interval" class="swal2-input" style="width:100%; margin:0;">
+                    <option value="weekly" selected>Weekly</option>
+                    <option value="biweekly">Biweekly</option>
+                    <option value="monthly">Monthly</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="renew-count" style="display:block; margin-bottom:6px;">How many classes/events to add?</label>
+                  <input id="renew-count" class="swal2-input" style="width:100%; margin:0;" type="number" min="1" max="200" step="1" value="12" />
+                </div>
+              </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Add',
+            cancelButtonText: 'Cancel',
+            preConfirm: () => {
+                const interval = document.getElementById('renew-interval')?.value;
+                const countRaw = document.getElementById('renew-count')?.value;
+                const count = Number(countRaw);
+                if (!interval) return Swal.showValidationMessage('Choose a repeat interval.');
+                if (!Number.isInteger(count) || count < 1 || count > 200) {
+                    return Swal.showValidationMessage('Enter a repeat count between 1 and 200.');
+                }
+                return { interval, count };
+            }
+        });
+
+        if (!result.isConfirmed) return;
+
+        try {
+            const { interval, count } = result.value;
+            const baseEvent = {
+                title: event.title,
+                date: event.date,
+                time: event.time,
+                durationMinutes: event.durationMinutes ?? 60,
+                location: event.location,
+                signUpLink: event.signUpLink || '',
+            };
+
+            const { added, skipped } = await addRenewedEvents({ baseEvent, interval, count });
+            await Swal.fire({
+                icon: 'success',
+                title: 'Added successfully',
+                text: `Added ${added} class/event(s).${skipped ? ` Skipped ${skipped} duplicate date(s).` : ''}`,
+                confirmButtonText: 'OK'
+            });
+            fetchEvents();
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Renew failed',
                 text: error.message,
                 confirmButtonText: 'OK'
             });
@@ -889,6 +991,16 @@ const AdminDashboard = () => {
                                                     data-tooltip="Update"
                                                 >
                                                     <FaSave aria-hidden="true" />
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="event-action-button event-action-button--renew"
+                                                    onClick={() => handleRenew(event)}
+                                                    title="Renew"
+                                                    aria-label="Renew"
+                                                    data-tooltip="Renew"
+                                                >
+                                                    <FaRedoAlt aria-hidden="true" />
                                                 </button>
                                                 <button
                                                     type="button"
