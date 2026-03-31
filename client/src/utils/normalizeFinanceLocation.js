@@ -181,4 +181,21 @@ export function normalizeFinanceLocation(raw) {
     return s;
 }
 
+/**
+ * Single key for grouping/summing (e.g. drive miles by location). After {@link normalizeFinanceLocation},
+ * maps any casing of a known preset to that preset's canonical spelling so `yogaRIOT` and `YogaRIOT` merge.
+ *
+ * @param {string | null | undefined} raw
+ * @returns {string}
+ */
+export function financeLocationAggregationKey(raw) {
+    const n = normalizeFinanceLocation(raw);
+    if (!n) return '';
+    const preset = PRESET_CANONICAL.find((p) => p.toLowerCase() === n.toLowerCase());
+    if (preset) return preset;
+    const lettersOnly = n.toLowerCase().replace(/[^a-z]/g, '');
+    if (lettersOnly === 'yogariot') return YOGA_RIOT;
+    return n;
+}
+
 export default normalizeFinanceLocation;

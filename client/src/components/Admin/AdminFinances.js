@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 import {
     normalizeFinanceLocation,
+    financeLocationAggregationKey,
     PEOPLES_YOGA_NE,
     PEOPLES_YOGA_SE,
     YOGA_REFUGE_NW,
@@ -280,7 +281,7 @@ const AdminFinances = () => {
         classData.forEach((entry) => {
             const year = Number((entry.date || '').split('-')[0]);
             if (year !== summaryYear || Number.isNaN(year)) return;
-            const loc = normalizeFinanceLocation(entry.location);
+            const loc = financeLocationAggregationKey(entry.location);
             const trip = computeTripMilesAndGasForRow(loc, milesOverrides, travelSettings);
             let m = 0;
             let g = 0;
@@ -1129,10 +1130,6 @@ const AdminFinances = () => {
                                         className="location-other-input"
                                     />
                                 )}
-                                <p className="location-trip-hint">
-                                    Trip miles and gas fill in when this location has a one-way distance saved (click a location
-                                    in the table → set miles and Tucson mpg/$/gal; settings are stored on the server).
-                                </p>
                             </div>
                             <div className="form-group">
                                 <label>Category</label>
