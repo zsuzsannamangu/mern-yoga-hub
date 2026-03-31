@@ -77,8 +77,15 @@
     }
 
     .finances-summary__row--bottom {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 320px));
+        // Keep same column tracks as top row so cards align vertically
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         justify-content: start;
+
+        // Bottom row cards should stay compact, not stretch wide
+        .summary-card {
+            max-width: 320px;
+            justify-self: start;
+        }
     }
 
     .summary-card {
