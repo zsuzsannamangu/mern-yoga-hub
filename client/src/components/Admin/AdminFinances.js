@@ -80,6 +80,7 @@ const AdminFinances = () => {
     const [classData, setClassData] = useState([]);
     const [expandedYears, setExpandedYears] = useState(() => new Set());
     const [expandedMonths, setExpandedMonths] = useState(new Set());
+    const [driveByLocationOpen, setDriveByLocationOpen] = useState(false);
     const expandedYearsRef = useRef(expandedYears);
     expandedYearsRef.current = expandedYears;
     const financesYearExpansionInitRef = useRef(false);
@@ -269,16 +270,16 @@ const AdminFinances = () => {
         return { monthsByYear: byYear, sortedYears: years };
     }, [groupedData]);
 
-    /** Prior calendar year: totals + per-location miles/gas for tax summary. */
-    const priorYearDriveAggregates = useMemo(() => {
-        const taxYear = new Date().getFullYear() - 1;
+    /** Current calendar year: totals + per-location miles/gas (matches summary cards). */
+    const currentYearDriveAggregates = useMemo(() => {
+        const summaryYear = new Date().getFullYear();
         const byLoc = new Map();
         let totalMiles = 0;
         let totalGas = 0;
 
         classData.forEach((entry) => {
             const year = Number((entry.date || '').split('-')[0]);
-            if (year !== taxYear || Number.isNaN(year)) return;
+            if (year !== summaryYear || Number.isNaN(year)) return;
             const loc = normalizeFinanceLocation(entry.location);
             const trip = computeTripMilesAndGasForRow(loc, milesOverrides, travelSettings);
             let m = 0;
@@ -300,7 +301,7 @@ const AdminFinances = () => {
             return a[0].localeCompare(b[0]);
         });
 
-        return { taxYear, totalMiles, totalGas, byLocationSorted };
+        return { summaryYear, totalMiles, totalGas, byLocationSorted };
     }, [classData, milesOverrides, travelSettings]);
 
     useEffect(() => {
@@ -894,11 +895,11 @@ const AdminFinances = () => {
     }
 
     const {
-        taxYear: driveGasTaxYear,
-        totalMiles: totalDriveMilesTaxYear,
-        totalGas: totalGasDriveTaxYear,
-        byLocationSorted: priorYearDriveByLocation,
-    } = priorYearDriveAggregates;
+        summaryYear: driveStatsYear,
+        totalMiles: totalDriveMilesForYear,
+        totalGas: totalGasDriveForYear,
+        byLocationSorted: driveByLocationForYear,
+    } = currentYearDriveAggregates;
 
     const totalRevenue = classData.reduce((sum, entry) => sum + (entry.receivedRate || entry.rate || 0), 0);
     const totalRevenue2025 = classData.reduce((sum, entry) => {
@@ -986,64 +987,81 @@ const AdminFinances = () => {
                     </div>
                     <div
                         className="summary-card yearly"
-                        title={`Total round-trip drive miles for all entries dated in ${driveGasTaxYear} (prior calendar year, for taxes). Same trip math as the table below.`}
+                        title={`Total round-trip drive miles for all entries dated in ${driveStatsYear} (current calendar year). Same trip math as the table below.`}
                     >
-                        <h3>Drive Miles (RT) ({driveGasTaxYear})</h3>
-                        <p className="revenue-amount">{formatTripMiles(totalDriveMilesTaxYear)}</p>
+                        <h3>Drive Miles (RT) ({driveStatsYear})</h3>
+                        <p className="revenue-amount">{formatTripMiles(totalDriveMilesForYear)}</p>
                     </div>
                     <div
                         className="summary-card yearly"
-                        title={`Estimated gas for those round trips in ${driveGasTaxYear} (prior calendar year, for taxes). Uses MPG and $/gal from travel settings.`}
+                        title={`Estimated gas for those round trips in ${driveStatsYear}. Uses MPG and $/gal from travel settings.`}
                     >
-                        <h3>Gas — Driving ({driveGasTaxYear})</h3>
-                        <p className="revenue-amount">{formatCurrency(totalGasDriveTaxYear)}</p>
+                        <h3>Gas — Driving ({driveStatsYear})</h3>
+                        <p className="revenue-amount">{formatCurrency(totalGasDriveForYear)}</p>
                     </div>
                 </div>
             </div>
 
             <section
-                className="finances-prior-year-drive"
-                aria-label={`Drive miles by location for ${driveGasTaxYear}`}
+                className="finances-drive-by-location"
+                aria-label={`Drive miles by location for ${driveStatsYear}`}
             >
-                <h4 className="finances-prior-year-drive__title">
-                    Miles driven by location ({driveGasTaxYear})
-                </h4>
-                <p className="finances-prior-year-drive__hint">
-                    Prior calendar year for taxes: round-trip miles and estimated gas per normalized location for
-                    all finance rows dated in {driveGasTaxYear}. Same trip math as the table below.
-                </p>
-                {priorYearDriveByLocation.length === 0 ? (
-                    <p className="finances-prior-year-drive__empty">
-                        No finance entries dated in {driveGasTaxYear}.
-                    </p>
-                ) : (
-                    <div className="finances-prior-year-drive__wrap">
-                        <table className="finances-prior-year-drive__table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Location</th>
-                                    <th scope="col">Drive miles (RT)</th>
-                                    <th scope="col">Est. gas</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {priorYearDriveByLocation.map(([loc, agg]) => (
-                                    <tr key={loc}>
-                                        <td>{loc}</td>
-                                        <td>{formatTripMiles(agg.miles)}</td>
-                                        <td>{formatCurrency(agg.gas)}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th scope="row">Total</th>
-                                    <td>{formatTripMiles(totalDriveMilesTaxYear)}</td>
-                                    <td>{formatCurrency(totalGasDriveTaxYear)}</td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+                <button
+                    type="button"
+                    className={`finances-drive-by-location__toggle ${
+                        driveByLocationOpen ? 'finances-drive-by-location__toggle--open' : ''
+                    }`}
+                    onClick={() => setDriveByLocationOpen((open) => !open)}
+                    aria-expanded={driveByLocationOpen}
+                    title={driveByLocationOpen ? 'Click to hide details' : 'Click to show breakdown by location'}
+                >
+                    <span className="finances-drive-by-location__expand-icon" aria-hidden="true">
+                        {driveByLocationOpen ? '▼' : '▶'}
+                    </span>
+                    <span className="finances-drive-by-location__toggle-label">
+                        Miles driven by location ({driveStatsYear})
+                    </span>
+                </button>
+                {driveByLocationOpen && (
+                    <>
+                        <p className="finances-drive-by-location__hint">
+                            Current calendar year: round-trip miles and estimated gas per normalized location for all
+                            finance rows dated in {driveStatsYear}. Same trip math as the table below.
+                        </p>
+                        {driveByLocationForYear.length === 0 ? (
+                            <p className="finances-drive-by-location__empty">
+                                No finance entries dated in {driveStatsYear}.
+                            </p>
+                        ) : (
+                            <div className="finances-drive-by-location__wrap">
+                                <table className="finances-drive-by-location__table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Location</th>
+                                            <th scope="col">Drive miles (RT)</th>
+                                            <th scope="col">Est. gas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {driveByLocationForYear.map(([loc, agg]) => (
+                                            <tr key={loc}>
+                                                <td>{loc}</td>
+                                                <td>{formatTripMiles(agg.miles)}</td>
+                                                <td>{formatCurrency(agg.gas)}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th scope="row">Total</th>
+                                            <td>{formatTripMiles(totalDriveMilesForYear)}</td>
+                                            <td>{formatCurrency(totalGasDriveForYear)}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        )}
+                    </>
                 )}
             </section>
 

@@ -25,6 +25,11 @@
         background-color: transparent !important;
     }
 
+    .finances-drive-by-location__toggle:hover {
+        background: mix(#fff, $secondary-background-color, 45%) !important;
+        background-color: mix(#fff, $secondary-background-color, 45%) !important;
+    }
+
     .class-table button.location-cell--clickable:hover {
         color: $primary-button-color !important;
     }
@@ -177,8 +182,8 @@
     }
 }
 
-// Prior-year drive breakdown (same tax year as Drive Miles / Gas summary cards)
-.finances-prior-year-drive {
+// Drive miles by location for current calendar year (same year as Drive Miles / Gas summary cards)
+.finances-drive-by-location {
     margin: 0 10px 36px 10px;
     padding: 20px 22px;
     background: white;
@@ -188,8 +193,36 @@
     box-sizing: border-box;
     max-width: 100%;
 
-    &__title {
-        margin: 0 0 8px 0;
+    &__toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        margin: 0;
+        padding: 10px 12px;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font: inherit;
+        text-align: left;
+        background: transparent;
+        color: inherit;
+
+        &--open {
+            margin-bottom: 4px;
+        }
+    }
+
+    &__expand-icon {
+        flex-shrink: 0;
+        font-size: 12px;
+        color: $primary-button-color;
+        font-weight: bold;
+        line-height: 1;
+    }
+
+    &__toggle-label {
         font-family: $font-main;
         font-size: 1.15rem;
         font-weight: 600;
