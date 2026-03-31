@@ -140,8 +140,8 @@
             label {
                 display: grid;
                 grid-template-rows: auto auto;
-                gap: 6px;
-                padding: 10px 12px;
+                gap: 4px;
+                padding: 6px 10px;
                 border-radius: 8px;
                 border: 1px solid $border-color;
                 background: $background-color;
@@ -157,11 +157,11 @@
                     border-radius: 0;
                     font-family: $font-main;
                     color: $text-color;
-                    height: 36px;
+                    height: 28px;
                     box-sizing: border-box;
                     background: transparent;
                     outline: none;
-                    font-size: 0.95rem;
+                    font-size: 0.9rem;
                     font-weight: 500;
                 }
             }
@@ -247,7 +247,7 @@
         }
 
         .bulk-delete-action-button {
-            height: 34px;
+            height: 30px;
             padding: 0 12px;
             border-radius: 6px;
             font-size: 0.85rem;
@@ -275,7 +275,7 @@
         }
 
         .bulk-action-button {
-            height: 34px;
+            height: 30px;
             padding: 0 12px;
             border-radius: 6px;
             font-size: 0.85rem;
@@ -366,9 +366,16 @@
             font-family: $font-main;
             color: $secondary-text-color;
             background: $background-color;
-            height: 34px;
+            height: 30px;
             line-height: 20px;
             box-sizing: border-box;
+        }
+
+        /* Short numeric field for class length */
+        input[name='durationMinutes'].events-input {
+            min-width: 70px;
+            width: 70px;
+            text-align: center;
         }
 
         /* Force consistent typography for native date/time controls */
@@ -395,7 +402,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            height: 34px;
+            height: 30px;
             padding: 0 12px;
             border-radius: 6px;
             font-size: 0.85rem;
@@ -429,7 +436,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            height: 34px;
+            height: 30px;
             border: none;
             padding: 0 12px;
             border-radius: 6px;
