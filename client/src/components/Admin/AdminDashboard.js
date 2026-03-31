@@ -33,6 +33,7 @@ const AdminDashboard = () => {
         location: '',
         signUpLink: '',
         repeat: '',
+        repeatCount: '',
     }); // State for new event form
     const [loading, setLoading] = useState(false); // State for loading indicator
     const alertShown = useRef(false);
@@ -94,34 +95,46 @@ const AdminDashboard = () => {
             // Generate recurring events weekly or monthly
             const eventsToAdd = [];
             let currentDate = new Date(newEvent.date);
+            const hasRepeat = Boolean(newEvent.repeat);
 
-            if (newEvent.repeat === 'weekly') {
-                for (let i = 0; i < 12; i++) {
-                    eventsToAdd.push({
-                        ...newEvent,
-                        date: currentDate.toISOString().split('T')[0],
+            const baseEvent = {
+                title: newEvent.title,
+                date: newEvent.date,
+                time: newEvent.time,
+                location: newEvent.location,
+                signUpLink: newEvent.signUpLink,
+            };
+
+            if (hasRepeat) {
+                const repeatCountNum = Number(newEvent.repeatCount);
+                const isValidCount = Number.isInteger(repeatCountNum) && repeatCountNum > 0 && repeatCountNum <= 200;
+
+                if (!isValidCount) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Please enter a repeat count between 1 and 200.',
+                        confirmButtonText: 'OK'
                     });
-                    currentDate.setDate(currentDate.getDate() + 7);
+                    return;
                 }
-            } else if (newEvent.repeat === 'biweekly') {
-                // 6 occurrences = 12 weeks (mirrors the 12-week horizon of weekly)
-                for (let i = 0; i < 6; i++) {
+
+                for (let i = 0; i < repeatCountNum; i++) {
                     eventsToAdd.push({
-                        ...newEvent,
+                        ...baseEvent,
                         date: currentDate.toISOString().split('T')[0],
                     });
-                    currentDate.setDate(currentDate.getDate() + 14);
-                }
-            } else if (newEvent.repeat === 'monthly') {
-                for (let i = 0; i < 6; i++) {
-                    eventsToAdd.push({
-                        ...newEvent,
-                        date: currentDate.toISOString().split('T')[0],
-                    });
-                    currentDate.setMonth(currentDate.getMonth() + 1);
+
+                    if (newEvent.repeat === 'weekly') {
+                        currentDate.setDate(currentDate.getDate() + 7);
+                    } else if (newEvent.repeat === 'biweekly') {
+                        currentDate.setDate(currentDate.getDate() + 14);
+                    } else if (newEvent.repeat === 'monthly') {
+                        currentDate.setMonth(currentDate.getMonth() + 1);
+                    }
                 }
             } else {
-                eventsToAdd.push(newEvent);
+                eventsToAdd.push(baseEvent);
             }
 
             // Send each event to the backend
@@ -145,6 +158,7 @@ const AdminDashboard = () => {
                 location: '',
                 signUpLink: '',
                 repeat: '',
+                repeatCount: '',
             });
             fetchEvents();
         } catch (error) {
@@ -394,6 +408,19 @@ const AdminDashboard = () => {
                         <option value="monthly">Monthly</option>
                     </select>
                 </div>
+                {newEvent.repeat ? (
+                    <div className="form-group">
+                        <label>Repeat count</label>
+                        <input
+                            type="number"
+                            min="1"
+                            max="200"
+                            step="1"
+                            value={newEvent.repeatCount}
+                            onChange={(e) => setNewEvent({ ...newEvent, repeatCount: e.target.value })}
+                        />
+                    </div>
+                ) : null}
                 <button type="submit" className="add-event-button">Add Event</button>
             </form>
 
