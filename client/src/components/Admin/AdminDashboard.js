@@ -461,15 +461,6 @@ const AdminDashboard = () => {
                     <p>Loading events...</p>
                 ) : events.length > 0 ? (
                     <>
-                        <button
-                            onClick={handleBulkDelete}
-                            disabled={selectedEvents.length === 0}
-                            className="bulk-delete-button"
-                            title={selectedEvents.length > 0 ? `Bulk delete (${selectedEvents.length})` : 'Bulk delete'}
-                            aria-label={selectedEvents.length > 0 ? `Bulk delete (${selectedEvents.length})` : 'Bulk delete'}
-                        >
-                            <FaTrash className="icon" />
-                        </button>
                         <div className="bulk-controls">
                             <div className="bulk-controls__dates">
                                 <label>
@@ -490,6 +481,17 @@ const AdminDashboard = () => {
                                 </label>
                             </div>
                             <div className="bulk-controls__actions">
+                                <button
+                                    type="button"
+                                    onClick={handleBulkDelete}
+                                    disabled={selectedEvents.length === 0}
+                                    className="bulk-delete-action-button"
+                                    title={selectedEvents.length > 0 ? `Bulk delete (${selectedEvents.length})` : 'Bulk delete'}
+                                    aria-label={selectedEvents.length > 0 ? `Bulk delete (${selectedEvents.length})` : 'Bulk delete'}
+                                >
+                                    <FaTrash className="icon" aria-hidden="true" />
+                                    Bulk delete
+                                </button>
                                 <button
                                     type="button"
                                     className="bulk-action-button"
