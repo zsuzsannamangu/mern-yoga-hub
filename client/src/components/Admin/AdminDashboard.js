@@ -383,7 +383,7 @@ const AdminDashboard = () => {
 
     const handleRenew = async (event) => {
         const result = await Swal.fire({
-            title: 'Renew this class/event',
+            title: `Renew: ${event.title}`,
             html: `
               <div style="text-align:left; display:grid; gap:12px;">
                 <div>
