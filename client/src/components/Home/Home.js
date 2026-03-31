@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import './Home.scss';
 import '../../App.scss';
 import Swal from 'sweetalert2';
@@ -89,8 +90,42 @@ function Home() {
     }
   };
 
+  const siteUrl = (process.env.REACT_APP_SITE_URL || 'https://www.yogaandchocolate.com').replace(
+    /\/$/,
+    ''
+  );
+  const homeStructuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': `${siteUrl}/#website`,
+        url: `${siteUrl}/`,
+        name: 'Yoga and Chocolate | Zsuzsanna Mangu',
+        description:
+          'Handcrafted plant-based chocolates and trauma-informed yoga in Portland, Oregon and online — classes, yoga therapy, workshops, and chocolate tastings.',
+        publisher: { '@id': `${siteUrl}/#person` },
+      },
+      {
+        '@type': 'Person',
+        '@id': `${siteUrl}/#person`,
+        name: 'Zsuzsanna Mangu',
+        url: `${siteUrl}/`,
+        jobTitle: 'Yoga teacher and chocolatier',
+      },
+    ],
+  };
+
   return (
     <div className="homepage">
+      <Helmet>
+        <title>Yoga and Chocolate | Zsuzsanna Mangu — Portland Yoga &amp; Small-Batch Chocolate</title>
+        <meta
+          name="description"
+          content="Handcrafted plant-based chocolates and trauma-informed yoga in Portland and online: group classes, yoga therapy, workshops, and chocolate offerings. Book a free consultation or browse the calendar."
+        />
+        <script type="application/ld+json">{JSON.stringify(homeStructuredData)}</script>
+      </Helmet>
       {/* Workshop Announcement Bar - Top */}
       <div className="workshop-announcement newyear-announcement">
         <div className="announcement-content">

@@ -70,7 +70,9 @@
 
     .finances-summary__row {
         display: grid;
-        gap: 20px;
+        // Explicit gaps so cards never visually “kiss” (some layouts ignore shorthand `gap` oddly)
+        column-gap: 28px;
+        row-gap: 28px;
         align-items: stretch;
     }
 
@@ -82,6 +84,8 @@
     // Row 2: two class cards — same 4-column track as top so they line up under cols 1–2
     .finances-summary__row--bottom {
         grid-template-columns: repeat(4, minmax(0, 1fr));
+        // Extra horizontal space between the two cards in this row
+        column-gap: 36px;
 
         .summary-card:nth-child(1) {
             grid-column: 1;
@@ -100,6 +104,8 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
         height: 100%;
+        min-width: 0; // grid overflow: keeps gap visible
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -136,7 +142,6 @@
         &.monthly {
             background: rgba(170, 157, 18, 0.08);
             border-left: 4px solid $green-color;
-            animation: slideIn 0.3s ease-out;
 
             h3 {
                 color: $green-color;
@@ -179,17 +184,6 @@
                 grid-column: auto;
             }
         }
-    }
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
     }
 }
 

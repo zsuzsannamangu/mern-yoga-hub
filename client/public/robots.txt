@@ -1,6 +1,5 @@
-
-//This file tells web crawlers (like Google bots) which parts of your site should or should not be indexed for search engines
-
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /user
+
+Sitemap: https://www.yogaandchocolate.com/sitemap.xml

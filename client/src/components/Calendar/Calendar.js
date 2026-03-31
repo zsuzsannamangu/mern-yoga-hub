@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Helmet } from 'react-helmet';
 import CalendarDays from './CalendarDays';
 import './Calendar.scss';
 import { Link } from 'react-router-dom';
@@ -151,6 +152,13 @@ export default class Calendar extends Component {
 
     return (
       <div className="calendar-container">
+        <Helmet>
+          <title>Yoga Class Calendar | Zsuzsanna Mangu — Portland &amp; Online</title>
+          <meta
+            name="description"
+            content="Browse upcoming yoga classes, workshops, and events with Zsuzsanna Mangu in the Portland area and online. See dates, times, and locations, then reserve your spot."
+          />
+        </Helmet>
         {/* Workshop Announcement Bar */}
         <div className="workshop-announcement newyear-announcement">
           <div className="announcement-content">

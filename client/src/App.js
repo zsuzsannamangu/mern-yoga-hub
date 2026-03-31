@@ -39,6 +39,7 @@ import UserOAuthHandler from './components/User/UserOAuthHandler';
 import AdminSubscribers from './components/Admin/AdminSubscribers';
 import AdminFinances from './components/Admin/AdminFinances';
 import Unsubscribe from './components/Home/Unsubscribe';
+import SiteSeo from './components/seo/SiteSeo';
 
 // Protected routes for guarding user and admin routes
 import { UserProtectedRoute, AdminProtectedRoute } from './routes/ProtectedRoutes';
@@ -67,6 +68,7 @@ function App() {
       <AdminAuthProvider>
         <Router>
           <div className="App">
+            <SiteSeo />
             {/* Accessibility: Skip to main content */}
             <a href="#main-content" className="skip-link">
               Skip to main content
