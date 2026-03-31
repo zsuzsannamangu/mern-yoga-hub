@@ -165,7 +165,9 @@
         transition: margin-left 0.3s ease;
         background-color: $background-color;
         min-height: 100vh;
-        padding: 20px;
+        padding: 20px 32px 20px 20px;
+        box-sizing: border-box;
+        min-width: 0; // allow flex child to shrink so wide tables scroll inside, not overflow the layout
     }
 }
 
@@ -194,6 +196,7 @@
 
     .admin-layout .admin-content {
         margin-left: 0;
+        padding: 16px 20px 16px 16px;
 
         .admin-sidebar.expanded ~ & {
             margin-left: 0;
