@@ -278,17 +278,15 @@ const AdminFinances = () => {
         const grouped = groupDataByMonth(classData);
         const cy = String(new Date().getFullYear());
         let openYear = cy;
-        let monthKeys = Object.keys(grouped).filter((k) => k.startsWith(`${openYear}-`));
-        if (monthKeys.length === 0) {
+        if (!Object.keys(grouped).some((k) => k.startsWith(`${openYear}-`))) {
             const allYears = [...new Set(Object.keys(grouped).map((k) => k.slice(0, 4)))].sort((a, b) =>
                 b.localeCompare(a)
             );
             if (allYears.length === 0) return;
             openYear = allYears[0];
-            monthKeys = Object.keys(grouped).filter((k) => k.startsWith(`${openYear}-`));
         }
         setExpandedYears(new Set([openYear]));
-        setExpandedMonths(new Set(monthKeys));
+        // Months start collapsed; user expands each month to see class rows.
     }, [loading, classData]);
 
     const calculateMonthlyTotals = (groupedData, expandedMonths) => {
@@ -334,14 +332,13 @@ const AdminFinances = () => {
             else next.delete(yearStr);
             return next;
         });
-        setExpandedMonths((prev) => {
-            const next = new Set(prev);
-            monthKeysInYear.forEach((k) => {
-                if (willOpen) next.add(k);
-                else next.delete(k);
+        if (!willOpen) {
+            setExpandedMonths((prev) => {
+                const next = new Set(prev);
+                monthKeysInYear.forEach((k) => next.delete(k));
+                return next;
             });
-            return next;
-        });
+        }
     };
 
     const handleInputChange = (e) => {
@@ -1288,8 +1285,8 @@ const AdminFinances = () => {
                                     aria-expanded={yearOpen}
                                     title={
                                         yearOpen
-                                            ? 'Click to hide all months for this year'
-                                            : 'Click to show all months for this year'
+                                            ? 'Click to hide months for this year'
+                                            : 'Click to list months for this year (expand a month to see classes)'
                                     }
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
