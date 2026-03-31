@@ -428,8 +428,8 @@
             min-width: 260px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding-right: 6px;
+            gap: 8px;
+            padding-right: 4px;
         }
 
         .events-open-link {
@@ -442,17 +442,21 @@
             font-size: $admin-action-icon-font-size;
             font-weight: 700;
             font-family: $font-main;
-            background-color: transparent;
-            color: $text-color;
+            background-color: $primary-button-color;
+            color: $button-text-color;
             text-decoration: none;
             white-space: nowrap;
             box-sizing: border-box;
             position: relative;
 
             &:hover {
-                background: $admin-action-icon-hover-bg;
-                color: $text-color;
+                background-color: $primary-button-hover-color;
+                color: $button-text-color;
                 text-decoration: none;
+            }
+
+            svg {
+                display: block;
             }
         }
 
@@ -464,10 +468,7 @@
         td.events-td-actions {
             white-space: nowrap;
             min-width: 170px;
-            padding-left: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding-left: 4px;
         }
 
         .event-action-button {
@@ -482,14 +483,18 @@
             font-weight: 700;
             font-family: $font-main;
             cursor: pointer;
-            margin-left: 0;
+            margin-left: 6px;
             box-sizing: border-box;
-            color: $text-color;
+            color: $button-text-color;
             position: relative;
-            background: transparent;
+            background-color: $primary-button-color;
 
             &:hover {
-                background: $admin-action-icon-hover-bg;
+                background-color: $primary-button-hover-color;
+            }
+
+            svg {
+                display: block;
             }
         }
 
@@ -540,16 +545,26 @@
         }
 
         .event-action-button--update {
-            // inherits hover
+            background-color: $primary-button-color;
+
+            &:hover {
+                background-color: $primary-button-hover-color;
+            }
         }
 
         .event-action-button--renew {
-            // inherits hover
+            background-color: $primary-button-color;
+
+            &:hover {
+                background-color: $primary-button-hover-color;
+            }
         }
 
         .event-action-button--delete {
+            background-color: $delete-button;
+
             &:hover {
-                background: $admin-action-icon-hover-danger-bg;
+                background-color: $delete-button-hover;
             }
         }
     }
