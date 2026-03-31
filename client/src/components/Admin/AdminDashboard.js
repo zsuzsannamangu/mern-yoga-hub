@@ -410,51 +410,87 @@ const AdminDashboard = () => {
                         >
                             <FaTrash className="icon" />
                         </button>
-                        <ul>
-                            {orderedEvents.map((event) => (
-                                <li key={event._id} className="event-card">
-                                    <div className="event-details">
-                                        <input
-                                            type="checkbox"
-                                            onChange={(e) => handleSelect(event._id, e.target.checked)}
-                                            checked={selectedEvents.includes(event._id)}
-                                        />
-                                        <p>
-                                            <strong>{event.title}</strong> - {event.date} {event.time} at {event.location}
-                                        </p>
-                                    </div>
-                                    <div className="event-actions">
-                                        <button
-                                            type="button"
-                                            className="delete-single-event-button"
-                                            onClick={() => deleteEvent(event._id)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>
-                                    <form
-                                        onSubmit={(e) => {
-                                            e.preventDefault();
-                                            const updatedData = {
-                                                title: e.target.title.value,
-                                                date: e.target.date.value,
-                                                time: e.target.time.value,
-                                                location: e.target.location.value,
-                                                signUpLink: e.target.signUpLink.value,
-                                            };
-                                            updateEvent(event._id, updatedData);
-                                        }}
-                                    >
-                                        <input type="text" name="title" defaultValue={event.title} placeholder="Title" />
-                                        <input type="date" name="date" defaultValue={event.date} />
-                                        <input type="time" name="time" defaultValue={event.time} />
-                                        <input type="text" name="location" defaultValue={event.location} placeholder="Location" />
-                                        <input type="text" name="signUpLink" defaultValue={event.signUpLink} placeholder="Sign Up Link" />
-                                        <button type="submit" className="update-event-button">Update</button>
-                                    </form>
-                                </li>
-                            ))}
-                        </ul>
+                        <div className="events-table-wrap">
+                            <table className="events-table">
+                                <thead>
+                                    <tr>
+                                        <th aria-label="Select for bulk delete"></th>
+                                        <th>Title</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Location</th>
+                                        <th>Link</th>
+                                        <th aria-label="Actions"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {orderedEvents.map((event) => (
+                                        <tr key={event._id}>
+                                            <td className="events-td-check">
+                                                <input
+                                                    type="checkbox"
+                                                    onChange={(e) => handleSelect(event._id, e.target.checked)}
+                                                    checked={selectedEvents.includes(event._id)}
+                                                    aria-label={`Select ${event.title} for bulk delete`}
+                                                />
+                                            </td>
+                                            <td>
+                                                <input type="text" name="title" defaultValue={event.title} className="events-input" />
+                                            </td>
+                                            <td>
+                                                <input type="date" name="date" defaultValue={event.date} className="events-input" />
+                                            </td>
+                                            <td>
+                                                <input type="time" name="time" defaultValue={event.time} className="events-input" />
+                                            </td>
+                                            <td>
+                                                <input type="text" name="location" defaultValue={event.location} className="events-input" />
+                                            </td>
+                                            <td className="events-td-link">
+                                                <input type="text" name="signUpLink" defaultValue={event.signUpLink} className="events-input" />
+                                                {event.signUpLink ? (
+                                                    <a
+                                                        href={event.signUpLink}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="events-open-link"
+                                                    >
+                                                        Open
+                                                    </a>
+                                                ) : null}
+                                            </td>
+                                            <td className="events-td-actions">
+                                                <button
+                                                    type="button"
+                                                    className="update-event-button"
+                                                    onClick={(e) => {
+                                                        const row = e.currentTarget.closest('tr');
+                                                        if (!row) return;
+                                                        const updatedData = {
+                                                            title: row.querySelector('input[name="title"]')?.value || '',
+                                                            date: row.querySelector('input[name="date"]')?.value || '',
+                                                            time: row.querySelector('input[name="time"]')?.value || '',
+                                                            location: row.querySelector('input[name="location"]')?.value || '',
+                                                            signUpLink: row.querySelector('input[name="signUpLink"]')?.value || '',
+                                                        };
+                                                        updateEvent(event._id, updatedData);
+                                                    }}
+                                                >
+                                                    Update
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="delete-single-event-button"
+                                                    onClick={() => deleteEvent(event._id)}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </>
                 ) : (
                     <p>No events added yet.</p>
