@@ -82,6 +82,7 @@
             border-collapse: collapse;
             font-family: $font-secondary;
             background: white;
+            table-layout: fixed;
 
             thead {
                 background: $content-background-color;
@@ -94,6 +95,7 @@
                     border-bottom: 2px solid $border-color;
                     font-size: 0.95rem;
                     font-family: $font-main;
+                    white-space: nowrap;
 
                     &:last-child {
                         text-align: center;
@@ -119,6 +121,8 @@
                         font-size: 0.9rem;
                         color: $text-color;
                         vertical-align: middle;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
 
                         &:first-child {
                             font-weight: 500;
@@ -129,6 +133,19 @@
                         }
                     }
                 }
+            }
+        }
+
+        // Booked + passed sessions: keep columns aligned
+        table.sessions-table {
+            th:nth-child(1), td:nth-child(1) { width: 120px; } // Date
+            th:nth-child(2), td:nth-child(2) { width: 110px; } // Time
+            th:nth-child(3), td:nth-child(3) { width: 170px; } // Name
+            th:nth-child(4), td:nth-child(4) { width: 220px; } // Email
+            th:nth-child(6), td:nth-child(6) { width: 84px; }  // Actions
+
+            td:nth-child(5) { // Message
+                white-space: nowrap;
             }
         }
 

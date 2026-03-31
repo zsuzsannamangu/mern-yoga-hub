@@ -493,7 +493,7 @@ const AdminBooking = () => {
                         <p>Loading...</p>
                     ) : upcomingSlots.length > 0 ? (
                         <div className="available-slots-table">
-                            <table>
+                            <table className="sessions-table">
                                 <thead>
                                     <tr>
                                         <th>Date</th>
@@ -537,7 +537,7 @@ const AdminBooking = () => {
                         <p>Loading...</p>
                     ) : passedSlots.length > 0 ? (
                         <div className="available-slots-table">
-                            <table>
+                            <table className="sessions-table">
                                 <thead>
                                     <tr>
                                         <th>Date</th>
