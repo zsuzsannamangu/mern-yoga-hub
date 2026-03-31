@@ -858,6 +858,8 @@ const AdminFinances = () => {
     }
 
     const currentYear = new Date().getFullYear();
+    /** Prior calendar year — drive/gas summary cards use this for tax-year totals. */
+    const driveGasTaxYear = currentYear - 1;
     const totalRevenue = classData.reduce((sum, entry) => sum + (entry.receivedRate || entry.rate || 0), 0);
     const totalRevenue2025 = classData.reduce((sum, entry) => {
         const year = Number((entry.date || '').split('-')[0]);
@@ -868,24 +870,24 @@ const AdminFinances = () => {
         return year === 2026 ? sum + (entry.receivedRate || entry.rate || 0) : sum;
     }, 0);
 
-    const { totalDriveMilesCurrentYear, totalGasDriveCurrentYear } = classData.reduce(
+    const { totalDriveMilesTaxYear, totalGasDriveTaxYear } = classData.reduce(
         (acc, entry) => {
             const year = Number((entry.date || '').split('-')[0]);
-            if (year !== currentYear || Number.isNaN(year)) return acc;
+            if (year !== driveGasTaxYear || Number.isNaN(year)) return acc;
             const trip = computeTripMilesAndGasForRow(
                 normalizeFinanceLocation(entry.location),
                 milesOverrides,
                 travelSettings
             );
             if (trip.tripMiles != null && !Number.isNaN(Number(trip.tripMiles))) {
-                acc.totalDriveMilesCurrentYear += Number(trip.tripMiles);
+                acc.totalDriveMilesTaxYear += Number(trip.tripMiles);
             }
             if (trip.tripGasCost != null && !Number.isNaN(Number(trip.tripGasCost))) {
-                acc.totalGasDriveCurrentYear += Number(trip.tripGasCost);
+                acc.totalGasDriveTaxYear += Number(trip.tripGasCost);
             }
             return acc;
         },
-        { totalDriveMilesCurrentYear: 0, totalGasDriveCurrentYear: 0 }
+        { totalDriveMilesTaxYear: 0, totalGasDriveTaxYear: 0 }
     );
 
     const monthlyTotals = calculateMonthlyTotals(groupedData, expandedMonths);
@@ -964,17 +966,17 @@ const AdminFinances = () => {
                     </div>
                     <div
                         className="summary-card yearly"
-                        title={`Total round-trip drive miles for all entries dated in ${currentYear}, using the same locations and travel settings as the table below.`}
+                        title={`Total round-trip drive miles for all entries dated in ${driveGasTaxYear} (prior calendar year, for taxes). Same trip math as the table below.`}
                     >
-                        <h3>Drive Miles (RT) ({currentYear})</h3>
-                        <p className="revenue-amount">{formatTripMiles(totalDriveMilesCurrentYear)}</p>
+                        <h3>Drive Miles (RT) ({driveGasTaxYear})</h3>
+                        <p className="revenue-amount">{formatTripMiles(totalDriveMilesTaxYear)}</p>
                     </div>
                     <div
                         className="summary-card yearly"
-                        title={`Estimated gas cost to drive those round trips in ${currentYear} (MPG and price per gallon from travel settings).`}
+                        title={`Estimated gas for those round trips in ${driveGasTaxYear} (prior calendar year, for taxes). Uses MPG and $/gal from travel settings.`}
                     >
-                        <h3>Gas — Driving ({currentYear})</h3>
-                        <p className="revenue-amount">{formatCurrency(totalGasDriveCurrentYear)}</p>
+                        <h3>Gas — Driving ({driveGasTaxYear})</h3>
+                        <p className="revenue-amount">{formatCurrency(totalGasDriveTaxYear)}</p>
                     </div>
                 </div>
             </div>
@@ -1309,12 +1311,12 @@ const AdminFinances = () => {
                                         </span>
                                         <span className="month-name">{yearStr}</span>
                                     </span>
-                                    <span className="month-count">
-                                        <span className="month-count__line">{yearTeaching} classes</span>
-                                        <span className="month-count__line month-count__line--secondary">
+                                    <div className="month-count">
+                                        <div className="month-count__line">{yearTeaching} classes</div>
+                                        <div className="month-count__line month-count__line--secondary">
                                             {yearTherapy} therapy
-                                        </span>
-                                    </span>
+                                        </div>
+                                    </div>
                                 </div>
                                 {yearOpen &&
                                     monthTuples.map(([monthKey, monthData]) => (
@@ -1346,12 +1348,12 @@ const AdminFinances = () => {
                                     </span>
                                     <span className="month-name">{monthData.name}</span>
                                 </span>
-                                <span className="month-count">
-                                    <span className="month-count__line">{monthData.yogaTeachingCount} classes</span>
-                                    <span className="month-count__line month-count__line--secondary">
+                                <div className="month-count">
+                                    <div className="month-count__line">{monthData.yogaTeachingCount} classes</div>
+                                    <div className="month-count__line month-count__line--secondary">
                                         {monthData.yogaTherapyCount} therapy
-                                    </span>
-                                </span>
+                                    </div>
+                                </div>
                             </div>
                             
                             {expandedMonths.has(monthKey) && (
