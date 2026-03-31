@@ -5,11 +5,14 @@ import './AdminFinances.scss';
 import '../../App.scss';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
+import { normalizeFinanceLocation } from '../../utils/normalizeFinanceLocation';
 
 const AdminFinances = () => {
     const LOCATION_PRESETS = [
         { id: 'bhakti', label: 'The Bhakti Yoga Movement Center', location: 'The Bhakti Yoga Movement Center' },
+        { id: 'blhc', label: 'BLHC', location: 'BLHC' },
         { id: 'dear', label: 'Dear Yoga', location: 'Dear Yoga' },
+        { id: 'danner-boots', label: 'Danner Boots', location: 'Danner Boots' },
         { id: 'firelight', label: 'Firelight Yoga', location: 'Firelight Yoga' },
         { id: 'fullbodied', label: 'Full Bodied Yoga', location: 'Full Bodied Yoga' },
         { id: 'yoga-refuge-nw', label: 'Yoga Refuge, NW location', location: 'Yoga Refuge, NW location' },
@@ -239,7 +242,7 @@ const AdminFinances = () => {
                         date,
                         time: newEntry.time,
                         class: newEntry.class,
-                        location: newEntry.location,
+                        location: normalizeFinanceLocation(newEntry.location),
                         category: newEntry.category,
                         grossRate: newEntry.grossRate,
                         receivedRate: newEntry.receivedRate,
@@ -256,7 +259,7 @@ const AdminFinances = () => {
                     date: newEntry.date,
                     time: newEntry.time,
                     class: newEntry.class,
-                    location: newEntry.location,
+                    location: normalizeFinanceLocation(newEntry.location),
                     category: newEntry.category,
                     grossRate: newEntry.grossRate,
                     receivedRate: newEntry.receivedRate,
@@ -358,14 +361,19 @@ const AdminFinances = () => {
             ...entry,
             category: entry.category || 'other',
             grossRate: entry.grossRate || entry.rate || '',
-            receivedRate: entry.receivedRate || entry.rate || ''
+            receivedRate: entry.receivedRate || entry.rate || '',
+            location: normalizeFinanceLocation(entry.location),
         });
     };
 
     const handleSaveEdit = async () => {
         try {
             const token = localStorage.getItem('adminToken');
-            const response = await adminAxiosInstance.put(`/api/finances/${editingId}`, editingData, {
+            const payload = {
+                ...editingData,
+                location: normalizeFinanceLocation(editingData.location),
+            };
+            const response = await adminAxiosInstance.put(`/api/finances/${editingId}`, payload, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -467,7 +475,7 @@ const AdminFinances = () => {
                     date: entry.date,
                     time: entry.time,
                     class: entry.class || entry.className, // Handle both field names
-                    location: entry.location,
+                    location: normalizeFinanceLocation(entry.location),
                     category: updates.category || entry.category || 'other',
                     grossRate: entry.grossRate || entry.rate || 0,
                     receivedRate: entry.receivedRate || entry.rate || 0,
@@ -1099,7 +1107,7 @@ const AdminFinances = () => {
                                                     <div className="table-cell">{formatDate(entry.date)}</div>
                                                     <div className="table-cell">{formatTime(entry.time)}</div>
                                                     <div className="table-cell">{entry.class}</div>
-                                                    <div className="table-cell">{entry.location}</div>
+                                                    <div className="table-cell">{normalizeFinanceLocation(entry.location)}</div>
                                                     <div className="table-cell">{formatCurrency(entry.grossRate || entry.rate || 0)}</div>
                                                     <div className="table-cell">{formatCurrency(entry.receivedRate || entry.rate || 0)}</div>
                                                     <div className="table-cell">{entry.paymentMethod}</div>
