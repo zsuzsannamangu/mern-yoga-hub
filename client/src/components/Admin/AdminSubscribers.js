@@ -113,9 +113,6 @@ const AdminSubscribers = () => {
         <div className="no-subscribers">No subscribers yet.</div>
       ) : (
         <>
-        <p className="copy-help">
-          <strong>Quick copy:</strong> click the box below, then press <kbd>⌘</kbd>+<kbd>A</kbd> (Mac) or <kbd>Ctrl</kbd>+<kbd>A</kbd> (Windows), then <kbd>⌘</kbd>+<kbd>C</kbd> / <kbd>Ctrl</kbd>+<kbd>C</kbd>. Or use the copy buttons.
-        </p>
         <div className="emails-bulk-block">
           <label className="emails-bulk-label" htmlFor="subscriber-emails-bulk">
             All emails (one per line)

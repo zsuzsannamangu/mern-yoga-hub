@@ -14,25 +14,6 @@
         margin-bottom: 20px;
     }
 
-    .copy-help {
-        margin: 0 0 12px 0;
-        font-size: 0.9rem;
-        color: $secondary-text-color;
-        line-height: 1.5;
-        max-width: 720px;
-
-        kbd {
-            display: inline-block;
-            padding: 1px 6px;
-            margin: 0 1px;
-            border: 1px solid $border-color;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-family: $font-main;
-            background: $secondary-background-color;
-        }
-    }
-
     .emails-bulk-block {
         margin-bottom: 14px;
         max-width: 560px;
