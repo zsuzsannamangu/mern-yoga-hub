@@ -399,7 +399,7 @@ const AdminBooking = () => {
                             
                             {searchResults.bookingsByEmail.length === 0 && 
                              (!searchResults.bookingsByUserId || searchResults.bookingsByUserId.length === 0) && (
-                                <p className="no-results">No bookings found for this email address.</p>
+                                <p className="no-results">No bookings found by this email address.</p>
                             )}
                         </div>
                     )}

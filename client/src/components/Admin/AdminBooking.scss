@@ -341,12 +341,12 @@
         }
 
         .no-results {
-            padding: 15px;
-            background-color: #ffe6e6;
-            border-radius: 4px;
+            padding: 6px 0;
+            background: transparent;
+            border-radius: 0;
             color: $text-color;
             font-family: $font-main;
-            text-align: center;
+            text-align: left;
         }
     }
 }
