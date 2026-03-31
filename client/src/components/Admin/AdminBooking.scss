@@ -291,10 +291,37 @@
         border-radius: 8px;
         border: 1px solid $border-color;
 
-        h4 {
-            color: $main-title-color;
+        .search-results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
             margin-bottom: 15px;
-            font-family: $font-title;
+
+            h4 {
+                color: $main-title-color;
+                margin: 0;
+                font-family: $font-title;
+            }
+        }
+
+        .search-results-close {
+            border: none;
+            background: transparent;
+            color: $secondary-text-color;
+            width: $admin-icon-btn-width;
+            height: $admin-icon-btn-height;
+            border-radius: $admin-icon-btn-radius;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: $admin-action-icon-font-size;
+
+            &:hover {
+                background: $admin-action-icon-hover-bg;
+                color: $text-color;
+            }
         }
 
         h5 {

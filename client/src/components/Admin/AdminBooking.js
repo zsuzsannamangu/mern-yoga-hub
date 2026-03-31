@@ -451,7 +451,21 @@ const AdminBooking = () => {
 
                     {searchResults && (
                         <div className="search-results">
-                            <h4>Search Results for: {searchResults.email}</h4>
+                            <div className="search-results-header">
+                                <h4>Search Results for: {searchResults.email}</h4>
+                                <button
+                                    type="button"
+                                    className="search-results-close"
+                                    onClick={() => {
+                                        setSearchResults(null);
+                                        setSearchEmail('');
+                                    }}
+                                    aria-label="Close search results"
+                                    title="Close"
+                                >
+                                    <span aria-hidden="true">✕</span>
+                                </button>
+                            </div>
 
                             {searchResults.userFound && (
                                 <div className="user-info">
