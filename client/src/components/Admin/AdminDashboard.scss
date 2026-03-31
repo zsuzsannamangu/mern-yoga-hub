@@ -274,6 +274,11 @@
             }
         }
 
+        .events-open-link--placeholder {
+            visibility: hidden;
+            pointer-events: none;
+        }
+
         td.events-td-actions {
             white-space: nowrap;
             min-width: 170px;

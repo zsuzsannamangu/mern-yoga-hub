@@ -465,6 +465,8 @@ const AdminDashboard = () => {
                             onClick={handleBulkDelete}
                             disabled={selectedEvents.length === 0}
                             className="bulk-delete-button"
+                            title={selectedEvents.length > 0 ? `Bulk delete (${selectedEvents.length})` : 'Bulk delete'}
+                            aria-label={selectedEvents.length > 0 ? `Bulk delete (${selectedEvents.length})` : 'Bulk delete'}
                         >
                             <FaTrash className="icon" />
                         </button>
@@ -560,7 +562,11 @@ const AdminDashboard = () => {
                                                     >
                                                         Open
                                                     </a>
-                                                ) : null}
+                                                ) : (
+                                                    <span className="events-open-link events-open-link--placeholder" aria-hidden="true">
+                                                        Open
+                                                    </span>
+                                                )}
                                             </td>
                                             <td className="events-td-actions">
                                                 <button
