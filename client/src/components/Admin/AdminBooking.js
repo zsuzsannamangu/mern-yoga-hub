@@ -299,10 +299,11 @@ const AdminBooking = () => {
             const data = response.data;
 
             if (!data?.bookingsByEmail || data.bookingsByEmail.length === 0) {
+                const searched = searchEmail.trim();
                 await Swal.fire({
                     icon: 'info',
                     title: 'No bookings found',
-                    text: 'No bookings found by this email address.',
+                    html: `No bookings found for <strong>${searched}</strong>.`,
                     confirmButtonText: 'OK'
                 });
                 setSearchResults(null);
