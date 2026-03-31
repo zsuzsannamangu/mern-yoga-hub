@@ -401,10 +401,70 @@ $class-table-grid-cols-sm:
     .month-group {
         border: 1px solid $border-color;
         border-top: none;
+    }
 
-        &:last-child {
-            border-radius: 0 0 6px 6px;
+    .finances-year-block:last-child .month-group:last-child {
+        border-radius: 0 0 6px 6px;
+    }
+
+    .finances-year-block:not(:last-child) .month-group:last-child {
+        border-radius: 0;
+    }
+
+    .finances-year-block:not(.finances-year-block--open):last-child .year-header {
+        border-radius: 0 0 6px 6px;
+    }
+
+    .finances-year-block--open .year-header {
+        border-bottom: none;
+    }
+
+    .year-header {
+        display: grid;
+        grid-template-columns: $class-table-grid-cols;
+        align-items: center;
+        background: mix(#fff, $secondary-background-color, 28%);
+        padding: 13px 12px;
+        cursor: pointer;
+        border: 1px solid $border-color;
+        border-top: none;
+        column-gap: 0;
+        box-sizing: border-box;
+
+        &.expanded {
+            background: mix(#fff, $content-background-color, 12%);
         }
+
+        .year-header__checkbox-spacer {
+            grid-column: 1;
+            min-height: 18px;
+        }
+
+        .month-label {
+            grid-column: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding-left: 14px;
+            min-width: 0;
+        }
+
+        .month-count {
+            grid-column: 3;
+            justify-self: center;
+        }
+
+        .month-name {
+            font-size: 1.05rem;
+        }
+    }
+
+    .finances-year-block:first-child .year-header {
+        border-top: none;
+    }
+
+    .finances-year-block:not(:first-child) .year-header {
+        border-top: 1px solid $border-color;
     }
 
     .month-header {
@@ -414,15 +474,9 @@ $class-table-grid-cols-sm:
         background: $secondary-background-color;
         padding: 14px 12px;
         cursor: pointer;
-        transition: background-color 0.2s ease;
         border-bottom: 1px solid $border-color;
         column-gap: 0;
         position: relative;
-
-        &:hover {
-            // Barely deeper than row base — avoid heavy #e0e0e0 gray
-            background: mix($content-background-color-hover, $secondary-background-color, 6%);
-        }
 
         &.expanded {
             background: $content-background-color;
@@ -492,14 +546,9 @@ $class-table-grid-cols-sm:
             display: grid;
             grid-template-columns: $class-table-grid-cols;
             border-bottom: 1px solid rgba(204, 204, 204, 0.3);
-            transition: background-color 0.2s ease;
 
             &.selected {
                 background-color: rgba($primary-button-color, 0.1);
-            }
-
-            &:hover {
-                background: rgba(248, 250, 252, 0.92);
             }
 
             &:last-child {
@@ -615,35 +664,16 @@ $class-table-grid-cols-sm:
                     font-size: 16px;
                     padding: 4px 6px;
                     border-radius: 3px;
-                    transition: all 0.2s ease;
-
-                    &:hover {
-                        background: rgba(0, 0, 0, 0.04);
-                    }
                 }
 
                 .save-btn {
                     color: $green-color;
                     font-weight: bold;
-
-                    &:hover {
-                        background: rgba(40, 167, 69, 0.1);
-                    }
                 }
 
                 .cancel-btn {
                     color: $delete-button;
                     font-weight: bold;
-
-                    &:hover {
-                        background: rgba(220, 53, 69, 0.1);
-                    }
-                }
-
-                .delete-btn {
-                    &:hover {
-                        background: rgba(220, 53, 69, 0.1);
-                    }
                 }
             }
 
@@ -802,10 +832,6 @@ $class-table-grid-cols-sm:
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-
-    &:hover {
-        color: mix(#fff, $primary-button-color, 58%);
-    }
 }
 
 .table-cell--location-edit {
@@ -833,11 +859,6 @@ $class-table-grid-cols-sm:
     line-height: 1;
     padding: 0;
     color: $text-color;
-
-    &:hover {
-        background: mix(#fff, $secondary-background-color, 45%);
-        border-color: $border-color;
-    }
 }
 
 .location-stats-modal {
@@ -890,11 +911,6 @@ $class-table-grid-cols-sm:
     color: $secondary-text-color;
     padding: 4px 8px;
     border-radius: 4px;
-
-    &:hover {
-        background: $secondary-background-color;
-        color: $text-color;
-    }
 }
 
 .location-stats-meta {

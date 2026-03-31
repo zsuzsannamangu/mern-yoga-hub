@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { adminAxiosInstance } from '../../config/axiosConfig';
 import AdminLayout from './AdminLayout';
 import './AdminFinances.scss';
@@ -25,6 +25,38 @@ import {
 } from '../../utils/financeLocationTravel';
 import { computeTripMilesAndGasForRow } from '../../utils/financeTripCompute';
 
+function sortClassData(data) {
+    return [...data].sort((a, b) => {
+        const dateA = new Date(`${a.date} ${a.time}`);
+        const dateB = new Date(`${b.date} ${b.time}`);
+        return dateA - dateB;
+    });
+}
+
+function groupDataByMonth(data) {
+    const grouped = {};
+    data.forEach((entry) => {
+        const [year, month, day] = entry.date.split('-');
+        const date = new Date(year, month - 1, day);
+        const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+        const monthName = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+
+        if (!grouped[monthKey]) {
+            grouped[monthKey] = {
+                name: monthName,
+                entries: [],
+                yogaTeachingCount: 0,
+                yogaTherapyCount: 0,
+            };
+        }
+        grouped[monthKey].entries.push(entry);
+        if (entry.category === 'yoga teaching') grouped[monthKey].yogaTeachingCount += 1;
+        if (entry.category === 'yoga therapy') grouped[monthKey].yogaTherapyCount += 1;
+    });
+
+    return grouped;
+}
+
 const AdminFinances = () => {
     const LOCATION_PRESETS = [
         { id: 'bhakti', label: 'The Bhakti Yoga Movement Center', location: 'The Bhakti Yoga Movement Center' },
@@ -44,7 +76,11 @@ const AdminFinances = () => {
         { id: 'other', label: 'Other (new location)', location: '' },
     ];
     const [classData, setClassData] = useState([]);
+    const [expandedYears, setExpandedYears] = useState(() => new Set());
     const [expandedMonths, setExpandedMonths] = useState(new Set());
+    const expandedYearsRef = useRef(expandedYears);
+    expandedYearsRef.current = expandedYears;
+    const financesYearExpansionInitRef = useRef(false);
     const [showAddForm, setShowAddForm] = useState(false);
     const [loading, setLoading] = useState(true);
     const [editingId, setEditingId] = useState(null);
@@ -215,38 +251,45 @@ const AdminFinances = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [locationStatsCanonical]);
 
-    const sortClassData = (data) => {
-        return data.sort((a, b) => {
-            const dateA = new Date(`${a.date} ${a.time}`);
-            const dateB = new Date(`${b.date} ${b.time}`);
-            return dateA - dateB;
-        });
-    };
+    const groupedData = useMemo(() => groupDataByMonth(classData), [classData]);
 
-    const groupDataByMonth = (data) => {
-        const grouped = {};
-        data.forEach(entry => {
-            // Parse date string as local date to avoid timezone shifts
-            const [year, month, day] = entry.date.split('-');
-            const date = new Date(year, month - 1, day); // month is 0-indexed
-            const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-            const monthName = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-            
-            if (!grouped[monthKey]) {
-                grouped[monthKey] = {
-                    name: monthName,
-                    entries: [],
-                    yogaTeachingCount: 0,
-                    yogaTherapyCount: 0,
-                };
-            }
-            grouped[monthKey].entries.push(entry);
-            if (entry.category === 'yoga teaching') grouped[monthKey].yogaTeachingCount += 1;
-            if (entry.category === 'yoga therapy') grouped[monthKey].yogaTherapyCount += 1;
+    const { monthsByYear, sortedYears } = useMemo(() => {
+        const entries = Object.entries(groupedData).sort(([a], [b]) => b.localeCompare(a));
+        const byYear = new Map();
+        entries.forEach(([mk, md]) => {
+            const y = mk.slice(0, 4);
+            if (!byYear.has(y)) byYear.set(y, []);
+            byYear.get(y).push([mk, md]);
         });
-        
-        return grouped;
-    };
+        const years = [...byYear.keys()].sort((a, b) => b.localeCompare(a));
+        return { monthsByYear: byYear, sortedYears: years };
+    }, [groupedData]);
+
+    useEffect(() => {
+        if (loading) return;
+        if (classData.length === 0) {
+            financesYearExpansionInitRef.current = false;
+            setExpandedYears(new Set());
+            setExpandedMonths(new Set());
+            return;
+        }
+        if (financesYearExpansionInitRef.current) return;
+        financesYearExpansionInitRef.current = true;
+        const grouped = groupDataByMonth(classData);
+        const cy = String(new Date().getFullYear());
+        let openYear = cy;
+        let monthKeys = Object.keys(grouped).filter((k) => k.startsWith(`${openYear}-`));
+        if (monthKeys.length === 0) {
+            const allYears = [...new Set(Object.keys(grouped).map((k) => k.slice(0, 4)))].sort((a, b) =>
+                b.localeCompare(a)
+            );
+            if (allYears.length === 0) return;
+            openYear = allYears[0];
+            monthKeys = Object.keys(grouped).filter((k) => k.startsWith(`${openYear}-`));
+        }
+        setExpandedYears(new Set([openYear]));
+        setExpandedMonths(new Set(monthKeys));
+    }, [loading, classData]);
 
     const calculateMonthlyTotals = (groupedData, expandedMonths) => {
         let totalRevenue = 0;
@@ -281,6 +324,24 @@ const AdminFinances = () => {
             newExpanded.add(monthKey);
         }
         setExpandedMonths(newExpanded);
+    };
+
+    const toggleYear = (yearStr, monthKeysInYear) => {
+        const willOpen = !expandedYearsRef.current.has(yearStr);
+        setExpandedYears((prev) => {
+            const next = new Set(prev);
+            if (willOpen) next.add(yearStr);
+            else next.delete(yearStr);
+            return next;
+        });
+        setExpandedMonths((prev) => {
+            const next = new Set(prev);
+            monthKeysInYear.forEach((k) => {
+                if (willOpen) next.add(k);
+                else next.delete(k);
+            });
+            return next;
+        });
     };
 
     const handleInputChange = (e) => {
@@ -797,7 +858,6 @@ const AdminFinances = () => {
         );
     }
 
-    const groupedData = groupDataByMonth(classData);
     const currentYear = new Date().getFullYear();
     const totalRevenue = classData.reduce((sum, entry) => sum + (entry.receivedRate || entry.rate || 0), 0);
     const totalRevenue2025 = classData.reduce((sum, entry) => {
@@ -1210,8 +1270,56 @@ const AdminFinances = () => {
                         <div className="header-cell">Actions</div>
                     </div>
 
-                    {Object.entries(groupedData).map(([monthKey, monthData]) => (
-                        <div key={monthKey} className="month-group">
+                    {sortedYears.map((yearStr) => {
+                        const monthTuples = monthsByYear.get(yearStr) || [];
+                        const yearOpen = expandedYears.has(yearStr);
+                        const monthKeysInYear = monthTuples.map(([k]) => k);
+                        const yearTeaching = monthTuples.reduce((s, [, m]) => s + m.yogaTeachingCount, 0);
+                        const yearTherapy = monthTuples.reduce((s, [, m]) => s + m.yogaTherapyCount, 0);
+                        return (
+                            <div
+                                key={yearStr}
+                                className={`finances-year-block ${yearOpen ? 'finances-year-block--open' : ''}`}
+                            >
+                                <div
+                                    className={`year-header ${yearOpen ? 'expanded' : ''}`}
+                                    role="button"
+                                    tabIndex={0}
+                                    aria-expanded={yearOpen}
+                                    title={
+                                        yearOpen
+                                            ? 'Click to hide all months for this year'
+                                            : 'Click to show all months for this year'
+                                    }
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            toggleYear(yearStr, monthKeysInYear);
+                                        }
+                                    }}
+                                    onClick={(e) => {
+                                        if (e.target.type !== 'checkbox') {
+                                            toggleYear(yearStr, monthKeysInYear);
+                                        }
+                                    }}
+                                >
+                                    <span className="year-header__checkbox-spacer" aria-hidden="true" />
+                                    <span className="month-label">
+                                        <span className="expand-icon" aria-hidden="true">
+                                            {yearOpen ? '▼' : '▶'}
+                                        </span>
+                                        <span className="month-name">{yearStr}</span>
+                                    </span>
+                                    <span className="month-count">
+                                        <span className="month-count__line">{yearTeaching} classes</span>
+                                        <span className="month-count__line month-count__line--secondary">
+                                            {yearTherapy} therapy
+                                        </span>
+                                    </span>
+                                </div>
+                                {yearOpen &&
+                                    monthTuples.map(([monthKey, monthData]) => (
+                                        <div key={monthKey} className="month-group">
                             <div 
                                 className={`month-header ${expandedMonths.has(monthKey) ? 'expanded' : ''}`}
                                 onClick={(e) => {
@@ -1489,8 +1597,11 @@ const AdminFinances = () => {
                                     })}
                                 </div>
                             )}
-                        </div>
-                    ))}
+                                        </div>
+                                    ))}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
 
