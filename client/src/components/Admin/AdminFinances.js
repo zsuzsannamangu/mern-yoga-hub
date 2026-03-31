@@ -891,9 +891,13 @@ const AdminFinances = () => {
         );
     }
 
-    const currentYear = new Date().getFullYear();
-    /** Prior calendar year — drive/gas summary cards use this for tax-year totals. */
-    const driveGasTaxYear = currentYear - 1;
+    const {
+        taxYear: driveGasTaxYear,
+        totalMiles: totalDriveMilesTaxYear,
+        totalGas: totalGasDriveTaxYear,
+        byLocationSorted: priorYearDriveByLocation,
+    } = priorYearDriveAggregates;
+
     const totalRevenue = classData.reduce((sum, entry) => sum + (entry.receivedRate || entry.rate || 0), 0);
     const totalRevenue2025 = classData.reduce((sum, entry) => {
         const year = Number((entry.date || '').split('-')[0]);
@@ -903,26 +907,6 @@ const AdminFinances = () => {
         const year = Number((entry.date || '').split('-')[0]);
         return year === 2026 ? sum + (entry.receivedRate || entry.rate || 0) : sum;
     }, 0);
-
-    const { totalDriveMilesTaxYear, totalGasDriveTaxYear } = classData.reduce(
-        (acc, entry) => {
-            const year = Number((entry.date || '').split('-')[0]);
-            if (year !== driveGasTaxYear || Number.isNaN(year)) return acc;
-            const trip = computeTripMilesAndGasForRow(
-                normalizeFinanceLocation(entry.location),
-                milesOverrides,
-                travelSettings
-            );
-            if (trip.tripMiles != null && !Number.isNaN(Number(trip.tripMiles))) {
-                acc.totalDriveMilesTaxYear += Number(trip.tripMiles);
-            }
-            if (trip.tripGasCost != null && !Number.isNaN(Number(trip.tripGasCost))) {
-                acc.totalGasDriveTaxYear += Number(trip.tripGasCost);
-            }
-            return acc;
-        },
-        { totalDriveMilesTaxYear: 0, totalGasDriveTaxYear: 0 }
-    );
 
     const monthlyTotals = calculateMonthlyTotals(groupedData, expandedMonths);
 
@@ -1014,6 +998,52 @@ const AdminFinances = () => {
                     </div>
                 </div>
             </div>
+
+            <section
+                className="finances-prior-year-drive"
+                aria-label={`Drive miles by location for ${driveGasTaxYear}`}
+            >
+                <h4 className="finances-prior-year-drive__title">
+                    Miles driven by location ({driveGasTaxYear})
+                </h4>
+                <p className="finances-prior-year-drive__hint">
+                    Prior calendar year for taxes: round-trip miles and estimated gas per normalized location for
+                    all finance rows dated in {driveGasTaxYear}. Same trip math as the table below.
+                </p>
+                {priorYearDriveByLocation.length === 0 ? (
+                    <p className="finances-prior-year-drive__empty">
+                        No finance entries dated in {driveGasTaxYear}.
+                    </p>
+                ) : (
+                    <div className="finances-prior-year-drive__wrap">
+                        <table className="finances-prior-year-drive__table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Location</th>
+                                    <th scope="col">Drive miles (RT)</th>
+                                    <th scope="col">Est. gas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {priorYearDriveByLocation.map(([loc, agg]) => (
+                                    <tr key={loc}>
+                                        <td>{loc}</td>
+                                        <td>{formatTripMiles(agg.miles)}</td>
+                                        <td>{formatCurrency(agg.gas)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th scope="row">Total</th>
+                                    <td>{formatTripMiles(totalDriveMilesTaxYear)}</td>
+                                    <td>{formatCurrency(totalGasDriveTaxYear)}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                )}
+            </section>
 
             {showAddForm && (
                 <div className="add-entry-form">
