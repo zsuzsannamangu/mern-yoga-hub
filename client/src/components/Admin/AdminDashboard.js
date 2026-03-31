@@ -6,6 +6,7 @@ import './AdminDashboard.scss';
 import '../../App.scss';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
+import { THE_PRACTICE_SPACE } from '../../utils/normalizeFinanceLocation';
 
 const AdminDashboard = () => {
     const navigate = useNavigate(); // Navigation function
@@ -19,7 +20,7 @@ const AdminDashboard = () => {
         { id: 'heartspring', label: 'Heart Spring Health', location: 'Heart Spring Health', signUpLink: 'https://heartspringhealth.com/events/' },
         { id: 'peoples-ne', label: "The People's Yoga NE", location: "The People's Yoga NE", signUpLink: 'https://thepeoplesyoga.org/events-and-workshops/' },
         { id: 'peoples-se', label: "The People's Yoga SE", location: "The People's Yoga SE", signUpLink: 'https://thepeoplesyoga.org/events-and-workshops/' },
-        { id: 'practice-space', label: 'The Practice Space', location: 'The Practice Space', signUpLink: 'https://thepracticespacepdx.com/' },
+        { id: 'practice-space', label: THE_PRACTICE_SPACE, location: THE_PRACTICE_SPACE, signUpLink: 'https://thepracticespacepdx.com/' },
         { id: 'ready-set-grow', label: 'Ready Set Grow', location: 'Ready Set Grow', signUpLink: 'https://readysetgrowpdx.com/' },
         { id: 'yoga-refuge-nw', label: 'Yoga Refuge NW', location: 'Yoga Refuge NW', signUpLink: 'https://www.yogarefugepdx.com/class-schedule' },
         { id: 'yoga-refuge-se', label: 'Yoga Refuge SE', location: 'Yoga Refuge SE', signUpLink: 'https://www.yogarefugepdx.com/class-schedule' },

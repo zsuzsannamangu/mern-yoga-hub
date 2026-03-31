@@ -8,6 +8,7 @@ import {
     PEOPLES_YOGA_SE,
     YOGA_REFUGE_NW,
     YOGA_REFUGE_SE,
+    THE_PRACTICE_SPACE,
 } from './normalizeFinanceLocation';
 
 const LS_TRAVEL = 'yogasavor_finance_travel';
@@ -66,6 +67,7 @@ const MILES_KEY_ALIASES = {
     [PEOPLES_YOGA_SE]: ["The People's Yoga, SE location"],
     [YOGA_REFUGE_NW]: ['Yoga Refuge, NW location', 'Yoga Refuge'],
     [YOGA_REFUGE_SE]: ['Yoga Refuge, SE location'],
+    [THE_PRACTICE_SPACE]: ['Practice Space'],
 };
 
 function readMilesValue(overrides, key) {
@@ -104,6 +106,7 @@ export function getOneWayMilesForLocation(canonicalLocation, overridesRaw) {
         'Yoga Refuge, NW location': YOGA_REFUGE_NW,
         'Yoga Refuge, SE location': YOGA_REFUGE_SE,
         'Yoga Refuge': YOGA_REFUGE_NW,
+        'Practice Space': THE_PRACTICE_SPACE,
     }[canonicalLocation];
     if (legacyCanon) {
         const fromNew = readMilesValue(overrides, legacyCanon);

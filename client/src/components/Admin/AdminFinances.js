@@ -11,6 +11,7 @@ import {
     PEOPLES_YOGA_SE,
     YOGA_REFUGE_NW,
     YOGA_REFUGE_SE,
+    THE_PRACTICE_SPACE,
 } from '../../utils/normalizeFinanceLocation';
 import { buildLocationFinanceReport } from '../../utils/locationFinanceReport';
 import {
@@ -37,7 +38,7 @@ const AdminFinances = () => {
         { id: 'peoples-yoga-ne', label: PEOPLES_YOGA_NE, location: PEOPLES_YOGA_NE },
         { id: 'peoples-yoga-se', label: PEOPLES_YOGA_SE, location: PEOPLES_YOGA_SE },
         { id: 'heartspring', label: 'Heart Spring Health', location: 'Heart Spring Health' },
-        { id: 'practice-space', label: 'The Practice Space', location: 'The Practice Space' },
+        { id: 'practice-space', label: THE_PRACTICE_SPACE, location: THE_PRACTICE_SPACE },
         { id: 'ready-set-grow', label: 'Ready Set Grow', location: 'Ready Set Grow' },
         { id: 'online', label: 'Online', location: 'Online' },
         { id: 'other', label: 'Other (new location)', location: '' },
@@ -1151,7 +1152,7 @@ const AdminFinances = () => {
                             Location
                         </div>
                         <div className="header-cell">Gross Rate</div>
-                        <div className="header-cell">Received Rate</div>
+                        <div className="header-cell">Received</div>
                         <div className="header-cell" title="Round-trip miles; set one-way distance per location in Location stats">
                             Trip (mi)
                         </div>
@@ -1205,13 +1206,13 @@ const AdminFinances = () => {
                                 <div className="month-entries">
                                     {monthData.entries.map((entry) => {
                                         const editingThis = editingId === entry.id;
-                                        const liveTrip = editingThis
-                                            ? computeTripMilesAndGasForRow(
-                                                  normalizeFinanceLocation(editingData.location || ''),
-                                                  milesOverrides,
-                                                  travelSettings
-                                              )
-                                            : null;
+                                        const tripForRow = computeTripMilesAndGasForRow(
+                                            normalizeFinanceLocation(
+                                                editingThis ? (editingData.location || '') : entry.location
+                                            ),
+                                            milesOverrides,
+                                            travelSettings
+                                        );
                                         return (
                                         <div key={entry.id} className={`table-row ${selectedEntries.has(entry.id) ? 'selected' : ''}`}>
                                             <div className="table-cell checkbox-cell">
@@ -1310,10 +1311,10 @@ const AdminFinances = () => {
                                                         />
                                                     </div>
                                                     <div className="table-cell table-cell--trip-preview" title="Saved on ✓ from current location & travel settings">
-                                                        {formatTripMiles(liveTrip.tripMiles)}
+                                                        {formatTripMiles(tripForRow.tripMiles)}
                                                     </div>
                                                     <div className="table-cell table-cell--trip-preview" title="Saved on ✓ from current location & travel settings">
-                                                        {formatCurrency(liveTrip.tripGasCost)}
+                                                        {formatCurrency(tripForRow.tripGasCost)}
                                                     </div>
                                                     <div className="table-cell">
                                                         <select
@@ -1384,8 +1385,18 @@ const AdminFinances = () => {
                                                     </div>
                                                     <div className="table-cell">{formatCurrency(entry.grossRate || entry.rate || 0)}</div>
                                                     <div className="table-cell">{formatCurrency(entry.receivedRate || entry.rate || 0)}</div>
-                                                    <div className="table-cell">{formatTripMiles(entry.tripMiles)}</div>
-                                                    <div className="table-cell">{formatCurrency(entry.tripGasCost)}</div>
+                                                    <div
+                                                        className="table-cell table-cell--trip-preview"
+                                                        title="From travel settings & location (stored when you save the row)"
+                                                    >
+                                                        {formatTripMiles(tripForRow.tripMiles)}
+                                                    </div>
+                                                    <div
+                                                        className="table-cell table-cell--trip-preview"
+                                                        title="From travel settings & location (stored when you save the row)"
+                                                    >
+                                                        {formatCurrency(tripForRow.tripGasCost)}
+                                                    </div>
                                                     <div className="table-cell">{entry.paymentMethod}</div>
                                                     <div className={`table-cell status-${entry.paid}`}>
                                                         {entry.paid}

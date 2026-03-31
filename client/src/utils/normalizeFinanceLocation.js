@@ -15,6 +15,8 @@ export const YOGA_REFUGE_NW = 'Yoga Refuge NW';
 /** Southeast */
 export const YOGA_REFUGE_SE = 'Yoga Refuge SE';
 
+export const THE_PRACTICE_SPACE = 'The Practice Space';
+
 /** @deprecated use PEOPLES_YOGA_NE — for legacy miles-key lookup only */
 const PEOPLES_LEGACY_NW_LABEL = "The People's Yoga, NW location";
 const PEOPLES_LEGACY_SE_LABEL = "The People's Yoga, SE location";
@@ -36,7 +38,7 @@ const PRESET_CANONICAL = [
     PEOPLES_YOGA_NE,
     PEOPLES_YOGA_SE,
     'Heart Spring Health',
-    'The Practice Space',
+    THE_PRACTICE_SPACE,
     'Ready Set Grow',
     'Online',
 ];
@@ -51,6 +53,10 @@ const LEGACY_REFUGE_LOWERCASE = {
     [REFUGE_LEGACY_NW_LABEL.toLowerCase()]: YOGA_REFUGE_NW,
     [REFUGE_LEGACY_SE_LABEL.toLowerCase()]: YOGA_REFUGE_SE,
     [REFUGE_LEGACY_GENERIC.toLowerCase()]: YOGA_REFUGE_NW,
+};
+
+const LEGACY_PRACTICE_SPACE_LOWERCASE = {
+    'practice space': THE_PRACTICE_SPACE,
 };
 
 function collapseWhitespace(str) {
@@ -76,6 +82,9 @@ export function normalizeFinanceLocation(raw) {
     const legacyRefuge = LEGACY_REFUGE_LOWERCASE[lower];
     if (legacyRefuge) return legacyRefuge;
 
+    const legacyPractice = LEGACY_PRACTICE_SPACE_LOWERCASE[lower];
+    if (legacyPractice) return legacyPractice;
+
     // Compact abbreviations (FLY, FBY, TPY, TPY-NE, TPY-SE, …)
     if (lettersOnly === 'fly') return 'Firelight Yoga';
     if (lettersOnly === 'fby') return 'Full Bodied Yoga';
@@ -87,6 +96,7 @@ export function normalizeFinanceLocation(raw) {
     if (lettersOnly === 'yr') return YOGA_REFUGE_NW;
     if (lettersOnly === 'blhc') return 'BLHC';
     if (lettersOnly === 'db') return 'Danner Boots';
+    if (lettersOnly === 'tps') return THE_PRACTICE_SPACE;
 
     // Firelight Yoga
     if (lower === 'fly' || /\bf\.?\s*l\.?\s*y\.?\b/i.test(s)) return 'Firelight Yoga';
@@ -106,6 +116,8 @@ export function normalizeFinanceLocation(raw) {
     if (lower === 'blhc' || /\bb\.?\s*l\.?\s*h\.?\s*c\.?\b/i.test(s)) return 'BLHC';
 
     if (lower.includes('danner') && lower.includes('boot')) return 'Danner Boots';
+
+    if (lower.includes('practice space')) return THE_PRACTICE_SPACE;
 
     const looksRefuge =
         /^yr\b/i.test(s) ||
