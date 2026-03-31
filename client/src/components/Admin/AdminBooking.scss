@@ -139,9 +139,10 @@
         }
 
         // Available slots (3-column table): keep Date/Time/Actions close together
-        table:not(.sessions-table) {
-            table-layout: auto;
-            width: auto;
+        // (Extra-specific so it wins over the base `table { width: 100%; table-layout: fixed; }`)
+        .available-slots-table > table:not(.sessions-table) {
+            table-layout: auto !important;
+            width: auto !important;
 
             th,
             td {
@@ -414,6 +415,9 @@
         border-radius: 8px;
         border: 1px solid $border-color;
         width: 100%;
+        max-width: 860px;
+        margin-left: auto;
+        margin-right: auto;
 
         .search-results-header {
             display: flex;
@@ -484,6 +488,7 @@
                 padding: 10px 12px;
                 margin-bottom: 10px;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                max-width: 100%;
 
                 p {
                     margin: 4px 0;
