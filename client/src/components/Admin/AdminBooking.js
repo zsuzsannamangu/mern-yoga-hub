@@ -384,24 +384,6 @@ const AdminBooking = () => {
                                 </div>
                             )}
                             
-                            {searchResults.bookingsByUserId.length > 0 && (
-                                <div className="bookings-list">
-                                    <h5>Bookings Found by User ID ({searchResults.bookingsByUserId.length}):</h5>
-                                    <ul>
-                                        {searchResults.bookingsByUserId.map((booking) => (
-                                            <li key={booking.id} className="booking-result-item">
-                                                <p><strong>Date:</strong> {booking.date} at {booking.time}</p>
-                                                <p><strong>Name:</strong> {booking.firstName} {booking.lastName}</p>
-                                                <p><strong>Email:</strong> {booking.email}</p>
-                                                <p><strong>Session Type:</strong> {booking.sessionType}</p>
-                                                <p><strong>Booking ID:</strong> {booking.id}</p>
-                                                {booking.message && <p><strong>Message:</strong> {booking.message}</p>}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
-                            
                             {searchResults.allYahooBookings.length > 0 && (
                                 <div className="similar-bookings">
                                     <h5>Other Yahoo.com Bookings (for typo checking):</h5>
@@ -416,7 +398,7 @@ const AdminBooking = () => {
                             )}
                             
                             {searchResults.bookingsByEmail.length === 0 && 
-                             searchResults.bookingsByUserId.length === 0 && (
+                             (!searchResults.bookingsByUserId || searchResults.bookingsByUserId.length === 0) && (
                                 <p className="no-results">No bookings found for this email address.</p>
                             )}
                         </div>

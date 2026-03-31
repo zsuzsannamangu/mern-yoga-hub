@@ -485,7 +485,9 @@
             position: relative;
 
             svg {
-                font-size: 1.25rem !important;
+                font-size: 1.45rem !important;
+                line-height: 1;
+                display: block;
             }
         }
 
@@ -558,5 +560,28 @@
                 background-color: $delete-button-hover;
             }
         }
+    }
+}
+
+/* SweetAlert: Renew modal input consistency */
+.swal2-popup.renew-modal {
+    .swal2-input,
+    select.swal2-input {
+        height: 44px;
+        padding: 10px 12px;
+        margin: 0;
+        font-family: $font-main;
+        font-size: 1rem;
+        color: $text-color;
+        border: 1px solid $border-color;
+        border-radius: 8px;
+        box-shadow: none;
+        box-sizing: border-box;
+    }
+
+    label {
+        font-family: $font-main;
+        font-size: 0.95rem;
+        color: $secondary-text-color;
     }
 }

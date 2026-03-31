@@ -402,6 +402,9 @@ const AdminDashboard = () => {
             showCancelButton: true,
             confirmButtonText: 'Add',
             cancelButtonText: 'Cancel',
+            customClass: {
+                popup: 'renew-modal',
+            },
             preConfirm: () => {
                 const interval = document.getElementById('renew-interval')?.value;
                 const countRaw = document.getElementById('renew-count')?.value;
