@@ -12,7 +12,28 @@ const AdminDashboard = () => {
     const navigate = useNavigate(); // Navigation function
     const [events, setEvents] = useState([]); // State to store events
     const [selectedEvents, setSelectedEvents] = useState([]); // State for selected events for bulk delete
-    const [newEvent, setNewEvent] = useState({ title: '', date: '', time: '', location: '', signUpLink: '' }); // State for new event form
+    const LOCATION_PRESETS = [
+        { id: 'bhakti', label: 'The Bhakti Yoga Movement Center', location: 'The Bhakti Yoga Movement Center', signUpLink: 'https://www.thebymc.com/classes' },
+        { id: 'dear', label: 'Dear Yoga', location: 'Dear Yoga', signUpLink: 'https://www.dearyogastudio.com/schedule' },
+        { id: 'firelight', label: 'Firelight Yoga', location: 'Firelight Yoga', signUpLink: 'https://firelightyoga.com/' },
+        { id: 'fullbodied', label: 'Full Bodied Yoga', location: 'Full Bodied Yoga', signUpLink: 'https://fullbodiedyoga.union.site/' },
+        { id: 'heartspring', label: 'Heart Spring Health', location: 'Heart Spring Health', signUpLink: 'https://heartspringhealth.com/events/' },
+        { id: 'peoples', label: "The People's Yoga", location: "The People's Yoga", signUpLink: 'https://thepeoplesyoga.org/events-and-workshops/' },
+        { id: 'practice-space', label: 'The Practice Space', location: 'The Practice Space', signUpLink: 'https://thepracticespacepdx.com/' },
+        { id: 'ready-set-grow', label: 'Ready Set Grow', location: 'Ready Set Grow', signUpLink: 'https://readysetgrowpdx.com/' },
+        { id: 'yoga-refuge', label: 'Yoga Refuge', location: 'Yoga Refuge', signUpLink: 'https://www.yogarefugepdx.com/class-schedule' },
+        { id: 'other', label: 'Other (new location)', location: '', signUpLink: '' },
+    ];
+
+    const [newEvent, setNewEvent] = useState({
+        title: '',
+        date: '',
+        time: '',
+        locationPreset: '',
+        location: '',
+        signUpLink: '',
+        repeat: '',
+    }); // State for new event form
     const [loading, setLoading] = useState(false); // State for loading indicator
     const alertShown = useRef(false);
 
@@ -82,6 +103,15 @@ const AdminDashboard = () => {
                     });
                     currentDate.setDate(currentDate.getDate() + 7);
                 }
+            } else if (newEvent.repeat === 'biweekly') {
+                // 6 occurrences = 12 weeks (mirrors the 12-week horizon of weekly)
+                for (let i = 0; i < 6; i++) {
+                    eventsToAdd.push({
+                        ...newEvent,
+                        date: currentDate.toISOString().split('T')[0],
+                    });
+                    currentDate.setDate(currentDate.getDate() + 14);
+                }
             } else if (newEvent.repeat === 'monthly') {
                 for (let i = 0; i < 6; i++) {
                     eventsToAdd.push({
@@ -107,7 +137,15 @@ const AdminDashboard = () => {
                 confirmButtonText: 'OK'
             });
             // Reset event form fields
-            setNewEvent({ title: '', date: '', time: '', location: '', signUpLink: '', repeat: '' });
+            setNewEvent({
+                title: '',
+                date: '',
+                time: '',
+                locationPreset: '',
+                location: '',
+                signUpLink: '',
+                repeat: '',
+            });
             fetchEvents();
         } catch (error) {
             Swal.fire({
@@ -231,6 +269,28 @@ const AdminDashboard = () => {
         }
     };
 
+    const handleLocationPresetChange = (presetId) => {
+        const preset = LOCATION_PRESETS.find((p) => p.id === presetId);
+        if (!preset) return;
+
+        if (preset.id === 'other') {
+            setNewEvent((prev) => ({
+                ...prev,
+                locationPreset: preset.id,
+                location: '',
+                signUpLink: prev.signUpLink || '',
+            }));
+            return;
+        }
+
+        setNewEvent((prev) => ({
+            ...prev,
+            locationPreset: preset.id,
+            location: preset.location,
+            signUpLink: preset.signUpLink,
+        }));
+    };
+
     useEffect(() => {
         const checkAuth = async () => {
             try {
@@ -292,11 +352,23 @@ const AdminDashboard = () => {
                 </div>
                 <div className="form-group">
                     <label>Location</label>
+                    <select
+                        value={newEvent.locationPreset}
+                        onChange={(e) => handleLocationPresetChange(e.target.value)}
+                    >
+                        <option value="">Select a location</option>
+                        {LOCATION_PRESETS.map((p) => (
+                            <option key={p.id} value={p.id}>
+                                {p.label}
+                            </option>
+                        ))}
+                    </select>
                     <input
                         type="text"
-                        placeholder=""
+                        placeholder={newEvent.locationPreset === 'other' ? 'Enter a new location name' : ''}
                         value={newEvent.location}
                         onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
+                        readOnly={newEvent.locationPreset !== 'other'}
                     />
                 </div>
                 <div className="form-group">
@@ -316,6 +388,7 @@ const AdminDashboard = () => {
                     >
                         <option value="">None</option>
                         <option value="weekly">Weekly</option>
+                        <option value="biweekly">Biweekly</option>
                         <option value="monthly">Monthly</option>
                     </select>
                 </div>
