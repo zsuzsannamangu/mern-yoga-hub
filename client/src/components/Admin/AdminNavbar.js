@@ -30,7 +30,7 @@ const AdminNavbar = () => {
     };
 
     const menuItems = [
-        { path: '/admin/dashboard', icon: FaCalendarAlt, label: 'Events' },
+        { path: '/admin/dashboard', icon: FaCalendarAlt, label: 'Classes/Events' },
         { path: '/admin/bookings', icon: FaBookOpen, label: 'Bookings' },
         { path: '/admin/chocolates', icon: FaCookieBite, label: 'Chocolates' },
         { path: '/admin/signups', icon: FaChalkboardTeacher, label: 'Classes' },

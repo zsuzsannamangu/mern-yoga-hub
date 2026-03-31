@@ -170,7 +170,7 @@ export default class Calendar extends Component {
           viewport={{ once: true }}
           transition={{ duration: 1 }}
         >
-          <h1 className="section-title">Upcoming Yoga Classes and Events</h1>
+          <h1 className="section-title">Upcoming Yoga Classes &amp; Events</h1>
           <div className="title-line"></div>
         </motion.div>
         <motion.div
@@ -208,7 +208,7 @@ export default class Calendar extends Component {
             <div className="availability-section">
               <div className="availability-header">
                 <h3>
-                  Events on {this.months[selectedDate.getMonth()]}{' '}
+                  Classes &amp; events on {this.months[selectedDate.getMonth()]}{' '}
                   {selectedDate.getDate()},{' '}
                   {selectedDate.getFullYear()}
                 </h3>

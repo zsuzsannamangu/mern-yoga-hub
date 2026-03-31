@@ -205,7 +205,7 @@ const AdminDashboard = () => {
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
-                text: 'Event(s) added successfully',
+                text: 'Class/event(s) added successfully',
                 confirmButtonText: 'OK'
             });
             // Reset event form fields
@@ -304,7 +304,7 @@ const AdminDashboard = () => {
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
-                    text: 'Selected event(s) deleted successfully',
+                    text: 'Selected class/event(s) deleted successfully',
                     confirmButtonText: 'OK'
                 });
                 setSelectedEvents([]);
@@ -490,7 +490,7 @@ const AdminDashboard = () => {
             <div className="admin-dashboard">
             <h3 className="section-title">Manage Classes and Events</h3>
             <form className="event-form" onSubmit={addEvent}>
-                <h3>Add New Event</h3>
+                <h3>Add New Class/Event</h3>
                 <div className="form-group">
                     <label>Title</label>
                     <input
@@ -588,7 +588,7 @@ const AdminDashboard = () => {
             </form>
 
             <div className="upcoming-events-container">
-                <h3>Upcoming Events</h3>
+                <h3>Upcoming Classes &amp; Events</h3>
                 {loading ? (
                     <p>Loading events...</p>
                 ) : events.length > 0 ? (
