@@ -150,6 +150,8 @@ const AdminBooking = () => {
                     date.setDate(startDate.getDate() + i);
                 } else if (repeat === 'weekly') {
                     date.setDate(startDate.getDate() + i * 7);
+                } else if (repeat === 'biweekly') {
+                    date.setDate(startDate.getDate() + i * 14);
                 }
                 slots.push({ date: date.toISOString().split('T')[0], time: newSlot.time });
             }
@@ -334,7 +336,7 @@ const AdminBooking = () => {
                     <div className="search-form">
                         <input
                             type="email"
-                            placeholder="Enter email address (e.g., mistymansolilli@yahoo.com)"
+                            placeholder="Enter email address"
                             value={searchEmail}
                             onChange={(e) => setSearchEmail(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && searchBookingsByEmail()}
@@ -446,6 +448,7 @@ const AdminBooking = () => {
                             <option value="">No Repeat</option>
                             <option value="daily">Daily</option>
                             <option value="weekly">Weekly</option>
+                            <option value="biweekly">Biweekly</option>
                         </select>
                     </div>
                     <div className="form-group">
