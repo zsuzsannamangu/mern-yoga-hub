@@ -18,10 +18,12 @@ const AdminDashboard = () => {
         { id: 'firelight', label: 'Firelight Yoga', location: 'Firelight Yoga', signUpLink: 'https://firelightyoga.com/' },
         { id: 'fullbodied', label: 'Full Bodied Yoga', location: 'Full Bodied Yoga', signUpLink: 'https://fullbodiedyoga.union.site/' },
         { id: 'heartspring', label: 'Heart Spring Health', location: 'Heart Spring Health', signUpLink: 'https://heartspringhealth.com/events/' },
-        { id: 'peoples', label: "The People's Yoga", location: "The People's Yoga", signUpLink: 'https://thepeoplesyoga.org/events-and-workshops/' },
+        { id: 'peoples-ne', label: "The People's Yoga NE", location: "The People's Yoga NE", signUpLink: 'https://thepeoplesyoga.org/events-and-workshops/' },
+        { id: 'peoples-se', label: "The People's Yoga SE", location: "The People's Yoga SE", signUpLink: 'https://thepeoplesyoga.org/events-and-workshops/' },
         { id: 'practice-space', label: 'The Practice Space', location: 'The Practice Space', signUpLink: 'https://thepracticespacepdx.com/' },
         { id: 'ready-set-grow', label: 'Ready Set Grow', location: 'Ready Set Grow', signUpLink: 'https://readysetgrowpdx.com/' },
-        { id: 'yoga-refuge', label: 'Yoga Refuge', location: 'Yoga Refuge', signUpLink: 'https://www.yogarefugepdx.com/class-schedule' },
+        { id: 'yoga-refuge-nw', label: 'Yoga Refuge NW', location: 'Yoga Refuge NW', signUpLink: 'https://www.yogarefugepdx.com/class-schedule' },
+        { id: 'yoga-refuge-se', label: 'Yoga Refuge SE', location: 'Yoga Refuge SE', signUpLink: 'https://www.yogarefugepdx.com/class-schedule' },
         { id: 'other', label: 'Other (new location)', location: '', signUpLink: '' },
     ];
 
@@ -41,8 +43,7 @@ const AdminDashboard = () => {
     const [bulkEndDate, setBulkEndDate] = useState('');
     const [filterLocation, setFilterLocation] = useState('');
     const [filterTitle, setFilterTitle] = useState('');
-    const [bulkLocationPreset, setBulkLocationPreset] = useState('');
-    const [bulkLocationOther, setBulkLocationOther] = useState('');
+    const [bulkLocationText, setBulkLocationText] = useState('');
     const [bulkLink, setBulkLink] = useState('');
     const [bulkTitle, setBulkTitle] = useState('');
     const [bulkDate, setBulkDate] = useState('');
@@ -353,20 +354,8 @@ const AdminDashboard = () => {
         const eventsById = new Map(events.map((e) => [e._id, e]));
         const selected = events.filter((e) => selectedSet.has(e._id));
 
-        const preset = LOCATION_PRESETS.find((p) => p.id === bulkLocationPreset);
-        const isOther = bulkLocationPreset === 'other';
-
-        const locationValue = isOther ? bulkLocationOther.trim() : (preset?.location || '');
-        const wantsLocationChange = Boolean(bulkLocationPreset);
-        if (wantsLocationChange && isOther && !locationValue) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Missing location name',
-                text: 'Enter a location name for Other.',
-                confirmButtonText: 'OK'
-            });
-            return;
-        }
+        const locationValue = bulkLocationText.trim();
+        const wantsLocationChange = Boolean(locationValue);
 
         const titleValue = bulkTitle.trim();
         const dateValue = bulkDate.trim();
@@ -417,8 +406,7 @@ const AdminDashboard = () => {
                 confirmButtonText: 'OK'
             });
 
-            setBulkLocationPreset('');
-            setBulkLocationOther('');
+            setBulkLocationText('');
             setBulkLink('');
             setBulkTitle('');
             setBulkDate('');
@@ -717,29 +705,26 @@ const AdminDashboard = () => {
                                     </div>
                                     <div className="bulk-update__field">
                                         <label>Location</label>
-                                        <select
-                                            value={bulkLocationPreset}
-                                            onChange={(e) => {
-                                                const presetId = e.target.value;
-                                                setBulkLocationPreset(presetId);
-                                                if (presetId !== 'other') setBulkLocationOther('');
-                                            }}
-                                        >
-                                            <option value="">(leave as-is)</option>
-                                            {LOCATION_PRESETS.map((p) => (
-                                                <option key={p.id} value={p.id}>
-                                                    {p.label}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        {bulkLocationPreset === 'other' ? (
-                                            <input
-                                                type="text"
-                                                placeholder="Enter location name"
-                                                value={bulkLocationOther}
-                                                onChange={(e) => setBulkLocationOther(e.target.value)}
-                                            />
-                                        ) : null}
+                                        <input
+                                            type="text"
+                                            placeholder="(leave blank to keep)"
+                                            value={bulkLocationText}
+                                            onChange={(e) => setBulkLocationText(e.target.value)}
+                                            list="admin-bulk-location-suggestions"
+                                        />
+                                        <datalist id="admin-bulk-location-suggestions">
+                                            {[
+                                                ...new Set([
+                                                    ...LOCATION_PRESETS.filter((p) => p.id !== 'other').map((p) => p.location),
+                                                    ...events.map((e) => (e.location || '').trim()).filter(Boolean),
+                                                ]),
+                                            ]
+                                                .filter(Boolean)
+                                                .sort()
+                                                .map((loc) => (
+                                                    <option key={loc} value={loc} />
+                                                ))}
+                                        </datalist>
                                     </div>
                                     <div className="bulk-update__field">
                                         <label>Link</label>
