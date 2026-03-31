@@ -494,6 +494,17 @@ const AdminDashboard = () => {
                                 </button>
                                 <button
                                     type="button"
+                                    className="bulk-action-button bulk-action-button--outline"
+                                    onClick={() => {
+                                        setBulkStartDate('');
+                                        setBulkEndDate('');
+                                    }}
+                                    disabled={!bulkStartDate && !bulkEndDate}
+                                >
+                                    Clear dates
+                                </button>
+                                <button
+                                    type="button"
                                     className="bulk-action-button"
                                     onClick={() => toggleSelectAllFiltered(true)}
                                     disabled={filteredIds.length === 0}
