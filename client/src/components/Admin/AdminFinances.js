@@ -12,6 +12,7 @@ import {
     YOGA_REFUGE_NW,
     YOGA_REFUGE_SE,
     THE_PRACTICE_SPACE,
+    YOGA_RIOT,
 } from '../../utils/normalizeFinanceLocation';
 import { buildLocationFinanceReport } from '../../utils/locationFinanceReport';
 import {
@@ -72,6 +73,7 @@ const AdminFinances = () => {
         { id: 'heartspring', label: 'Heart Spring Health', location: 'Heart Spring Health' },
         { id: 'practice-space', label: THE_PRACTICE_SPACE, location: THE_PRACTICE_SPACE },
         { id: 'ready-set-grow', label: 'Ready Set Grow', location: 'Ready Set Grow' },
+        { id: 'yoga-riot', label: YOGA_RIOT, location: YOGA_RIOT },
         { id: 'online', label: 'Online', location: 'Online' },
         { id: 'other', label: 'Other (new location)', location: '' },
     ];

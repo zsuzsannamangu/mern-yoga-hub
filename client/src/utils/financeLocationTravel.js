@@ -9,6 +9,7 @@ import {
     YOGA_REFUGE_NW,
     YOGA_REFUGE_SE,
     THE_PRACTICE_SPACE,
+    YOGA_RIOT,
 } from './normalizeFinanceLocation';
 
 const LS_TRAVEL = 'yogasavor_finance_travel';
@@ -68,6 +69,7 @@ const MILES_KEY_ALIASES = {
     [YOGA_REFUGE_NW]: ['Yoga Refuge, NW location', 'Yoga Refuge'],
     [YOGA_REFUGE_SE]: ['Yoga Refuge, SE location'],
     [THE_PRACTICE_SPACE]: ['Practice Space'],
+    [YOGA_RIOT]: ['yogaRIOT', 'YogaRiot', 'YOGA RIOT', 'yoga riot'],
 };
 
 function readMilesValue(overrides, key) {

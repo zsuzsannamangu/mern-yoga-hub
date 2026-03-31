@@ -17,6 +17,9 @@ export const YOGA_REFUGE_SE = 'Yoga Refuge SE';
 
 export const THE_PRACTICE_SPACE = 'The Practice Space';
 
+/** Studio name is stylized with mixed case; normalize all casings to this. */
+export const YOGA_RIOT = 'YogaRIOT';
+
 /** @deprecated use PEOPLES_YOGA_NE — for legacy miles-key lookup only */
 const PEOPLES_LEGACY_NW_LABEL = "The People's Yoga, NW location";
 const PEOPLES_LEGACY_SE_LABEL = "The People's Yoga, SE location";
@@ -40,6 +43,7 @@ const PRESET_CANONICAL = [
     'Heart Spring Health',
     THE_PRACTICE_SPACE,
     'Ready Set Grow',
+    YOGA_RIOT,
     'Online',
 ];
 
@@ -97,6 +101,7 @@ export function normalizeFinanceLocation(raw) {
     if (lettersOnly === 'blhc') return 'BLHC';
     if (lettersOnly === 'db') return 'Danner Boots';
     if (lettersOnly === 'tps') return THE_PRACTICE_SPACE;
+    if (lettersOnly === 'yogariot') return YOGA_RIOT;
 
     // Firelight Yoga
     if (lower === 'fly' || /\bf\.?\s*l\.?\s*y\.?\b/i.test(s)) return 'Firelight Yoga';
@@ -118,6 +123,8 @@ export function normalizeFinanceLocation(raw) {
     if (lower.includes('danner') && lower.includes('boot')) return 'Danner Boots';
 
     if (lower.includes('practice space')) return THE_PRACTICE_SPACE;
+
+    if (lower.includes('yoga') && lower.includes('riot')) return YOGA_RIOT;
 
     const looksRefuge =
         /^yr\b/i.test(s) ||
