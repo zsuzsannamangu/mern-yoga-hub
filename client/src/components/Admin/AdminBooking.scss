@@ -309,8 +309,12 @@
     background: transparent;
     border: none;
     padding: 0 20px; // match .slots-table-container horizontal gutter
-    display: flex;
-    justify-content: flex-start;
+    display: block;
+
+    .search-bar-row {
+        display: flex;
+        justify-content: flex-end; // keep bar on the right
+    }
 
     .search-form {
         display: flex;
@@ -378,6 +382,7 @@
         background-color: $secondary-background-color;
         border-radius: 8px;
         border: 1px solid $border-color;
+        width: 100%;
 
         .search-results-header {
             display: flex;

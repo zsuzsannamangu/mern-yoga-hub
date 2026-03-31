@@ -600,53 +600,55 @@ const AdminFinances = () => {
             </div>
 
             <div className="finances-summary">
-                {/* Yearly Totals */}
-                <div className="summary-card yearly">
-                    <h3>Total Revenue (All Time)</h3>
-                    <p className="revenue-amount">{formatCurrency(totalRevenue)}</p>
-                </div>
-                <div className="summary-card yearly">
-                    <h3>Total Revenue (2025)</h3>
-                    <p className="revenue-amount">{formatCurrency(totalRevenue2025)}</p>
-                </div>
-                <div className="summary-card yearly">
-                    <h3>Total Revenue (2026)</h3>
-                    <p className="revenue-amount">{formatCurrency(totalRevenue2026)}</p>
-                </div>
-                <div className="summary-card yearly">
-                    <h3>Total Classes (All Time)</h3>
-                    <p className="revenue-amount">{classData.filter(entry => entry.category === 'yoga teaching').length}</p>
-                </div>
-                
-                {/* Monthly Totals - Only show when months are expanded */}
-                {monthlyTotals.hasExpandedMonths && (
-                    <>
-                        <div className="summary-card monthly">
-                            <h3>
-                                {monthlyTotals.monthNames.length === 1 
+                <div className="finances-summary__row finances-summary__row--top">
+                    <div className="summary-card yearly">
+                        <h3>Total Revenue (All Time)</h3>
+                        <p className="revenue-amount">{formatCurrency(totalRevenue)}</p>
+                    </div>
+                    <div className="summary-card yearly">
+                        <h3>Total Revenue (2025)</h3>
+                        <p className="revenue-amount">{formatCurrency(totalRevenue2025)}</p>
+                    </div>
+                    <div className="summary-card yearly">
+                        <h3>Total Revenue (2026)</h3>
+                        <p className="revenue-amount">{formatCurrency(totalRevenue2026)}</p>
+                    </div>
+                    <div className="summary-card monthly">
+                        <h3>
+                            {monthlyTotals.hasExpandedMonths
+                                ? (monthlyTotals.monthNames.length === 1
                                     ? `${monthlyTotals.monthNames[0]} Revenue`
-                                    : `Selected Months Revenue`
-                                }
-                            </h3>
-                            <p className="revenue-amount">{formatCurrency(monthlyTotals.totalRevenue)}</p>
-                            {monthlyTotals.monthNames.length > 1 && (
-                                <p className="month-list">{monthlyTotals.monthNames.join(', ')}</p>
-                            )}
-                        </div>
-                        <div className="summary-card monthly">
-                            <h3>
-                                {monthlyTotals.monthNames.length === 1 
+                                    : `Selected Months Revenue`)
+                                : 'Selected Month Revenue'}
+                        </h3>
+                        <p className="revenue-amount">
+                            {monthlyTotals.hasExpandedMonths ? formatCurrency(monthlyTotals.totalRevenue) : '—'}
+                        </p>
+                        {monthlyTotals.hasExpandedMonths && monthlyTotals.monthNames.length > 1 && (
+                            <p className="month-list">{monthlyTotals.monthNames.join(', ')}</p>
+                        )}
+                    </div>
+                </div>
+
+                <div className="finances-summary__row finances-summary__row--bottom">
+                    <div className="summary-card yearly">
+                        <h3>Total Classes (All Time)</h3>
+                        <p className="revenue-amount">{classData.filter(entry => entry.category === 'yoga teaching').length}</p>
+                    </div>
+                    <div className="summary-card monthly">
+                        <h3>
+                            {monthlyTotals.hasExpandedMonths
+                                ? (monthlyTotals.monthNames.length === 1
                                     ? `${monthlyTotals.monthNames[0]} Classes`
-                                    : `Selected Months Classes`
-                                }
-                            </h3>
-                            <p className="revenue-amount">{monthlyTotals.totalClasses}</p>
-                            {monthlyTotals.monthNames.length > 1 && (
-                                <p className="month-list">{monthlyTotals.monthNames.join(', ')}</p>
-                            )}
-                        </div>
-                    </>
-                )}
+                                    : `Selected Months Classes`)
+                                : 'Selected Month Classes'}
+                        </h3>
+                        <p className="revenue-amount">{monthlyTotals.hasExpandedMonths ? monthlyTotals.totalClasses : '—'}</p>
+                        {monthlyTotals.hasExpandedMonths && monthlyTotals.monthNames.length > 1 && (
+                            <p className="month-list">{monthlyTotals.monthNames.join(', ')}</p>
+                        )}
+                    </div>
+                </div>
             </div>
 
             {showAddForm && (
