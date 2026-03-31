@@ -24,6 +24,7 @@ const AdminBooking = () => {
     const [searchEmail, setSearchEmail] = useState(''); // Search email state
     const [searchResults, setSearchResults] = useState(null); // Search results state
     const [searching, setSearching] = useState(false); // Searching state
+    const [updatingNotes, setUpdatingNotes] = useState({}); // { [bookingId]: boolean }
 
     /**
      * Formats a time string into a human-readable format.
@@ -283,6 +284,34 @@ const AdminBooking = () => {
         });
     };
 
+    const toggleNotesAdded = async (bookingId, nextValue) => {
+        setUpdatingNotes((prev) => ({ ...prev, [bookingId]: true }));
+        try {
+            const token = localStorage.getItem('adminToken');
+            await adminAxiosInstance.patch(
+                `/api/bookings/${bookingId}/notes-added`,
+                { notesAdded: nextValue },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            setPassedSlots((prev) =>
+                prev.map((s) => (s._id === bookingId ? { ...s, notesAdded: nextValue } : s))
+            );
+            setUpcomingSlots((prev) =>
+                prev.map((s) => (s._id === bookingId ? { ...s, notesAdded: nextValue } : s))
+            );
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to update notes',
+                text: error.response?.data?.message || 'Please try again.',
+                confirmButtonText: 'OK',
+            });
+        } finally {
+            setUpdatingNotes((prev) => ({ ...prev, [bookingId]: false }));
+        }
+    };
+
     // Load slots on component mount
     useEffect(() => {
         fetchSlots();
@@ -295,8 +324,8 @@ const AdminBooking = () => {
         if (!searchEmail.trim()) {
             Swal.fire({
                 icon: 'warning',
-                title: 'Email Required',
-                text: 'Please enter an email address to search.',
+                title: 'Search Required',
+                text: 'Please enter a name or email to search.',
                 confirmButtonText: 'OK'
             });
             return;
@@ -304,7 +333,7 @@ const AdminBooking = () => {
 
         setSearching(true);
         try {
-            const response = await adminAxiosInstance.get(`/api/admin/diagnostics/bookings-by-email?email=${encodeURIComponent(searchEmail.trim())}`);
+            const response = await adminAxiosInstance.get(`/api/admin/diagnostics/bookings-by-email?q=${encodeURIComponent(searchEmail.trim())}`);
             const data = response.data;
 
             if (!data?.bookingsByEmail || data.bookingsByEmail.length === 0) {
@@ -431,7 +460,7 @@ const AdminBooking = () => {
                     <div className="search-form">
                         <input
                             type="email"
-                            placeholder="Search for email…"
+                            placeholder="Search name or email…"
                             value={searchEmail}
                             onChange={(e) => setSearchEmail(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && searchBookingsByEmail()}
@@ -543,6 +572,7 @@ const AdminBooking = () => {
                                                     onClick={() => deleteSession(slot._id)}
                                                     className="delete-slot-button"
                                                     title="Delete"
+                                                    data-tooltip="Delete"
                                                 >
                                                     <span aria-hidden="true">🗑️</span>
                                                 </button>
@@ -583,22 +613,26 @@ const AdminBooking = () => {
                                             <td>{slot.email}</td>
                                             <td>{slot.message || ''}</td>
                                             <td>
-                                                <input
-                                                    className="notes-added-checkbox"
-                                                    type="checkbox"
-                                                    checked={Boolean((slot.adminNotes || slot.notes || '').trim())}
-                                                    readOnly
-                                                    disabled
-                                                    title="Notes added"
-                                                    aria-label="Notes added"
-                                                />
+                                                <div className="session-actions">
+                                                    <label className="notes-added" title="Notes added" data-tooltip="Notes added">
+                                                        <input
+                                                            className="notes-added-checkbox"
+                                                            type="checkbox"
+                                                            checked={Boolean(slot.notesAdded)}
+                                                            onChange={(e) => toggleNotesAdded(slot._id, e.target.checked)}
+                                                            disabled={Boolean(updatingNotes[slot._id])}
+                                                            aria-label="Notes added"
+                                                        />
+                                                    </label>
                                                 <button
                                                     onClick={() => deleteSession(slot._id)}
                                                     className="delete-slot-button"
                                                     title="Delete"
+                                                    data-tooltip="Delete"
                                                 >
                                                     <span aria-hidden="true">🗑️</span>
                                                 </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}

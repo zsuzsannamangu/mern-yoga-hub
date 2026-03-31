@@ -504,17 +504,18 @@ router.post('/appointments', authMiddleware, adminMiddleware, async (req, res) =
 // Diagnostic endpoint to find bookings by email (Admin only)
 router.get('/diagnostics/bookings-by-email', authMiddleware, adminMiddleware, async (req, res) => {
   try {
-    const { email } = req.query;
+    const { email, q } = req.query;
     
-    if (!email) {
-      return res.status(400).json({ message: 'Email parameter is required' });
+    const query = String(q || email || '').trim();
+    if (!query) {
+      return res.status(400).json({ message: 'Search query is required' });
     }
 
-    // Find user by email
-    const user = await User.findOne({ email: email });
+    // Prefer an exact user match when possible
+    const user = await User.findOne({ email: query });
     
     let results = {
-      email: email,
+      email: query,
       userFound: !!user,
       user: user ? {
         id: user._id,
@@ -528,10 +529,17 @@ router.get('/diagnostics/bookings-by-email', authMiddleware, adminMiddleware, as
       allYahooBookings: []
     };
 
-    // Search bookings by email (exact match)
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const partial = new RegExp(escaped, 'i');
+
+    // Search bookings by email OR name (partial match)
     const bookingsByEmail = await Booking.find({ 
-      email: email,
-      isBooked: true 
+      isBooked: true,
+      $or: [
+        { email: partial },
+        { firstName: partial },
+        { lastName: partial },
+      ]
     }).sort({ date: 1, time: 1 });
     
     results.bookingsByEmail = bookingsByEmail.map(b => ({

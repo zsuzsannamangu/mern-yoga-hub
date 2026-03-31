@@ -170,12 +170,86 @@
             }
         }
 
+        .session-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .notes-added {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: $admin-icon-btn-width;
+            height: $admin-icon-btn-height;
+            border-radius: $admin-icon-btn-radius;
+            position: relative;
+
+            &:hover {
+                background: $admin-action-icon-hover-bg;
+            }
+        }
+
         .notes-added-checkbox {
             width: 18px;
             height: 18px;
-            margin-right: 10px;
+            margin: 0;
             accent-color: $primary-button-color;
-            cursor: default;
+            cursor: pointer;
+        }
+
+        .notes-added[disabled],
+        .notes-added-checkbox:disabled {
+            cursor: not-allowed;
+            opacity: 0.55;
+        }
+
+        /* Lightweight tooltips (same pattern as events table) */
+        .notes-added[data-tooltip]::after,
+        .delete-slot-button[data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 8px);
+            transform: translateX(-50%);
+            background: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.12s ease;
+            z-index: 10;
+        }
+
+        .notes-added[data-tooltip]::before,
+        .delete-slot-button[data-tooltip]::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 3px);
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: rgba(44, 62, 80, 0.95);
+            opacity: 0;
+            transition: opacity 0.12s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .notes-added:hover::after,
+        .notes-added:focus-within::after,
+        .delete-slot-button:hover::after,
+        .delete-slot-button:focus-visible::after,
+        .notes-added:hover::before,
+        .notes-added:focus-within::before,
+        .delete-slot-button:hover::before,
+        .delete-slot-button:focus-visible::before {
+            opacity: 1;
         }
     }
 }

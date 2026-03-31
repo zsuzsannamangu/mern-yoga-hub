@@ -87,7 +87,7 @@ module.exports = (io) => {
                 // If we get here, it means userId was provided but no email matches
                 // Still execute the query for userId
                 const bookedSlots = await Booking.find(query)
-                    .select('date time firstName lastName email message sessionType title length location link isAdminCreated status userId')
+                    .select('date time firstName lastName email message sessionType title length location link isAdminCreated status userId notesAdded')
                     .sort({ date: 1, time: 1 }); // Sort by date and time
                 
                 console.log(`Found ${bookedSlots.length} bookings for query:`, { 
@@ -115,7 +115,7 @@ module.exports = (io) => {
             // Fetch all slots (available and booked) if no query params are provided
             const availableSlots = await Booking.find({ isBooked: false });
             const bookedSlots = await Booking.find({ isBooked: true })
-                .select('date time firstName lastName email message sessionType title length location link isAdminCreated status userId')
+                .select('date time firstName lastName email message sessionType title length location link isAdminCreated status userId notesAdded')
                 .populate('userId', 'firstName lastName email') // Populate user details if needed
                 .sort({ date: 1, time: 1 }); // Sort by date and time
             
@@ -179,6 +179,29 @@ module.exports = (io) => {
                     success: false,
                     error: 'Slot not found',
                 });
+
+  // Admin: toggle notesAdded flag
+  router.patch('/:id/notes-added', authMiddleware, adminMiddleware, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { notesAdded } = req.body;
+
+      const updated = await Booking.findByIdAndUpdate(
+        id,
+        { $set: { notesAdded: Boolean(notesAdded) } },
+        { new: true }
+      ).select('_id notesAdded');
+
+      if (!updated) {
+        return res.status(404).json({ success: false, message: 'Booking not found' });
+      }
+
+      return res.status(200).json({ success: true, booking: updated });
+    } catch (error) {
+      console.error('Failed to update notesAdded:', error);
+      return res.status(500).json({ success: false, message: 'Failed to update notes flag' });
+    }
+  });
             }
 
             return res.status(200).json({
