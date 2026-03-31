@@ -771,7 +771,7 @@ const AdminUsers = () => {
                                                 }}
                                                 title="Add Appointment"
                                             >
-                                                <span aria-hidden="true">➕</span>
+                                                <span className="admin-plus-icon" aria-hidden="true">+</span>
                                             </button>
                                             <button 
                                                 className="delete-button" 

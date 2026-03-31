@@ -395,18 +395,19 @@
 }
 
 .add-appointment-btn {
-    background-color: $primary-button-color;
-    color: $button-text-color;
-    border: none;
-    padding: 6px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-    transition: background-color 0.3s ease;
+    // This legacy rule conflicts with the universal icon-button style above.
+    // Keep it neutral so the table action button styling wins.
+    background: transparent;
+    color: $secondary-text-color;
+}
 
-    &:hover {
-        background-color: $primary-button-hover-color;
-    }
+.admin-plus-icon {
+    color: $secondary-text-color;
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 1;
+    display: block;
+    transform: translateY(-1px);
 }
 
 .appointments-row {

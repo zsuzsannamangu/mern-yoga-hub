@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './AdminSubscribers.scss';
-import { FaTrash } from 'react-icons/fa';
+// Using emoji icons (matches AdminFinances)
 import '../../App.scss';
 import AdminLayout from './AdminLayout';
 import Swal from 'sweetalert2';
@@ -84,7 +84,7 @@ const AdminSubscribers = () => {
                 <td>{new Date(sub.subscribedAt).toLocaleString()}</td>
                 <td>
                   <button className="delete-button" onClick={() => deleteSubscriber(sub._id)}>
-                    <FaTrash />
+                    <span aria-hidden="true">🗑️</span>
                   </button>
                 </td>
               </tr>

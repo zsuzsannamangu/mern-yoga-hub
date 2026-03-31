@@ -27,15 +27,16 @@
 
 
             .delete-button {
-                background-color: $delete-button;
-                color: $button-text-color;
                 border: none;
-                border-radius: 5px;
-                padding: 5px 10px;
+                background: transparent;
+                color: $text-color;
+                border-radius: $admin-action-icon-radius;
+                padding: $admin-action-icon-padding-y $admin-action-icon-padding-x;
                 cursor: pointer;
+                font-size: $admin-action-icon-font-size;
 
                 &:hover {
-                    background-color: $delete-button-hover;
+                    background: $admin-action-icon-hover-danger-bg;
                 }
             }
         }
@@ -65,15 +66,16 @@
             }
 
             .delete-button {
-                background-color: $delete-button;
-                color: $button-text-color;
                 border: none;
-                border-radius: 5px;
-                padding: 5px 10px;
+                background: transparent;
+                color: $text-color;
+                border-radius: $admin-action-icon-radius;
+                padding: $admin-action-icon-padding-y $admin-action-icon-padding-x;
                 cursor: pointer;
+                font-size: $admin-action-icon-font-size;
 
                 &:hover {
-                    background-color: $delete-button-hover;
+                    background: $admin-action-icon-hover-danger-bg;
                 }
             }
 

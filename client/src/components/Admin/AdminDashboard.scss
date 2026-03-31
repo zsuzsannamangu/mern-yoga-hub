@@ -429,6 +429,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            padding-right: 6px;
         }
 
         .events-open-link {
@@ -463,6 +464,10 @@
         td.events-td-actions {
             white-space: nowrap;
             min-width: 170px;
+            padding-left: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .event-action-button {
@@ -477,7 +482,7 @@
             font-weight: 700;
             font-family: $font-main;
             cursor: pointer;
-            margin-left: 8px;
+            margin-left: 0;
             box-sizing: border-box;
             color: $text-color;
             position: relative;
