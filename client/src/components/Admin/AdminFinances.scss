@@ -25,11 +25,6 @@
         background-color: transparent !important;
     }
 
-    .finances-drive-by-location__toggle:hover {
-        background: mix(#fff, $secondary-background-color, 45%) !important;
-        background-color: mix(#fff, $secondary-background-color, 45%) !important;
-    }
-
     .class-table button.location-cell--clickable:hover {
         color: $primary-button-color !important;
     }
@@ -198,7 +193,7 @@
         align-items: center;
         gap: 10px;
         width: 100%;
-        margin: 0;
+        margin: -8px -10px 0 -10px;
         padding: 10px 12px;
         box-sizing: border-box;
         border: none;
@@ -208,6 +203,20 @@
         text-align: left;
         background: transparent;
         color: inherit;
+        user-select: none;
+
+        &:hover {
+            background: mix(#fff, $secondary-background-color, 45%);
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &:focus-visible {
+            outline: 2px solid $primary-button-color;
+            outline-offset: 2px;
+        }
 
         &--open {
             margin-bottom: 4px;
@@ -596,17 +605,11 @@ $class-table-grid-cols-sm:
             font-family: $admin-table-font-family;
             line-height: 1.35;
             text-align: center;
-            white-space: normal;
-            overflow-wrap: normal;
+            white-space: nowrap;
 
             .month-count__sep {
                 opacity: 0.55;
                 font-weight: 500;
-            }
-
-            .month-count__teach,
-            .month-count__therapy {
-                white-space: nowrap;
             }
 
             .month-count__therapy {
@@ -691,17 +694,11 @@ $class-table-grid-cols-sm:
             font-family: $admin-table-font-family;
             line-height: 1.35;
             text-align: center;
-            white-space: normal;
-            overflow-wrap: normal;
+            white-space: nowrap;
 
             .month-count__sep {
                 opacity: 0.55;
                 font-weight: 500;
-            }
-
-            .month-count__teach,
-            .month-count__therapy {
-                white-space: nowrap;
             }
 
             .month-count__therapy {

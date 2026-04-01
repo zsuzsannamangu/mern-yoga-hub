@@ -16,6 +16,7 @@ import {
     YOGA_RIOT,
 } from '../../utils/normalizeFinanceLocation';
 import { buildLocationFinanceReport } from '../../utils/locationFinanceReport';
+import { getDriveMilesSummaryCalendarYear } from '../../utils/driveMilesSummaryCalendarYear';
 import {
     getOneWayMilesForLocation,
     DEFAULT_TUCSON_HYBRID_MPG,
@@ -271,9 +272,9 @@ const AdminFinances = () => {
         return { monthsByYear: byYear, sortedYears: years };
     }, [groupedData]);
 
-    /** Current calendar year: totals + per-location miles/gas (matches summary cards). */
+    /** Drive summary year: Jan 1–Apr 15 of following year use calendar year N, then roll (tax-season window). */
     const currentYearDriveAggregates = useMemo(() => {
-        const summaryYear = new Date().getFullYear();
+        const summaryYear = getDriveMilesSummaryCalendarYear();
         const byLoc = new Map();
         let totalMiles = 0;
         let totalGas = 0;
@@ -988,14 +989,14 @@ const AdminFinances = () => {
                     </div>
                     <div
                         className="summary-card yearly"
-                        title={`Total round-trip drive miles for all entries dated in ${driveStatsYear} (current calendar year). Same trip math as the table below.`}
+                        title={`Total round-trip drive miles for all entries dated in ${driveStatsYear}. This summary year runs Jan 1 through Apr 15 of the next calendar year, then advances. Same trip math as the table below.`}
                     >
                         <h3>Drive Miles (RT) ({driveStatsYear})</h3>
                         <p className="revenue-amount">{formatTripMiles(totalDriveMilesForYear)}</p>
                     </div>
                     <div
                         className="summary-card yearly"
-                        title={`Estimated gas for those round trips in ${driveStatsYear}. Uses MPG and $/gal from travel settings.`}
+                        title={`Estimated gas for those round trips in ${driveStatsYear} (same year window as Drive Miles). Uses MPG and $/gal from travel settings.`}
                     >
                         <h3>Gas — Driving ({driveStatsYear})</h3>
                         <p className="revenue-amount">{formatCurrency(totalGasDriveForYear)}</p>
@@ -1007,14 +1008,21 @@ const AdminFinances = () => {
                 className="finances-drive-by-location"
                 aria-label={`Drive miles by location for ${driveStatsYear}`}
             >
-                <button
-                    type="button"
+                <div
                     className={`finances-drive-by-location__toggle ${
                         driveByLocationOpen ? 'finances-drive-by-location__toggle--open' : ''
                     }`}
-                    onClick={() => setDriveByLocationOpen((open) => !open)}
+                    role="button"
+                    tabIndex={0}
                     aria-expanded={driveByLocationOpen}
                     title={driveByLocationOpen ? 'Click to hide details' : 'Click to show breakdown by location'}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setDriveByLocationOpen((open) => !open);
+                        }
+                    }}
+                    onClick={() => setDriveByLocationOpen((open) => !open)}
                 >
                     <span className="finances-drive-by-location__expand-icon" aria-hidden="true">
                         {driveByLocationOpen ? '▼' : '▶'}
@@ -1022,12 +1030,13 @@ const AdminFinances = () => {
                     <span className="finances-drive-by-location__toggle-label">
                         Miles driven by location ({driveStatsYear})
                     </span>
-                </button>
+                </div>
                 {driveByLocationOpen && (
                     <>
                         <p className="finances-drive-by-location__hint">
-                            Current calendar year: round-trip miles and estimated gas per normalized location for all
-                            finance rows dated in {driveStatsYear}. Same trip math as the table below.
+                            Round-trip miles and estimated gas per normalized location for all finance rows dated in{' '}
+                            {driveStatsYear} (summary year through Apr 15 of the next calendar year, then it rolls
+                            forward). Same trip math as the table below.
                         </p>
                         {driveByLocationForYear.length === 0 ? (
                             <p className="finances-drive-by-location__empty">
@@ -1397,7 +1406,11 @@ const AdminFinances = () => {
                                         <span className="month-count__sep" aria-hidden="true">
                                             {' · '}
                                         </span>
-                                        <span className="month-count__therapy">{yearTherapy} therapy</span>
+                                        <span className="month-count__therapy">
+                                            {yearTherapy}
+                                            {'\u00a0'}
+                                            therapy
+                                        </span>
                                     </div>
                                 </div>
                                 {yearOpen &&
@@ -1435,7 +1448,11 @@ const AdminFinances = () => {
                                     <span className="month-count__sep" aria-hidden="true">
                                         {' · '}
                                     </span>
-                                    <span className="month-count__therapy">{monthData.yogaTherapyCount} therapy</span>
+                                    <span className="month-count__therapy">
+                                        {monthData.yogaTherapyCount}
+                                        {'\u00a0'}
+                                        therapy
+                                    </span>
                                 </div>
                             </div>
                             
