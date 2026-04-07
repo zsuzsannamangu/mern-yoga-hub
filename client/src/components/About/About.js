@@ -83,7 +83,6 @@ function About() {
             <Helmet>
                 <title>Yoga Classes with Zsuzsanna | Group Classes, Workshops & Private Sessions</title>
                 <meta name="description" content="Explore group yoga classes, workshops, and private sessions with Zsuzsanna — trauma-informed chair and wheelchair yoga, hypermobility and EDS, vinyasa, restorative, and chocolate and chakra workshops in Portland and online." />
-                <link rel="canonical" href="https://www.yogaandchocolate.com/yoga" />
             </Helmet>
 
             {/* Workshop Announcement Bar */}

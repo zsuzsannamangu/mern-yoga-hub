@@ -1,11 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Import Link for navigation
+import { Helmet } from "react-helmet";
 import "./AboutWebsite.scss";
 import { FaGithub } from 'react-icons/fa'; // GitHub icon from react-icons
 
 const AboutWebsite = () => {
     return (
         <div className="about-app">
+            <Helmet>
+                <title>About This Website | Yoga and Chocolate</title>
+                <meta
+                    name="description"
+                    content="How the Yoga and Chocolate site is built: booking, class signups, chocolates, and email — custom MERN stack app by Zsuzsanna Mangu."
+                />
+            </Helmet>
             <div className="about-container">
                 <h1>About This Website</h1>
 

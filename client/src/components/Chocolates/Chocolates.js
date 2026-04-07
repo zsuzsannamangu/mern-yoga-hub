@@ -19,7 +19,6 @@ function Chocolates() {
             <Helmet>
                 <title>ReTreat Chocolates | Small-Batch, Sustainable, Plant-Based, Low-Waste</title>
                 <meta name="description" content="Handcrafted chocolate made with organic, fair-trade cacao or ceremonial cacao. Soy-free, vegan, palm-oil free and packaged in reusable tins." />
-                <link rel="canonical" href="https://www.yogaandchocolate.com/chocolates" />
             </Helmet>
 
             {/* Workshop Announcement Bar */}

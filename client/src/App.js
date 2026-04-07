@@ -40,6 +40,7 @@ import AdminSubscribers from './components/Admin/AdminSubscribers';
 import AdminFinances from './components/Admin/AdminFinances';
 import Unsubscribe from './components/Home/Unsubscribe';
 import SiteSeo from './components/seo/SiteSeo';
+import NotFound from './pages/NotFound';
 
 // Protected routes for guarding user and admin routes
 import { UserProtectedRoute, AdminProtectedRoute } from './routes/ProtectedRoutes';
@@ -189,6 +190,7 @@ function App() {
                     </AdminProtectedRoute>
                   }
                 />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
             {/* Footer remains consistent across all pages */}

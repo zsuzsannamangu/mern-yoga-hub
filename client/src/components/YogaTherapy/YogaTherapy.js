@@ -68,7 +68,6 @@ function YogaTherapy() {
             <Helmet>
                 <title>Yoga Therapy with Zsuzsanna | Personalized Healing & Wellbeing</title>
                 <meta name="description" content="Yoga therapy with Zsuzsanna: one-on-one breathwork, somatic movement, and adaptive practices for anxiety, depression, and chronic pain; hypermobility-aware and accessible approaches including chair and wheelchair yoga. Portland and online." />
-                <link rel="canonical" href="https://www.yogaandchocolate.com/yoga-therapy" />
             </Helmet>
 
             <motion.div

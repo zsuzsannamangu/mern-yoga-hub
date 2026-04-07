@@ -1,6 +1,11 @@
 {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/" }
-    ]
-  }
-  
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "yogaandchocolate.com" }],
+      "destination": "https://www.yogaandchocolate.com/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+}

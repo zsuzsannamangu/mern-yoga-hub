@@ -74,7 +74,6 @@ function Contact() {
                     name="description"
                     content="Get in touch with Zsuzsanna Mangu for yoga classes, yoga therapy sessions, chocolate orders, or collaboration inquiries. Reach out with questions or booking requests."
                 />
-                <link rel="canonical" href="https://www.yogaandchocolate.com/contact" />
             </Helmet>
             <motion.div
                 className="contact-left"
