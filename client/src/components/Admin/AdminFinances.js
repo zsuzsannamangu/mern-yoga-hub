@@ -35,6 +35,19 @@ function sortClassData(data) {
     });
 }
 
+/** Today's calendar date in local time as YYYY-MM-DD (for comparing to finance entry dates). */
+function financeTodayKeyLocal() {
+    const t = new Date();
+    return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+}
+
+/** Finance row date is on or before `asOfKey` (YYYY-MM-DD). Defaults to today (local). */
+function isFinanceEntryOnOrBeforeToday(entry, asOfKey = financeTodayKeyLocal()) {
+    const raw = (entry.date || '').trim();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(raw)) return false;
+    return raw <= asOfKey;
+}
+
 function groupDataByMonth(data) {
     const grouped = {};
     data.forEach((entry) => {
@@ -271,14 +284,16 @@ const AdminFinances = () => {
         return { monthsByYear: byYear, sortedYears: years };
     }, [groupedData]);
 
-    /** Current calendar year: drive totals + by-location breakdown (same YYYY as summary card labels). */
+    /** Current calendar year through today: drive totals + by-location (excludes future-dated rows). */
     const currentYearDriveAggregates = useMemo(() => {
+        const asOf = financeTodayKeyLocal();
         const summaryYear = new Date().getFullYear();
         const byLoc = new Map();
         let totalMiles = 0;
         let totalGas = 0;
 
         classData.forEach((entry) => {
+            if (!isFinanceEntryOnOrBeforeToday(entry, asOf)) return;
             const year = Number((entry.date || '').split('-')[0]);
             if (year !== summaryYear || Number.isNaN(year)) return;
             const loc = financeLocationAggregationKey(entry.location);
@@ -902,12 +917,17 @@ const AdminFinances = () => {
         byLocationSorted: driveByLocationForYear,
     } = currentYearDriveAggregates;
 
-    const totalRevenue = classData.reduce((sum, entry) => sum + (entry.receivedRate || entry.rate || 0), 0);
+    const totalRevenue = classData.reduce((sum, entry) => {
+        if (!isFinanceEntryOnOrBeforeToday(entry)) return sum;
+        return sum + (entry.receivedRate || entry.rate || 0);
+    }, 0);
     const totalRevenue2025 = classData.reduce((sum, entry) => {
+        if (!isFinanceEntryOnOrBeforeToday(entry)) return sum;
         const year = Number((entry.date || '').split('-')[0]);
         return year === 2025 ? sum + (entry.receivedRate || entry.rate || 0) : sum;
     }, 0);
     const totalRevenue2026 = classData.reduce((sum, entry) => {
+        if (!isFinanceEntryOnOrBeforeToday(entry)) return sum;
         const year = Number((entry.date || '').split('-')[0]);
         return year === 2026 ? sum + (entry.receivedRate || entry.rate || 0) : sum;
     }, 0);
@@ -939,15 +959,24 @@ const AdminFinances = () => {
 
             <div className="finances-summary">
                 <div className="finances-summary__row finances-summary__row--top">
-                    <div className="summary-card yearly">
+                    <div
+                        className="summary-card yearly"
+                        title="Sum of received (or rate) for rows whose class date is on or before today. Excludes future scheduled dates."
+                    >
                         <h3>Total Revenue (All Time)</h3>
                         <p className="revenue-amount">{formatCurrency(totalRevenue)}</p>
                     </div>
-                    <div className="summary-card yearly">
+                    <div
+                        className="summary-card yearly"
+                        title="2025 revenue through today only (by row date). Excludes future 2025-dated rows if any."
+                    >
                         <h3>Total Revenue (2025)</h3>
                         <p className="revenue-amount">{formatCurrency(totalRevenue2025)}</p>
                     </div>
-                    <div className="summary-card yearly">
+                    <div
+                        className="summary-card yearly"
+                        title="2026 revenue through today only (by row date). Excludes future classes."
+                    >
                         <h3>Total Revenue (2026)</h3>
                         <p className="revenue-amount">{formatCurrency(totalRevenue2026)}</p>
                     </div>
@@ -969,9 +998,20 @@ const AdminFinances = () => {
                 </div>
 
                 <div className="finances-summary__row finances-summary__row--bottom">
-                    <div className="summary-card yearly">
+                    <div
+                        className="summary-card yearly"
+                        title="Yoga teaching rows with a class date on or before today. Excludes future scheduled classes."
+                    >
                         <h3>Total Classes (All Time)</h3>
-                        <p className="revenue-amount">{classData.filter(entry => entry.category === 'yoga teaching').length}</p>
+                        <p className="revenue-amount">
+                            {
+                                classData.filter(
+                                    (entry) =>
+                                        entry.category === 'yoga teaching' &&
+                                        isFinanceEntryOnOrBeforeToday(entry)
+                                ).length
+                            }
+                        </p>
                     </div>
                     <div className="summary-card monthly">
                         <h3>
@@ -988,14 +1028,14 @@ const AdminFinances = () => {
                     </div>
                     <div
                         className="summary-card yearly"
-                        title={`Total round-trip drive miles for all entries dated in ${driveStatsYear} (current calendar year). Same trip math as the table below.`}
+                        title={`Round-trip drive miles for ${driveStatsYear} rows dated on or before today (excludes future classes). Same trip math as the table below.`}
                     >
                         <h3>Drive Miles (RT) ({driveStatsYear})</h3>
                         <p className="revenue-amount">{formatTripMiles(totalDriveMilesForYear)}</p>
                     </div>
                     <div
                         className="summary-card yearly"
-                        title={`Estimated gas for those round trips in ${driveStatsYear} (current calendar year). Uses MPG and $/gal from travel settings.`}
+                        title={`Estimated gas for those same trips through today in ${driveStatsYear}. Uses MPG and $/gal from travel settings.`}
                     >
                         <h3>Gas — Driving ({driveStatsYear})</h3>
                         <p className="revenue-amount">{formatCurrency(totalGasDriveForYear)}</p>
@@ -1033,8 +1073,8 @@ const AdminFinances = () => {
                 {driveByLocationOpen && (
                     <>
                         <p className="finances-drive-by-location__hint">
-                            Current calendar year: round-trip miles and estimated gas per normalized location for all
-                            finance rows dated in {driveStatsYear}. Same trip math as the table below.
+                            {driveStatsYear} through today: round-trip miles and estimated gas per normalized location
+                            (row date on or before today). Same trip math as the table below.
                         </p>
                         {driveByLocationForYear.length === 0 ? (
                             <p className="finances-drive-by-location__empty">
