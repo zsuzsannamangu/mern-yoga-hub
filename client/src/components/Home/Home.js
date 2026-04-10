@@ -5,6 +5,7 @@ import '../../App.scss';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 function Home() {
   useEffect(() => {
@@ -103,7 +104,7 @@ function Home() {
         url: `${siteUrl}/`,
         name: 'Yoga and Chocolate | Zsuzsanna Mangu',
         description:
-          'Handcrafted plant-based chocolates and trauma-informed yoga in Portland, Oregon and online — classes, yoga therapy, workshops, and chocolate tastings.',
+          'Trauma-informed yoga, yoga therapy, and gentle chronic-pain support in Portland, Oregon and online — plus classes, workshops, and small-batch chocolates.',
         publisher: { '@id': `${siteUrl}/#person` },
       },
       {
@@ -122,7 +123,7 @@ function Home() {
         <title>Yoga and Chocolate | Zsuzsanna Mangu — Portland Yoga &amp; Small-Batch Chocolate</title>
         <meta
           name="description"
-          content="Handcrafted plant-based chocolates and trauma-informed yoga in Portland and online: group classes, yoga therapy, workshops, and chocolate offerings. Book a free consultation or browse the calendar."
+          content="Trauma-informed yoga and yoga therapy in Portland and online — including gentle support for chronic pain, group classes, workshops, and small-batch chocolates. Book a free consult or browse the calendar."
         />
         <script type="application/ld+json">{JSON.stringify(homeStructuredData)}</script>
       </Helmet>
@@ -165,6 +166,37 @@ function Home() {
         />
       </motion.div>
 
+      <motion.div
+        className="home-client-paths"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.15 }}
+      >
+        <h2 className="home-client-paths__title">Work with me</h2>
+        <p className="home-client-paths__intro">
+          Not sure where to start? Pick what fits — you can always book a{' '}
+          <a href="#book-section">free 30-minute consult</a> to talk it through.
+        </p>
+        <ul className="home-client-paths__list">
+          <li>
+            <Link to="/chronic-pain-help">Chronic pain or nervous-system overwhelm</Link>
+            <span className="home-client-paths__hint"> — gentle one-on-one support (Portland &amp; online)</span>
+          </li>
+          <li>
+            <Link to="/yoga-therapy">Yoga therapy</Link>
+            <span className="home-client-paths__hint"> — individualized sessions (anxiety, pain, mobility, and more)</span>
+          </li>
+          <li>
+            <Link to="/calendar">Class &amp; workshop calendar</Link>
+            <span className="home-client-paths__hint"> — reserve a spot in group offerings</span>
+          </li>
+          <li>
+            <Link to="/contact">Contact</Link>
+            <span className="home-client-paths__hint"> — questions or custom requests</span>
+          </li>
+        </ul>
+      </motion.div>
+
       {/* Rest of the content sections */}
       <div className='main-section'>
         <motion.div
@@ -203,7 +235,10 @@ function Home() {
             <div className="title-line"></div>
           </div>
           <div className="right-section">
-            <p>If you are interested in working with me through yoga therapy, yoga classes or anything chocolate related, and want to learn more, book a free 30-minute online meeting with me to answer any questions you have.</p>
+            <p>
+              If you want to work together — yoga therapy, classes, chronic pain support, or anything chocolate —
+              book a <strong>free 30-minute online meeting</strong> to ask questions and see if we are a fit.
+            </p>
 
             <form className="booking-form" onSubmit={handleSubmit}>
               <label>
@@ -218,9 +253,10 @@ function Home() {
               <label>
                 What are you interested in?
                 <select name="session-type" required>
+                  <option value="chronic pain support">Chronic pain / gentle one-on-one support</option>
+                  <option value="yoga therapy">Yoga Therapy</option>
                   <option value="private yoga">Individual Yoga Class</option>
                   <option value="group yoga">Group Yoga Class</option>
-                  <option value="yoga therapy">Yoga Therapy</option>
                   <option value="chocolates">Chocolates</option>
                 </select>
               </label>

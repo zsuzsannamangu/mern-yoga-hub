@@ -405,3 +405,58 @@
   &__link--left  { left: 0; }
   &__link--right { right: 0; }
 }
+
+.home-client-paths {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.75rem clamp(18px, 4vw, 28px) 2rem;
+  box-sizing: border-box;
+  text-align: left;
+  border-bottom: 1px solid rgba(139, 75, 140, 0.15);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 248, 252, 0.95) 100%);
+
+  &__title {
+    font-family: $font-title;
+    font-size: clamp(1.35rem, 3vw, 1.65rem);
+    color: $main-title-color;
+    margin: 0 0 0.5rem;
+  }
+
+  &__intro {
+    margin: 0 0 1rem;
+    line-height: 1.55;
+    color: $text-color;
+    font-size: 1rem;
+
+    a {
+      color: $primary-button-color;
+      font-weight: 600;
+    }
+  }
+
+  &__list {
+    margin: 0;
+    padding-left: 1.15rem;
+    line-height: 1.65;
+    color: $text-color;
+
+    li {
+      margin-bottom: 0.55rem;
+    }
+
+    a {
+      color: $primary-button-color;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__hint {
+    color: $secondary-text-color;
+    font-weight: 400;
+  }
+}

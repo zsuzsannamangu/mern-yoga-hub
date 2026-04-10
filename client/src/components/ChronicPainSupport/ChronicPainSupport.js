@@ -64,9 +64,10 @@ export default function ChronicPainSupport() {
 
             <div className="chronic-pain-cta">
                 <p>
-                    <strong>Ready to explore whether we are a fit?</strong>{' '}
-                    <Link to="/contact">Contact me</Link> to ask questions or request a consult, or see what is on the{' '}
-                    <Link to="/calendar">calendar</Link>.
+                    <strong>Ready to explore whether we are a fit?</strong> On the{' '}
+                    <a href="/#book-section">home page</a> you can request a <strong>free 30-minute online consult</strong>
+                    , or <Link to="/contact">contact me</Link> with questions. You can also check the{' '}
+                    <Link to="/calendar">calendar</Link> for group options.
                 </p>
             </div>
 
