@@ -1,5 +1,22 @@
 /** Stable section + row ids for React keys and localStorage merges. */
 
+/** Visual grouping on the admin page (weekly vs monthly vs reference). */
+export const RHYTHM_BAND_LABELS = {
+    weekly: 'Weekly rhythm (day-by-day)',
+    monthly: 'Monthly themes & phases',
+    reference: 'Reference & output',
+};
+
+/** Infer band from persisted `section.band` or from stable section id. */
+export function inferSectionBand(section) {
+    const b = section?.band;
+    if (b === 'weekly' || b === 'monthly' || b === 'reference') return b;
+    const id = String(section?.id || '');
+    if (id.startsWith('month-')) return 'monthly';
+    if (id === 'output-tracker' || id === 'simple-flow') return 'reference';
+    return 'weekly';
+}
+
 export function rid() {
     return `r_${Math.random().toString(36).slice(2, 11)}`;
 }

@@ -1,8 +1,9 @@
 @use '../../styles/variables' as *;
 
 .admin-rhythm {
-    max-width: 1100px;
-    padding-bottom: 3rem;
+    max-width: 1120px;
+    padding: 1.25rem 1.5rem 3rem;
+    box-sizing: border-box;
 
     &__header {
         display: flex;
@@ -71,6 +72,26 @@
         }
     }
 
+    &__band {
+        margin: 2rem 0 0.85rem;
+        padding: 0.5rem 0 0.35rem;
+        border-bottom: 2px solid $border-color;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+    &__band-label {
+        display: inline-block;
+        font-family: $font-title;
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: $secondary-text-color;
+    }
+
     &__section {
         margin-bottom: 1.5rem;
         padding: 1.25rem 1.35rem;
@@ -79,6 +100,18 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
         border-left: 4px solid $primary-button-color;
         box-sizing: border-box;
+
+        &--weekly {
+            border-left-color: $primary-button-color;
+        }
+
+        &--monthly {
+            border-left-color: #c45c26;
+        }
+
+        &--reference {
+            border-left-color: #2d6a4f;
+        }
     }
 
     &__section-head {
@@ -178,18 +211,44 @@
     }
 
     &__icon-btn {
-        background: transparent;
-        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2rem;
+        min-height: 2rem;
+        background: $content-background-color;
+        border: 1px solid $border-color;
         cursor: pointer;
-        font-size: 1.1rem;
-        padding: 0.2rem 0.35rem;
+        font-size: 0.85rem;
+        padding: 0.25rem 0.4rem;
         line-height: 1;
-        border-radius: 4px;
-        opacity: 0.85;
+        border-radius: 6px;
+        color: $text-color;
+        box-sizing: border-box;
 
         &:hover {
-            background: rgba($delete-button, 0.12);
-            opacity: 1;
+            background: rgba($delete-button, 0.1);
+            border-color: rgba($delete-button, 0.45);
+        }
+
+        &--danger {
+            color: $delete-button;
+            border-color: rgba($delete-button, 0.45);
+
+            &:hover {
+                background: rgba($delete-button, 0.15);
+                color: darken($delete-button, 6%);
+            }
+        }
+    }
+
+    /* Icon buttons sit in table cells — avoid global link/button styles washing them out */
+    &__table button.admin-rhythm__icon-btn {
+        text-decoration: none;
+        color: $delete-button;
+
+        &:hover {
+            color: darken($delete-button, 6%);
         }
     }
 
