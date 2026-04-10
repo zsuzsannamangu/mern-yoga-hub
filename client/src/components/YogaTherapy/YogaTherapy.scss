@@ -287,7 +287,57 @@
     }
   }
 
-  .yoga-therapy-overlay-text p:not(.yoga-therapy-hero-tagline) {
+  .yoga-therapy-pain-cta {
+    display: flex;
+    justify-content: center;
+    margin: 0.9rem 0 0;
+    padding-top: 0.9rem;
+    width: 100%;
+    border-top: 1px solid rgba(44, 62, 80, 0.12);
+  }
+
+  .yoga-therapy-pain-cta__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    font-family: $font-secondary;
+    font-size: 0.86rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #fff !important;
+    background: linear-gradient(135deg, $purple-dark 0%, darken($primary-button-color, 6%) 100%);
+    padding: 0.5rem 1rem 0.5rem 1.1rem;
+    border-radius: 999px;
+    box-shadow: 0 2px 10px rgba(80, 60, 120, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+
+    @media (min-width: 768px) {
+      font-size: 0.9rem;
+      padding: 0.55rem 1.15rem 0.55rem 1.2rem;
+    }
+
+    &:hover {
+      color: #fff !important;
+      filter: brightness(1.06);
+      box-shadow: 0 4px 14px rgba(80, 60, 120, 0.3);
+      transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $purple-dark;
+      outline-offset: 3px;
+    }
+  }
+
+  .yoga-therapy-pain-cta__arrow {
+    font-size: 1.05em;
+    line-height: 1;
+    opacity: 0.95;
+  }
+
+  .yoga-therapy-overlay-text p:not(.yoga-therapy-hero-tagline):not(.yoga-therapy-pain-cta) {
     margin: 0 0 1.2rem;
     font-size: 1.1rem;
     font-family: $font-secondary;
