@@ -10,7 +10,8 @@ import {
     FaSignOutAlt,
     FaBars,
     FaTimes,
-    FaChalkboardTeacher
+    FaChalkboardTeacher,
+    FaClipboardList
 } from 'react-icons/fa';
 import './AdminNavbar.scss';
 import '../../App.scss';
@@ -36,7 +37,8 @@ const AdminNavbar = () => {
         { path: '/admin/signups', icon: FaChalkboardTeacher, label: 'Classes' },
         { path: '/admin/users', icon: FaUsers, label: 'Clients' },
         { path: '/admin/subscribers', icon: FaEnvelope, label: 'Subscribers' },
-        { path: '/admin/finances', icon: FaChartLine, label: 'Finances' }
+        { path: '/admin/finances', icon: FaChartLine, label: 'Finances' },
+        { path: '/admin/rhythm', icon: FaClipboardList, label: 'Rhythm' }
     ];
 
     return (

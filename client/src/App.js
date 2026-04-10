@@ -39,6 +39,7 @@ import AboutWebsite from "./components/AboutWebsite/AboutWebsite";
 import UserOAuthHandler from './components/User/UserOAuthHandler';
 import AdminSubscribers from './components/Admin/AdminSubscribers';
 import AdminFinances from './components/Admin/AdminFinances';
+import AdminRhythm from './components/Admin/AdminRhythm';
 import Unsubscribe from './components/Home/Unsubscribe';
 import SiteSeo from './components/seo/SiteSeo';
 import NotFound from './pages/NotFound';
@@ -189,6 +190,14 @@ function App() {
                   element={
                     <AdminProtectedRoute>
                       <AdminFinances showAlert={showAlert} />
+                    </AdminProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/rhythm"
+                  element={
+                    <AdminProtectedRoute>
+                      <AdminRhythm />
                     </AdminProtectedRoute>
                   }
                 />
