@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import './YogaTherapy.scss';
 import '../../App.scss';
 import { motion } from 'framer-motion';
@@ -83,6 +83,7 @@ function YogaTherapy() {
                         <p className="yoga-therapy-hero-tagline">
                             One-on-one sessions integrating breathwork, somatic movement, and gentle, adaptive practices to support anxiety, depression and chronic pain. Sessions also draw on functional movement, hypermobility-aware strengthening, and accessible approaches (including chair and wheelchair yoga).
                         </p>
+                        {/* Chronic pain hero CTA — re-enable when ready (needs Link import from react-router-dom)
                         <p className="yoga-therapy-pain-cta">
                             <Link to="/chronic-pain-help" className="yoga-therapy-pain-cta__link">
                                 Looking for help with chronic pain? Start here <span className="yoga-therapy-pain-cta__arrow" aria-hidden="true">
@@ -90,6 +91,7 @@ function YogaTherapy() {
                                 </span>
                             </Link>
                         </p>
+                        */}
                     </div>
                 </div>
             </motion.div>
