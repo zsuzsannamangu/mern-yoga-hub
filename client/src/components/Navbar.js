@@ -80,6 +80,7 @@ function Navbar() {
                     <>
                         <Link to="/" className="nav-item">Home</Link>
                         <Link to="/yoga" className="nav-item">Yoga</Link>
+                        <Link to="/chronic-pain-help" className="nav-item">Chronic pain help</Link>
                         <Link to="/yoga-therapy" className="nav-item">Yoga Therapy</Link>
                         <Link to="/calendar" className="nav-item">Calendar</Link>
                         <Link to="/chocolates" className="nav-item nav-item-chocolates">Chocolates</Link>
@@ -119,6 +120,7 @@ function Navbar() {
                                 <>
                                     <Link to="/" className="mobile-nav-item" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
                                     <Link to="/yoga" className="mobile-nav-item" onClick={() => setIsMobileMenuOpen(false)}>Yoga</Link>
+                                    <Link to="/chronic-pain-help" className="mobile-nav-item" onClick={() => setIsMobileMenuOpen(false)}>Chronic pain help</Link>
                                     <Link to="/yoga-therapy" className="mobile-nav-item" onClick={() => setIsMobileMenuOpen(false)}>Yoga Therapy</Link>
                                     <Link to="/calendar" className="mobile-nav-item" onClick={() => setIsMobileMenuOpen(false)}>Calendar</Link>
                                     <Link to="/chocolates" className="mobile-nav-item" onClick={() => setIsMobileMenuOpen(false)}>Chocolates</Link>

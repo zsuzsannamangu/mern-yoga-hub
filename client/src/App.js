@@ -35,6 +35,7 @@ import SignUpSelection from './components/Calendar/SignUpSelection';
 import AdminSignups from './components/Admin/AdminSignups';
 import AdminUsers from './components/Admin/AdminUsers';
 import AboutWebsite from "./components/AboutWebsite/AboutWebsite";
+import ChronicPainSupport from './components/ChronicPainSupport/ChronicPainSupport';
 import UserOAuthHandler from './components/User/UserOAuthHandler';
 import AdminSubscribers from './components/Admin/AdminSubscribers';
 import AdminFinances from './components/Admin/AdminFinances';
@@ -82,6 +83,7 @@ function App() {
                 <Route path="/" element={<Home showAlert={showAlert} />} /> {/* Passes the reusable showAlert function as a prop to the page for triggering alerts  */}
                 <Route path="/yoga" element={<About />} />
                 <Route path="/yoga-therapy" element={<YogaTherapy />} />
+                <Route path="/chronic-pain-help" element={<ChronicPainSupport />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/chocolates" element={<Chocolates showAlert={showAlert} />} />
                 <Route path="/contact" element={<Contact showAlert={showAlert} />} />
