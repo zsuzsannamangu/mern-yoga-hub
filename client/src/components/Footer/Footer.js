@@ -85,7 +85,7 @@ function Footer() {
         <div className="footer-links">
           <a href="/">Home</a>
           <a href="/yoga">Yoga</a>
-          <a href="/chronic-pain-help">Chronic pain help</a>
+          {/* <a href="/chronic-pain-help">Chronic pain help</a> */}
           <a href="/calendar">Calendar</a>
           <a href="/contact">Contact</a>
           <a href="/chocolates">Chocolates</a>

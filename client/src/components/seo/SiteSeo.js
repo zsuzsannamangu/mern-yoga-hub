@@ -13,7 +13,7 @@ const RECOGNIZED_PATHS = new Set([
     '/',
     '/yoga',
     '/yoga-therapy',
-    '/chronic-pain-help',
+    // '/chronic-pain-help',
     '/calendar',
     '/chocolates',
     '/contact',
