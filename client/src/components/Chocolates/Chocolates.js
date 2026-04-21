@@ -9,6 +9,7 @@ import Slideshow from './Slideshow';
 import { motion } from 'framer-motion';
 import Testimonials from './Testimonials';
 import VideoBlock from './VideoBlock';
+import { seo } from '../../config/seoContent';
 
 function Chocolates() {
     const scrollToProductsSection = () => {
@@ -17,8 +18,12 @@ function Chocolates() {
     return (
         <div className='chocolates-page'>
             <Helmet>
-                <title>ReTreat Chocolates | Small-Batch, Sustainable, Plant-Based, Low-Waste</title>
-                <meta name="description" content="Handcrafted chocolate made with organic, fair-trade cacao or ceremonial cacao. Soy-free, vegan, palm-oil free and packaged in reusable tins." />
+                <title>{seo.chocolates.title}</title>
+                <meta name="description" content={seo.chocolates.description} />
+                <meta property="og:title" content={seo.chocolates.title} />
+                <meta property="og:description" content={seo.chocolates.description} />
+                <meta name="twitter:title" content={seo.chocolates.title} />
+                <meta name="twitter:description" content={seo.chocolates.description} />
             </Helmet>
 
             {/* Workshop Announcement Bar */}

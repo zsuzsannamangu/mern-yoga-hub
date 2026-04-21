@@ -5,6 +5,7 @@ import './YogaTherapy.scss';
 import '../../App.scss';
 import { motion } from 'framer-motion';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { seo } from '../../config/seoContent';
 
 function YogaTherapy() {
     const [openFAQ, setOpenFAQ] = useState(null);
@@ -67,8 +68,12 @@ function YogaTherapy() {
     return (
         <div className='yoga-therapy-page'>
             <Helmet>
-                <title>Yoga Therapy with Zsuzsanna | Personalized Healing & Wellbeing</title>
-                <meta name="description" content="Yoga therapy with Zsuzsanna: one-on-one breathwork, somatic movement, and adaptive practices for anxiety, depression, and chronic pain; hypermobility-aware and accessible approaches including chair and wheelchair yoga. Portland and online." />
+                <title>{seo.yogaTherapy.title}</title>
+                <meta name="description" content={seo.yogaTherapy.description} />
+                <meta property="og:title" content={seo.yogaTherapy.title} />
+                <meta property="og:description" content={seo.yogaTherapy.description} />
+                <meta name="twitter:title" content={seo.yogaTherapy.title} />
+                <meta name="twitter:description" content={seo.yogaTherapy.description} />
             </Helmet>
 
             <motion.div

@@ -20,6 +20,10 @@ function entryToPartialFormDefaults(entry) {
         paymentRequestSent: entry.paymentRequestSent,
         taxed: entry.taxed,
         paid: entry.paid,
+        teachingRole:
+            entry.teachingRole === 'sub' || entry.teachingRole === 'regular'
+                ? entry.teachingRole
+                : undefined,
     });
 }
 

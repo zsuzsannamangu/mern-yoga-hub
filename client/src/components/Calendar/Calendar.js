@@ -4,6 +4,7 @@ import CalendarDays from './CalendarDays';
 import './Calendar.scss';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { seo } from '../../config/seoContent';
 
 export default class Calendar extends Component {
   constructor() {
@@ -153,11 +154,12 @@ export default class Calendar extends Component {
     return (
       <div className="calendar-container">
         <Helmet>
-          <title>Yoga Class Calendar | Zsuzsanna Mangu — Portland &amp; Online</title>
-          <meta
-            name="description"
-            content="Browse upcoming yoga classes, workshops, and events with Zsuzsanna Mangu in the Portland area and online. See dates, times, and locations, then reserve your spot."
-          />
+          <title>{seo.calendar.title}</title>
+          <meta name="description" content={seo.calendar.description} />
+          <meta property="og:title" content={seo.calendar.title} />
+          <meta property="og:description" content={seo.calendar.description} />
+          <meta name="twitter:title" content={seo.calendar.title} />
+          <meta name="twitter:description" content={seo.calendar.description} />
         </Helmet>
         {/* Workshop Announcement Bar */}
         <div className="workshop-announcement newyear-announcement">

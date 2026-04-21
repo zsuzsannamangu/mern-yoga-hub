@@ -164,7 +164,8 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
             paymentMethod,
             paymentRequestSent,
             paid,
-            taxed
+            taxed,
+            teachingRole,
         } = req.body;
 
         // Validate required fields
@@ -199,6 +200,9 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
             return res.status(400).json({ success: false, message: tripParsed.error });
         }
 
+        const role =
+            teachingRole === 'sub' || teachingRole === 'regular' ? teachingRole : 'regular';
+
         const newFinanceEntry = new Finance({
             date,
             time,
@@ -213,6 +217,7 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
             paymentRequestSent: paymentRequestSent || 'no',
             paid: paid || 'no',
             taxed: taxed || 'no',
+            teachingRole: role,
             tripMiles: tripParsed.tripMiles,
             tripGasCost: tripParsed.tripGasCost
         });
@@ -260,7 +265,8 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
             paymentMethod,
             paymentRequestSent,
             paid,
-            taxed
+            taxed,
+            teachingRole,
         } = req.body;
 
         // Validate required fields
@@ -295,6 +301,9 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
             return res.status(400).json({ success: false, message: tripParsedPut.error });
         }
 
+        const rolePut =
+            teachingRole === 'sub' || teachingRole === 'regular' ? teachingRole : 'regular';
+
         const updatedEntry = await Finance.findByIdAndUpdate(
             id,
             {
@@ -311,6 +320,7 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
                 paymentRequestSent,
                 paid,
                 taxed,
+                teachingRole: rolePut,
                 tripMiles: tripParsedPut.tripMiles,
                 tripGasCost: tripParsedPut.tripGasCost
             },

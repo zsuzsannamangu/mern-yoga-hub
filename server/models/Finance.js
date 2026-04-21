@@ -44,6 +44,12 @@ const financeSchema = new mongoose.Schema({
         enum: ['yes', 'no'],
         default: 'no'
     },
+    /** Regular slot vs substitute teaching */
+    teachingRole: {
+        type: String,
+        enum: ['regular', 'sub'],
+        default: 'regular',
+    },
     // Round-trip miles for this row (tax deduction help); from home → studio × 2 when saved
     tripMiles: { type: Number, required: false, default: null },
     // Estimated gas $ for this trip (personal tracking); MPG + $/gal from client when saved

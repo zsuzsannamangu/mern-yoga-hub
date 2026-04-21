@@ -5,6 +5,7 @@ import '../../App.scss';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 import { motion } from 'framer-motion';
+import { seo } from '../../config/seoContent';
 // import { Link } from 'react-router-dom';
 
 function Home() {
@@ -104,7 +105,7 @@ function Home() {
         url: `${siteUrl}/`,
         name: 'Yoga and Chocolate | Zsuzsanna Mangu',
         description:
-          'Handcrafted plant-based chocolates and trauma-informed yoga in Portland, Oregon and online — classes, yoga therapy, workshops, and chocolate tastings.',
+          'Handcrafted plant-based chocolates and trauma-informed yoga in Portland, Oregon and online — classes, yoga therapy, private yoga, workshops, retreat-style events, and chocolate tastings.',
         publisher: { '@id': `${siteUrl}/#person` },
       },
       {
@@ -113,6 +114,13 @@ function Home() {
         name: 'Zsuzsanna Mangu',
         url: `${siteUrl}/`,
         jobTitle: 'Yoga teacher and chocolatier',
+        knowsAbout: [
+          'Yoga therapy Portland',
+          'Private yoga classes Portland',
+          'Yoga and chocolate workshops',
+          'ReTreat chocolates',
+          'Trauma-informed yoga',
+        ],
       },
     ],
   };
@@ -120,11 +128,12 @@ function Home() {
   return (
     <div className="homepage">
       <Helmet>
-        <title>Yoga and Chocolate | Zsuzsanna Mangu — Portland Yoga &amp; Small-Batch Chocolate</title>
-        <meta
-          name="description"
-          content="Handcrafted plant-based chocolates and trauma-informed yoga in Portland and online: group classes, yoga therapy, workshops, and chocolate offerings. Book a free consultation or browse the calendar."
-        />
+        <title>{seo.home.title}</title>
+        <meta name="description" content={seo.home.description} />
+        <meta property="og:title" content={seo.home.title} />
+        <meta property="og:description" content={seo.home.description} />
+        <meta name="twitter:title" content={seo.home.title} />
+        <meta name="twitter:description" content={seo.home.description} />
         <script type="application/ld+json">{JSON.stringify(homeStructuredData)}</script>
       </Helmet>
       {/* Workshop Announcement Bar - Top */}

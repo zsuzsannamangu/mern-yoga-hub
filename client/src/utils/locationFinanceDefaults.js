@@ -15,6 +15,7 @@ const YOGA_VENUE_AUTOFILL = {
     paymentRequestSent: 'n/a',
     taxed: 'no',
     paid: 'no',
+    teachingRole: 'regular',
 };
 
 /**
@@ -64,4 +65,5 @@ export const ADD_ENTRY_FINANCE_FIELD_DEFAULTS = {
     paymentRequestSent: 'no',
     taxed: 'no',
     paid: 'no',
+    teachingRole: 'regular',
 };

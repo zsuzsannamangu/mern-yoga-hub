@@ -31,7 +31,7 @@ function buildClassesByMonth(filteredEntries) {
             return (a.time || '').localeCompare(b.time || '');
         });
 
-    /** @type {Map<string, Array<{ id: string, date: string, time: string, className: string, category: string }>>} */
+    /** @type {Map<string, Array<{ id: string, date: string, time: string, className: string, category: string, teachingRole: string }>>} */
     const byMonth = new Map();
     for (const e of rows) {
         const dateStr = e.date || '';
@@ -46,6 +46,7 @@ function buildClassesByMonth(filteredEntries) {
             time: e.time,
             className: e.class || '—',
             category: e.category || 'other',
+            teachingRole: e.teachingRole === 'sub' ? 'sub' : 'regular',
         });
     }
 

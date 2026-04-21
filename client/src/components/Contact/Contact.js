@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 import { getRecaptchaToken } from '../../utils/recaptcha';
 import { motion } from 'framer-motion';
+import { seo } from '../../config/seoContent';
 
 function Contact() {
     const [formData, setFormData] = useState({
@@ -69,11 +70,12 @@ function Contact() {
     return (
         <div className='contact-form-container'>
             <Helmet>
-                <title>Contact | Yoga and Chocolate by Zsuzsanna Mangu</title>
-                <meta
-                    name="description"
-                    content="Get in touch with Zsuzsanna Mangu for yoga classes, yoga therapy sessions, chocolate orders, or collaboration inquiries. Reach out with questions or booking requests."
-                />
+                <title>{seo.contact.title}</title>
+                <meta name="description" content={seo.contact.description} />
+                <meta property="og:title" content={seo.contact.title} />
+                <meta property="og:description" content={seo.contact.description} />
+                <meta name="twitter:title" content={seo.contact.title} />
+                <meta name="twitter:description" content={seo.contact.description} />
             </Helmet>
             <motion.div
                 className="contact-left"

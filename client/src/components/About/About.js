@@ -7,6 +7,7 @@ import '../../App.scss';
 import { motion } from 'framer-motion';
 import Slideshow from './Slideshow';
 import { FaCalendarAlt, FaExternalLinkAlt, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { seo } from '../../config/seoContent';
 
 function About() {
     const location = useLocation(); // React Router hook to access current location (current URL, such as the path or query parameters)
@@ -81,8 +82,12 @@ function About() {
     return (
         <div className='about-page'>
             <Helmet>
-                <title>Yoga Classes with Zsuzsanna | Group Classes, Workshops & Private Sessions</title>
-                <meta name="description" content="Explore group yoga classes, workshops, and private sessions with Zsuzsanna — trauma-informed chair and wheelchair yoga, hypermobility and EDS, vinyasa, restorative, and chocolate and chakra workshops in Portland and online." />
+                <title>{seo.yoga.title}</title>
+                <meta name="description" content={seo.yoga.description} />
+                <meta property="og:title" content={seo.yoga.title} />
+                <meta property="og:description" content={seo.yoga.description} />
+                <meta name="twitter:title" content={seo.yoga.title} />
+                <meta name="twitter:description" content={seo.yoga.description} />
             </Helmet>
 
             {/* Workshop Announcement Bar */}

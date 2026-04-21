@@ -445,6 +445,7 @@ $class-table-grid-cols:
     118px
     60px
     minmax(84px, 0.82fr)
+    minmax(44px, 0.16fr)
     minmax(88px, 1.02fr)
     72px
     72px
@@ -461,6 +462,7 @@ $class-table-grid-cols-md:
     108px
     54px
     minmax(72px, 0.88fr)
+    minmax(40px, 0.14fr)
     minmax(74px, 0.98fr)
     64px
     64px
@@ -477,6 +479,7 @@ $class-table-grid-cols-sm:
     100px
     50px
     minmax(66px, 0.84fr)
+    minmax(36px, 0.12fr)
     minmax(68px, 0.96fr)
     58px
     58px
@@ -1189,7 +1192,8 @@ $class-table-grid-cols-sm:
 
     li {
         display: grid;
-        grid-template-columns: minmax(7rem, auto) minmax(5rem, auto) 1fr minmax(6.5rem, auto);
+        grid-template-columns:
+            minmax(7rem, auto) minmax(5rem, auto) 1fr minmax(2.25rem, auto) minmax(6.5rem, auto);
         gap: 10px 12px;
         align-items: baseline;
         padding: 6px 0;
@@ -1217,6 +1221,14 @@ $class-table-grid-cols-sm:
     color: $text-color;
     font-weight: 500;
     word-break: break-word;
+}
+
+.location-stats-class-role {
+    color: $secondary-text-color;
+    font-size: 0.85em;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
 }
 
 .location-stats-class-category {

@@ -53,6 +53,14 @@ function isFinanceEntryOnOrBeforeToday(entry, asOfKey = financeTodayKeyLocal()) 
     return raw <= asOfKey;
 }
 
+function normalizeTeachingRole(val) {
+    return val === 'sub' ? 'sub' : 'regular';
+}
+
+function teachingRoleShortLabel(val) {
+    return normalizeTeachingRole(val) === 'sub' ? 'Sub' : 'Reg';
+}
+
 function groupDataByMonth(data) {
     const grouped = {};
     data.forEach((entry) => {
@@ -115,7 +123,8 @@ const AdminFinances = () => {
         category: '',
         paid: '',
         taxed: '',
-        paymentMethod: ''
+        paymentMethod: '',
+        teachingRole: '',
     });
     const [locationStatsCanonical, setLocationStatsCanonical] = useState(null);
     const [travelSettings, setTravelSettings] = useState(() => ({
@@ -142,7 +151,8 @@ const AdminFinances = () => {
         taxed: 'no',
         repeat: 'no',
         repeatCount: 1,
-        repeatFrequency: 'weekly'
+        repeatFrequency: 'weekly',
+        teachingRole: 'regular',
     });
 
     const learnedFinanceDefaultsByPreset = useMemo(
@@ -490,6 +500,7 @@ const AdminFinances = () => {
                         paymentRequestSent: newEntry.paymentRequestSent,
                         paid: newEntry.paid,
                         taxed: newEntry.taxed,
+                        teachingRole: normalizeTeachingRole(newEntry.teachingRole),
                         tripMiles: trip.tripMiles,
                         tripGasCost: trip.tripGasCost,
                     });
@@ -510,6 +521,7 @@ const AdminFinances = () => {
                     paymentRequestSent: newEntry.paymentRequestSent,
                     paid: newEntry.paid,
                     taxed: newEntry.taxed,
+                    teachingRole: normalizeTeachingRole(newEntry.teachingRole),
                     tripMiles: trip.tripMiles,
                     tripGasCost: trip.tripGasCost,
                 });
@@ -553,7 +565,8 @@ const AdminFinances = () => {
                 taxed: 'no',
                 repeat: 'no',
                 repeatCount: 1,
-                repeatFrequency: 'weekly'
+                repeatFrequency: 'weekly',
+                teachingRole: 'regular',
             });
             setShowAddForm(false);
 
@@ -614,6 +627,7 @@ const AdminFinances = () => {
             grossRate: entry.grossRate || entry.rate || '',
             receivedRate: entry.receivedRate || entry.rate || '',
             location: normalizeFinanceLocation(entry.location),
+            teachingRole: normalizeTeachingRole(entry.teachingRole),
         });
     };
 
@@ -708,6 +722,7 @@ const AdminFinances = () => {
             if (bulkEditData.paid) updates.paid = bulkEditData.paid;
             if (bulkEditData.taxed) updates.taxed = bulkEditData.taxed;
             if (bulkEditData.paymentMethod) updates.paymentMethod = bulkEditData.paymentMethod;
+            if (bulkEditData.teachingRole) updates.teachingRole = bulkEditData.teachingRole;
 
             if (Object.keys(updates).length === 0) {
                 Swal.fire({
@@ -741,6 +756,9 @@ const AdminFinances = () => {
                     paymentRequestSent: entry.paymentRequestSent || 'no',
                     paid: updates.paid || entry.paid || 'no',
                     taxed: updates.taxed || entry.taxed || 'no',
+                    teachingRole: updates.teachingRole
+                        ? normalizeTeachingRole(updates.teachingRole)
+                        : normalizeTeachingRole(entry.teachingRole),
                     tripMiles: trip.tripMiles,
                     tripGasCost: trip.tripGasCost,
                 };
@@ -1167,6 +1185,17 @@ const AdminFinances = () => {
                                     required
                                 />
                             </div>
+                            <div className="form-group">
+                                <label title="Regular weekly slot vs substitute / cover">Regular / Sub</label>
+                                <select
+                                    name="teachingRole"
+                                    value={newEntry.teachingRole || 'regular'}
+                                    onChange={handleInputChange}
+                                >
+                                    <option value="regular">Regular</option>
+                                    <option value="sub">Substitute</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div className="form-row">
@@ -1391,6 +1420,12 @@ const AdminFinances = () => {
                         <div className="header-cell">Date</div>
                         <div className="header-cell">Time</div>
                         <div className="header-cell">Class</div>
+                        <div
+                            className="header-cell"
+                            title="Regular weekly slot vs substitute (cover) class"
+                        >
+                            Reg / Sub
+                        </div>
                         <div className="header-cell header-cell--hint" title="Click a location in a row for yearly totals, pay per class, and drive estimates">
                             Location
                         </div>
@@ -1576,6 +1611,18 @@ const AdminFinances = () => {
                                                             className="edit-input"
                                                         />
                                                     </div>
+                                                    <div className="table-cell table-cell--teaching-role">
+                                                        <select
+                                                            name="teachingRole"
+                                                            value={editingData.teachingRole || 'regular'}
+                                                            onChange={handleEditInputChange}
+                                                            className="edit-select"
+                                                            title="Regular vs substitute"
+                                                        >
+                                                            <option value="regular">Reg</option>
+                                                            <option value="sub">Sub</option>
+                                                        </select>
+                                                    </div>
                                                     <div className="table-cell table-cell--location-edit">
                                                         <input
                                                             type="text"
@@ -1691,6 +1738,16 @@ const AdminFinances = () => {
                                                         title={entry.class || ''}
                                                     >
                                                         {entry.class}
+                                                    </div>
+                                                    <div
+                                                        className="table-cell table-cell--teaching-role table-cell--truncate"
+                                                        title={
+                                                            normalizeTeachingRole(entry.teachingRole) === 'sub'
+                                                                ? 'Substitute class'
+                                                                : 'Regular class'
+                                                        }
+                                                    >
+                                                        {teachingRoleShortLabel(entry.teachingRole)}
                                                     </div>
                                                     <div className="table-cell table-cell--location-wrap">
                                                         <button
@@ -1863,6 +1920,16 @@ const AdminFinances = () => {
                                                             {formatTime(row.time)}
                                                         </span>
                                                         <span className="location-stats-class-name">{row.className}</span>
+                                                        <span
+                                                            className="location-stats-class-role"
+                                                            title={
+                                                                row.teachingRole === 'sub'
+                                                                    ? 'Substitute'
+                                                                    : 'Regular'
+                                                            }
+                                                        >
+                                                            {row.teachingRole === 'sub' ? 'Sub' : 'Reg'}
+                                                        </span>
                                                         <span
                                                             className="location-stats-class-category"
                                                             title="Category"
@@ -2054,6 +2121,20 @@ const AdminFinances = () => {
                                     <option value="card">Card</option>
                                 </select>
                             </div>
+                            <div className="form-group">
+                                <label>Regular / Sub</label>
+                                <select
+                                    name="teachingRole"
+                                    value={bulkEditData.teachingRole}
+                                    onChange={(e) =>
+                                        setBulkEditData({ ...bulkEditData, teachingRole: e.target.value })
+                                    }
+                                >
+                                    <option value="">-- Keep Current --</option>
+                                    <option value="regular">Regular</option>
+                                    <option value="sub">Substitute</option>
+                                </select>
+                            </div>
                             <div className="form-actions">
                                 <button type="submit" className="submit-btn">Apply Changes</button>
                                 <button 
@@ -2065,7 +2146,8 @@ const AdminFinances = () => {
                                             category: '',
                                             paid: '',
                                             taxed: '',
-                                            paymentMethod: ''
+                                            paymentMethod: '',
+                                            teachingRole: '',
                                         });
                                     }}
                                 >
