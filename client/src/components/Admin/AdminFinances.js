@@ -1778,7 +1778,6 @@ const AdminFinances = () => {
                         </div>
 
                         <div className="location-stats-section">
-                            <h4>By year (tax & teaching)</h4>
                             <div className="location-stats-table-wrap">
                                 <table className="location-stats-table">
                                     <thead>
