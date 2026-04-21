@@ -1843,9 +1843,10 @@ const AdminFinances = () => {
                         </div>
 
                         <div className="location-stats-section">
-                            <h4>Classes taught (by month)</h4>
+                            <h4>All sessions (by month)</h4>
                             <p className="location-stats-classes-intro">
-                                Yoga teaching rows at this location, newest month first.
+                                Every finance row at this location (yoga teaching, staff meetings, workshops, etc.),
+                                newest month first.
                             </p>
                             {locationReport.classesByMonth && locationReport.classesByMonth.length > 0 ? (
                                 <div className="location-stats-classes-by-month">
@@ -1862,6 +1863,12 @@ const AdminFinances = () => {
                                                             {formatTime(row.time)}
                                                         </span>
                                                         <span className="location-stats-class-name">{row.className}</span>
+                                                        <span
+                                                            className="location-stats-class-category"
+                                                            title="Category"
+                                                        >
+                                                            {row.category}
+                                                        </span>
                                                     </li>
                                                 ))}
                                             </ul>
@@ -1870,7 +1877,7 @@ const AdminFinances = () => {
                                 </div>
                             ) : (
                                 <p className="location-stats-empty location-stats-empty--inline">
-                                    No yoga teaching classes logged for this location yet.
+                                    No rows for this location yet.
                                 </p>
                             )}
                         </div>

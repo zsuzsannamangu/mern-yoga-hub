@@ -1189,7 +1189,7 @@ $class-table-grid-cols-sm:
 
     li {
         display: grid;
-        grid-template-columns: minmax(7rem, auto) minmax(5rem, auto) 1fr;
+        grid-template-columns: minmax(7rem, auto) minmax(5rem, auto) 1fr minmax(6.5rem, auto);
         gap: 10px 12px;
         align-items: baseline;
         padding: 6px 0;
@@ -1219,10 +1219,24 @@ $class-table-grid-cols-sm:
     word-break: break-word;
 }
 
+.location-stats-class-category {
+    color: $secondary-text-color;
+    font-size: 0.88em;
+    font-weight: 400;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 @media (max-width: 520px) {
     .location-stats-class-list li {
         grid-template-columns: 1fr;
         gap: 4px;
+    }
+
+    .location-stats-class-category {
+        text-align: left;
     }
 }
 

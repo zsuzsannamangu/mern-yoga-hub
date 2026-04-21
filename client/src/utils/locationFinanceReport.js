@@ -19,29 +19,33 @@ function formatMonthHeading(yyyyMm) {
 }
 
 /**
- * Yoga-teaching rows at this location, grouped by calendar month (most recent month first).
+ * All finance rows at this location (every category — staff meetings, workshops, etc.),
+ * grouped by calendar month (most recent month first).
  */
 function buildClassesByMonth(filteredEntries) {
-    const teachingRows = (filteredEntries || [])
-        .filter((e) => e.category === 'yoga teaching')
+    const rows = (filteredEntries || [])
+        .filter((e) => e != null)
         .sort((a, b) => {
             const d = (a.date || '').localeCompare(b.date || '');
             if (d !== 0) return d;
             return (a.time || '').localeCompare(b.time || '');
         });
 
-    /** @type {Map<string, Array<{ id: string, date: string, time: string, className: string }>>} */
+    /** @type {Map<string, Array<{ id: string, date: string, time: string, className: string, category: string }>>} */
     const byMonth = new Map();
-    for (const e of teachingRows) {
+    for (const e of rows) {
         const dateStr = e.date || '';
         if (dateStr.length < 7) continue;
         const monthKey = dateStr.slice(0, 7);
         if (!byMonth.has(monthKey)) byMonth.set(monthKey, []);
         byMonth.get(monthKey).push({
-            id: String(e.id ?? e._id ?? `${e.date}-${e.time}-${e.class}`),
+            id: String(
+                e.id ?? e._id ?? `${e.date}-${e.time}-${e.class}-${e.category ?? ''}`
+            ),
             date: e.date,
             time: e.time,
             className: e.class || '—',
+            category: e.category || 'other',
         });
     }
 
