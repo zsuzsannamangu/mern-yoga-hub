@@ -104,8 +104,7 @@ function Home() {
         '@id': `${siteUrl}/#website`,
         url: `${siteUrl}/`,
         name: 'Yoga and Chocolate | Zsuzsanna Mangu',
-        description:
-          'Handcrafted plant-based chocolates and trauma-informed yoga in Portland, Oregon and online — classes, yoga therapy, private yoga, workshops, retreat-style events, and chocolate tastings.',
+        description: seo.home.description,
         publisher: { '@id': `${siteUrl}/#person` },
       },
       {

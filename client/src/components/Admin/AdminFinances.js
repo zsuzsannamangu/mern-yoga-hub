@@ -57,6 +57,10 @@ function normalizeTeachingRole(val) {
     return val === 'sub' ? 'sub' : 'regular';
 }
 
+function isYogaTeachingCategory(cat) {
+    return (cat || '').trim() === 'yoga teaching';
+}
+
 function teachingRoleShortLabel(val) {
     return normalizeTeachingRole(val) === 'sub' ? 'Sub' : 'Reg';
 }
@@ -441,10 +445,13 @@ const AdminFinances = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setNewEntry(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setNewEntry((prev) => {
+            const next = { ...prev, [name]: value };
+            if (name === 'category' && !isYogaTeachingCategory(value)) {
+                next.teachingRole = 'regular';
+            }
+            return next;
+        });
     };
 
     const generateRepeatDates = (startDate, frequency, count) => {
@@ -515,7 +522,9 @@ const AdminFinances = () => {
                         paymentRequestSent: newEntry.paymentRequestSent,
                         paid: newEntry.paid,
                         taxed: newEntry.taxed,
-                        teachingRole: normalizeTeachingRole(newEntry.teachingRole),
+                        teachingRole: isYogaTeachingCategory(newEntry.category)
+                            ? normalizeTeachingRole(newEntry.teachingRole)
+                            : 'regular',
                         tripMiles: trip.tripMiles,
                         tripGasCost: trip.tripGasCost,
                     });
@@ -536,7 +545,9 @@ const AdminFinances = () => {
                     paymentRequestSent: newEntry.paymentRequestSent,
                     paid: newEntry.paid,
                     taxed: newEntry.taxed,
-                    teachingRole: normalizeTeachingRole(newEntry.teachingRole),
+                    teachingRole: isYogaTeachingCategory(newEntry.category)
+                        ? normalizeTeachingRole(newEntry.teachingRole)
+                        : 'regular',
                     tripMiles: trip.tripMiles,
                     tripGasCost: trip.tripGasCost,
                 });
@@ -656,6 +667,9 @@ const AdminFinances = () => {
                 location: loc,
                 tripMiles: trip.tripMiles,
                 tripGasCost: trip.tripGasCost,
+                teachingRole: isYogaTeachingCategory(editingData.category)
+                    ? normalizeTeachingRole(editingData.teachingRole)
+                    : 'regular',
             };
             const response = await adminAxiosInstance.put(`/api/finances/${editingId}`, payload, {
                 headers: { Authorization: `Bearer ${token}` },
@@ -758,12 +772,22 @@ const AdminFinances = () => {
                 // Use existing entry values and override with bulk updates
                 const loc = normalizeFinanceLocation(entry.location);
                 const trip = computeTripMilesAndGasForRow(loc, milesOverrides, travelSettings);
+                const finalCategory = updates.category || entry.category || 'other';
+                let teachingRoleForRow;
+                if (!isYogaTeachingCategory(finalCategory)) {
+                    teachingRoleForRow = 'regular';
+                } else if (updates.teachingRole) {
+                    teachingRoleForRow = normalizeTeachingRole(updates.teachingRole);
+                } else {
+                    teachingRoleForRow = normalizeTeachingRole(entry.teachingRole);
+                }
+
                 const updatedEntry = {
                     date: entry.date,
                     time: entry.time,
                     class: entry.class || entry.className, // Handle both field names
                     location: loc,
-                    category: updates.category || entry.category || 'other',
+                    category: finalCategory,
                     grossRate: entry.grossRate || entry.rate || 0,
                     receivedRate: entry.receivedRate || entry.rate || 0,
                     paymentFrequency: entry.paymentFrequency || 'per-class',
@@ -771,9 +795,7 @@ const AdminFinances = () => {
                     paymentRequestSent: entry.paymentRequestSent || 'no',
                     paid: updates.paid || entry.paid || 'no',
                     taxed: updates.taxed || entry.taxed || 'no',
-                    teachingRole: updates.teachingRole
-                        ? normalizeTeachingRole(updates.teachingRole)
-                        : normalizeTeachingRole(entry.teachingRole),
+                    teachingRole: teachingRoleForRow,
                     tripMiles: trip.tripMiles,
                     tripGasCost: trip.tripGasCost,
                 };
@@ -794,7 +816,8 @@ const AdminFinances = () => {
                 category: '',
                 paid: '',
                 taxed: '',
-                paymentMethod: ''
+                paymentMethod: '',
+                teachingRole: '',
             });
 
         } catch (error) {
@@ -854,10 +877,13 @@ const AdminFinances = () => {
 
     const handleEditInputChange = (e) => {
         const { name, value } = e.target;
-        setEditingData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setEditingData((prev) => {
+            const next = { ...prev, [name]: value };
+            if (name === 'category' && !isYogaTeachingCategory(value)) {
+                next.teachingRole = 'regular';
+            }
+            return next;
+        });
     };
 
     const locationReport = useMemo(() => {
@@ -1200,17 +1226,6 @@ const AdminFinances = () => {
                                     required
                                 />
                             </div>
-                            <div className="form-group">
-                                <label title="Regular weekly slot vs substitute / cover">Regular / Sub</label>
-                                <select
-                                    name="teachingRole"
-                                    value={newEntry.teachingRole || 'regular'}
-                                    onChange={handleInputChange}
-                                >
-                                    <option value="regular">Regular</option>
-                                    <option value="sub">Substitute</option>
-                                </select>
-                            </div>
                         </div>
 
                         <div className="form-row">
@@ -1255,6 +1270,19 @@ const AdminFinances = () => {
                                     <option value="other">Other</option>
                                 </select>
                             </div>
+                            {isYogaTeachingCategory(newEntry.category) && (
+                                <div className="form-group">
+                                    <label title="Regular weekly slot vs substitute / cover">Regular / Sub</label>
+                                    <select
+                                        name="teachingRole"
+                                        value={newEntry.teachingRole || 'regular'}
+                                        onChange={handleInputChange}
+                                    >
+                                        <option value="regular">Regular</option>
+                                        <option value="sub">Substitute</option>
+                                    </select>
+                                </div>
+                            )}
                         </div>
 
                         <div className="form-row">
@@ -1437,7 +1465,7 @@ const AdminFinances = () => {
                         <div className="header-cell">Class</div>
                         <div
                             className="header-cell"
-                            title="Regular weekly slot vs substitute (cover) class"
+                            title="Regular vs substitute for yoga teaching only; other categories show —"
                         >
                             Reg / Sub
                         </div>
@@ -1637,16 +1665,20 @@ const AdminFinances = () => {
                                                         />
                                                     </div>
                                                     <div className="table-cell table-cell--teaching-role">
-                                                        <select
-                                                            name="teachingRole"
-                                                            value={editingData.teachingRole || 'regular'}
-                                                            onChange={handleEditInputChange}
-                                                            className="edit-select"
-                                                            title="Regular vs substitute"
-                                                        >
-                                                            <option value="regular">Reg</option>
-                                                            <option value="sub">Sub</option>
-                                                        </select>
+                                                        {isYogaTeachingCategory(editingData.category) ? (
+                                                            <select
+                                                                name="teachingRole"
+                                                                value={editingData.teachingRole || 'regular'}
+                                                                onChange={handleEditInputChange}
+                                                                className="edit-select"
+                                                                title="Regular vs substitute"
+                                                            >
+                                                                <option value="regular">Reg</option>
+                                                                <option value="sub">Sub</option>
+                                                            </select>
+                                                        ) : (
+                                                            <span title="Not applicable for this category">—</span>
+                                                        )}
                                                     </div>
                                                     <div className="table-cell table-cell--location-edit">
                                                         <input
@@ -1767,12 +1799,16 @@ const AdminFinances = () => {
                                                     <div
                                                         className="table-cell table-cell--teaching-role table-cell--truncate"
                                                         title={
-                                                            normalizeTeachingRole(entry.teachingRole) === 'sub'
-                                                                ? 'Substitute class'
-                                                                : 'Regular class'
+                                                            isYogaTeachingCategory(entry.category)
+                                                                ? normalizeTeachingRole(entry.teachingRole) === 'sub'
+                                                                    ? 'Substitute class'
+                                                                    : 'Regular class'
+                                                                : undefined
                                                         }
                                                     >
-                                                        {teachingRoleShortLabel(entry.teachingRole)}
+                                                        {isYogaTeachingCategory(entry.category)
+                                                            ? teachingRoleShortLabel(entry.teachingRole)
+                                                            : '—'}
                                                     </div>
                                                     <div className="table-cell table-cell--location-wrap">
                                                         <button
@@ -1948,12 +1984,18 @@ const AdminFinances = () => {
                                                         <span
                                                             className="location-stats-class-role"
                                                             title={
-                                                                row.teachingRole === 'sub'
-                                                                    ? 'Substitute'
-                                                                    : 'Regular'
+                                                                isYogaTeachingCategory(row.category)
+                                                                    ? row.teachingRole === 'sub'
+                                                                        ? 'Substitute'
+                                                                        : 'Regular'
+                                                                    : undefined
                                                             }
                                                         >
-                                                            {row.teachingRole === 'sub' ? 'Sub' : 'Reg'}
+                                                            {isYogaTeachingCategory(row.category)
+                                                                ? row.teachingRole === 'sub'
+                                                                    ? 'Sub'
+                                                                    : 'Reg'
+                                                                : '—'}
                                                         </span>
                                                         <span
                                                             className="location-stats-class-category"
