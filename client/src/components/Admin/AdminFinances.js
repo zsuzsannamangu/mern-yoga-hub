@@ -1844,6 +1844,39 @@ const AdminFinances = () => {
                         </div>
 
                         <div className="location-stats-section">
+                            <h4>Classes taught (by month)</h4>
+                            <p className="location-stats-classes-intro">
+                                Yoga teaching rows at this location, newest month first.
+                            </p>
+                            {locationReport.classesByMonth && locationReport.classesByMonth.length > 0 ? (
+                                <div className="location-stats-classes-by-month">
+                                    {locationReport.classesByMonth.map((block) => (
+                                        <div key={block.monthKey} className="location-stats-month-block">
+                                            <h5 className="location-stats-month-heading">{block.monthLabel}</h5>
+                                            <ul className="location-stats-class-list">
+                                                {block.classes.map((row) => (
+                                                    <li key={row.id}>
+                                                        <span className="location-stats-class-date">
+                                                            {formatDate(row.date)}
+                                                        </span>
+                                                        <span className="location-stats-class-time">
+                                                            {formatTime(row.time)}
+                                                        </span>
+                                                        <span className="location-stats-class-name">{row.className}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p className="location-stats-empty location-stats-empty--inline">
+                                    No yoga teaching classes logged for this location yet.
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="location-stats-section">
                             <h4>Gross pay per yoga class (this location)</h4>
                             <ul className="location-stats-gross-list">
                                 <li>

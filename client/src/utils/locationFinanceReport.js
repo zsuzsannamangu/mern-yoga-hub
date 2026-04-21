@@ -11,6 +11,49 @@ function parseYear(dateStr) {
     return Number.isNaN(y) ? null : y;
 }
 
+/** @param {string} yyyyMm e.g. `2025-04` */
+function formatMonthHeading(yyyyMm) {
+    const [y, m] = yyyyMm.split('-').map((x) => parseInt(x, 10));
+    if (!y || !m) return yyyyMm;
+    return new Date(y, m - 1, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+}
+
+/**
+ * Yoga-teaching rows at this location, grouped by calendar month (most recent month first).
+ */
+function buildClassesByMonth(filteredEntries) {
+    const teachingRows = (filteredEntries || [])
+        .filter((e) => e.category === 'yoga teaching')
+        .sort((a, b) => {
+            const d = (a.date || '').localeCompare(b.date || '');
+            if (d !== 0) return d;
+            return (a.time || '').localeCompare(b.time || '');
+        });
+
+    /** @type {Map<string, Array<{ id: string, date: string, time: string, className: string }>>} */
+    const byMonth = new Map();
+    for (const e of teachingRows) {
+        const dateStr = e.date || '';
+        if (dateStr.length < 7) continue;
+        const monthKey = dateStr.slice(0, 7);
+        if (!byMonth.has(monthKey)) byMonth.set(monthKey, []);
+        byMonth.get(monthKey).push({
+            id: String(e.id ?? e._id ?? `${e.date}-${e.time}-${e.class}`),
+            date: e.date,
+            time: e.time,
+            className: e.class || '—',
+        });
+    }
+
+    return Array.from(byMonth.entries())
+        .sort((a, b) => b[0].localeCompare(a[0]))
+        .map(([monthKey, classes]) => ({
+            monthKey,
+            monthLabel: formatMonthHeading(monthKey),
+            classes,
+        }));
+}
+
 function numericGross(entry) {
     const n = Number(entry.grossRate ?? entry.rate ?? 0);
     return Number.isFinite(n) ? n : 0;
@@ -131,12 +174,15 @@ export function buildLocationFinanceReport(entries, canonicalLocation, opts) {
         }
     }
 
+    const classesByMonth = buildClassesByMonth(filtered);
+
     return {
         canonicalLocation,
         entryCount: filtered.length,
         oneWayMilesConfigured: oneWay,
         roundTripMilesPerSession,
         years,
+        classesByMonth,
         allTime: {
             ...allTime,
             roundTripMilesTotal: allTimeMiles,

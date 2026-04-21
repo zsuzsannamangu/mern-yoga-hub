@@ -1144,6 +1144,88 @@ $class-table-grid-cols-sm:
     font-style: italic;
 }
 
+.location-stats-empty--inline {
+    text-align: left !important;
+    margin: 0;
+}
+
+.location-stats-classes-intro {
+    margin: 0 0 12px 0;
+    font-size: 0.85rem;
+    color: $secondary-text-color;
+    line-height: 1.4;
+    font-family: $admin-table-font-family;
+}
+
+.location-stats-classes-by-month {
+    max-height: min(48vh, 420px);
+    overflow-y: auto;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    padding: 12px 14px;
+    background: rgba($content-background-color, 0.5);
+}
+
+.location-stats-month-block {
+    margin-bottom: 18px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.location-stats-month-heading {
+    margin: 0 0 8px 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: $main-title-color;
+    font-family: $font-title;
+}
+
+.location-stats-class-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+        display: grid;
+        grid-template-columns: minmax(7rem, auto) minmax(5rem, auto) 1fr;
+        gap: 10px 12px;
+        align-items: baseline;
+        padding: 6px 0;
+        border-bottom: 1px solid rgba($border-color, 0.45);
+        font-family: $admin-table-font-family;
+        font-size: $admin-table-font-size;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+}
+
+.location-stats-class-date {
+    color: $text-color;
+    white-space: nowrap;
+}
+
+.location-stats-class-time {
+    color: $secondary-text-color;
+    white-space: nowrap;
+}
+
+.location-stats-class-name {
+    color: $text-color;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+@media (max-width: 520px) {
+    .location-stats-class-list li {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+}
+
 .location-stats-gross-list {
     list-style: none;
     margin: 0;
