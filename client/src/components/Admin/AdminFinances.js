@@ -17,6 +17,10 @@ import {
 } from '../../utils/normalizeFinanceLocation';
 import { buildLocationFinanceReport } from '../../utils/locationFinanceReport';
 import {
+    LOCATION_FINANCE_DEFAULTS_BY_PRESET,
+    ADD_ENTRY_FINANCE_FIELD_DEFAULTS,
+} from '../../utils/locationFinanceDefaults';
+import {
     getOneWayMilesForLocation,
     DEFAULT_TUCSON_HYBRID_MPG,
     DEFAULT_GAS_PRICE_PER_GALLON,
@@ -142,10 +146,14 @@ const AdminFinances = () => {
         const preset = LOCATION_PRESETS.find((p) => p.id === presetId);
         if (!preset) return;
 
+        const financeDefaults =
+            LOCATION_FINANCE_DEFAULTS_BY_PRESET[presetId] || ADD_ENTRY_FINANCE_FIELD_DEFAULTS;
+
         setNewEntry((prev) => ({
             ...prev,
             locationPreset: presetId,
             location: presetId === 'other' ? '' : preset.location,
+            ...financeDefaults,
         }));
     };
 

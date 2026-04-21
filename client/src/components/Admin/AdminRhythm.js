@@ -292,10 +292,6 @@ export default function AdminRhythm() {
                     );
                 })}
 
-                <p className="admin-rhythm__footer-hint">
-                    Tip: duplicate this browser profile or export is not built in yet — copy the table into a doc if you
-                    need a backup. Clearing site data will remove saved edits.
-                </p>
             </div>
         </AdminLayout>
     );
