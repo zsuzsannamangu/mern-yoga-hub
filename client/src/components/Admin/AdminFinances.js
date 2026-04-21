@@ -20,6 +20,7 @@ import {
     LOCATION_FINANCE_DEFAULTS_BY_PRESET,
     ADD_ENTRY_FINANCE_FIELD_DEFAULTS,
 } from '../../utils/locationFinanceDefaults';
+import { inferLearnedFinanceDefaultsByPresetId } from '../../utils/inferFinanceDefaultsFromHistory';
 import {
     getOneWayMilesForLocation,
     DEFAULT_TUCSON_HYBRID_MPG,
@@ -76,25 +77,27 @@ function groupDataByMonth(data) {
     return grouped;
 }
 
+/** Location dropdown + canonical `location` string on finance rows (must match normalizeFinanceLocation). */
+const LOCATION_PRESETS = [
+    { id: 'bhakti', label: 'The Bhakti Yoga Movement Center', location: 'The Bhakti Yoga Movement Center' },
+    { id: 'blhc', label: 'BLHC', location: 'BLHC' },
+    { id: 'dear', label: 'Dear Yoga', location: 'Dear Yoga' },
+    { id: 'danner-boots', label: 'Danner Boots', location: 'Danner Boots' },
+    { id: 'firelight', label: 'Firelight Yoga', location: 'Firelight Yoga' },
+    { id: 'fullbodied', label: 'Full Bodied Yoga', location: 'Full Bodied Yoga' },
+    { id: 'yoga-refuge-nw', label: YOGA_REFUGE_NW, location: YOGA_REFUGE_NW },
+    { id: 'yoga-refuge-se', label: YOGA_REFUGE_SE, location: YOGA_REFUGE_SE },
+    { id: 'peoples-yoga-ne', label: PEOPLES_YOGA_NE, location: PEOPLES_YOGA_NE },
+    { id: 'peoples-yoga-se', label: PEOPLES_YOGA_SE, location: PEOPLES_YOGA_SE },
+    { id: 'heartspring', label: 'Heart Spring Health', location: 'Heart Spring Health' },
+    { id: 'practice-space', label: THE_PRACTICE_SPACE, location: THE_PRACTICE_SPACE },
+    { id: 'ready-set-grow', label: 'Ready Set Grow', location: 'Ready Set Grow' },
+    { id: 'yoga-riot', label: YOGA_RIOT, location: YOGA_RIOT },
+    { id: 'online', label: 'Online', location: 'Online' },
+    { id: 'other', label: 'Other (new location)', location: '' },
+];
+
 const AdminFinances = () => {
-    const LOCATION_PRESETS = [
-        { id: 'bhakti', label: 'The Bhakti Yoga Movement Center', location: 'The Bhakti Yoga Movement Center' },
-        { id: 'blhc', label: 'BLHC', location: 'BLHC' },
-        { id: 'dear', label: 'Dear Yoga', location: 'Dear Yoga' },
-        { id: 'danner-boots', label: 'Danner Boots', location: 'Danner Boots' },
-        { id: 'firelight', label: 'Firelight Yoga', location: 'Firelight Yoga' },
-        { id: 'fullbodied', label: 'Full Bodied Yoga', location: 'Full Bodied Yoga' },
-        { id: 'yoga-refuge-nw', label: YOGA_REFUGE_NW, location: YOGA_REFUGE_NW },
-        { id: 'yoga-refuge-se', label: YOGA_REFUGE_SE, location: YOGA_REFUGE_SE },
-        { id: 'peoples-yoga-ne', label: PEOPLES_YOGA_NE, location: PEOPLES_YOGA_NE },
-        { id: 'peoples-yoga-se', label: PEOPLES_YOGA_SE, location: PEOPLES_YOGA_SE },
-        { id: 'heartspring', label: 'Heart Spring Health', location: 'Heart Spring Health' },
-        { id: 'practice-space', label: THE_PRACTICE_SPACE, location: THE_PRACTICE_SPACE },
-        { id: 'ready-set-grow', label: 'Ready Set Grow', location: 'Ready Set Grow' },
-        { id: 'yoga-riot', label: YOGA_RIOT, location: YOGA_RIOT },
-        { id: 'online', label: 'Online', location: 'Online' },
-        { id: 'other', label: 'Other (new location)', location: '' },
-    ];
     const [classData, setClassData] = useState([]);
     const [expandedYears, setExpandedYears] = useState(() => new Set());
     const [expandedMonths, setExpandedMonths] = useState(new Set());
@@ -142,12 +145,19 @@ const AdminFinances = () => {
         repeatFrequency: 'weekly'
     });
 
+    const learnedFinanceDefaultsByPreset = useMemo(
+        () => inferLearnedFinanceDefaultsByPresetId(classData, LOCATION_PRESETS),
+        [classData]
+    );
+
     const handleLocationPresetChange = (presetId) => {
         const preset = LOCATION_PRESETS.find((p) => p.id === presetId);
         if (!preset) return;
 
-        const financeDefaults =
+        const staticDefaults =
             LOCATION_FINANCE_DEFAULTS_BY_PRESET[presetId] || ADD_ENTRY_FINANCE_FIELD_DEFAULTS;
+        const learned = learnedFinanceDefaultsByPreset[presetId];
+        const financeDefaults = learned ? { ...staticDefaults, ...learned } : staticDefaults;
 
         setNewEntry((prev) => ({
             ...prev,
@@ -1766,9 +1776,6 @@ const AdminFinances = () => {
                                 ✕
                             </button>
                         </div>
-                        <p className="location-stats-meta">
-                            {locationReport.entryCount} finance {locationReport.entryCount === 1 ? 'row' : 'rows'} at this location (all categories).
-                        </p>
 
                         <div className="location-stats-section">
                             <h4>By year (tax & teaching)</h4>
@@ -1890,7 +1897,7 @@ const AdminFinances = () => {
                                                 </button>
                                             </div>
                                             <span className="location-stats-hint">
-                                                Stored in your database (same on any device you use to log in). Each finance row
+                                                Each finance row
                                                 counts as one round trip (
                                                 {locationReport.roundTripMilesPerSession == null
                                                     ? 'set miles to calculate'
@@ -1928,7 +1935,6 @@ const AdminFinances = () => {
                                                     Add vehicle
                                                 </button>
                                             </div>
-                                            <span className="location-stats-hint">Stored in your database for all locations.</span>
                                         </label>
                                     </div>
                                 </>
