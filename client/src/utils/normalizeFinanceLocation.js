@@ -63,6 +63,14 @@ const LEGACY_PRACTICE_SPACE_LOWERCASE = {
     'practice space': THE_PRACTICE_SPACE,
 };
 
+/** Saved rows sometimes used a short label instead of the full preset string. */
+const BHAKTI_CANONICAL = 'The Bhakti Yoga Movement Center';
+
+const LEGACY_BHAKTI_LOWERCASE = {
+    bhakti: BHAKTI_CANONICAL,
+    bymc: BHAKTI_CANONICAL,
+};
+
 function collapseWhitespace(str) {
     return String(str || '')
         .trim()
@@ -89,6 +97,9 @@ export function normalizeFinanceLocation(raw) {
     const legacyPractice = LEGACY_PRACTICE_SPACE_LOWERCASE[lower];
     if (legacyPractice) return legacyPractice;
 
+    const legacyBhakti = LEGACY_BHAKTI_LOWERCASE[lower];
+    if (legacyBhakti) return legacyBhakti;
+
     // Compact abbreviations (FLY, FBY, TPY, TPY-NE, TPY-SE, …)
     if (lettersOnly === 'fly') return 'Firelight Yoga';
     if (lettersOnly === 'fby') return 'Full Bodied Yoga';
@@ -99,6 +110,7 @@ export function normalizeFinanceLocation(raw) {
     if (lettersOnly === 'yrse') return YOGA_REFUGE_SE;
     if (lettersOnly === 'yr') return YOGA_REFUGE_NW;
     if (lettersOnly === 'blhc') return 'BLHC';
+    if (lettersOnly === 'bhakti' || lettersOnly === 'bymc') return BHAKTI_CANONICAL;
     if (lettersOnly === 'db') return 'Danner Boots';
     if (lettersOnly === 'tps') return THE_PRACTICE_SPACE;
     if (lettersOnly === 'yogariot') return YOGA_RIOT;
@@ -106,6 +118,14 @@ export function normalizeFinanceLocation(raw) {
     // Firelight Yoga
     if (lower === 'fly' || /\bf\.?\s*l\.?\s*y\.?\b/i.test(s)) return 'Firelight Yoga';
     if (lower.includes('firelight')) return 'Firelight Yoga';
+
+    // The Bhakti Yoga Movement Center (short or missing “The ”)
+    if (
+        lower === 'bhakti yoga movement center' ||
+        /^bhakti\s+yoga\s+movement\s+center\b/i.test(s)
+    ) {
+        return BHAKTI_CANONICAL;
+    }
 
     // Full Bodied Yoga
     if (lower === 'fby' || /\bf\.?\s*b\.?\s*y\.?\b/i.test(s)) return 'Full Bodied Yoga';
