@@ -61,6 +61,12 @@ function teachingRoleShortLabel(val) {
     return normalizeTeachingRole(val) === 'sub' ? 'Sub' : 'Reg';
 }
 
+/** e.g. `44 classes (37 reg, 7 sub)` for year/month band labels */
+function formatYogaTeachingSummary(total, reg, sub) {
+    if (total === 0) return '0 classes';
+    return `${total} classes (${reg} reg, ${sub} sub)`;
+}
+
 function groupDataByMonth(data) {
     const grouped = {};
     data.forEach((entry) => {
@@ -74,11 +80,20 @@ function groupDataByMonth(data) {
                 name: monthName,
                 entries: [],
                 yogaTeachingCount: 0,
+                yogaTeachingRegularCount: 0,
+                yogaTeachingSubCount: 0,
                 yogaTherapyCount: 0,
             };
         }
         grouped[monthKey].entries.push(entry);
-        if (entry.category === 'yoga teaching') grouped[monthKey].yogaTeachingCount += 1;
+        if (entry.category === 'yoga teaching') {
+            grouped[monthKey].yogaTeachingCount += 1;
+            if (normalizeTeachingRole(entry.teachingRole) === 'sub') {
+                grouped[monthKey].yogaTeachingSubCount += 1;
+            } else {
+                grouped[monthKey].yogaTeachingRegularCount += 1;
+            }
+        }
         if (entry.category === 'yoga therapy') grouped[monthKey].yogaTherapyCount += 1;
     });
 
@@ -1457,6 +1472,8 @@ const AdminFinances = () => {
                         const yearOpen = expandedYears.has(yearStr);
                         const monthKeysInYear = monthTuples.map(([k]) => k);
                         const yearTeaching = monthTuples.reduce((s, [, m]) => s + m.yogaTeachingCount, 0);
+                        const yearTeachingReg = monthTuples.reduce((s, [, m]) => s + m.yogaTeachingRegularCount, 0);
+                        const yearTeachingSub = monthTuples.reduce((s, [, m]) => s + m.yogaTeachingSubCount, 0);
                         const yearTherapy = monthTuples.reduce((s, [, m]) => s + m.yogaTherapyCount, 0);
                         return (
                             <div
@@ -1493,7 +1510,9 @@ const AdminFinances = () => {
                                         <span className="month-name">{yearStr}</span>
                                     </span>
                                     <div className="month-count">
-                                        <span className="month-count__teach">{yearTeaching} classes</span>
+                                        <span className="month-count__teach">
+                                            {formatYogaTeachingSummary(yearTeaching, yearTeachingReg, yearTeachingSub)}
+                                        </span>
                                         <span className="month-count__sep" aria-hidden="true">
                                             {' · '}
                                         </span>
@@ -1535,7 +1554,13 @@ const AdminFinances = () => {
                                     <span className="month-name">{monthData.name}</span>
                                 </span>
                                 <div className="month-count">
-                                    <span className="month-count__teach">{monthData.yogaTeachingCount} classes</span>
+                                    <span className="month-count__teach">
+                                        {formatYogaTeachingSummary(
+                                            monthData.yogaTeachingCount,
+                                            monthData.yogaTeachingRegularCount,
+                                            monthData.yogaTeachingSubCount
+                                        )}
+                                    </span>
                                     <span className="month-count__sep" aria-hidden="true">
                                         {' · '}
                                     </span>
