@@ -109,7 +109,10 @@ function Footer() {
 
         {/* Newsletter Signup */}
         <div className="newsletter">
-          <p>Get updates about yoga classes, workshops, events, and new chocolates.</p>
+          <p className="newsletter-intro">
+            Get updates about yoga classes, workshops, events,{' '}
+            <span className="newsletter-line-tail">and new chocolates.</span>
+          </p>
           <form onSubmit={handleNewsletterSubmit}>
             <input
               type="email"

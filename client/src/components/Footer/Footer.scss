@@ -76,6 +76,11 @@
         font-family: $font-main;
     }
 
+    /* Keep “and new chocolates.” on one line so “chocolates” never wraps alone */
+    .newsletter-intro .newsletter-line-tail {
+        white-space: nowrap;
+    }
+
     form {
         display: flex;
         justify-content: center;

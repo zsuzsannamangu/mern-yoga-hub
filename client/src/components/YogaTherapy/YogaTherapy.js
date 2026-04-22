@@ -59,7 +59,7 @@ const FAQ_DATA = [
         {
             id: 6,
             question: "How long should I plan to work together?",
-            answer: "I recommend committing to at least eight weeks of yoga therapy when you can. That gives us time to build trust, tailor practices to you, and support meaningful, lasting shifts in your body, mind, and nervous system. If your life only allows a shorter stretch, we still start where you are — this is a guideline, not a rule."
+            answer: "I recommend committing to at least eight weeks of yoga therapy when you can. That gives us time to build trust and support meaningful, lasting shifts in your body, mind, and nervous system. If your life only allows a shorter stretch, we still start where you are, this is a guideline, not a rule."
         },
         {
             id: 7,
