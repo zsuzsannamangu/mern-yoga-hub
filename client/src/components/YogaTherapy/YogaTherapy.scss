@@ -151,7 +151,7 @@
 
       p {
         text-align: left;
-        hyphens: auto;
+        hyphens: none;
         word-spacing: normal;
         text-rendering: optimizeLegibility;
       }
@@ -421,7 +421,7 @@
       color: $text-color;
       line-height: 1.7;
       text-align: left;
-      hyphens: auto;
+      hyphens: none;
       word-spacing: normal;
       text-rendering: optimizeLegibility;
 
@@ -431,21 +431,18 @@
     }
   }
 
+  // Inline links: match site default (purple, no underline) — not $accent-color
   a {
-    color: $accent-color;
-    text-decoration: underline;
+    color: $purple-primary;
+    text-decoration: none;
 
     &:hover {
-      color: darken($accent-color, 10%);
+      color: $purple-secondary;
     }
 
-    &.register-link {
-      color: $purple-primary;
-      text-decoration: underline;
-
-      &:hover {
-        color: $purple-secondary;
-      }
+    &:focus-visible {
+      outline: 2px solid $purple-primary;
+      outline-offset: 2px;
     }
   }
 
@@ -976,7 +973,7 @@
       line-height: 1.7;
       color: $secondary-text-color;
       text-align: left;
-      hyphens: auto;
+      hyphens: none;
       word-spacing: normal;
       text-rendering: optimizeLegibility;
 

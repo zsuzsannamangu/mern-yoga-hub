@@ -68,6 +68,11 @@ button:focus {
   }
 }
 
+/* ~18px when the browser default is 16px — improves readability for rem-based type sitewide */
+html {
+  font-size: 112.5%;
+}
+
 body,
 html,
 #root {
@@ -77,6 +82,10 @@ html,
   padding: 0;
   overflow-x: hidden; // Prevent horizontal scrolling
   font-family: $font-main; // Apply global font style
+}
+
+body {
+  line-height: 1.6;
 }
 
 a {
@@ -137,7 +146,7 @@ h1 {
 }
 
 .logo {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 500;
   color: $tertiary-text-color; // Styled logo text
   flex-shrink: 0; // Prevent shrinking
@@ -153,7 +162,7 @@ h1 {
 }
 
 .nav-item {
-  font-size: 16px;
+  font-size: 1rem;
   color: $text-color; // Default link color
   text-decoration: none;
   transition: color 0.3s; // Smooth color transition on hover

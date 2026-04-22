@@ -36,7 +36,7 @@ const FAQ_DATA = [
                 "Yoga therapy may be defined as the application of Yogic principles to a particular person with the objective of achieving a particular spiritual, psychological, or physiological goal. The means employed are comprised of intelligently conceived steps that include but are not limited to the components of Ashtânga Yoga, which includes the educational teachings of yama, niyama, âsana, prânâyâma, pratyâhâra, dhâranâ, dhyâna, and samâdhi. Also included are the application of meditation, textual study, spiritual or psychological counseling, chanting, imagery, prayer, and ritual to meet the needs of the individual. Yoga therapy respects individual differences in age, culture, religion, philosophy, occupation, and mental and physical health.",
             definitionAttribution: {
                 beforeLink: ' (Definition from the ',
-                href: 'https://www.iayt.org/about-yoga-therapy',
+                href: 'https://www.iayt.org/page/YogaTherapyDefinitio',
                 linkLabel: 'International Association of Yoga Therapists',
                 afterLink: ')',
             },

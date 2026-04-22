@@ -151,7 +151,7 @@
 
       p {
         text-align: left;
-        hyphens: auto;
+        hyphens: none;
         word-spacing: normal;
         text-rendering: optimizeLegibility;
       }
@@ -371,7 +371,7 @@
       color: $text-color;
       line-height: 1.7;
       text-align: left;
-      hyphens: auto;
+      hyphens: none;
       word-spacing: normal;
       text-rendering: optimizeLegibility;
 
@@ -925,7 +925,7 @@
       line-height: 1.7;
       color: $secondary-text-color;
       text-align: left;
-      hyphens: auto;
+      hyphens: none;
       word-spacing: normal;
       text-rendering: optimizeLegibility;
 
