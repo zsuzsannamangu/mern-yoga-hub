@@ -16,9 +16,10 @@ function AboutChocolates() {
           <div className="title-line"></div>
           <p>Hello! Welcome to ReTreat Chocolates!</p>
           <p>
-            ReTreat Chocolates is my Portland-based line of small-batch, plant-based chocolate—sold here on Yoga and
-            Chocolate and through local pickup. Every batch is made with organic or ceremonial cacao. I’m Zsuzsanna
-            Mangu; I’ve run this business since November 2020.
+            ReTreat Chocolates is my Portland-based line of small-batch, plant-based chocolate — including maple-sweetened{' '}
+            <strong>dark chocolate made in Portland</strong>
+            — sold here on Yoga and Chocolate and through local pickup. Every batch is made with organic or ceremonial cacao.
+            I&apos;m Zsuzsanna Mangu; I&apos;ve run this business since November 2020.
           </p>
           <h3>My Mission: Reduce - Reuse - ReTreat™</h3>
           <p>Driven by a commitment to sustainability, ReTreat offers chocolates in returnable and reusable packaging. Our family practices low-waste living, and ReTreat is an extension of that

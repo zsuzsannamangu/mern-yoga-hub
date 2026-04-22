@@ -119,6 +119,7 @@ function Home() {
           'Private yoga classes Portland',
           'Yoga and chocolate workshop Portland',
           'Yoga and chocolate workshops',
+          'Portland dark chocolate',
           'ReTreat chocolates',
           'Trauma-informed yoga',
         ],

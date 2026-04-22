@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import './Chocolates.scss';
 import Products from './Products';
@@ -9,12 +8,73 @@ import Slideshow from './Slideshow';
 import { motion } from 'framer-motion';
 import Testimonials from './Testimonials';
 import VideoBlock from './VideoBlock';
-import { seo } from '../../config/seoContent';
+import { seo, SEO_SITE_HOST } from '../../config/seoContent';
+
+const CHOCOLATES_OG_IMAGE = `${SEO_SITE_HOST}/images/chocolates/Truffles_1.jpg`;
 
 function Chocolates() {
     const scrollToProductsSection = () => {
         document.getElementById("products-section").scrollIntoView({ behavior: "smooth" });
     };
+
+    const chocolatesStructuredData = useMemo(() => {
+        const pageUrl = `${SEO_SITE_HOST}/chocolates`;
+        return {
+            '@context': 'https://schema.org',
+            '@graph': [
+                {
+                    '@type': 'WebPage',
+                    '@id': `${pageUrl}#webpage`,
+                    url: pageUrl,
+                    name: seo.chocolates.title,
+                    description: seo.chocolates.description,
+                    inLanguage: 'en-US',
+                    primaryImageOfPage: {
+                        '@type': 'ImageObject',
+                        url: CHOCOLATES_OG_IMAGE,
+                    },
+                },
+                {
+                    '@type': 'BreadcrumbList',
+                    itemListElement: [
+                        {
+                            '@type': 'ListItem',
+                            position: 1,
+                            name: 'Home',
+                            item: `${SEO_SITE_HOST}/`,
+                        },
+                        {
+                            '@type': 'ListItem',
+                            position: 2,
+                            name: 'ReTreat Chocolates',
+                            item: pageUrl,
+                        },
+                    ],
+                },
+                {
+                    '@type': 'Organization',
+                    '@id': `${pageUrl}#retreat-chocolates`,
+                    name: 'ReTreat Chocolates',
+                    url: pageUrl,
+                    description: seo.chocolates.description,
+                    founder: {
+                        '@type': 'Person',
+                        name: 'Zsuzsanna Mangu',
+                        url: `${SEO_SITE_HOST}/`,
+                    },
+                    areaServed: {
+                        '@type': 'City',
+                        name: 'Portland',
+                        containedInPlace: {
+                            '@type': 'State',
+                            name: 'Oregon',
+                        },
+                    },
+                },
+            ],
+        };
+    }, []);
+
     return (
         <div className='chocolates-page'>
             <Helmet>
@@ -22,8 +82,13 @@ function Chocolates() {
                 <meta name="description" content={seo.chocolates.description} />
                 <meta property="og:title" content={seo.chocolates.title} />
                 <meta property="og:description" content={seo.chocolates.description} />
+                <meta property="og:image" content={CHOCOLATES_OG_IMAGE} />
+                <meta property="og:image:alt" content="ReTreat handcrafted dark chocolate — Portland small-batch vegan chocolate" />
+                <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content={seo.chocolates.title} />
                 <meta name="twitter:description" content={seo.chocolates.description} />
+                <meta name="twitter:image" content={CHOCOLATES_OG_IMAGE} />
+                <script type="application/ld+json">{JSON.stringify(chocolatesStructuredData)}</script>
             </Helmet>
 
             {/* Workshop Announcement Bar */}
@@ -52,6 +117,7 @@ function Chocolates() {
                         transition={{ delay: 0.5, duration: 1 }}
                     >
                         <h1>ReTreat Chocolates</h1>
+                        <p className="overlay-tagline">Small-batch dark chocolate in Portland — vegan, plant-based, sustainably sourced.</p>
                         <p>Plant-based. Sustainably sourced. Low waste packaging.</p>
                         <p>Organic, local and seasonal ingredients.</p>
                         <p>I never use: soy, palm oil, and refined sugar.</p>

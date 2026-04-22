@@ -58,6 +58,11 @@ const FAQ_DATA = [
         },
         {
             id: 6,
+            question: "How long should I plan to work together?",
+            answer: "I recommend committing to at least eight weeks of yoga therapy when you can. That gives us time to build trust, tailor practices to you, and support meaningful, lasting shifts in your body, mind, and nervous system. If your life only allows a shorter stretch, we still start where you are — this is a guideline, not a rule."
+        },
+        {
+            id: 7,
             question: "How much are yoga therapy sessions?",
             answer: "Yoga therapy sessions are offered on a sliding scale through June 2026, while I'm in training. Online sessions are $10-$80/hr, and in-person sessions in NW Portland are $20-$100/hr. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked."
         }
