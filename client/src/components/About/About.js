@@ -30,7 +30,7 @@ function About() {
         {
             id: 3,
             question: "What types of classes do you offer?",
-            answer: "I offer a variety of classes including Hatha Yoga, Vinyasa Flow, Slow Flow, Restorative Yoga, Postpartum Yoga, and Wheelchair & Adaptive Yoga. I also teach workshops combining yoga with chocolate tasting and chakra exploration."
+            answer: "I offer a variety of classes including Hatha Yoga, Vinyasa Flow, Slow Flow, Restorative Yoga, Postpartum Yoga, and Wheelchair & Adaptive Yoga."
         },
         {
             id: 4,

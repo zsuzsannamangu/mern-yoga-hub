@@ -7,9 +7,17 @@ import { motion } from 'framer-motion';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { seo, SEO_SITE_HOST } from '../../config/seoContent';
 
-/** Plain text for JSON-LD (strips FAQ answers that include HTML links). */
+/** Plain text for JSON-LD (strips any stray HTML). */
 function faqAnswerPlainText(htmlOrText) {
     return htmlOrText.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function faqAnswerTextForSchema(faq) {
+    if (faq.definitionAttribution) {
+        const { beforeLink, linkLabel, afterLink } = faq.definitionAttribution;
+        return `${faq.answer}${beforeLink}${linkLabel}${afterLink}`.replace(/\s+/g, ' ').trim();
+    }
+    return faqAnswerPlainText(faq.answer);
 }
 
 const YOGA_THERAPY_OG_IMAGE = `${SEO_SITE_HOST}/images/yoga/Zsuzsi_Home_4.jpg`;
@@ -23,36 +31,33 @@ const FAQ_DATA = [
         },
         {
             id: 2,
-            question: "What is trauma-informed yoga?",
-            answer: "Trauma-informed yoga is an approach that prioritizes safety, choice, and empowerment. It's designed to create a supportive environment where students can connect with their bodies at their own pace. The focus is on invitation rather than instruction, offering space for each person to decide what feels right for them in the moment."
+            question: "What is yoga therapy?",
+            answer:
+                "Yoga therapy may be defined as the application of Yogic principles to a particular person with the objective of achieving a particular spiritual, psychological, or physiological goal. The means employed are comprised of intelligently conceived steps that include but are not limited to the components of Ashtânga Yoga, which includes the educational teachings of yama, niyama, âsana, prânâyâma, pratyâhâra, dhâranâ, dhyâna, and samâdhi. Also included are the application of meditation, textual study, spiritual or psychological counseling, chanting, imagery, prayer, and ritual to meet the needs of the individual. Yoga therapy respects individual differences in age, culture, religion, philosophy, occupation, and mental and physical health.",
+            definitionAttribution: {
+                beforeLink: ' (Definition from the ',
+                href: 'https://www.iayt.org/about-yoga-therapy',
+                linkLabel: 'International Association of Yoga Therapists',
+                afterLink: ')',
+            },
         },
         {
             id: 3,
-            question: "What is yoga therapy?",
-            answer: "Yoga therapy may be defined as the application of Yogic principles to a particular person with the objective of achieving a particular spiritual, psychological, or physiological goal. The means employed are comprised of intelligently conceived steps that include but are not limited to the components of Ashtânga Yoga, which includes the educational teachings of yama, niyama, âsana, prânâyâma, pratyâhâra, dhâranâ, dhyâna, and samâdhi. Also included are the application of meditation, textual study, spiritual or psychological counseling, chanting, imagery, prayer, and ritual to meet the needs of the individual. Yoga therapy respects individual differences in age, culture, religion, philosophy, occupation, and mental and physical health. (Definition from the <a href='https://www.iayt.org/about-yoga-therapy' target='_blank' rel='noopener noreferrer'>International Association of Yoga Therapists</a>)"
-        },
-        {
-            id: 4,
             question: "Are sessions in-person or online?",
             answer: "I offer both. You're welcome to join in person in Portland, Oregon, or online via Google Meet. If you're local, I recommend in-person sessions when possible for deeper support."
         },
         {
-            id: 5,
+            id: 4,
             question: "Do you offer hands-on assists or touch during in-person sessions?",
             answer: "Yes, only with consent. I offer gentle, intentional touch and hands-on support when appropriate and always with your clear permission. Touch can be a beautiful tool for grounding, connection, and transformation."
         },
         {
-            id: 6,
+            id: 5,
             question: "What props do I need for online sessions?",
             answer: "If you have yoga props, great! But you can easily use everyday items too: a stack of books for blocks, a firm pillow for a bolster, a belt as a strap, and any cozy blanket you have on hand. I always offer modifications so you can make the most of what you have."
         },
         {
-            id: 7,
-            question: "Are yoga therapy sessions covered by insurance?",
-            answer: "Yoga therapy may be reimbursable through HSA or FSA accounts if recommended by a licensed healthcare provider. Please check with your provider to confirm eligibility."
-        },
-        {
-            id: 8,
+            id: 6,
             question: "How much are yoga therapy sessions?",
             answer: "Yoga therapy sessions are offered on a sliding scale through June 2026, while I'm in training. Online sessions are $10-$80/hr, and in-person sessions in NW Portland are $20-$100/hr. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked."
         }
@@ -97,12 +102,12 @@ function YogaTherapy() {
                 },
                 {
                     '@type': 'FAQPage',
-                    mainEntity: FAQ_DATA.map(({ question, answer }) => ({
+                    mainEntity: FAQ_DATA.map((faq) => ({
                         '@type': 'Question',
-                        name: question,
+                        name: faq.question,
                         acceptedAnswer: {
                             '@type': 'Answer',
-                            text: faqAnswerPlainText(answer),
+                            text: faqAnswerTextForSchema(faq),
                         },
                     })),
                 },
@@ -339,7 +344,22 @@ function YogaTherapy() {
                                 transition={{ duration: 0.3, ease: 'easeInOut' }}
                             >
                                 <div className="faq-answer-content">
-                                    <p>{faq.answer}</p>
+                                    <p>
+                                        {faq.answer}
+                                        {faq.definitionAttribution && (
+                                            <>
+                                                {faq.definitionAttribution.beforeLink}
+                                                <a
+                                                    href={faq.definitionAttribution.href}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    {faq.definitionAttribution.linkLabel}
+                                                </a>
+                                                {faq.definitionAttribution.afterLink}
+                                            </>
+                                        )}
+                                    </p>
                                 </div>
                             </motion.div>
                         </motion.div>

@@ -230,9 +230,13 @@
 }
 
 .right-section p {
-    display: flex;
-    flex-direction: column;
+    display: block;
     padding: 0;
+    margin: 0 0 1em;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 
