@@ -168,7 +168,7 @@ export default class Calendar extends Component {
               ✨ <strong>Yoga and chocolate workshop</strong> on May 9th at The People&apos;s Yoga
             </span>
             <a href="/yoga?section=workshop" className="announcement-link">
-              Workshop details &amp; sign up
+              Details &amp; sign up
             </a>
           </div>
         </div>
