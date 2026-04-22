@@ -117,7 +117,6 @@ function Chocolates() {
                         transition={{ delay: 0.5, duration: 1 }}
                     >
                         <h1>ReTreat Chocolates</h1>
-                        <p className="overlay-tagline">Small-batch dark chocolate in Portland — vegan, plant-based, sustainably sourced.</p>
                         <p>Plant-based. Sustainably sourced. Low waste packaging.</p>
                         <p>Organic, local and seasonal ingredients.</p>
                         <p>I never use: soy, palm oil, and refined sugar.</p>

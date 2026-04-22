@@ -48,21 +48,39 @@ button:focus {
   }
 }
 
-/* Accessibility: Skip to main content link */
+/* Accessibility: Skip to main content — fully hidden until focus (top:-40px left a purple sliver once root font-size grew) */
 .skip-link {
   position: absolute;
-  top: -40px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
   left: 0;
+  top: 0;
+  z-index: 10000;
   background: $purple-primary;
   color: $button-text-color;
-  padding: 8px 16px;
   text-decoration: none;
-  z-index: 10000;
-  border-radius: 0 0 4px 0;
   font-weight: 600;
-  
+
   &:focus {
+    position: fixed;
     top: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+    padding: 8px 16px;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    clip-path: none;
+    white-space: normal;
+    border-radius: 0 0 4px 0;
     outline: 3px solid $purple-secondary;
     outline-offset: 2px;
   }

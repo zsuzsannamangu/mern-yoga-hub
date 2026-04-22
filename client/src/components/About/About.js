@@ -15,39 +15,6 @@ const YOGA_CHOCOLATE_WORKSHOP_EVENTS_LD = {
     '@graph': [
         {
             '@type': 'Event',
-            '@id': `${SEO_SITE_HOST}/yoga#event-yoga-chocolate-firelight-2026-02-14`,
-            name: 'Awaken the Senses: Yoga, Chocolate & Chakras — Firelight Yoga, Portland',
-            description:
-                'Restorative yoga, meditation, and mindful tasting with handcrafted chakra chocolates (Root & Heart focus). Led by Zsuzsanna Mangu.',
-            startDate: '2026-02-14T15:00:00-08:00',
-            endDate: '2026-02-14T16:30:00-08:00',
-            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-            eventStatus: 'https://schema.org/EventScheduled',
-            location: {
-                '@type': 'Place',
-                name: 'Firelight Yoga',
-                address: {
-                    '@type': 'PostalAddress',
-                    addressLocality: 'Portland',
-                    addressRegion: 'OR',
-                    addressCountry: 'US',
-                },
-            },
-            offers: {
-                '@type': 'Offer',
-                url: 'https://firelightyoga.com/yoga-chocolate-chakras/',
-                availability: 'https://schema.org/InStock',
-            },
-            organizer: {
-                '@type': 'Person',
-                name: 'Zsuzsanna Mangu',
-                url: `${SEO_SITE_HOST}/`,
-            },
-            performer: { '@type': 'Person', name: 'Zsuzsanna Mangu' },
-            image: `${SEO_SITE_HOST}/images/chocolates/Chocolate_1.jpg`,
-        },
-        {
-            '@type': 'Event',
             '@id': `${SEO_SITE_HOST}/yoga#event-yoga-chocolate-peoples-2026-05-09`,
             name: "Awaken the Senses: Yoga, Chocolate & Chakras — The People's Yoga NE, Portland",
             description:
@@ -327,23 +294,6 @@ function About() {
                                     <div className="date-header">
                                         <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
-                                            <div className="date-text">February 14, 2026</div>
-                                            <div className="time-text">3:00 PM - 4:30 PM</div>
-                                        </div>
-                                    </div>
-                                    <div className="location-text">
-                                        <FaExternalLinkAlt className="register-icon" aria-hidden="true" />
-                                        <a href="https://firelightyoga.com/yoga-chocolate-chakras/" target="_blank" rel="noopener noreferrer" aria-label="Register for workshop on February 14 at Firelight Yoga, 3:00 PM to 4:30 PM">Firelight Yoga</a>
-                                    </div>
-                                    <div className="chakra-focus">
-                                        Focus: Root (1st) & Heart (4th) Chakras
-                                    </div>
-                                </div>
-
-                                <div className="workshop-date-card">
-                                    <div className="date-header">
-                                        <FaCalendarAlt className="date-icon" aria-hidden="true" />
-                                        <div className="date-info">
                                             <div className="date-text">May 9, 2026</div>
                                             <div className="time-text">3:00 PM – 5:00 PM</div>
                                         </div>
@@ -358,26 +308,6 @@ function About() {
                                 </div>
                             </div>
                         </div>
-                        <p className="workshop-signup-lead">
-                            <strong>Sign up through the host studio</strong>
-                            {' — '}
-                            <a
-                                href="https://firelightyoga.com/yoga-chocolate-chakras/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                February 14 at Firelight Yoga
-                            </a>
-                            {' · '}
-                            <a
-                                href="https://thepeoplesyoga.org/events-and-workshops/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                May 9 at The People&apos;s Yoga NE
-                            </a>
-                            .
-                        </p>
                     </motion.div>
 
                     <motion.div className="info-item" variants={fadeInUp}>

@@ -69,7 +69,7 @@
 .product-image {
   width: 100%;
   height: auto;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   flex-shrink: 0;
 }
 
@@ -83,18 +83,13 @@
   color: $secondary-text-color;
   margin: 0;
   width: 100%;
-  flex: 1 1 auto;
-  min-height: 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
   line-height: 1.35;
 }
 
 .product-price {
   font-size: 1rem;
   color: $primary-button-color;
-  margin: 5px 0;
+  margin: 4px 0 6px;
   flex-shrink: 0;
   width: 100%;
 }
@@ -173,7 +168,7 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-  margin-top: 12px;
+  margin-top: 8px;
   flex-shrink: 0;
   width: 100%;
 }

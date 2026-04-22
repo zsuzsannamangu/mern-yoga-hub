@@ -17,7 +17,7 @@ export const seo = {
     yoga: {
         title: 'Yoga & Chocolate Workshop Portland | Classes & Private Yoga — Zsuzsanna Mangu',
         description:
-            'Yoga and chocolate workshop in Portland: restorative yoga, meditation, and handcrafted chakra chocolates. Upcoming dates with The People\'s Yoga and Firelight Yoga — register through the host studio. Plus group classes, private yoga, and trauma-informed teaching.',
+            'Yoga and chocolate workshop in Portland: restorative yoga, meditation, and handcrafted chakra chocolates. Upcoming date with The People\'s Yoga — register through the host studio. Plus group classes, private yoga, and trauma-informed teaching.',
     },
     yogaTherapy: {
         title: 'Portland Yoga Therapy | One-on-One Sessions & Online — Zsuzsanna Mangu',
