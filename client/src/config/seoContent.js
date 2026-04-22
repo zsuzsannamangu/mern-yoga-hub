@@ -20,9 +20,9 @@ export const seo = {
             'Group and private yoga classes in Portland, OR and online — vinyasa, restorative, adaptive and chair yoga, yoga and chocolate workshops, and retreat-style events around PDX. Trauma-informed teaching.',
     },
     yogaTherapy: {
-        title: 'Yoga Therapy in Portland, OR | One-on-One Sessions & Online',
+        title: 'Portland Yoga Therapy | One-on-One Sessions & Online — Zsuzsanna Mangu',
         description:
-            'Yoga therapy in Portland and online: personalized breathwork, somatic movement, and adaptive yoga for stress, anxiety, chronic pain, and hypermobility. Private yoga sessions tailored to you.',
+            'Portland yoga therapy and online sessions: personalized breathwork, somatic movement, and adaptive yoga for stress, anxiety, chronic pain, and hypermobility. In-person in NW Portland; book one-on-one yoga therapy.',
     },
     chocolates: {
         title: 'ReTreat Chocolates Portland | Zsuzsanna Mangu — Vegan Cacao, Zero-Waste Tins',

@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 import { motion } from 'framer-motion';
 import { seo } from '../../config/seoContent';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Home() {
   useEffect(() => {
@@ -114,6 +114,7 @@ function Home() {
         url: `${siteUrl}/`,
         jobTitle: 'Yoga teacher and chocolatier',
         knowsAbout: [
+          'Portland yoga therapy',
           'Yoga therapy Portland',
           'Private yoga classes Portland',
           'Yoga and chocolate workshops',
@@ -223,7 +224,8 @@ function Home() {
           </div>
           <div className="right-section">
             <p>
-              My offerings include therapeutic yoga, adaptive yoga, gentle slow flow, hatha, and restorative yoga, somatic movement, breathwork, meditation, and Ayurvedic wisdom. I work with individuals and
+              My offerings include therapeutic yoga, adaptive yoga, gentle slow flow, hatha, and restorative yoga, somatic movement, breathwork, meditation, and Ayurvedic wisdom. For one-on-one work, see{' '}
+              <Link to="/yoga-therapy">yoga therapy in Portland, Oregon and online</Link>. I work with individuals and
               groups, supporting each student in deepening their connection to body, breath, and self-compassion.
             </p>
             <p>

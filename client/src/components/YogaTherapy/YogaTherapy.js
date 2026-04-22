@@ -1,17 +1,21 @@
 import { Helmet } from "react-helmet";
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import './YogaTherapy.scss';
 import '../../App.scss';
 import { motion } from 'framer-motion';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { seo } from '../../config/seoContent';
+import { seo, SEO_SITE_HOST } from '../../config/seoContent';
 
-function YogaTherapy() {
-    const [openFAQ, setOpenFAQ] = useState(null);
+/** Plain text for JSON-LD (strips FAQ answers that include HTML links). */
+function faqAnswerPlainText(htmlOrText) {
+    return htmlOrText.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
 
-    // FAQ data focused on yoga therapy
-    const faqData = [
+const YOGA_THERAPY_OG_IMAGE = `${SEO_SITE_HOST}/images/yoga/Zsuzsi_Home_4.jpg`;
+
+// FAQ data focused on yoga therapy (module scope so structured data stays stable)
+const FAQ_DATA = [
         {
             id: 1,
             question: "Do I need to have yoga experience to do yoga therapy?",
@@ -52,7 +56,59 @@ function YogaTherapy() {
             question: "How much are yoga therapy sessions?",
             answer: "Yoga therapy sessions are offered on a sliding scale through June 2026, while I'm in training. Online sessions are $10-$80/hr, and in-person sessions in NW Portland are $20-$100/hr. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked."
         }
-    ];
+];
+
+function YogaTherapy() {
+    const [openFAQ, setOpenFAQ] = useState(null);
+
+    const yogaTherapyStructuredData = useMemo(() => {
+        const pageUrl = `${SEO_SITE_HOST}/yoga-therapy`;
+        return {
+            '@context': 'https://schema.org',
+            '@graph': [
+                {
+                    '@type': 'WebPage',
+                    '@id': `${pageUrl}#webpage`,
+                    url: pageUrl,
+                    name: seo.yogaTherapy.title,
+                    description: seo.yogaTherapy.description,
+                    inLanguage: 'en-US',
+                    primaryImageOfPage: {
+                        '@type': 'ImageObject',
+                        url: YOGA_THERAPY_OG_IMAGE,
+                    },
+                },
+                {
+                    '@type': 'BreadcrumbList',
+                    itemListElement: [
+                        {
+                            '@type': 'ListItem',
+                            position: 1,
+                            name: 'Home',
+                            item: `${SEO_SITE_HOST}/`,
+                        },
+                        {
+                            '@type': 'ListItem',
+                            position: 2,
+                            name: 'Yoga Therapy',
+                            item: pageUrl,
+                        },
+                    ],
+                },
+                {
+                    '@type': 'FAQPage',
+                    mainEntity: FAQ_DATA.map(({ question, answer }) => ({
+                        '@type': 'Question',
+                        name: question,
+                        acceptedAnswer: {
+                            '@type': 'Answer',
+                            text: faqAnswerPlainText(answer),
+                        },
+                    })),
+                },
+            ],
+        };
+    }, []);
 
     const toggleFAQ = (id) => {
         setOpenFAQ(openFAQ === id ? null : id);
@@ -72,8 +128,13 @@ function YogaTherapy() {
                 <meta name="description" content={seo.yogaTherapy.description} />
                 <meta property="og:title" content={seo.yogaTherapy.title} />
                 <meta property="og:description" content={seo.yogaTherapy.description} />
+                <meta property="og:image" content={YOGA_THERAPY_OG_IMAGE} />
+                <meta property="og:image:alt" content="Yoga therapy — personalized sessions in Portland and online" />
+                <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content={seo.yogaTherapy.title} />
                 <meta name="twitter:description" content={seo.yogaTherapy.description} />
+                <meta name="twitter:image" content={YOGA_THERAPY_OG_IMAGE} />
+                <script type="application/ld+json">{JSON.stringify(yogaTherapyStructuredData)}</script>
             </Helmet>
 
             <motion.div
@@ -84,7 +145,7 @@ function YogaTherapy() {
             >
                 <div className="yoga-therapy-overlay">
                     <div className="yoga-therapy-overlay-text">
-                        <h1>Yoga Therapy</h1>
+                        <h1>Yoga Therapy in Portland &amp; Online</h1>
                         <p className="yoga-therapy-hero-tagline">
                             One-on-one sessions integrating breathwork, somatic movement, and gentle, adaptive practices to support anxiety, depression and chronic pain. Sessions also draw on functional movement, hypermobility-aware strengthening, and accessible approaches (including chair and wheelchair yoga).
                         </p>
@@ -253,7 +314,7 @@ function YogaTherapy() {
                 <motion.h2 className="section-title" variants={fadeInUp}>Frequently Asked Questions</motion.h2>
                 <div className="title-line"></div>
                 <div className="faq-accordion">
-                    {faqData.map((faq) => (
+                    {FAQ_DATA.map((faq) => (
                         <motion.div key={faq.id} className="faq-item" variants={fadeInUp}>
                             <button
                                 className={`faq-question ${openFAQ === faq.id ? 'open' : ''}`}
