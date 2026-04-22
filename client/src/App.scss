@@ -150,6 +150,13 @@ h1 {
   font-weight: 500;
   color: $tertiary-text-color; // Styled logo text
   flex-shrink: 0; // Prevent shrinking
+  border: 0;
+  // No decorative rule above/below the name (legacy mobile used ::after with $line-color)
+  &::before,
+  &::after {
+    content: none;
+    display: none;
+  }
 }
 
 .nav-links {
@@ -254,10 +261,6 @@ h1 {
     text-align: center;
     flex: 1;
     margin: 0 auto;
-
-    &::after {
-      display: none; // Remove decorative line on mobile
-    }
   }
 
   /* Hide nav-links on mobile (they're in hamburger menu) */
