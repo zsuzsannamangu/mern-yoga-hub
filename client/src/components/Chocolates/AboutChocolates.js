@@ -20,7 +20,7 @@ function AboutChocolates() {
             Chocolate and through local pickup. Every batch is made with organic or ceremonial cacao. I’m Zsuzsanna
             Mangu; I’ve run this business since November 2020.
           </p>
-          <h3>Our Mission: Reduce - Reuse - ReTreat™</h3>
+          <h3>My Mission: Reduce - Reuse - ReTreat™</h3>
           <p>Driven by a commitment to sustainability, ReTreat offers chocolates in returnable and reusable packaging. Our family practices low-waste living, and ReTreat is an extension of that
             philosophy. When I couldn't find chocolate with sustainable packaging, I decided to make it myself, leading to the creation of ReTreat.</p>
           <h3>Ingredients and Packaging</h3>

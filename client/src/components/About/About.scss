@@ -803,6 +803,26 @@
   }
 }
 
+.workshop-signup-lead {
+  margin-top: 1.25rem;
+  margin-bottom: 0;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: $text-color;
+  text-align: left;
+
+  a {
+    color: $purple-primary;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      color: $purple-secondary;
+      text-decoration: underline;
+    }
+  }
+}
+
 /* Wheelchair Yoga Image Styling */
 .wheelchair-yoga-content {
   display: flex;

@@ -65,7 +65,7 @@ const offeringsData = [
         <br><br>An immersive experience combining restorative yoga, meditation, and sense awareness. This workshop brings together yoga and handmade chocolate to awaken presence, deepen awareness, and open the senses.
         <br><br>As both a chocolatier and yoga teacher, I bring these worlds together with intention. The chocolates we taste are created specifically to reflect the body's energetic centers, the chakras, using organic cacao infused with edible flowers, fruits, and spices.
         <br><br>Throughout the workshop, you'll be guided through restorative yoga and meditation practices that prepare the body and mind to fully experience these flavors. Together, we'll explore the chakras through both movement and sense awareness.
-        <br><br>View upcoming workshop dates and register on the <a href="/yoga?section=classDescriptions">Classes & Workshops page</a>.
+        <br><br>View upcoming workshop dates and register on the <a href="/yoga?section=workshop">yoga &amp; chocolate workshop section</a> of the Classes &amp; Workshops page.
         `,
         image: '/images/yoga/Zsuzsi_yoga_21.jpg',
     },

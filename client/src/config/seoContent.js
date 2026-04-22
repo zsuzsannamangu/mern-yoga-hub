@@ -12,12 +12,12 @@ export const seo = {
     home: {
         title: 'Yoga and Chocolate | Zsuzsanna Mangu — Portland Yoga, Therapy & ReTreat Chocolates',
         description:
-            'Yoga and chocolate in Portland, Oregon: trauma-informed classes, yoga therapy, private yoga sessions, workshops (including retreat-style yoga and chocolate), and small-batch ReTreat chocolates. Book a session!',
+            'Portland yoga and chocolate workshops (chakra-themed restorative yoga + tasting), group classes, yoga therapy, and ReTreat small-batch chocolates. Upcoming yoga–chocolate events at Portland studios — details and registration on the Yoga page.',
     },
     yoga: {
-        title: 'Portland Yoga Classes & Private Yoga | Workshops, Retreat Yoga & Chocolate Events',
+        title: 'Yoga & Chocolate Workshop Portland | Classes & Private Yoga — Zsuzsanna Mangu',
         description:
-            'Group and private yoga classes in Portland, OR and online — vinyasa, restorative, adaptive and chair yoga, yoga and chocolate workshops, and retreat-style events around PDX. Trauma-informed teaching.',
+            'Yoga and chocolate workshop in Portland: restorative yoga, meditation, and handcrafted chakra chocolates. Upcoming dates with The People\'s Yoga and Firelight Yoga — register through the host studio. Plus group classes, private yoga, and trauma-informed teaching.',
     },
     yogaTherapy: {
         title: 'Portland Yoga Therapy | One-on-One Sessions & Online — Zsuzsanna Mangu',
@@ -27,16 +27,16 @@ export const seo = {
     chocolates: {
         title: 'ReTreat Chocolates Portland | Zsuzsanna Mangu — Vegan Cacao, Zero-Waste Tins',
         description:
-            'ReTreat Chocolates by Zsuzsanna Mangu: Portland-made, small-batch vegan chocolate from organic or ceremonial cacao. Soy-free, palm-oil free, hand-packed in reusable tins. Sold through Yoga and Chocolate in Portland, Oregon.',
+            'ReTreat Chocolates by Zsuzsanna Mangu: Portland-made, small-batch vegan chocolate from organic or ceremonial cacao. Soy-free, palm-oil free, hand-packed in reusable tins. Also: Portland yoga and chocolate workshops pairing tasting with restorative practice.',
     },
     calendar: {
-        title: 'Yoga Calendar Portland & Online | Classes, Workshops & Retreat Yoga Events',
+        title: 'Yoga Calendar Portland & Online | Classes, Workshops & Yoga–Chocolate Events',
         description:
-            'Upcoming yoga classes, workshops, and retreat yoga events in the Portland area and online. Browse the schedule for PDX studios, special events, and yoga-and-chocolate offerings.',
+            'Portland and online yoga calendar: weekly classes, workshops, and special events including yoga and chocolate experiences. See dates and how to sign up.',
     },
     contact: {
         title: 'Contact | Private Yoga in Portland, Yoga Therapy & Chocolate — Zsuzsanna Mangu',
         description:
-            'Reach out to book private yoga classes in Portland, yoga therapy, workshop questions, ReTreat chocolate orders, or collaborations. Questions welcome.',
+            'Questions about private yoga, yoga therapy, yoga and chocolate workshops in Portland, ReTreat chocolate orders, or collaborations — get in touch.',
     },
 };

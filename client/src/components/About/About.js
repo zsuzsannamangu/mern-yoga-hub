@@ -7,7 +7,80 @@ import '../../App.scss';
 import { motion } from 'framer-motion';
 import Slideshow from './Slideshow';
 import { FaCalendarAlt, FaExternalLinkAlt, FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { seo } from '../../config/seoContent';
+import { seo, SEO_SITE_HOST } from '../../config/seoContent';
+
+/** Event structured data for upcoming yoga + chocolate workshops (Google may show as rich results). */
+const YOGA_CHOCOLATE_WORKSHOP_EVENTS_LD = {
+    '@context': 'https://schema.org',
+    '@graph': [
+        {
+            '@type': 'Event',
+            '@id': `${SEO_SITE_HOST}/yoga#event-yoga-chocolate-firelight-2026-02-14`,
+            name: 'Awaken the Senses: Yoga, Chocolate & Chakras — Firelight Yoga, Portland',
+            description:
+                'Restorative yoga, meditation, and mindful tasting with handcrafted chakra chocolates (Root & Heart focus). Led by Zsuzsanna Mangu.',
+            startDate: '2026-02-14T15:00:00-08:00',
+            endDate: '2026-02-14T16:30:00-08:00',
+            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            eventStatus: 'https://schema.org/EventScheduled',
+            location: {
+                '@type': 'Place',
+                name: 'Firelight Yoga',
+                address: {
+                    '@type': 'PostalAddress',
+                    addressLocality: 'Portland',
+                    addressRegion: 'OR',
+                    addressCountry: 'US',
+                },
+            },
+            offers: {
+                '@type': 'Offer',
+                url: 'https://firelightyoga.com/yoga-chocolate-chakras/',
+                availability: 'https://schema.org/InStock',
+            },
+            organizer: {
+                '@type': 'Person',
+                name: 'Zsuzsanna Mangu',
+                url: `${SEO_SITE_HOST}/`,
+            },
+            performer: { '@type': 'Person', name: 'Zsuzsanna Mangu' },
+            image: `${SEO_SITE_HOST}/images/chocolates/Chocolate_1.jpg`,
+        },
+        {
+            '@type': 'Event',
+            '@id': `${SEO_SITE_HOST}/yoga#event-yoga-chocolate-peoples-2026-05-09`,
+            name: "Awaken the Senses: Yoga, Chocolate & Chakras — The People's Yoga NE, Portland",
+            description:
+                'Restorative yoga, meditation, and mindful tasting with handcrafted chakra chocolates (Root & Heart focus). Led by Zsuzsanna Mangu.',
+            startDate: '2026-05-09T15:00:00-07:00',
+            endDate: '2026-05-09T17:00:00-07:00',
+            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            eventStatus: 'https://schema.org/EventScheduled',
+            location: {
+                '@type': 'Place',
+                name: "The People's Yoga NE",
+                address: {
+                    '@type': 'PostalAddress',
+                    addressLocality: 'Portland',
+                    addressRegion: 'OR',
+                    addressCountry: 'US',
+                },
+            },
+            offers: {
+                '@type': 'Offer',
+                url: 'https://thepeoplesyoga.org/events-and-workshops/',
+                availability: 'https://schema.org/InStock',
+            },
+            organizer: {
+                '@type': 'Person',
+                name: 'Zsuzsanna Mangu',
+                url: `${SEO_SITE_HOST}/`,
+            },
+            performer: { '@type': 'Person', name: 'Zsuzsanna Mangu' },
+            image: `${SEO_SITE_HOST}/images/chocolates/Chocolate_1.jpg`,
+        },
+    ],
+};
 
 function About() {
     const location = useLocation(); // React Router hook to access current location (current URL, such as the path or query parameters)
@@ -71,6 +144,15 @@ function About() {
         const params = new URLSearchParams(location.search);
         const section = params.get('section');
 
+        if (section === 'workshop') {
+            const el = document.getElementById('workshop-yoga-chocolate');
+            if (el) {
+                window.requestAnimationFrame(() => {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
+            return;
+        }
         if (section === 'regularClasses' && regularClassesRef.current) {
             regularClassesRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else if (section === 'classDescriptions' && classDescriptionsRef.current) {
@@ -88,6 +170,7 @@ function About() {
                 <meta property="og:description" content={seo.yoga.description} />
                 <meta name="twitter:title" content={seo.yoga.title} />
                 <meta name="twitter:description" content={seo.yoga.description} />
+                <script type="application/ld+json">{JSON.stringify(YOGA_CHOCOLATE_WORKSHOP_EVENTS_LD)}</script>
             </Helmet>
 
             {/* Workshop Announcement Bar */}
@@ -96,8 +179,8 @@ function About() {
                     <span className="announcement-text">
                         ✨ <strong>Yoga and chocolate workshop</strong> — May 9th at The People&apos;s Yoga
                     </span>
-                    <a href="/yoga?section=classDescriptions" className="announcement-link">
-                        View Workshops
+                    <a href="/yoga?section=workshop" className="announcement-link">
+                        Workshop details &amp; sign up
                     </a>
                 </div>
             </div>
@@ -205,7 +288,7 @@ function About() {
                 <motion.h2 className="section-title" variants={fadeInUp}>Classes and Workshops</motion.h2>
                 <div className="title-line"></div>
                 <div className="info-category">
-                    <motion.div className="info-item" variants={fadeInUp}>
+                    <motion.div className="info-item" variants={fadeInUp} id="workshop-yoga-chocolate">
                         <h4>Awaken the Senses: Restorative Yoga, Handcrafted Chocolate and an Exploration of the Chakras</h4>
                         <p>
                             An immersive experience combining restorative yoga, meditation, and sense awareness. This workshop brings together yoga and handmade chocolate to awaken presence, deepen awareness, and open the senses.
@@ -275,6 +358,26 @@ function About() {
                                 </div>
                             </div>
                         </div>
+                        <p className="workshop-signup-lead">
+                            <strong>Sign up through the host studio</strong>
+                            {' — '}
+                            <a
+                                href="https://firelightyoga.com/yoga-chocolate-chakras/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                February 14 at Firelight Yoga
+                            </a>
+                            {' · '}
+                            <a
+                                href="https://thepeoplesyoga.org/events-and-workshops/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                May 9 at The People&apos;s Yoga NE
+                            </a>
+                            .
+                        </p>
                     </motion.div>
 
                     <motion.div className="info-item" variants={fadeInUp}>

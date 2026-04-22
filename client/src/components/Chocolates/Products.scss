@@ -55,14 +55,11 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  /* Stack the elements vertically */
   align-items: center;
-  /* Center content horizontally */
-  justify-content: space-between;
-  /* Ensure text is centered */
+  justify-content: flex-start;
   padding: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  height: 100%;
+  min-height: 0;
 }
 
 .product-card:hover {
@@ -73,6 +70,7 @@
   width: 100%;
   height: auto;
   margin-bottom: 15px;
+  flex-shrink: 0;
 }
 
 .product-info {
@@ -84,12 +82,21 @@
   font-weight: bold;
   color: $secondary-text-color;
   margin: 0;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  line-height: 1.35;
 }
 
 .product-price {
   font-size: 1rem;
   color: $primary-button-color;
   margin: 5px 0;
+  flex-shrink: 0;
+  width: 100%;
 }
 
 .product-description {
@@ -164,13 +171,11 @@
 .product-buttons {
   display: flex;
   justify-content: center;
-  /* Center the buttons horizontally */
   align-items: center;
-  /* Center the buttons vertically if needed */
   gap: 8px;
-  /* Add spacing between the buttons */
   margin-top: 12px;
-  /* Add some space above the buttons */
+  flex-shrink: 0;
+  width: 100%;
 }
 
 button:disabled {

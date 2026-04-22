@@ -150,9 +150,10 @@
     }
 }
 
+/* Slightly smaller than global rem scale (html 112.5%) so hero overlay matches pre-bump proportions */
 .overlay-text h1 {
     font-family: $font-elegant;
-    font-size: 2.5rem;
+    font-size: calc(2.5rem / 1.125);
     font-weight: 300;
     font-style: italic;
     letter-spacing: 0.5px;
@@ -160,13 +161,13 @@
     color: $text-color;
 
     @media (max-width: 768px) {
-        font-size: 2rem;
+        font-size: calc(2rem / 1.125);
     }
 }
 
 .overlay-text p {
     margin: 0 0 1rem;
-    font-size: 1.2rem;
+    font-size: calc(1.2rem / 1.125);
     font-family: $font-secondary;
     line-height: 0.8;
 
@@ -181,7 +182,7 @@
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: calc(1rem / 1.125);
     cursor: pointer;
     margin-top: 1rem;
     font-family: $font-title;
@@ -198,7 +199,7 @@
         width: 80%; /* Maximize width on very small screens */
         left: 0; /* Center horizontally */
         padding: 10px; /* Reduce padding for smaller screens */
-        font-size: 0.9rem; /* Slightly smaller text size */
+        font-size: calc(0.9rem / 1.125); /* Match pre–root-scale overlay sizing */
     }
     .products-section {
         padding: 20px; /* Ensure consistent spacing for products */
