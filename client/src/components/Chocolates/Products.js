@@ -122,9 +122,11 @@ function Products({ showAlert }) {
               className="product-image"
               onClick={() => openProductModal(product)}
             />
-            <h3 className="product-name" onClick={() => openProductModal(product)}>
-              {product.name}
-            </h3>
+            <div className="product-title-slot">
+              <h3 className="product-name" onClick={() => openProductModal(product)}>
+                {product.name}
+              </h3>
+            </div>
             <p className="product-price">${product.price}</p>
 
             <div className="product-buttons">

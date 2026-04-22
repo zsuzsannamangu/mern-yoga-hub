@@ -73,6 +73,17 @@
   flex-shrink: 0;
 }
 
+/* Grows so every card in a grid row reserves the same space above the price (prices line up). */
+.product-title-slot {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100%;
+  min-height: 0;
+}
+
 .product-info {
   padding: 16px;
 }
@@ -84,6 +95,7 @@
   margin: 0;
   width: 100%;
   line-height: 1.35;
+  flex-shrink: 0;
 }
 
 .product-price {
