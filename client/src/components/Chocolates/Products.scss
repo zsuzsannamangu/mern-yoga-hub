@@ -101,7 +101,8 @@
 .product-price {
   font-size: 1rem;
   color: $primary-button-color;
-  margin: 4px 0 6px;
+  /* Slight lift; same for every card so prices stay on one row */
+  margin: -6px 0 6px;
   flex-shrink: 0;
   width: 100%;
 }
