@@ -47,6 +47,11 @@
       }
     }
 
+    .event-indicator,
+    .slot-indicator {
+      display: none;
+    }
+
     @media (max-width: 768px) {
       width: 30px;
       height: 30px;

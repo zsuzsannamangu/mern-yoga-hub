@@ -89,8 +89,8 @@ function CalendarDays({
           onClick={() => !(day.isPast || day.isDisabled) && changeCurrentDay(day)}
         >
           <p>{day.number}</p>
-          {isEventDay(day) && <div className="event-indicator"></div>}
-          {isSlotDay(day) && <div className="slot-indicator"></div>}
+          {isEventDay(day) && !day.isToday && <div className="event-indicator"></div>}
+          {isSlotDay(day) && !day.isToday && <div className="slot-indicator"></div>}
         </div>
       ))}
     </div>
