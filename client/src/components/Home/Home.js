@@ -7,6 +7,7 @@ import '@sweetalert2/theme-material-ui/material-ui.css';
 import { motion } from 'framer-motion';
 import { seo } from '../../config/seoContent';
 import { Link } from 'react-router-dom';
+import SiteAnnouncement from '../SiteAnnouncement/SiteAnnouncement';
 
 function Home() {
   useEffect(() => {
@@ -138,17 +139,7 @@ function Home() {
         <meta name="twitter:description" content={seo.home.description} />
         <script type="application/ld+json">{JSON.stringify(homeStructuredData)}</script>
       </Helmet>
-      {/* Workshop Announcement Bar - Top */}
-      <div className="workshop-announcement newyear-announcement">
-        <div className="announcement-content">
-          <span className="announcement-text">
-            ✨ <strong>Yoga and chocolate workshop</strong> on May 9th at The People&apos;s Yoga
-          </span>
-          <a href="/yoga?section=workshop" className="announcement-link">
-            Details &amp; sign up
-          </a>
-        </div>
-      </div>
+      <SiteAnnouncement />
 
       <motion.div
         className="split-banner"

@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import Testimonials from './Testimonials';
 import VideoBlock from './VideoBlock';
 import { seo, SEO_SITE_HOST } from '../../config/seoContent';
+import SiteAnnouncement from '../SiteAnnouncement/SiteAnnouncement';
 
 const CHOCOLATES_OG_IMAGE = `${SEO_SITE_HOST}/images/chocolates/Truffles_1.jpg`;
 
@@ -91,17 +92,7 @@ function Chocolates() {
                 <script type="application/ld+json">{JSON.stringify(chocolatesStructuredData)}</script>
             </Helmet>
 
-            {/* Workshop Announcement Bar */}
-            <div className="workshop-announcement newyear-announcement">
-                <div className="announcement-content">
-                    <span className="announcement-text">
-                        ✨ <strong>Yoga and chocolate workshop</strong> on May 9th at The People&apos;s Yoga
-                    </span>
-                    <a href="/yoga?section=workshop" className="announcement-link">
-                        Details &amp; sign up
-                    </a>
-                </div>
-            </div>
+            <SiteAnnouncement />
 
             <motion.div
                 className='chocolates-top'

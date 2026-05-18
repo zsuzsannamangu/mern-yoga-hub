@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import Slideshow from './Slideshow';
 import { FaCalendarAlt, FaExternalLinkAlt, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { seo, SEO_SITE_HOST } from '../../config/seoContent';
+import SiteAnnouncement from '../SiteAnnouncement/SiteAnnouncement';
 
 /** Event structured data for upcoming yoga + chocolate workshops (Google may show as rich results). */
 const YOGA_CHOCOLATE_WORKSHOP_EVENTS_LD = {
@@ -120,6 +121,15 @@ function About() {
             }
             return;
         }
+        if (section === 'hypermobility') {
+            const el = document.getElementById('hypermobility-eds');
+            if (el) {
+                window.requestAnimationFrame(() => {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
+            return;
+        }
         if (section === 'regularClasses' && regularClassesRef.current) {
             regularClassesRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else if (section === 'classDescriptions' && classDescriptionsRef.current) {
@@ -140,17 +150,7 @@ function About() {
                 <script type="application/ld+json">{JSON.stringify(YOGA_CHOCOLATE_WORKSHOP_EVENTS_LD)}</script>
             </Helmet>
 
-            {/* Workshop Announcement Bar */}
-            <div className="workshop-announcement newyear-announcement">
-                <div className="announcement-content">
-                    <span className="announcement-text">
-                        ✨ <strong>Yoga and chocolate workshop</strong> on May 9th at The People&apos;s Yoga
-                    </span>
-                    <a href="/yoga?section=workshop" className="announcement-link">
-                        Details &amp; sign up
-                    </a>
-                </div>
-            </div>
+            <SiteAnnouncement />
 
             <motion.div
                 className='about-top'
@@ -451,7 +451,7 @@ function About() {
                         </p>
                     </motion.div>
 
-                    <motion.div className="info-item" variants={fadeInUp}>
+                    <motion.div className="info-item" variants={fadeInUp} id="hypermobility-eds">
                         <h4>Yoga for Hypermobility &amp; EDS</h4>
                         <p><strong>Building Stability and Body Awareness</strong></p>
                         <p className="class-schedule">
@@ -474,7 +474,7 @@ function About() {
                             )
                         </p>
                         <p className="class-schedule">
-                            Saturdays — April 11, April 25, May 9, May 23, June 6, June 20
+                            Saturdays: April 11, April 25, May 9, May 23, June 6, June 20
                         </p>
                         <p>
                             This class is designed for people with hypermobile bodies, including those living with Ehlers-Danlos Syndrome (EDS) or hypermobility spectrum disorders.
@@ -491,18 +491,18 @@ function About() {
                         <p>No prior yoga experience is required.</p>
                         <p><strong>Series focus</strong></p>
                         <ul>
-                            <li><strong>Week 1: Understanding Hypermobility in Movement</strong> — Learning how to work within supportive ranges of motion. We explore neutral joint alignment, micro-bends, and the difference between mobility and stability through slow, simple yoga poses.</li>
-                            <li><strong>Week 2: Proprioception &amp; Body Awareness</strong> — Practices that improve awareness of joint position and movement. We use slow transitions, small-range movements, and props such as blocks or the wall to support body awareness.</li>
-                            <li><strong>Week 3: Joint Stability &amp; Co-Contraction</strong> — Developing muscular support around joints through gentle strengthening and co-contraction. The practice includes low-load strength work and isometric holds that stabilize shoulders and hips.</li>
-                            <li><strong>Week 4: Moving with Control</strong> — Learning to move with precision rather than momentum. We explore slow transitions, coordination patterns, and controlled flowing movements.</li>
-                            <li><strong>Week 5: Nervous System Regulation</strong> — Practices that support recovery and reduce tension in the body. This class includes breathwork, restorative postures, and pacing strategies to support nervous system balance.</li>
-                            <li><strong>Week 6: Integration &amp; Personal Practice</strong> — Bringing the elements together into a sustainable yoga practice. Students learn how to modify yoga safely and apply the tools from the series in everyday movement.</li>
+                            <li><strong>April 11: Understanding Hypermobility in Movement</strong> — Learning how to work within supportive ranges of motion. We explore neutral joint alignment, micro-bends, and the difference between mobility and stability through slow, simple yoga poses.</li>
+                            <li><strong>April 25: Proprioception &amp; Body Awareness</strong> — Practices that improve awareness of joint position and movement. We use slow transitions, small-range movements, and props such as blocks or the wall to support body awareness.</li>
+                            <li><strong>May 9: Joint Stability &amp; Co-Contraction</strong> — Developing muscular support around joints through gentle strengthening and co-contraction. The practice includes low-load strength work and isometric holds that stabilize shoulders and hips.</li>
+                            <li><strong>May 23: Moving with Control</strong> — Learning to move with precision rather than momentum. We explore slow transitions, coordination patterns, and controlled flowing movements.</li>
+                            <li><strong>June 6: Nervous System Regulation</strong> — Practices that support recovery and reduce tension in the body. This class includes breathwork, restorative postures, and pacing strategies to support nervous system balance.</li>
+                            <li><strong>June 20: Integration &amp; Personal Practice</strong> — Bringing the elements together into a sustainable yoga practice. Students learn how to modify yoga safely and apply the tools from the series in everyday movement.</li>
                         </ul>
                     </motion.div>
 
                     {/* Additional Classes Note */}
                     <motion.div className="info-item additional-classes-note" variants={fadeInUp}>
-                        <p><em>I also sub at The People's Yoga, The Practice Space, Ready Set Grow and Firelight Yoga. For a complete schedule of all classes, including substitute classes and special events, please check the <a href="/calendar">calendar</a>.</em></p>
+                        <p><em>I also sub at The People's Yoga, The Practice Space, Ready Set Grow and Firelight Yoga. For a complete schedule of all classes, including substitute teaching and events, please check the <a href="/calendar">calendar</a>.</em></p>
                     </motion.div>
                 </div>
             </motion.div>

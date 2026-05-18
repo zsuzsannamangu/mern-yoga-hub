@@ -5,6 +5,7 @@ import './Calendar.scss';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { seo } from '../../config/seoContent';
+import SiteAnnouncement from '../SiteAnnouncement/SiteAnnouncement';
 
 export default class Calendar extends Component {
   constructor() {
@@ -161,17 +162,7 @@ export default class Calendar extends Component {
           <meta name="twitter:title" content={seo.calendar.title} />
           <meta name="twitter:description" content={seo.calendar.description} />
         </Helmet>
-        {/* Workshop Announcement Bar */}
-        <div className="workshop-announcement newyear-announcement">
-          <div className="announcement-content">
-            <span className="announcement-text">
-              ✨ <strong>Yoga and chocolate workshop</strong> on May 9th at The People&apos;s Yoga
-            </span>
-            <a href="/yoga?section=workshop" className="announcement-link">
-              Details &amp; sign up
-            </a>
-          </div>
-        </div>
+        <SiteAnnouncement />
 
         <motion.div
           className="calendar-title"

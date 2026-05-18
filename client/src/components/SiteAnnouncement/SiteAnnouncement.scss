@@ -1,0 +1,133 @@
+@use '../../styles/variables' as *;
+
+.workshop-announcement {
+  background: $gradient-purple;
+  color: white;
+  padding: 12px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: 10px 0;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: site-announcement-shimmer 3s infinite;
+  }
+
+  .announcement-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 0 12px;
+      justify-content: center;
+    }
+  }
+
+  .announcement-text {
+    font-size: 16px;
+    font-weight: 500;
+
+    strong {
+      font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 13px;
+      line-height: 1.35;
+      flex: 1 1 12rem;
+      min-width: 0;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
+      text-align: left;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+    }
+  }
+
+  .announcement-link {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-1px);
+      text-decoration: none;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      padding: 6px 12px;
+      font-size: 11px;
+      border-radius: 15px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 5px 10px;
+      font-size: 10px;
+    }
+  }
+
+  &.newyear-announcement {
+    background: linear-gradient(135deg, #6B9FD0 0%, #D88FB0 50%, #A584C8 100%);
+    border-top: 1px solid rgba(123, 167, 217, 0.3);
+    border-bottom: 1px solid rgba(123, 167, 217, 0.3);
+    color: $text-color;
+
+    .announcement-text {
+      color: $text-color;
+    }
+
+    .announcement-link {
+      background: rgba(255, 255, 255, 0.2);
+      color: $text-color;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.5);
+        color: $text-color;
+      }
+    }
+  }
+}
+
+@keyframes site-announcement-shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
