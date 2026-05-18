@@ -9,8 +9,8 @@ function SiteAnnouncement() {
     <div className="workshop-announcement newyear-announcement">
       <div className="announcement-content">
         <span className="announcement-text">
-          ✨ <strong>Yoga with Hypermobility and EDS Series</strong> — every other Saturday,
-          6:30–7:45pm at Heart Spring Health Clinic
+          ✨ <strong>Yoga with Hypermobility and EDS Series</strong> - every other Saturday,
+          6:30-7:45pm at Heart Spring Health Clinic
         </span>
         <Link to={HYPERMOBILITY_SECTION_PATH} className="announcement-link">
           Details &amp; sign up

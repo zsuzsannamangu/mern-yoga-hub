@@ -17,7 +17,7 @@ const YOGA_CHOCOLATE_WORKSHOP_EVENTS_LD = {
         {
             '@type': 'Event',
             '@id': `${SEO_SITE_HOST}/yoga#event-yoga-chocolate-peoples-2026-05-09`,
-            name: "Awaken the Senses: Yoga, Chocolate & Chakras — The People's Yoga NE, Portland",
+            name: "Awaken the Senses: Yoga, Chocolate & Chakras - The People's Yoga NE, Portland",
             description:
                 'Restorative yoga, meditation, and mindful tasting with handcrafted chakra chocolates (Root & Heart focus). Led by Zsuzsanna Mangu.',
             startDate: '2026-05-09T15:00:00-07:00',
@@ -295,7 +295,7 @@ function About() {
                                         <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
                                             <div className="date-text">May 9, 2026</div>
-                                            <div className="time-text">3:00 PM – 5:00 PM</div>
+                                            <div className="time-text">3:00 PM - 5:00 PM</div>
                                         </div>
                                     </div>
                                     <div className="location-text">
@@ -345,7 +345,7 @@ function About() {
                         <p>
                             No prior experience with chair yoga is required. This workshop is suitable for yoga teachers of all styles, yoga students, and anyone curious about making yoga more accessible, functional, and expansive.
                         </p>
-                        <p>Pay what you can: $35–$55 per person.</p>
+                        <p>Pay what you can: $35-$55 per person.</p>
                         <div className="workshop-dates-section">
                             <h5>Upcoming Dates</h5>
                             <div className="workshop-dates-grid">
@@ -354,7 +354,7 @@ function About() {
                                         <FaCalendarAlt className="date-icon" aria-hidden="true" />
                                         <div className="date-info">
                                             <div className="date-text">March 29, 2026</div>
-                                            <div className="time-text">2:00 PM – 3:30 PM</div>
+                                            <div className="time-text">2:00 PM - 3:30 PM</div>
                                         </div>
                                     </div>
                                     <div className="location-text">
@@ -412,7 +412,7 @@ function About() {
                     <motion.div className="info-item" variants={fadeInUp}>
                         <h4>Supportive &amp; Safe Chair Yoga</h4>
                         <p className="class-schedule">
-                            Wednesdays 9:00 AM – 10:00 AM · $25 per session ·{' '}
+                            Wednesdays 9:00 AM - 10:00 AM · $25 per session ·{' '}
                             <a
                                 href="https://heartspringhealth.com/event/chair-and-wheelchair-yoga/2026-04-01/"
                                 target="_blank"
@@ -491,12 +491,12 @@ function About() {
                         <p>No prior yoga experience is required.</p>
                         <p><strong>Series focus</strong></p>
                         <ul>
-                            <li><strong>April 11: Understanding Hypermobility in Movement</strong> — Learning how to work within supportive ranges of motion. We explore neutral joint alignment, micro-bends, and the difference between mobility and stability through slow, simple yoga poses.</li>
-                            <li><strong>April 25: Proprioception &amp; Body Awareness</strong> — Practices that improve awareness of joint position and movement. We use slow transitions, small-range movements, and props such as blocks or the wall to support body awareness.</li>
-                            <li><strong>May 9: Joint Stability &amp; Co-Contraction</strong> — Developing muscular support around joints through gentle strengthening and co-contraction. The practice includes low-load strength work and isometric holds that stabilize shoulders and hips.</li>
-                            <li><strong>May 23: Moving with Control</strong> — Learning to move with precision rather than momentum. We explore slow transitions, coordination patterns, and controlled flowing movements.</li>
-                            <li><strong>June 6: Nervous System Regulation</strong> — Practices that support recovery and reduce tension in the body. This class includes breathwork, restorative postures, and pacing strategies to support nervous system balance.</li>
-                            <li><strong>June 20: Integration &amp; Personal Practice</strong> — Bringing the elements together into a sustainable yoga practice. Students learn how to modify yoga safely and apply the tools from the series in everyday movement.</li>
+                            <li><strong>April 11: Understanding Hypermobility in Movement</strong> - Learning how to work within supportive ranges of motion. We explore neutral joint alignment, micro-bends, and the difference between mobility and stability through slow, simple yoga poses.</li>
+                            <li><strong>April 25: Proprioception &amp; Body Awareness</strong> - Practices that improve awareness of joint position and movement. We use slow transitions, small-range movements, and props such as blocks or the wall to support body awareness.</li>
+                            <li><strong>May 9: Joint Stability &amp; Co-Contraction</strong> - Developing muscular support around joints through gentle strengthening and co-contraction. The practice includes low-load strength work and isometric holds that stabilize shoulders and hips.</li>
+                            <li><strong>May 23: Moving with Control</strong> - Learning to move with precision rather than momentum. We explore slow transitions, coordination patterns, and controlled flowing movements.</li>
+                            <li><strong>June 6: Nervous System Regulation</strong> - Practices that support recovery and reduce tension in the body. This class includes breathwork, restorative postures, and pacing strategies to support nervous system balance.</li>
+                            <li><strong>June 20: Integration &amp; Personal Practice</strong> - Bringing the elements together into a sustainable yoga practice. Students learn how to modify yoga safely and apply the tools from the series in everyday movement.</li>
                         </ul>
                     </motion.div>
 
