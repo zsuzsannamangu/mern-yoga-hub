@@ -11,35 +11,39 @@
   background-color: $background-color;
   position: relative;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  color: $text-color;
+  transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease;
 
   &.highlighted {
-    background-color: #808080; /* Grey background for today's date */
-    color: #ffffff !important; /* White text */
-    font-weight: bold; /* Make the text bold */
-    width: 35px; /* Set the width of the circle */
-    height: 35px; /* Set the height of the circle */
-    line-height: 35px; /* Center the text vertically */
-    text-align: center; /* Center the text horizontally */
-    border-radius: 50%; /* Make the background circular */
-    margin: 0 auto; /* Center the circle within the day cell */
-    display: flex; /* Use flexbox for centering */
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
-    padding: 0; /* Remove padding */
+    background-color: transparent;
+    color: $text-color !important;
+    font-weight: bold;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid $primary-button-color;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-sizing: border-box;
 
     p {
-      color: #ffffff !important; /* White text for paragraph */
+      color: $text-color !important;
       margin: 0;
+      font-weight: 700;
     }
 
     &:hover {
-      background-color: lighten($background-color, 5%);
-      border-color: darken($border-color, 10%);
-      color: $text-color !important;
+      background-color: $content-background-color;
+      border-color: $primary-button-hover-color;
+      color: darken($text-color, 10%) !important;
 
       p {
-        color: $text-color !important;
+        color: darken($text-color, 10%) !important;
       }
     }
 
@@ -55,25 +59,42 @@
     color: $secondary-text-color;
     cursor: not-allowed;
     pointer-events: none;
-    background-color: $secondary-background-color; // Subtle background for disabled dates
+    background-color: $secondary-background-color;
+
+    p {
+      color: $secondary-text-color;
+    }
   }
 
   &.other-month {
-    color: $secondary-text-color; // Dim color for days in other months
+    color: $secondary-text-color;
     background-color: $secondary-background-color;
     border: 1px solid lighten($border-color, 20%);
+
+    p {
+      color: $secondary-text-color;
+    }
   }
 
   &.has-slot {
-    background-color: $purple-light; // Light purple background
-    color: $text-color; // Dark text for readability
-    font-weight: bold; // Make text bold
-    border: 1px solid $purple-primary; // Purple border
-    border-radius: 4px; // Rectangular shape (not circular like today's date)
+    background-color: $purple-light;
+    color: $text-color;
+    font-weight: bold;
+    border: 1px solid $purple-primary;
+    border-radius: 4px;
+
+    p {
+      color: $text-color;
+    }
 
     &:hover {
-      background-color: $purple-secondary; // Medium purple on hover (lighter than primary)
-      color: $button-text-color; // White text on hover
+      background-color: darken($purple-light, 6%);
+      border-color: $primary-button-color;
+      color: darken($text-color, 8%);
+
+      p {
+        color: darken($text-color, 8%);
+      }
     }
   }
 
@@ -113,13 +134,17 @@
   &:hover {
     background-color: lighten($background-color, 5%);
     border-color: darken($border-color, 10%);
+
+    p {
+      color: darken($text-color, 8%);
+    }
   }
 
   p {
     margin: 0;
     font-size: 14px;
     font-weight: normal;
-    color: inherit; // Ensures text color inherits from the class
+    color: $text-color;
 
     @media (max-width: 768px) {
       font-size: 12px;
@@ -141,9 +166,13 @@
   }
 
   &.selected {
-    background-color: darken($primary-button-color, 6%); // Highlight selected day
+    background-color: darken($primary-button-color, 6%);
     color: $button-text-color;
     font-weight: bold;
+
+    p {
+      color: $button-text-color;
+    }
 
     &:hover {
       background-color: $primary-button-hover-color;

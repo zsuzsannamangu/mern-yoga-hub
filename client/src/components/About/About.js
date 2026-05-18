@@ -455,7 +455,7 @@ function About() {
                         <h4>Yoga for Hypermobility &amp; EDS</h4>
                         <p><strong>Building Stability and Body Awareness</strong></p>
                         <p className="class-schedule">
-                            Saturdays 6:30–7:45 PM · $30 per session ·{' '}
+                            Saturdays 6:30-7:45 PM · $30 per session ·{' '}
                             <a
                                 href="https://heartspringhealth.com/event/yoga-for-hypermobility-eds/2026-04-11/"
                                 target="_blank"
