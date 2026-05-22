@@ -268,6 +268,7 @@ module.exports = (io) => {
             slot.message = message || '';
             slot.paymentAmount = paymentAmount != null ? Number(paymentAmount) : undefined;
             slot.usedCoupon = !!usedCoupon;
+            slot.status = 'scheduled';
 
             const savedSlot = await slot.save();
             
@@ -330,7 +331,7 @@ module.exports = (io) => {
                   <a href="https://docs.google.com/forms/d/e/1FAIpQLScvgtnQnBdWWTJqwQbqo98X_vNYpjuH9x-YpsAlced_xKjbSA/viewform?usp=header" target="_blank">New Client Form</a></p>
               
                   <p>I'm looking forward to working with you!</p>
-                  <p>As a thank-you for booking a yoga session with me, you’re welcome to **10% off** any chocolate order of $15 or more using the code **YOGAXCHOCOLATE**.</p>
+                  <p>As a thank-you for booking a yoga session with me, you’re welcome to <strong>10% off</strong> any <a href="https://www.yogaandchocolate.com/chocolates" target="_blank" style="color: #007BFF; text-decoration: none; font-weight: bold;">chocolate order</a> of $15 or more using the code <strong>YOGAXCHOCOLATE</strong>.</p>
                   <p>Warm regards,<br/>Zsuzsanna</p>
                 `,
             };

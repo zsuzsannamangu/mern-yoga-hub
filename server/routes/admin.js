@@ -502,6 +502,56 @@ router.post('/appointments', authMiddleware, adminMiddleware, async (req, res) =
   }
 });
 
+// Manually run appointment reminder job (Admin only, for testing)
+router.post('/diagnostics/run-appointment-reminders', authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { processAppointmentReminders } = require('../services/appointmentReminders');
+    const result = await processAppointmentReminders();
+    res.status(200).json({
+      message: 'Reminder check completed.',
+      ...result,
+    });
+  } catch (error) {
+    console.error('Manual appointment reminder run failed:', error);
+    res.status(500).json({ message: 'Failed to run appointment reminders.', error: error.message });
+  }
+});
+
+// Send a specific reminder email immediately (Admin only, for testing)
+router.post('/appointments/:id/send-reminder', authMiddleware, adminMiddleware, async (req, res) => {
+  const { type } = req.body;
+
+  if (!['3days', '2hours'].includes(type)) {
+    return res.status(400).json({ message: 'type must be "3days" or "2hours".' });
+  }
+
+  try {
+    const booking = await Booking.findById(req.params.id);
+    if (!booking || !booking.isBooked) {
+      return res.status(404).json({ message: 'Appointment not found.' });
+    }
+    if (!booking.email) {
+      return res.status(400).json({ message: 'This appointment has no client email.' });
+    }
+
+    const { sendReminderForBooking } = require('../services/appointmentReminders');
+    await sendReminderForBooking(booking, type);
+
+    const label = type === '3days' ? '3-day' : '2-hour';
+    res.status(200).json({
+      message: `${label} reminder sent to ${booking.email}.`,
+      bookingId: booking._id,
+      type,
+    });
+  } catch (error) {
+    console.error('Send reminder failed:', error);
+    res.status(500).json({
+      message: 'Failed to send reminder.',
+      error: error.message,
+    });
+  }
+});
+
 // Diagnostic endpoint to find bookings by email (Admin only)
 router.get('/diagnostics/bookings-by-email', authMiddleware, adminMiddleware, async (req, res) => {
   try {

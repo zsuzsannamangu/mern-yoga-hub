@@ -4,6 +4,12 @@ const Booking = require('../models/Booking');
 
 const TIMEZONE = 'America/Los_Angeles';
 
+// Reminder windows (minutes before appointment)
+const THREE_DAY_MIN = 70 * 60; // 70 hours
+const THREE_DAY_MAX = 75 * 60; // 75 hours
+const TWO_HOUR_MIN = 10; // don't send in the last 10 minutes
+const TWO_HOUR_MAX = 130; // up to ~2h 10m before (first cron in this range sends)
+
 if (process.env.SENDGRID_API_KEY) {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 }
@@ -12,7 +18,9 @@ function getAppointmentStart(booking) {
     if (!booking?.date || !booking?.time) return null;
 
     const [year, month, day] = booking.date.split('-').map(Number);
-    const [hour, minute] = booking.time.split(':').map(Number);
+    const timeParts = booking.time.split(':');
+    const hour = Number(timeParts[0]);
+    const minute = Number(timeParts[1] || 0);
 
     const dt = DateTime.fromObject(
         { year, month, day, hour, minute },
@@ -74,11 +82,6 @@ function buildReminderEmail(booking, reminderType) {
         ? `This is a friendly reminder that your upcoming session with Zsuzsanna Mangu is in about 3 days.`
         : `This is a friendly reminder that your session with Zsuzsanna Mangu starts in about 2 hours.`;
 
-    const locationHtml = locationLines
-        .map((line) => `<p>${line.replace(/^Location: /, '<strong>Location:</strong> ').replace(/^Join online: /, '<strong>Join online:</strong> <a href="')}</p>`)
-        .join('');
-
-    // Simpler HTML for location block
     let locationBlockHtml = '';
     if (booking.location && booking.link) {
         locationBlockHtml = `<p><strong>Location:</strong> ${booking.location}<br/><a href="${booking.link}">Join Meeting</a></p>`;
@@ -160,7 +163,7 @@ async function sendReminderForBooking(booking, reminderType) {
  */
 async function processAppointmentReminders() {
     if (process.env.REMINDER_EMAILS_ENABLED === 'false') {
-        return;
+        return { checked: 0, sent3d: 0, sent2h: 0, disabled: true };
     }
 
     const now = DateTime.now().setZone(TIMEZONE);
@@ -168,8 +171,12 @@ async function processAppointmentReminders() {
     const bookings = await Booking.find({
         isBooked: true,
         email: { $exists: true, $nin: [null, ''] },
-        status: 'scheduled',
+        status: { $nin: ['cancelled', 'rescheduled'] },
     });
+
+    let checked = 0;
+    let sent3d = 0;
+    let sent2h = 0;
 
     for (const booking of bookings) {
         const apptStart = getAppointmentStart(booking);
@@ -177,34 +184,65 @@ async function processAppointmentReminders() {
 
         if (apptStart <= now) continue;
 
-        const hoursUntil = apptStart.diff(now, 'hours').hours;
+        const minutesUntil = apptStart.diff(now, 'minutes').minutes;
+        checked += 1;
 
         try {
-            // ~3 days before (70–74 hour window; cron runs every 15 minutes)
-            if (!booking.reminder3DaysSentAt && hoursUntil >= 70 && hoursUntil <= 74) {
+            if (!booking.reminder3DaysSentAt && minutesUntil >= THREE_DAY_MIN && minutesUntil <= THREE_DAY_MAX) {
                 await sendReminderForBooking(booking, '3days');
+                sent3d += 1;
             }
 
-            // ~2 hours before (1.25–2.75 hour window)
-            if (!booking.reminder2HoursSentAt && hoursUntil >= 1.25 && hoursUntil <= 2.75) {
+            // Send once when session is ~2 hours away (any cron run between 10 min and 2h 10m before)
+            if (!booking.reminder2HoursSentAt && minutesUntil > TWO_HOUR_MIN && minutesUntil <= TWO_HOUR_MAX) {
                 await sendReminderForBooking(booking, '2hours');
+                sent2h += 1;
             }
         } catch (error) {
             console.error('Failed to send appointment reminder:', {
                 bookingId: booking._id,
                 email: booking.email,
-                reminderType: hoursUntil >= 70 && hoursUntil <= 74 ? '3days' : '2hours',
+                minutesUntil: Math.round(minutesUntil),
+                status: booking.status,
                 message: error.message,
                 sendGrid: error.response?.body,
             });
         }
     }
+
+    if (checked > 0 || sent3d > 0 || sent2h > 0) {
+        console.log('Appointment reminder run:', {
+            checked,
+            sent3d,
+            sent2h,
+            at: now.toISO(),
+        });
+    }
+
+    return { checked, sent3d, sent2h, at: now.toISO() };
 }
 
 function clearAppointmentReminders(booking) {
     if (!booking) return;
     booking.reminder3DaysSentAt = null;
     booking.reminder2HoursSentAt = null;
+}
+
+async function ensureBookedSlotsAreScheduled() {
+    const result = await Booking.updateMany(
+        {
+            isBooked: true,
+            $or: [
+                { status: { $exists: false } },
+                { status: null },
+                { status: '' },
+            ],
+        },
+        { $set: { status: 'scheduled' } }
+    );
+    if (result.modifiedCount > 0) {
+        console.log(`Appointment reminders: set status=scheduled on ${result.modifiedCount} booking(s)`);
+    }
 }
 
 function startAppointmentReminderScheduler() {
@@ -216,21 +254,24 @@ function startAppointmentReminderScheduler() {
         return;
     }
 
-    // Every 15 minutes
-    cron.schedule('*/15 * * * *', () => {
+    ensureBookedSlotsAreScheduled().catch((err) => {
+        console.error('Failed to normalize booking statuses for reminders:', err);
+    });
+
+    // Every 5 minutes for more reliable 2-hour reminders
+    cron.schedule('*/5 * * * *', () => {
         processAppointmentReminders().catch((err) => {
             console.error('Appointment reminder job error:', err);
         });
     });
 
-    // Initial run shortly after startup (after DB is ready)
     setTimeout(() => {
         processAppointmentReminders().catch((err) => {
             console.error('Appointment reminder initial run error:', err);
         });
     }, 30000);
 
-    console.log('Appointment reminder scheduler started (every 15 minutes)');
+    console.log('Appointment reminder scheduler started (every 5 minutes, Pacific time)');
 }
 
 module.exports = {
@@ -238,4 +279,5 @@ module.exports = {
     startAppointmentReminderScheduler,
     clearAppointmentReminders,
     getAppointmentStart,
+    sendReminderForBooking,
 };
