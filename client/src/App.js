@@ -34,6 +34,7 @@ import AdminChocolates from './components/Admin/AdminChocolates';
 import SignUpSelection from './components/Calendar/SignUpSelection';
 import AdminSignups from './components/Admin/AdminSignups';
 import AdminUsers from './components/Admin/AdminUsers';
+import AdminAppointmentsCalendar from './components/Admin/AdminAppointmentsCalendar';
 import AboutWebsite from "./components/AboutWebsite/AboutWebsite";
 // import ChronicPainSupport from './components/ChronicPainSupport/ChronicPainSupport';
 import UserOAuthHandler from './components/User/UserOAuthHandler';
@@ -174,6 +175,14 @@ function App() {
                   element={
                     <AdminProtectedRoute>
                       <AdminUsers showAlert={showAlert} />
+                    </AdminProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/appointments"
+                  element={
+                    <AdminProtectedRoute>
+                      <AdminAppointmentsCalendar showAlert={showAlert} />
                     </AdminProtectedRoute>
                   }
                 />

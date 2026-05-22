@@ -11,7 +11,8 @@ import {
     FaBars,
     FaTimes,
     FaChalkboardTeacher,
-    FaClipboardList
+    FaClipboardList,
+    FaCalendarCheck
 } from 'react-icons/fa';
 import './AdminNavbar.scss';
 import '../../App.scss';
@@ -33,6 +34,7 @@ const AdminNavbar = () => {
     const menuItems = [
         { path: '/admin/dashboard', icon: FaCalendarAlt, label: 'Classes/Events' },
         { path: '/admin/bookings', icon: FaBookOpen, label: 'Bookings' },
+        { path: '/admin/appointments', icon: FaCalendarCheck, label: 'Appointments' },
         { path: '/admin/chocolates', icon: FaCookieBite, label: 'Chocolates' },
         { path: '/admin/signups', icon: FaChalkboardTeacher, label: 'Classes' },
         { path: '/admin/users', icon: FaUsers, label: 'Clients' },

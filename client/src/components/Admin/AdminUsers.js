@@ -1,74 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import { adminAxiosInstance } from '../../config/axiosConfig';
 import './AdminUsers.scss';
 import '../../App.scss';
 import AdminLayout from './AdminLayout';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
+import {
+    categorizeBookings,
+    formatDate,
+    formatTimeWithZone,
+    isAppointmentPast,
+} from '../../utils/adminAppointments';
 // Using emoji icons (matches AdminFinances)
 
-const getAppointmentDurationMinutes = (appointment) => {
-    const durationText = appointment?.length || appointment?.duration;
-    if (!durationText) return 60;
-
-    const match = String(durationText).match(/(\d+)\s*(min|mins|minutes|hour|hours|hr|hrs)?/i);
-    if (!match) return 60;
-
-    const value = Number(match[1]);
-    const unit = (match[2] || 'min').toLowerCase();
-    if (Number.isNaN(value) || value <= 0) return 60;
-
-    if (unit.startsWith('hour') || unit === 'hr' || unit === 'hrs') {
-        return value * 60;
-    }
-    return value;
-};
-
-const isAppointmentPast = (appointment) => {
-    const now = new Date();
-    const appointmentStart = new Date(`${appointment.date}T${appointment.time}`);
-    const durationMinutes = getAppointmentDurationMinutes(appointment);
-    const appointmentEnd = new Date(appointmentStart.getTime() + durationMinutes * 60 * 1000);
-    return appointmentEnd < now;
-};
-
-const dedupeBookings = (bookings) =>
-    bookings.filter((booking, index, self) =>
-        index === self.findIndex((b) => b._id === booking._id)
-    );
-
-const categorizeBookings = (bookings) => {
-    const uniqueBookings = dedupeBookings(bookings).filter(
-        (slot) => slot.status !== 'rescheduled'
-    );
-
-    const upcoming = [];
-    const past = [];
-
-    uniqueBookings.forEach((slot) => {
-        if (isAppointmentPast(slot)) {
-            past.push(slot);
-        } else {
-            upcoming.push(slot);
-        }
-    });
-
-    upcoming.sort((a, b) => {
-        const dateA = new Date(`${a.date}T${a.time}`);
-        const dateB = new Date(`${b.date}T${b.time}`);
-        return dateA - dateB;
-    });
-
-    past.sort((a, b) => {
-        const dateA = new Date(`${a.date}T${a.time}`);
-        const dateB = new Date(`${b.date}T${b.time}`);
-        return dateB - dateA;
-    });
-
-    return { upcoming, past };
-};
-
 const AdminUsers = () => {
+    const location = useLocation();
     const [users, setUsers] = useState([]); // State to store users
     const [loading, setLoading] = useState(false); // State to track loading status
     const [sortBy, setSortBy] = useState('name'); // State to track sorting: 'name' or 'date'
@@ -89,11 +36,7 @@ const AdminUsers = () => {
     const [appointments, setAppointments] = useState({}); // userId -> { upcoming: [], past: [] }
     const [clientAppointmentTab, setClientAppointmentTab] = useState({}); // userId -> 'upcoming' | 'past'
     const [expandedUsers, setExpandedUsers] = useState(new Set()); // Track which users are expanded
-    const [allUpcomingAppointments, setAllUpcomingAppointments] = useState([]);
-    const [calendarMonth, setCalendarMonth] = useState(() => new Date());
-    const [selectedCalendarDate, setSelectedCalendarDate] = useState(null);
     const [sendingReminderKey, setSendingReminderKey] = useState(null);
-    const [runningReminderJob, setRunningReminderJob] = useState(false);
     const [newAppointment, setNewAppointment] = useState({
         title: '',
         date: '',
@@ -162,17 +105,6 @@ const AdminUsers = () => {
             setLoading(false);
         }
     }, [sortUsers]);
-
-    const fetchAllUpcomingAppointments = useCallback(async () => {
-        try {
-            const response = await adminAxiosInstance.get('/api/bookings');
-            const allBookings = response.data.bookedSlots || [];
-            const { upcoming } = categorizeBookings(allBookings);
-            setAllUpcomingAppointments(upcoming);
-        } catch (error) {
-            console.error('Error fetching upcoming appointments calendar:', error);
-        }
-    }, []);
 
     // Delete a user by ID
     const deleteUser = async (id) => {
@@ -294,12 +226,10 @@ const AdminUsers = () => {
         if (userId) {
             fetchAppointments(userId);
         }
-        fetchAllUpcomingAppointments();
     };
 
-    const refreshAllExpandedAndCalendar = () => {
+    const refreshAllExpanded = () => {
         expandedUsers.forEach((uid) => fetchAppointments(uid));
-        fetchAllUpcomingAppointments();
     };
 
     // Handle appointment form input changes
@@ -577,7 +507,7 @@ const AdminUsers = () => {
                     confirmButtonText: 'OK'
                 });
 
-                refreshAllExpandedAndCalendar();
+                refreshAllExpanded();
             } catch (error) {
                 Swal.fire({
                     icon: 'error',
@@ -615,7 +545,7 @@ const AdminUsers = () => {
                         confirmButtonText: 'OK'
                     });
 
-                    refreshAllExpandedAndCalendar();
+                    refreshAllExpanded();
                 } catch (error) {
                     Swal.fire({
                         icon: 'error',
@@ -662,23 +592,6 @@ const AdminUsers = () => {
         }
     };
 
-    // Format time with timezone
-    const formatTimeWithZone = (dateStr, timeStr) => {
-        const date = new Date(`${dateStr}T${timeStr}`);
-        return date.toLocaleTimeString('en-US', {
-            hour: 'numeric',
-            minute: '2-digit',
-            hour12: true,
-            timeZoneName: 'short'
-        });
-    };
-
-    // Format date consistently
-    const formatDate = (dateStr) => {
-        const [year, month, day] = dateStr.split('-');
-        return `${Number(month)}/${Number(day)}/${year}`;
-    };
-
     // Handle sort change
     const handleSortChange = (newSortBy) => {
         if (sortBy === newSortBy) {
@@ -704,62 +617,22 @@ const AdminUsers = () => {
     // Fetch users when the component mounts
     useEffect(() => {
         fetchUsers();
-        fetchAllUpcomingAppointments();
-    }, [fetchUsers, fetchAllUpcomingAppointments]);
+    }, [fetchUsers]);
 
-    const getCalendarDays = () => {
-        const year = calendarMonth.getFullYear();
-        const month = calendarMonth.getMonth();
-        const firstDay = new Date(year, month, 1);
-        const lastDay = new Date(year, month + 1, 0);
-        const startPadding = firstDay.getDay();
-        const days = [];
+    useEffect(() => {
+        const expandUserId = location.state?.expandUserId;
+        if (!expandUserId) return;
 
-        for (let i = 0; i < startPadding; i++) {
-            days.push(null);
-        }
-        for (let day = 1; day <= lastDay.getDate(); day++) {
-            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-            days.push(dateStr);
-        }
-        return days;
-    };
-
-    const getAppointmentsForDate = (dateStr) =>
-        allUpcomingAppointments.filter((appt) => appt.date === dateStr);
-
-    const selectedDayAppointments = selectedCalendarDate
-        ? getAppointmentsForDate(selectedCalendarDate)
-        : [];
-
-    const changeCalendarMonth = (offset) => {
-        setCalendarMonth((prev) => new Date(prev.getFullYear(), prev.getMonth() + offset, 1));
-        setSelectedCalendarDate(null);
-    };
-
-    const handleRunReminderJob = async () => {
-        setRunningReminderJob(true);
-        try {
-            const response = await adminAxiosInstance.post('/api/admin/diagnostics/run-appointment-reminders');
-            const { checked = 0, sent3d = 0, sent2h = 0 } = response.data || {};
-            Swal.fire({
-                icon: 'success',
-                title: 'Reminder check done',
-                html: `Checked <strong>${checked}</strong> upcoming appointment(s).<br/>Sent: <strong>${sent3d}</strong> three-day, <strong>${sent2h}</strong> two-hour.<br/><small>Only sends when an appointment is in the automatic time window.</small>`,
-                confirmButtonText: 'OK',
-            });
-            refreshAllExpandedAndCalendar();
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Reminder check failed',
-                text: error.response?.data?.message || 'Please try again.',
-                confirmButtonText: 'OK',
-            });
-        } finally {
-            setRunningReminderJob(false);
-        }
-    };
+        setExpandedUsers((prev) => new Set([...prev, expandUserId]));
+        fetchAppointments(expandUserId);
+        setClientAppointmentTab((prev) => ({
+            ...prev,
+            [expandUserId]: 'upcoming',
+        }));
+        window.requestAnimationFrame(() => {
+            document.querySelector('.user-table')?.scrollIntoView({ behavior: 'smooth' });
+        });
+    }, [location.state?.expandUserId]);
 
     const handleSendReminderNow = async (appointmentId, type) => {
         const key = `${appointmentId}-${type}`;
@@ -775,7 +648,7 @@ const AdminUsers = () => {
                 text: response.data?.message || 'Email sent successfully.',
                 confirmButtonText: 'OK',
             });
-            refreshAllExpandedAndCalendar();
+            refreshAllExpanded();
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -933,128 +806,6 @@ const AdminUsers = () => {
                     Add New Client
                 </button>
             </div>
-
-            <section className="upcoming-calendar-section">
-                <div className="calendar-section-header">
-                    <h4>Upcoming Appointments Calendar</h4>
-                    <span className="calendar-count">{allUpcomingAppointments.length} upcoming</span>
-                </div>
-                <div className="reminder-testing-bar">
-                    <button
-                        type="button"
-                        className="run-reminder-job-btn"
-                        onClick={handleRunReminderJob}
-                        disabled={runningReminderJob}
-                    >
-                        {runningReminderJob ? 'Running…' : 'Run automatic reminder check'}
-                    </button>
-                    <p className="reminder-testing-hint">
-                        Use <strong>2h reminder</strong> or <strong>3-day reminder</strong> on a client&apos;s upcoming appointment to send a test email immediately.
-                    </p>
-                </div>
-                <div className="calendar-controls">
-                    <button type="button" className="calendar-nav-btn" onClick={() => changeCalendarMonth(-1)}>
-                        ←
-                    </button>
-                    <h5>
-                        {calendarMonth.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
-                    </h5>
-                    <button type="button" className="calendar-nav-btn" onClick={() => changeCalendarMonth(1)}>
-                        →
-                    </button>
-                    <button
-                        type="button"
-                        className="calendar-today-btn"
-                        onClick={() => {
-                            setCalendarMonth(new Date());
-                            const today = new Date();
-                            const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-                            setSelectedCalendarDate(todayStr);
-                        }}
-                    >
-                        Today
-                    </button>
-                </div>
-                <div className="calendar-weekdays">
-                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                        <span key={day}>{day}</span>
-                    ))}
-                </div>
-                <div className="calendar-grid">
-                    {getCalendarDays().map((dateStr, index) => {
-                        if (!dateStr) {
-                            return <div key={`empty-${index}`} className="calendar-day empty" />;
-                        }
-                        const dayAppointments = getAppointmentsForDate(dateStr);
-                        const isSelected = selectedCalendarDate === dateStr;
-                        const today = new Date();
-                        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-                        const isToday = dateStr === todayStr;
-
-                        return (
-                            <button
-                                key={dateStr}
-                                type="button"
-                                className={`calendar-day ${isSelected ? 'selected' : ''} ${isToday ? 'today' : ''} ${dayAppointments.length > 0 ? 'has-appointments' : ''}`}
-                                onClick={() => setSelectedCalendarDate(dateStr)}
-                            >
-                                <span className="day-number">{Number(dateStr.split('-')[2])}</span>
-                                {dayAppointments.length > 0 && (
-                                    <span className="appointment-dot">{dayAppointments.length}</span>
-                                )}
-                            </button>
-                        );
-                    })}
-                </div>
-                <div className="calendar-day-details">
-                    {selectedCalendarDate ? (
-                        <>
-                            <h5>
-                                {formatDate(selectedCalendarDate)} — {selectedDayAppointments.length} appointment
-                                {selectedDayAppointments.length !== 1 ? 's' : ''}
-                            </h5>
-                            {selectedDayAppointments.length > 0 ? (
-                                <ul className="calendar-appointments-list">
-                                    {selectedDayAppointments.map((appt) => (
-                                        <li key={appt._id}>
-                                            <strong>{formatTimeWithZone(appt.date, appt.time)}</strong>
-                                            {' — '}
-                                            {appt.firstName} {appt.lastName}
-                                            {' — '}
-                                            {appt.title || appt.sessionType || 'Session'}
-                                            <span className="calendar-appt-actions">
-                                                {renderReminderButtons(appt)}
-                                                {appt.userId && (
-                                                    <button
-                                                        type="button"
-                                                        className="view-client-btn"
-                                                        onClick={() => {
-                                                            const uid = appt.userId._id || appt.userId;
-                                                            setExpandedUsers((prev) => new Set([...prev, uid.toString()]));
-                                                            fetchAppointments(uid.toString());
-                                                            setClientAppointmentTab((prev) => ({
-                                                                ...prev,
-                                                                [uid.toString()]: 'upcoming',
-                                                            }));
-                                                            document.querySelector('.user-table')?.scrollIntoView({ behavior: 'smooth' });
-                                                        }}
-                                                    >
-                                                        View client
-                                                    </button>
-                                                )}
-                                            </span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p className="no-appointments-msg">No upcoming appointments on this day.</p>
-                            )}
-                        </>
-                    ) : (
-                        <p className="calendar-hint">Click a date to see upcoming appointments for that day.</p>
-                    )}
-                </div>
-            </section>
 
             {loading ? (
                 <p>Loading users...</p>
