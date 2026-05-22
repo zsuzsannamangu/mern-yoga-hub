@@ -186,7 +186,7 @@
         border-radius: 4px;
         overflow: hidden;
 
-        li {
+        li.calendar-appointment-item {
             padding: 10px 12px;
             border-bottom: 1px solid $border-color;
             color: $text-color;
@@ -203,12 +203,15 @@
             }
         }
 
+        .calendar-appt-summary {
+            margin: 0;
+            line-height: 1.5;
+        }
+
         .calendar-appt-actions {
-            display: inline-flex;
-            flex-wrap: wrap;
+            display: flex;
             align-items: center;
-            gap: 8px;
-            margin-top: 6px;
+            margin-top: 8px;
         }
 
         .view-client-btn {

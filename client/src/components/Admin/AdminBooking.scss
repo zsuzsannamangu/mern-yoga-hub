@@ -169,16 +169,72 @@
             }
         }
 
-        // Booked + passed sessions: keep columns aligned
+        // Upcoming + passed sessions (7 columns)
         table.sessions-table {
-            th:nth-child(1), td:nth-child(1) { width: 120px; } // Date
-            th:nth-child(2), td:nth-child(2) { width: 110px; } // Time
-            th:nth-child(3), td:nth-child(3) { width: 170px; } // Name
-            th:nth-child(4), td:nth-child(4) { width: 220px; } // Email
-            th:nth-child(6), td:nth-child(6) { width: 84px; }  // Actions
+            th:nth-child(1), td:nth-child(1) { width: 108px; white-space: nowrap; } // Date
+            th:nth-child(2), td:nth-child(2) { width: 96px; white-space: nowrap; }  // Time
+            th:nth-child(3), td:nth-child(3) { width: 118px; } // Format
+            th:nth-child(4), td:nth-child(4) { width: 130px; } // Name
+            th:nth-child(5), td:nth-child(5) { width: 28%; min-width: 220px; } // Email
+            th:nth-child(7), td:nth-child(7) { width: 84px; }  // Actions
 
-            td:nth-child(5) { // Message
+            td:nth-child(6) { // Message
                 white-space: nowrap;
+            }
+
+            td.session-email-cell {
+                overflow: visible;
+                text-overflow: clip;
+            }
+        }
+
+        .session-email-wrap {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            max-width: 100%;
+        }
+
+        .session-email-text {
+            flex: 1;
+            min-width: 0;
+            color: $text-color;
+            text-decoration: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: block;
+            font-size: $admin-table-font-size;
+
+            &:hover {
+                overflow: visible;
+                white-space: normal;
+                word-break: break-all;
+                position: relative;
+                z-index: 3;
+                background: white;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+                padding: 4px 6px;
+                border-radius: 4px;
+                border: 1px solid $border-color;
+            }
+        }
+
+        .copy-email-btn {
+            flex-shrink: 0;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: $admin-action-icon-radius;
+            font-size: 0.85rem;
+            line-height: 1;
+            color: $text-color;
+            opacity: 0.75;
+
+            &:hover {
+                opacity: 1;
+                background: $admin-action-icon-hover-bg;
             }
         }
 

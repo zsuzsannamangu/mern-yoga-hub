@@ -156,14 +156,16 @@ const AdminAppointmentsCalendar = () => {
                                     {selectedDayAppointments.length > 0 ? (
                                         <ul className="calendar-appointments-list">
                                             {selectedDayAppointments.map((appt) => (
-                                                <li key={appt._id}>
-                                                    <strong>{formatTimeWithZone(appt.date, appt.time)}</strong>
-                                                    {' · '}
-                                                    {appt.firstName} {appt.lastName}
-                                                    {' · '}
-                                                    {appt.title || appt.sessionType || 'Session'}
-                                                    <span className="calendar-appt-actions">
-                                                        {appt.userId && (
+                                                <li key={appt._id} className="calendar-appointment-item">
+                                                    <p className="calendar-appt-summary">
+                                                        <strong>{formatTimeWithZone(appt.date, appt.time)}</strong>
+                                                        {' · '}
+                                                        {appt.firstName} {appt.lastName}
+                                                        {' · '}
+                                                        {appt.title || appt.sessionType || 'Session'}
+                                                    </p>
+                                                    {appt.userId && (
+                                                        <div className="calendar-appt-actions">
                                                             <button
                                                                 type="button"
                                                                 className="view-client-btn"
@@ -171,8 +173,8 @@ const AdminAppointmentsCalendar = () => {
                                                             >
                                                                 View client
                                                             </button>
-                                                        )}
-                                                    </span>
+                                                        </div>
+                                                    )}
                                                 </li>
                                             ))}
                                         </ul>

@@ -8,6 +8,65 @@ import '@sweetalert2/theme-material-ui/material-ui.css';
 import { SESSION_FORMAT_OPTIONS, getFormatLabel } from '../../utils/sessionFormat';
 // Using emoji icons (matches AdminFinances)
 
+async function copyTextToClipboard(text, successMessage = 'Copied') {
+    try {
+        if (navigator?.clipboard?.writeText) {
+            await navigator.clipboard.writeText(text);
+        } else {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'success',
+            title: successMessage,
+            showConfirmButton: false,
+            timer: 1200,
+            timerProgressBar: true,
+        });
+    } catch (err) {
+        console.error('Copy failed:', err);
+        Swal.fire({ icon: 'error', title: 'Could not copy to clipboard.', confirmButtonText: 'OK' });
+    }
+}
+
+function SessionEmailCell({ email }) {
+    if (!email) {
+        return <td className="session-email-cell">—</td>;
+    }
+
+    return (
+        <td className="session-email-cell">
+            <div className="session-email-wrap">
+                <a href={`mailto:${email}`} className="session-email-text" title={email}>
+                    {email}
+                </a>
+                <button
+                    type="button"
+                    className="copy-email-btn"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        copyTextToClipboard(email, 'Email copied');
+                    }}
+                    title="Copy email"
+                    aria-label={`Copy ${email}`}
+                >
+                    <span aria-hidden="true">📋</span>
+                </button>
+            </div>
+        </td>
+    );
+}
+
 /**
  * AdminBooking Component:
  * - Manages bookable slots (available, booked, upcoming, passed)
@@ -569,7 +628,7 @@ const AdminBooking = () => {
                 </div>
 
                 <div className="slots-table-container">
-                    <h3>Booked Sessions</h3>
+                    <h3>Upcoming Sessions</h3>
                     {loading ? (
                         <p>Loading...</p>
                     ) : upcomingSlots.length > 0 ? (
@@ -593,7 +652,7 @@ const AdminBooking = () => {
                                             <td>{formatTime(slot.time)}</td>
                                             <td>{getFormatLabel(slot.sessionFormat)}</td>
                                             <td>{slot.firstName} {slot.lastName}</td>
-                                            <td>{slot.email}</td>
+                                            <SessionEmailCell email={slot.email} />
                                             <td>{slot.message || ''}</td>
                                             <td>
                                                 <button
@@ -612,7 +671,7 @@ const AdminBooking = () => {
                             </table>
                         </div>
                     ) : (
-                        <p>No booked sessions</p>
+                        <p>No upcoming sessions</p>
                     )}
                 </div>
 
@@ -641,7 +700,7 @@ const AdminBooking = () => {
                                             <td>{formatTime(slot.time)}</td>
                                             <td>{getFormatLabel(slot.sessionFormat)}</td>
                                             <td>{slot.firstName} {slot.lastName}</td>
-                                            <td>{slot.email}</td>
+                                            <SessionEmailCell email={slot.email} />
                                             <td>{slot.message || ''}</td>
                                             <td>
                                                 <div className="session-actions">
