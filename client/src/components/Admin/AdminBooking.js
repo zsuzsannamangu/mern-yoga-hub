@@ -5,6 +5,7 @@ import './AdminBooking.scss';
 import '../../App.scss';
 import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
+import { SESSION_FORMAT_OPTIONS, getFormatLabel } from '../../utils/sessionFormat';
 // Using emoji icons (matches AdminFinances)
 
 /**
@@ -19,7 +20,7 @@ const AdminBooking = () => {
     const [availableSlots, setAvailableSlots] = useState([]);
     const [upcomingSlots, setUpcomingSlots] = useState([]);
     const [passedSlots, setPassedSlots] = useState([]);
-    const [newSlot, setNewSlot] = useState({ date: '', time: '' }); // New slot form state
+    const [newSlot, setNewSlot] = useState({ date: '', time: '', sessionFormat: 'virtual' });
     const [loading, setLoading] = useState(false); // Loading state for API calls
     const [searchEmail, setSearchEmail] = useState(''); // Search email state
     const [searchResults, setSearchResults] = useState(null); // Search results state
@@ -136,11 +137,11 @@ const AdminBooking = () => {
      */
     const addSlot = async (e) => {
         e.preventDefault();
-        if (!newSlot.date || !newSlot.time) {
+        if (!newSlot.date || !newSlot.time || !newSlot.sessionFormat) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Please fill out all the fields!',
+                text: 'Please fill out date, time, and session format.',
                 confirmButtonText: 'OK'
             });
             return;
@@ -164,10 +165,18 @@ const AdminBooking = () => {
                 } else if (repeat === 'biweekly') {
                     date.setDate(startDate.getDate() + i * 14);
                 }
-                slots.push({ date: date.toISOString().split('T')[0], time: newSlot.time });
+                slots.push({
+                    date: date.toISOString().split('T')[0],
+                    time: newSlot.time,
+                    sessionFormat: newSlot.sessionFormat,
+                });
             }
         } else {
-            slots.push({ date: newSlot.date, time: newSlot.time });
+            slots.push({
+                date: newSlot.date,
+                time: newSlot.time,
+                sessionFormat: newSlot.sessionFormat,
+            });
         }
 
         // Send request to add slots
@@ -182,7 +191,7 @@ const AdminBooking = () => {
                 text: 'Slots added successfully.',
                 confirmButtonText: 'OK'
             });
-            setNewSlot({ date: '', time: '', repeat: '', occurrences: '' });
+            setNewSlot({ date: '', time: '', repeat: '', occurrences: '', sessionFormat: 'virtual' });
             fetchSlots(); // Refresh slots list
         } catch (error) {
             Swal.fire({
@@ -387,6 +396,20 @@ const AdminBooking = () => {
                         />
                     </div>
                     <div className="form-group">
+                        <label>Session format</label>
+                        <select
+                            value={newSlot.sessionFormat || 'virtual'}
+                            onChange={(e) => setNewSlot({ ...newSlot, sessionFormat: e.target.value })}
+                            required
+                        >
+                            {SESSION_FORMAT_OPTIONS.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="form-group">
                         <label>Repeat</label>
                         <select
                             value={newSlot.repeat || ''}
@@ -422,6 +445,7 @@ const AdminBooking = () => {
                                     <tr>
                                         <th>Date</th>
                                         <th>Time</th>
+                                        <th>Format</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -436,6 +460,7 @@ const AdminBooking = () => {
                                             <tr key={slot._id}>
                                                 <td>{formatDate(slot.date)}</td>
                                                 <td>{formatTime(slot.time)}</td>
+                                                <td>{getFormatLabel(slot.sessionFormat)}</td>
                                                 <td>
                                                     <button
                                                         onClick={() => deleteSlot(slot._id)}
@@ -554,6 +579,7 @@ const AdminBooking = () => {
                                     <tr>
                                         <th>Date</th>
                                         <th>Time</th>
+                                        <th>Format</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Message</th>
@@ -565,6 +591,7 @@ const AdminBooking = () => {
                                         <tr key={slot._id}>
                                             <td>{formatDate(slot.date)}</td>
                                             <td>{formatTime(slot.time)}</td>
+                                            <td>{getFormatLabel(slot.sessionFormat)}</td>
                                             <td>{slot.firstName} {slot.lastName}</td>
                                             <td>{slot.email}</td>
                                             <td>{slot.message || ''}</td>
@@ -600,6 +627,7 @@ const AdminBooking = () => {
                                     <tr>
                                         <th>Date</th>
                                         <th>Time</th>
+                                        <th>Format</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Message</th>
@@ -611,6 +639,7 @@ const AdminBooking = () => {
                                         <tr key={slot._id}>
                                             <td>{formatDate(slot.date)}</td>
                                             <td>{formatTime(slot.time)}</td>
+                                            <td>{getFormatLabel(slot.sessionFormat)}</td>
                                             <td>{slot.firstName} {slot.lastName}</td>
                                             <td>{slot.email}</td>
                                             <td>{slot.message || ''}</td>

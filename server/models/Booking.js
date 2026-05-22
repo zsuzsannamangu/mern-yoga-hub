@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 const bookingSchema = new mongoose.Schema({
     date: { type: String, required: true },
     time: { type: String, required: true },
+    sessionFormat: {
+        type: String,
+        enum: ['virtual', 'in-person'],
+        default: 'virtual',
+    },
     isBooked: { type: Boolean, default: false },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Associate booking with a user
     firstName: { type: String }, // Add user name for booked slots

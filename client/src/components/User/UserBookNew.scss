@@ -203,6 +203,54 @@
     gap: 10px;
 }
 
+.session-format-filter {
+    margin-bottom: 20px;
+
+    .format-filter-label {
+        margin: 0 0 10px;
+        color: $secondary-text-color;
+        font-size: 1rem;
+    }
+
+    .format-filter-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .format-filter-btn {
+        flex: 1;
+        min-width: 140px;
+        padding: 12px 16px;
+        border: 2px solid $border-color;
+        border-radius: 8px;
+        background: white;
+        color: $text-color;
+        font-family: $font-main;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: border-color 0.2s ease, background-color 0.2s ease;
+
+        &:hover {
+            border-color: $primary-button-color;
+        }
+
+        &.selected {
+            border-color: $primary-button-color;
+            background: rgba($primary-button-color, 0.1);
+            font-weight: bold;
+        }
+    }
+}
+
+.format-filter-prompt {
+    flex: 1;
+    padding: 20px;
+    color: $secondary-text-color;
+    font-style: italic;
+    margin: 0;
+}
+
 .availability-section {
     flex: 1;
     padding: 20px;
@@ -221,6 +269,10 @@
     }
 
     .availability-time {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
         padding: 10px;
         text-align: center;
         border-radius: 5px;
@@ -231,6 +283,12 @@
         color: $text-color;
         border: 1px solid $border-color;
 
+        .slot-format-tag {
+            font-size: 0.75rem;
+            font-weight: normal;
+            opacity: 0.85;
+        }
+
         &:hover {
             background-color: #f5f5f5;
         }
@@ -240,6 +298,10 @@
             color: $button-text-color;
             font-weight: bold;
             border-color: $primary-button-color;
+
+            .slot-format-tag {
+                opacity: 1;
+            }
         }
     }
 

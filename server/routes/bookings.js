@@ -6,6 +6,11 @@ const { authMiddleware, adminMiddleware } = require('../middlewares/auth');
 const sgMail = require('@sendgrid/mail');
 const { DateTime } = require('luxon');
 const { clearAppointmentReminders } = require('../services/appointmentReminders');
+const {
+    VALID_FORMATS,
+    normalizeSessionFormat,
+    getLocationForFormat,
+} = require('../utils/sessionFormat');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -153,7 +158,28 @@ module.exports = (io) => {
         }
 
         try {
-            const createdSlots = await Booking.insertMany(slots);
+            const normalizedSlots = slots.map((slot) => {
+                const sessionFormat = normalizeSessionFormat(slot.sessionFormat);
+                return {
+                    ...slot,
+                    sessionFormat,
+                    location: getLocationForFormat(sessionFormat),
+                    isBooked: false,
+                    status: 'scheduled',
+                };
+            });
+
+            const invalidFormat = normalizedSlots.find(
+                (slot) => slot.sessionFormat && !VALID_FORMATS.includes(slot.sessionFormat)
+            );
+            if (invalidFormat) {
+                return res.status(400).json({
+                    success: false,
+                    error: 'sessionFormat must be "virtual" or "in-person"',
+                });
+            }
+
+            const createdSlots = await Booking.insertMany(normalizedSlots);
             return res.status(201).json({
                 success: true,
                 message: `${createdSlots.length} slot(s) added successfully`,
@@ -269,6 +295,8 @@ module.exports = (io) => {
             slot.paymentAmount = paymentAmount != null ? Number(paymentAmount) : undefined;
             slot.usedCoupon = !!usedCoupon;
             slot.status = 'scheduled';
+            slot.sessionFormat = normalizeSessionFormat(slot.sessionFormat);
+            slot.location = getLocationForFormat(slot.sessionFormat);
 
             const savedSlot = await slot.save();
             
