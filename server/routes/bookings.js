@@ -10,8 +10,6 @@ const {
     VALID_FORMATS,
     normalizeSessionFormat,
     getLocationForFormat,
-    getFormatLabel,
-    getBookingLocationEmailText,
 } = require('../utils/sessionFormat');
 const {
     isFirstSessionBooking,
@@ -351,8 +349,6 @@ module.exports = (io) => {
                 excludeBookingId: savedSlot._id,
             });
             const intakeFormSection = isFirstSession ? getIntakeFormEmailHtml() : '';
-            const locationText = getBookingLocationEmailText(savedSlot);
-            const formatLabel = getFormatLabel(savedSlot.sessionFormat);
 
             // Send emails
             const userEmail = {
@@ -368,8 +364,7 @@ module.exports = (io) => {
                   Date: ${slot.date}<br/>
                   Time: ${formattedTime}<br/>
                   Session Type: ${slot.sessionType}<br/>
-                  Format: ${formatLabel}<br/>
-                  Location: ${locationText}</p>
+                  Location: In-person sessions are at Yoga Refuge NW, 210 NW 17th Ave #101, Portland, OR 97209. We can also meet online.</p>
               
                   ${intakeFormSection}
               

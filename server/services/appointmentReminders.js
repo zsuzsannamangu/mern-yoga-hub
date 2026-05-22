@@ -1,7 +1,6 @@
 const { DateTime } = require('luxon');
 const sgMail = require('@sendgrid/mail');
 const Booking = require('../models/Booking');
-const { getBookingLocationEmailText } = require('../utils/sessionFormat');
 const TIMEZONE = 'America/Los_Angeles';
 
 // Reminder windows (minutes before appointment)
@@ -66,7 +65,9 @@ function buildLocationLines(booking) {
     } else if (booking.link) {
         lines.push(`Join online: ${booking.link}`);
     } else {
-        lines.push(`Location: ${getBookingLocationEmailText(booking)}`);
+        lines.push(
+            'Location: In-person sessions are at Yoga Refuge NW, 210 NW 17th Ave #101, Portland, OR 97209. We can also meet online.'
+        );
     }
 
     if (booking.length) {
@@ -93,7 +94,7 @@ function buildReminderEmail(booking, reminderType) {
     } else if (booking.link) {
         locationBlockHtml = `<p><a href="${booking.link}">Join Meeting</a></p>`;
     } else {
-        locationBlockHtml = `<p><strong>Location:</strong> ${getBookingLocationEmailText(booking)}</p>`;
+        locationBlockHtml = `<p><strong>Location:</strong> In-person sessions are at Yoga Refuge NW, 210 NW 17th Ave #101, Portland, OR 97209. We can also meet online.</p>`;
     }
     if (booking.length) {
         locationBlockHtml += `<p><strong>Length:</strong> ${booking.length}</p>`;
