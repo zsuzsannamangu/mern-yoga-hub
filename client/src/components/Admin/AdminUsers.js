@@ -25,8 +25,12 @@ const AdminUsers = () => {
     // Appointment states
     const [showAppointmentForm, setShowAppointmentForm] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
-    const [appointments, setAppointments] = useState({}); // userId -> appointments array
+    const [appointments, setAppointments] = useState({}); // userId -> { upcoming: [], past: [] }
+    const [clientAppointmentTab, setClientAppointmentTab] = useState({}); // userId -> 'upcoming' | 'past'
     const [expandedUsers, setExpandedUsers] = useState(new Set()); // Track which users are expanded
+    const [allUpcomingAppointments, setAllUpcomingAppointments] = useState([]);
+    const [calendarMonth, setCalendarMonth] = useState(() => new Date());
+    const [selectedCalendarDate, setSelectedCalendarDate] = useState(null);
     const [newAppointment, setNewAppointment] = useState({
         title: '',
         date: '',
@@ -82,6 +86,53 @@ const AdminUsers = () => {
         const durationMinutes = getAppointmentDurationMinutes(appointment);
         const appointmentEnd = new Date(appointmentStart.getTime() + durationMinutes * 60 * 1000);
         return appointmentEnd < now;
+    };
+
+    const dedupeBookings = (bookings) =>
+        bookings.filter((booking, index, self) =>
+            index === self.findIndex((b) => b._id === booking._id)
+        );
+
+    const categorizeBookings = (bookings) => {
+        const uniqueBookings = dedupeBookings(bookings).filter(
+            (slot) => slot.status !== 'rescheduled'
+        );
+
+        const upcoming = [];
+        const past = [];
+
+        uniqueBookings.forEach((slot) => {
+            if (isAppointmentPast(slot)) {
+                past.push(slot);
+            } else {
+                upcoming.push(slot);
+            }
+        });
+
+        upcoming.sort((a, b) => {
+            const dateA = new Date(`${a.date}T${a.time}`);
+            const dateB = new Date(`${b.date}T${b.time}`);
+            return dateA - dateB;
+        });
+
+        past.sort((a, b) => {
+            const dateA = new Date(`${a.date}T${a.time}`);
+            const dateB = new Date(`${b.date}T${b.time}`);
+            return dateB - dateA;
+        });
+
+        return { upcoming, past };
+    };
+
+    const fetchAllUpcomingAppointments = async () => {
+        try {
+            const response = await adminAxiosInstance.get('/api/bookings');
+            const allBookings = response.data.bookedSlots || [];
+            const { upcoming } = categorizeBookings(allBookings);
+            setAllUpcomingAppointments(upcoming);
+        } catch (error) {
+            console.error('Error fetching upcoming appointments calendar:', error);
+        }
     };
 
     // Sort users based on current sort settings
@@ -217,53 +268,36 @@ const AdminUsers = () => {
         }
     };
 
-    // Fetch appointments for a specific user
+    // Fetch all appointments for a specific user (upcoming + past)
     const fetchAppointments = async (userId) => {
         try {
-            const token = localStorage.getItem('adminToken');
-            // Fetch ALL appointments for this user (both admin-created and user-created)
-            const response = await adminAxiosInstance.get(`/api/bookings?userId=${userId}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            
-            console.log('Raw response for userId', userId, ':', response.data);
-            
-            // Filter out past sessions but keep cancelled appointments for admin to delete, then sort upcoming bookings
-            const now = new Date();
+            const response = await adminAxiosInstance.get(`/api/bookings?userId=${userId}`);
             const allBookings = response.data.bookedSlots || [];
-            console.log('All bookings for admin userId', userId, ':', allBookings);
-            
-            // Remove duplicates based on booking ID
-            const uniqueBookings = allBookings.filter((booking, index, self) => 
-                index === self.findIndex(b => b._id === booking._id)
-            );
-            console.log('Unique bookings after deduplication for admin:', uniqueBookings);
-            
-            const sortedBookings = uniqueBookings
-                .filter((slot) => {
-                    const slotStartTime = new Date(`${slot.date}T${slot.time}`);
-                    const durationMinutes = getAppointmentDurationMinutes(slot);
-                    const slotEndTime = new Date(slotStartTime.getTime() + durationMinutes * 60 * 1000);
-                    const isFutureOrInProgress = slotEndTime >= now;
-                    const notRescheduled = slot.status !== 'rescheduled'; // Hide rescheduled bookings (old appointments)
-                    console.log('Slot:', slot.date, slot.time, 'isFutureOrInProgress:', isFutureOrInProgress, 'status:', slot.status, 'notRescheduled:', notRescheduled);
-                    return isFutureOrInProgress && notRescheduled; // Show future sessions and in-progress sessions (excluding rescheduled ones)
-                })
-                .sort((a, b) => {
-                    const dateA = new Date(`${a.date}T${a.time}`);
-                    const dateB = new Date(`${b.date}T${b.time}`);
-                    return dateB - dateA;
-                });
-            
-            console.log('Filtered appointments for userId', userId, ':', sortedBookings);
-            
-            setAppointments(prev => ({
+            const categorized = categorizeBookings(allBookings);
+
+            setAppointments((prev) => ({
                 ...prev,
-                [userId]: sortedBookings
+                [userId]: categorized,
+            }));
+            setClientAppointmentTab((prev) => ({
+                ...prev,
+                [userId]: prev[userId] || 'upcoming',
             }));
         } catch (error) {
             console.error('Error fetching appointments:', error);
         }
+    };
+
+    const refreshAppointmentViews = (userId) => {
+        if (userId) {
+            fetchAppointments(userId);
+        }
+        fetchAllUpcomingAppointments();
+    };
+
+    const refreshAllExpandedAndCalendar = () => {
+        expandedUsers.forEach((uid) => fetchAppointments(uid));
+        fetchAllUpcomingAppointments();
     };
 
     // Handle appointment form input changes
@@ -340,8 +374,7 @@ const AdminUsers = () => {
             
             // Refresh appointments for this user
             if (selectedUserId) {
-                console.log('Refreshing appointments for userId:', selectedUserId);
-                fetchAppointments(selectedUserId);
+                refreshAppointmentViews(selectedUserId);
             }
         } catch (error) {
             console.error('Error creating appointment:', error);
@@ -503,7 +536,7 @@ const AdminUsers = () => {
 
             // Refresh appointments for this user
             if (editingAppointment && editingAppointment.userId) {
-                fetchAppointments(editingAppointment.userId);
+                refreshAppointmentViews(editingAppointment.userId);
             }
         } catch (error) {
             Swal.fire({
@@ -542,10 +575,7 @@ const AdminUsers = () => {
                     confirmButtonText: 'OK'
                 });
 
-                // Refresh appointments
-                if (selectedUserId) {
-                    fetchAppointments(selectedUserId);
-                }
+                refreshAllExpandedAndCalendar();
             } catch (error) {
                 Swal.fire({
                     icon: 'error',
@@ -583,10 +613,7 @@ const AdminUsers = () => {
                         confirmButtonText: 'OK'
                     });
 
-                    // Refresh appointments
-                    if (selectedUserId) {
-                        fetchAppointments(selectedUserId);
-                    }
+                    refreshAllExpandedAndCalendar();
                 } catch (error) {
                     Swal.fire({
                         icon: 'error',
@@ -675,7 +702,136 @@ const AdminUsers = () => {
     // Fetch users when the component mounts
     useEffect(() => {
         fetchUsers();
+        fetchAllUpcomingAppointments();
     }, [fetchUsers]);
+
+    const getCalendarDays = () => {
+        const year = calendarMonth.getFullYear();
+        const month = calendarMonth.getMonth();
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const startPadding = firstDay.getDay();
+        const days = [];
+
+        for (let i = 0; i < startPadding; i++) {
+            days.push(null);
+        }
+        for (let day = 1; day <= lastDay.getDate(); day++) {
+            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            days.push(dateStr);
+        }
+        return days;
+    };
+
+    const getAppointmentsForDate = (dateStr) =>
+        allUpcomingAppointments.filter((appt) => appt.date === dateStr);
+
+    const selectedDayAppointments = selectedCalendarDate
+        ? getAppointmentsForDate(selectedCalendarDate)
+        : [];
+
+    const changeCalendarMonth = (offset) => {
+        setCalendarMonth((prev) => new Date(prev.getFullYear(), prev.getMonth() + offset, 1));
+        setSelectedCalendarDate(null);
+    };
+
+    const renderAppointmentsTable = (appointmentList, isPast = false) => {
+        if (!appointmentList || appointmentList.length === 0) {
+            return (
+                <p className="no-appointments-msg">
+                    {isPast ? 'No past appointments on record.' : 'No upcoming appointments scheduled.'}
+                </p>
+            );
+        }
+
+        return (
+            <div className="appointments-table-container">
+                <table className="appointments-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Length</th>
+                            <th>Location/Link</th>
+                            <th>Status</th>
+                            {!isPast && <th>Actions</th>}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {appointmentList.map((appointment) => (
+                            <tr
+                                key={appointment._id}
+                                className={`appointment-row ${appointment.status === 'cancelled' ? 'cancelled' : ''} ${isPast ? 'past' : ''}`}
+                            >
+                                <td className="appointment-title">
+                                    <strong>{appointment.title || appointment.sessionType || 'General Session'}</strong>
+                                </td>
+                                <td className="appointment-date">{formatDate(appointment.date)}</td>
+                                <td className="appointment-time">{formatTimeWithZone(appointment.date, appointment.time)}</td>
+                                <td className="appointment-length">{appointment.length || appointment.duration || '60 mins'}</td>
+                                <td className="appointment-location">
+                                    {appointment.link ? (
+                                        <a
+                                            href={appointment.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="meeting-link"
+                                        >
+                                            Join Meeting
+                                        </a>
+                                    ) : appointment.location ? (
+                                        appointment.location
+                                    ) : (
+                                        'TBD'
+                                    )}
+                                </td>
+                                <td className="appointment-status">
+                                    {appointment.status === 'cancelled' ? (
+                                        <span className="cancelled-badge">CANCELLED</span>
+                                    ) : isPast ? (
+                                        <span className="past-badge">Completed</span>
+                                    ) : (
+                                        <span className="active-status">Active</span>
+                                    )}
+                                </td>
+                                {!isPast && (
+                                    <td className="appointment-actions">
+                                        {appointment.status === 'cancelled' ? (
+                                            <button
+                                                className="delete-btn"
+                                                onClick={() => handleDeleteAppointment(appointment._id)}
+                                                title="Delete Appointment"
+                                            >
+                                                <span aria-hidden="true">🗑️</span>
+                                            </button>
+                                        ) : (
+                                            <>
+                                                <button
+                                                    className="reschedule-btn"
+                                                    onClick={() => handleEditAppointment(appointment)}
+                                                    title="Edit Appointment"
+                                                >
+                                                    <span aria-hidden="true">✏️</span>
+                                                </button>
+                                                <button
+                                                    className="cancel-btn"
+                                                    onClick={() => handleCancelAppointment(appointment._id)}
+                                                    title="Cancel"
+                                                >
+                                                    <span aria-hidden="true">✕</span>
+                                                </button>
+                                            </>
+                                        )}
+                                    </td>
+                                )}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+    };
 
     const selectedUser = users.find((u) => u._id === selectedUserId);
     const selectedUserName = selectedUser
@@ -694,6 +850,113 @@ const AdminUsers = () => {
                     Add New Client
                 </button>
             </div>
+
+            <section className="upcoming-calendar-section">
+                <div className="calendar-section-header">
+                    <h4>Upcoming Appointments Calendar</h4>
+                    <span className="calendar-count">{allUpcomingAppointments.length} upcoming</span>
+                </div>
+                <div className="calendar-controls">
+                    <button type="button" className="calendar-nav-btn" onClick={() => changeCalendarMonth(-1)}>
+                        ←
+                    </button>
+                    <h5>
+                        {calendarMonth.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
+                    </h5>
+                    <button type="button" className="calendar-nav-btn" onClick={() => changeCalendarMonth(1)}>
+                        →
+                    </button>
+                    <button
+                        type="button"
+                        className="calendar-today-btn"
+                        onClick={() => {
+                            setCalendarMonth(new Date());
+                            const today = new Date();
+                            const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+                            setSelectedCalendarDate(todayStr);
+                        }}
+                    >
+                        Today
+                    </button>
+                </div>
+                <div className="calendar-weekdays">
+                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+                        <span key={day}>{day}</span>
+                    ))}
+                </div>
+                <div className="calendar-grid">
+                    {getCalendarDays().map((dateStr, index) => {
+                        if (!dateStr) {
+                            return <div key={`empty-${index}`} className="calendar-day empty" />;
+                        }
+                        const dayAppointments = getAppointmentsForDate(dateStr);
+                        const isSelected = selectedCalendarDate === dateStr;
+                        const today = new Date();
+                        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+                        const isToday = dateStr === todayStr;
+
+                        return (
+                            <button
+                                key={dateStr}
+                                type="button"
+                                className={`calendar-day ${isSelected ? 'selected' : ''} ${isToday ? 'today' : ''} ${dayAppointments.length > 0 ? 'has-appointments' : ''}`}
+                                onClick={() => setSelectedCalendarDate(dateStr)}
+                            >
+                                <span className="day-number">{Number(dateStr.split('-')[2])}</span>
+                                {dayAppointments.length > 0 && (
+                                    <span className="appointment-dot">{dayAppointments.length}</span>
+                                )}
+                            </button>
+                        );
+                    })}
+                </div>
+                <div className="calendar-day-details">
+                    {selectedCalendarDate ? (
+                        <>
+                            <h5>
+                                {formatDate(selectedCalendarDate)} — {selectedDayAppointments.length} appointment
+                                {selectedDayAppointments.length !== 1 ? 's' : ''}
+                            </h5>
+                            {selectedDayAppointments.length > 0 ? (
+                                <ul className="calendar-appointments-list">
+                                    {selectedDayAppointments.map((appt) => (
+                                        <li key={appt._id}>
+                                            <strong>{formatTimeWithZone(appt.date, appt.time)}</strong>
+                                            {' — '}
+                                            {appt.firstName} {appt.lastName}
+                                            {' — '}
+                                            {appt.title || appt.sessionType || 'Session'}
+                                            {appt.userId && (
+                                                <button
+                                                    type="button"
+                                                    className="view-client-btn"
+                                                    onClick={() => {
+                                                        const uid = appt.userId._id || appt.userId;
+                                                        setExpandedUsers((prev) => new Set([...prev, uid.toString()]));
+                                                        fetchAppointments(uid.toString());
+                                                        setClientAppointmentTab((prev) => ({
+                                                            ...prev,
+                                                            [uid.toString()]: 'upcoming',
+                                                        }));
+                                                        document.querySelector('.user-table')?.scrollIntoView({ behavior: 'smooth' });
+                                                    }}
+                                                >
+                                                    View client
+                                                </button>
+                                            )}
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p className="no-appointments-msg">No upcoming appointments on this day.</p>
+                            )}
+                        </>
+                    ) : (
+                        <p className="calendar-hint">Click a date to see upcoming appointments for that day.</p>
+                    )}
+                </div>
+            </section>
+
             {loading ? (
                 <p>Loading users...</p>
             ) : users.length > 0 ? (
@@ -725,9 +988,15 @@ const AdminUsers = () => {
                     <tbody>
                         {users.map((user, index) => (
                             <React.Fragment key={user._id}>
-                                <tr className="user-row" onClick={() => toggleUserExpansion(user._id)}>
+                                <tr
+                                    className={`user-row ${expandedUsers.has(user._id) ? 'expanded' : ''}`}
+                                    onClick={() => toggleUserExpansion(user._id)}
+                                >
                                     <td>{index + 1}</td>
-                                    <td>{user.firstName} {user.lastName}</td>
+                                    <td>
+                                        <span className="expand-indicator">{expandedUsers.has(user._id) ? '▼' : '▶'}</span>
+                                        {user.firstName} {user.lastName}
+                                    </td>
                                     <td>{user.pronoun}</td>
                                     <td>{user.email}</td>
                                     <td>{user.phone}</td>
@@ -791,90 +1060,40 @@ const AdminUsers = () => {
                                         <td colSpan="11">
                                             <div className="appointments-container">
                                                 <h4>Appointments for {user.firstName} {user.lastName}</h4>
-                                                {appointments[user._id] && appointments[user._id].length > 0 ? (
-                                                    <div className="appointments-table-container">
-                                                        <table className="appointments-table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Title</th>
-                                                                    <th>Date</th>
-                                                                    <th>Time</th>
-                                                                    <th>Length</th>
-                                                                    <th>Location/Link</th>
-                                                                    <th>Status</th>
-                                                                    <th>Actions</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {appointments[user._id].map((appointment) => (
-                                                                    <tr
-                                                                        key={appointment._id}
-                                                                        className={`appointment-row ${appointment.status === 'cancelled' ? 'cancelled' : ''} ${isAppointmentPast(appointment) ? 'past' : ''}`}
-                                                                    >
-                                                                        <td className="appointment-title">
-                                                                            <strong>{appointment.title || appointment.sessionType || 'General Session'}</strong>
-                                                                        </td>
-                                                                        <td className="appointment-date">{formatDate(appointment.date)}</td>
-                                                                        <td className="appointment-time">{formatTimeWithZone(appointment.date, appointment.time)}</td>
-                                                                        <td className="appointment-length">{appointment.length || appointment.duration || '60 mins'}</td>
-                                                                        <td className="appointment-location">
-                                                                            {appointment.link ? (
-                                                                                <a 
-                                                                                    href={appointment.link} 
-                                                                                    target="_blank" 
-                                                                                    rel="noopener noreferrer"
-                                                                                    className="meeting-link"
-                                                                                >
-                                                                                    Join Meeting
-                                                                                </a>
-                                                                            ) : appointment.location ? (
-                                                                                appointment.location
-                                                                            ) : (
-                                                                                'TBD'
-                                                                            )}
-                                                                        </td>
-                                                                        <td className="appointment-status">
-                                                                            {appointment.status === 'cancelled' ? (
-                                                                                <span className="cancelled-badge">CANCELLED</span>
-                                                                            ) : (
-                                                                                <span className="active-status">Active</span>
-                                                                            )}
-                                                                        </td>
-                                                                        <td className="appointment-actions">
-                                                                            {appointment.status === 'cancelled' ? (
-                                                                                <button 
-                                                                                    className="delete-btn"
-                                                                                    onClick={() => handleDeleteAppointment(appointment._id)}
-                                                                                    title="Delete Appointment"
-                                                                                >
-                                                                                    <span aria-hidden="true">🗑️</span>
-                                                                                </button>
-                                                                            ) : (
-                                                                                <>
-                                                                                    <button 
-                                                                                        className="reschedule-btn"
-                                                                                        onClick={() => handleEditAppointment(appointment)}
-                                                                                        title="Edit Appointment"
-                                                                                    >
-                                                                                        <span aria-hidden="true">✏️</span>
-                                                                                    </button>
-                                                                                    <button 
-                                                                                        className="cancel-btn"
-                                                                                        onClick={() => handleCancelAppointment(appointment._id)}
-                                                                                        title="Cancel"
-                                                                                    >
-                                                                                        <span aria-hidden="true">✕</span>
-                                                                                    </button>
-                                                                                </>
-                                                                            )}
-                                                                        </td>
-                                                                    </tr>
-                                                                ))}
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
+                                                <div className="appointment-tabs">
+                                                    <button
+                                                        type="button"
+                                                        className={`appointment-tab ${(clientAppointmentTab[user._id] || 'upcoming') === 'upcoming' ? 'active' : ''}`}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            setClientAppointmentTab((prev) => ({
+                                                                ...prev,
+                                                                [user._id]: 'upcoming',
+                                                            }));
+                                                        }}
+                                                    >
+                                                        Upcoming ({appointments[user._id]?.upcoming?.length || 0})
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        className={`appointment-tab ${clientAppointmentTab[user._id] === 'past' ? 'active' : ''}`}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            setClientAppointmentTab((prev) => ({
+                                                                ...prev,
+                                                                [user._id]: 'past',
+                                                            }));
+                                                        }}
+                                                    >
+                                                        Past ({appointments[user._id]?.past?.length || 0})
+                                                    </button>
+                                                </div>
+                                                {appointments[user._id] ? (
+                                                    (clientAppointmentTab[user._id] || 'upcoming') === 'past'
+                                                        ? renderAppointmentsTable(appointments[user._id].past, true)
+                                                        : renderAppointmentsTable(appointments[user._id].upcoming, false)
                                                 ) : (
-                                                    <p>No appointments scheduled.</p>
+                                                    <p>Loading appointments...</p>
                                                 )}
                                             </div>
                                         </td>
