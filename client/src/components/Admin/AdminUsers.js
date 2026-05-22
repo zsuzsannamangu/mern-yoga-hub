@@ -675,7 +675,7 @@ const AdminUsers = () => {
                     onClick={() => handleSendReminderNow(appointment._id, '2hours')}
                     title="Send 2-hour reminder email now (for testing)"
                 >
-                    {sendingReminderKey === `${appointment._id}-2hours` ? '…' : '2h reminder'}
+                    {sendingReminderKey === `${appointment._id}-2hours` ? '…' : '2h'}
                 </button>
                 <button
                     type="button"
@@ -684,7 +684,7 @@ const AdminUsers = () => {
                     onClick={() => handleSendReminderNow(appointment._id, '3days')}
                     title="Send 3-day reminder email now (for testing)"
                 >
-                    {sendingReminderKey === `${appointment._id}-3days` ? '…' : '3-day reminder'}
+                    {sendingReminderKey === `${appointment._id}-3days` ? '…' : '3d'}
                 </button>
             </div>
         );
@@ -762,21 +762,25 @@ const AdminUsers = () => {
                                             </button>
                                         ) : (
                                             <div className="appointment-actions-group">
+                                                <div className="appointment-icon-actions">
+                                                    <button
+                                                        type="button"
+                                                        className="reschedule-btn"
+                                                        onClick={() => handleEditAppointment(appointment)}
+                                                        title="Edit Appointment"
+                                                    >
+                                                        <span aria-hidden="true">✏️</span>
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        className="cancel-btn"
+                                                        onClick={() => handleCancelAppointment(appointment._id)}
+                                                        title="Cancel"
+                                                    >
+                                                        <span aria-hidden="true">✕</span>
+                                                    </button>
+                                                </div>
                                                 {renderReminderButtons(appointment)}
-                                                <button
-                                                    className="reschedule-btn"
-                                                    onClick={() => handleEditAppointment(appointment)}
-                                                    title="Edit Appointment"
-                                                >
-                                                    <span aria-hidden="true">✏️</span>
-                                                </button>
-                                                <button
-                                                    className="cancel-btn"
-                                                    onClick={() => handleCancelAppointment(appointment._id)}
-                                                    title="Cancel"
-                                                >
-                                                    <span aria-hidden="true">✕</span>
-                                                </button>
                                             </div>
                                         )}
                                     </td>

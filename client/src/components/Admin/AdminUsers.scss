@@ -37,9 +37,18 @@
 
     .appointment-actions-group {
         display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 8px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+    }
+
+    .appointment-icon-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        flex-shrink: 0;
     }
 
     .expand-indicator {
@@ -552,9 +561,9 @@
             &:nth-child(2) { width: 10%; } // Date
             &:nth-child(3) { width: 12%; } // Time
             &:nth-child(4) { width: 8%; }  // Length
-            &:nth-child(5) { width: 25%; } // Location/Link
+            &:nth-child(5) { width: 22%; } // Location/Link
             &:nth-child(6) { width: 10%; } // Status
-            &:nth-child(7) { width: 15%; } // Actions
+            &:nth-child(7) { width: 18%; min-width: 160px; } // Actions
         }
     }
 
@@ -588,7 +597,7 @@
 
         td {
             display: table-cell;
-            padding: 12px 8px;
+            padding: 8px;
             font-size: 14px;
             vertical-align: middle;
             color: $text-color !important;
@@ -690,26 +699,19 @@
 }
 
 .appointment-actions {
-    display: flex;
-    gap: 12px !important;
-    justify-content: center;
-    align-items: flex-start;
-    min-width: 140px;
+    padding: 6px 8px !important;
+    vertical-align: middle !important;
+    white-space: nowrap;
 
-    .reschedule-btn {
-        background: $gradient-warm;
-        color: $text-color;
+    .reschedule-btn,
+    .cancel-btn {
         border: none;
-        padding: 6px 8px;
+        padding: 4px 6px;
         border-radius: 4px;
         cursor: pointer;
         font-size: 12px;
+        line-height: 1;
         transition: background-color 0.3s ease;
-        margin-right: 8px;
-
-        &:hover {
-            background: $gradient-purple;
-        }
 
         svg {
             width: 14px;
@@ -717,24 +719,21 @@
         }
     }
 
+    .reschedule-btn {
+        background: $gradient-warm;
+        color: $text-color;
+
+        &:hover {
+            background: $gradient-purple;
+        }
+    }
+
     .cancel-btn {
         background-color: $delete-button;
         color: white;
-        border: none;
-        padding: 6px 8px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 12px;
-        transition: background-color 0.3s ease;
-        margin-left: 8px;
 
         &:hover {
             background-color: $delete-button-hover;
-        }
-
-        svg {
-            width: 14px;
-            height: 14px;
         }
     }
 
