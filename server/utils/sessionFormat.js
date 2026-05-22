@@ -18,10 +18,22 @@ function getFormatLabel(sessionFormat) {
         : 'Virtual';
 }
 
+/** Location line for confirmation/reminder emails from a booked slot or appointment. */
+function getBookingLocationEmailText(booking) {
+    if (booking?.link) {
+        return `Join online: ${booking.link}`;
+    }
+    if (booking?.location) {
+        return booking.location;
+    }
+    return getLocationForFormat(booking?.sessionFormat);
+}
+
 module.exports = {
     YOGA_REFUGE_ADDRESS,
     VALID_FORMATS,
     normalizeSessionFormat,
     getLocationForFormat,
     getFormatLabel,
+    getBookingLocationEmailText,
 };
