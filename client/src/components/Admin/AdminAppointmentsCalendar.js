@@ -10,7 +10,6 @@ import {
     categorizeBookings,
     formatDate,
     formatTimeWithZone,
-    isAppointmentPast,
 } from '../../utils/adminAppointments';
 
 const AdminAppointmentsCalendar = () => {
@@ -18,8 +17,6 @@ const AdminAppointmentsCalendar = () => {
     const [allUpcomingAppointments, setAllUpcomingAppointments] = useState([]);
     const [calendarMonth, setCalendarMonth] = useState(() => new Date());
     const [selectedCalendarDate, setSelectedCalendarDate] = useState(null);
-    const [sendingReminderKey, setSendingReminderKey] = useState(null);
-    const [runningReminderJob, setRunningReminderJob] = useState(false);
     const [loading, setLoading] = useState(true);
 
     const fetchAllUpcomingAppointments = useCallback(async () => {
@@ -76,86 +73,6 @@ const AdminAppointmentsCalendar = () => {
         setSelectedCalendarDate(null);
     };
 
-    const handleRunReminderJob = async () => {
-        setRunningReminderJob(true);
-        try {
-            const response = await adminAxiosInstance.post('/api/admin/diagnostics/run-appointment-reminders');
-            const { checked = 0, sent3d = 0, sent2h = 0 } = response.data || {};
-            Swal.fire({
-                icon: 'success',
-                title: 'Reminder check done',
-                html: `Checked <strong>${checked}</strong> upcoming appointment(s).<br/>Sent: <strong>${sent3d}</strong> three-day, <strong>${sent2h}</strong> two-hour.<br/><small>Only sends when an appointment is in the automatic time window.</small>`,
-                confirmButtonText: 'OK',
-            });
-            fetchAllUpcomingAppointments();
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Reminder check failed',
-                text: error.response?.data?.message || 'Please try again.',
-                confirmButtonText: 'OK',
-            });
-        } finally {
-            setRunningReminderJob(false);
-        }
-    };
-
-    const handleSendReminderNow = async (appointmentId, type) => {
-        const key = `${appointmentId}-${type}`;
-        setSendingReminderKey(key);
-        try {
-            const response = await adminAxiosInstance.post(
-                `/api/admin/appointments/${appointmentId}/send-reminder`,
-                { type }
-            );
-            Swal.fire({
-                icon: 'success',
-                title: 'Reminder sent',
-                text: response.data?.message || 'Email sent successfully.',
-                confirmButtonText: 'OK',
-            });
-            fetchAllUpcomingAppointments();
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Could not send reminder',
-                text: error.response?.data?.message || 'Please try again.',
-                confirmButtonText: 'OK',
-            });
-        } finally {
-            setSendingReminderKey(null);
-        }
-    };
-
-    const renderReminderButtons = (appointment) => {
-        if (appointment.status === 'cancelled' || isAppointmentPast(appointment)) {
-            return null;
-        }
-
-        return (
-            <div className="reminder-action-buttons">
-                <button
-                    type="button"
-                    className="send-reminder-btn"
-                    disabled={sendingReminderKey === `${appointment._id}-2hours`}
-                    onClick={() => handleSendReminderNow(appointment._id, '2hours')}
-                    title="Send 2-hour reminder email now (for testing)"
-                >
-                    {sendingReminderKey === `${appointment._id}-2hours` ? '…' : '2h reminder'}
-                </button>
-                <button
-                    type="button"
-                    className="send-reminder-btn"
-                    disabled={sendingReminderKey === `${appointment._id}-3days`}
-                    onClick={() => handleSendReminderNow(appointment._id, '3days')}
-                    title="Send 3-day reminder email now (for testing)"
-                >
-                    {sendingReminderKey === `${appointment._id}-3days` ? '…' : '3-day reminder'}
-                </button>
-            </div>
-        );
-    };
-
     const viewClient = (appt) => {
         const uid = appt.userId?._id || appt.userId;
         if (!uid) return;
@@ -171,22 +88,6 @@ const AdminAppointmentsCalendar = () => {
                     <p>Loading appointments…</p>
                 ) : (
                     <section className="upcoming-calendar-section">
-                        <div className="calendar-section-header">
-                            <span className="calendar-count">{allUpcomingAppointments.length} upcoming</span>
-                        </div>
-                        <div className="reminder-testing-bar">
-                            <button
-                                type="button"
-                                className="run-reminder-job-btn"
-                                onClick={handleRunReminderJob}
-                                disabled={runningReminderJob}
-                            >
-                                {runningReminderJob ? 'Running…' : 'Run automatic reminder check'}
-                            </button>
-                            <p className="reminder-testing-hint">
-                                Use <strong>2h reminder</strong> or <strong>3-day reminder</strong> on an appointment below to send a test email immediately.
-                            </p>
-                        </div>
                         <div className="calendar-controls">
                             <button type="button" className="calendar-nav-btn" onClick={() => changeCalendarMonth(-1)}>
                                 ←
@@ -258,7 +159,6 @@ const AdminAppointmentsCalendar = () => {
                                                     {' — '}
                                                     {appt.title || appt.sessionType || 'Session'}
                                                     <span className="calendar-appt-actions">
-                                                        {renderReminderButtons(appt)}
                                                         {appt.userId && (
                                                             <button
                                                                 type="button"
