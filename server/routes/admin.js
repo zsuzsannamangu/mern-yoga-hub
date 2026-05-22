@@ -59,6 +59,11 @@ function fallbackFetch(url, options) {
 }
 const Subscriber = require('../models/Subscriber');
 const Booking = require('../models/Booking');
+const {
+  isFirstSessionBooking,
+  getIntakeFormEmailHtml,
+  getIntakeFormEmailText,
+} = require('../utils/bookingEmailContent');
 const { clearAppointmentReminders } = require('../services/appointmentReminders');
 const sgMail = require('@sendgrid/mail');
 const { DateTime } = require('luxon');
@@ -470,18 +475,27 @@ router.post('/appointments', authMiddleware, adminMiddleware, async (req, res) =
 
     const clientLoginUrl = `${process.env.FRONTEND_URL || 'https://www.yogaandchocolate.com'}/login`;
 
+    const isFirstSession = await isFirstSessionBooking({
+      userId,
+      email: user.email,
+      excludeBookingId: newAppointment._id,
+    });
+    const intakeFormHtml = isFirstSession ? getIntakeFormEmailHtml() : '';
+    const intakeFormText = isFirstSession ? `\n\n${getIntakeFormEmailText()}` : '';
+
     // Send appointment confirmation email
     const emailContent = {
       to: user.email,
       from: process.env.EMAIL_USER,
       subject: 'New Appointment Scheduled with Zsuzsanna',
-      text: `Dear ${user.firstName}, \n\nYour "${title}" session with Zsuzsanna Mangu is scheduled at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedPacificTime} (${length}).\n\n${locationInfoText}\n\nPlease log in to your account (${clientLoginUrl}) or reply to this email to make changes.\n\nCurrently, online sessions are $10-$80 sliding scale and in-person sessions are $20-$100 sliding scale. Payments are accepted via Venmo @Zsuzsanna-Mangu.\n\nI'm looking forward to working with you!\n\nWarm regards,\nZsuzsanna\n\nThis is an automated email. Please reply directly if you have any questions.`,
+      text: `Dear ${user.firstName}, \n\nYour "${title}" session with Zsuzsanna Mangu is scheduled at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedPacificTime} (${length}).\n\n${locationInfoText}\n\nPlease log in to your account (${clientLoginUrl}) or reply to this email to make changes.${intakeFormText}\n\nCurrently, online sessions are $10-$80 sliding scale and in-person sessions are $20-$100 sliding scale. Payments are accepted via Venmo @Zsuzsanna-Mangu.\n\nI'm looking forward to working with you!\n\nWarm regards,\nZsuzsanna\n\nThis is an automated email. Please reply directly if you have any questions.`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <p>Dear ${user.firstName},</p>
           <p>Your "${title}" session with Zsuzsanna Mangu is scheduled at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedPacificTime} (${length}).</p>
           <p><strong>${locationInfoHtml}</strong></p>
           <p>Please <a href="${clientLoginUrl}" style="color: #007BFF; text-decoration: none; font-weight: bold;">log in</a> to your account or reply to this email to make changes.</p>
+          ${intakeFormHtml}
           <p>Currently, online sessions are $10-$80 sliding scale and in-person sessions are $20-$100 sliding scale. Payments are accepted via Venmo @Zsuzsanna-Mangu.</p>
           <p>I'm looking forward to working with you!</p>
           <p>Warm regards,<br>Zsuzsanna</p>

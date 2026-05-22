@@ -11,6 +11,10 @@ const {
     normalizeSessionFormat,
     getLocationForFormat,
 } = require('../utils/sessionFormat');
+const {
+    isFirstSessionBooking,
+    getIntakeFormEmailHtml,
+} = require('../utils/bookingEmailContent');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -339,6 +343,13 @@ module.exports = (io) => {
             
             const formattedTime = formatTimeWithZone(slot.date, slot.time);
 
+            const isFirstSession = await isFirstSessionBooking({
+                userId: userIdObjectId,
+                email,
+                excludeBookingId: savedSlot._id,
+            });
+            const intakeFormSection = isFirstSession ? getIntakeFormEmailHtml() : '';
+
             // Send emails
             const userEmail = {
                 to: email,
@@ -355,8 +366,7 @@ module.exports = (io) => {
                   Session Type: ${slot.sessionType}<br/>
                   Location: In-person sessions are at Yoga Refuge NW, 210 NW 17th Ave #101, Portland, OR 97209. We can also meet online.</p>
               
-                  <p>Before your first session, please fill out this form:<br/>
-                  <a href="https://docs.google.com/forms/d/e/1FAIpQLScvgtnQnBdWWTJqwQbqo98X_vNYpjuH9x-YpsAlced_xKjbSA/viewform?usp=header" target="_blank">New Client Form</a></p>
+                  ${intakeFormSection}
               
                   <p>I'm looking forward to working with you!</p>
                   <p>As a thank-you for booking a yoga session with me, you’re welcome to <strong>10% off</strong> any <a href="https://www.yogaandchocolate.com/chocolates" target="_blank" style="color: #007BFF; text-decoration: none; font-weight: bold;">chocolate order</a> of $15 or more using the code <strong>YOGAXCHOCOLATE</strong>.</p>
