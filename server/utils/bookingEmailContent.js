@@ -38,14 +38,14 @@ async function isFirstSessionBooking({ userId, email, excludeBookingId }) {
 
 function getIntakeFormEmailHtml() {
     return `
-              <p>If this will be your first session with me, please take a few minutes to complete our
+              <p>If this will be your first session with me, please take a few minutes to complete the
               <a href="${INTAKE_FORM_URL}" target="_blank" rel="noopener noreferrer" style="color: #007BFF; text-decoration: none; font-weight: bold;">Private Client Intake Form</a>
-              before we meet. Your responses help me prepare thoughtfully for our time together, and everything you share is kept confidential.</p>
+              before we meet.</p>
             `.trim();
 }
 
 function getIntakeFormEmailText() {
-    return `If this will be your first session with me, please complete our Private Client Intake Form before we meet (${INTAKE_FORM_URL}). Your responses help me prepare thoughtfully for our time together, and everything you share is kept confidential.`;
+    return `If this will be your first session with me, please complete the Private Client Intake Form before we meet (${INTAKE_FORM_URL}).`;
 }
 
 module.exports = {

@@ -12,7 +12,17 @@ import {
     formatTimeWithZone,
     isAppointmentPast,
 } from '../../utils/adminAppointments';
+import { YOGA_REFUGE_ADDRESS } from '../../utils/sessionFormat';
 // Using emoji icons (matches AdminFinances)
+
+const buildNewAppointmentForm = () => ({
+    title: '',
+    date: '',
+    time: '',
+    length: '',
+    location: YOGA_REFUGE_ADDRESS,
+    link: '',
+});
 
 const AdminUsers = () => {
     const location = useLocation();
@@ -37,14 +47,7 @@ const AdminUsers = () => {
     const [clientAppointmentTab, setClientAppointmentTab] = useState({}); // userId -> 'upcoming' | 'past'
     const [expandedUsers, setExpandedUsers] = useState(new Set()); // Track which users are expanded
     const [sendingReminderKey, setSendingReminderKey] = useState(null);
-    const [newAppointment, setNewAppointment] = useState({
-        title: '',
-        date: '',
-        time: '',
-        length: '',
-        location: '',
-        link: ''
-    });
+    const [newAppointment, setNewAppointment] = useState(buildNewAppointmentForm);
     // Edit user states
     const [showEditForm, setShowEditForm] = useState(false);
     const [editingUser, setEditingUser] = useState(null);
@@ -294,14 +297,7 @@ const AdminUsers = () => {
             });
 
             // Reset form and close modal
-            setNewAppointment({
-                title: '',
-                date: '',
-                time: '',
-                length: '',
-                location: '',
-                link: ''
-            });
+            setNewAppointment(buildNewAppointmentForm());
             setShowAppointmentForm(false);
             
             // Refresh appointments for this user
@@ -890,6 +886,7 @@ const AdminUsers = () => {
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     setSelectedUserId(user._id);
+                                                    setNewAppointment(buildNewAppointmentForm());
                                                     setShowAppointmentForm(true);
                                                 }}
                                                 title="Add Appointment"
@@ -1153,7 +1150,7 @@ const AdminUsers = () => {
                                     name="location"
                                     value={newAppointment.location}
                                     onChange={handleAppointmentInputChange}
-                                    placeholder="Physical address (e.g., 123 Main St, San Francisco)"
+                                    placeholder="Default is Yoga Refuge; edit for another location"
                                 />
                             </div>
                             <div className="form-group">
