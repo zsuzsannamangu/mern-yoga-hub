@@ -1,54 +1,73 @@
 @use '../../styles/variables' as *;
 
 .admin-appointments-calendar {
-    font-family: $font-main;
-    background-color: $background-color;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    font-family: $font-main;
+    background-color: $background-color;
+    box-sizing: border-box;
 
-    .section-title {
-        margin: 0 0 24px;
-        color: $main-title-color;
-        font-family: $font-title;
+    .appointments-calendar-header {
+        margin-bottom: 20px;
+
+        .section-title {
+            color: $secondary-text-color;
+            margin: 0 0 20px;
+        }
+    }
+
+    .loading-message {
+        color: $secondary-text-color;
+        font-family: $font-main;
+        margin: 0;
     }
 
     .upcoming-calendar-section {
-        background: $secondary-background-color;
+        background: white;
         border-radius: 8px;
         padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+        max-width: 100%;
 
         .calendar-controls {
             display: flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 16px;
+            flex-wrap: wrap;
 
             h5 {
                 margin: 0;
                 min-width: 180px;
                 text-align: center;
-                color: $text-color;
+                color: $secondary-text-color;
+                font-family: $font-main;
+                font-size: 1rem;
+                font-weight: 600;
             }
 
             .calendar-nav-btn,
             .calendar-today-btn {
-                background: $primary-button-color;
-                color: white;
+                background-color: $primary-button-color;
+                color: $button-text-color;
                 border: none;
-                border-radius: 4px;
-                padding: 6px 12px;
-                cursor: pointer;
+                border-radius: 5px;
+                padding: 8px 16px;
+                font-size: 14px;
                 font-family: $font-main;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
 
                 &:hover {
-                    background: $primary-button-hover-color;
+                    background-color: $primary-button-hover-color;
                 }
             }
 
             .calendar-nav-btn {
                 min-width: 36px;
+                padding: 8px 12px;
             }
         }
 
@@ -63,6 +82,7 @@
                 font-size: 0.75rem;
                 font-weight: bold;
                 color: $secondary-text-color;
+                font-family: $font-main;
             }
         }
 
@@ -76,7 +96,7 @@
             min-height: 52px;
             border: 1px solid $border-color;
             border-radius: 4px;
-            background: white;
+            background: $secondary-background-color;
             cursor: pointer;
             display: flex;
             flex-direction: column;
@@ -98,6 +118,7 @@
 
             &.has-appointments .day-number {
                 font-weight: bold;
+                color: $text-color;
             }
 
             &.selected {
@@ -118,7 +139,7 @@
                 margin-top: 2px;
                 font-size: 0.65rem;
                 background: $primary-button-color;
-                color: white;
+                color: $button-text-color;
                 border-radius: 10px;
                 padding: 1px 5px;
                 min-width: 16px;
@@ -132,13 +153,18 @@
 
             h5 {
                 margin: 0 0 12px;
-                color: $text-color;
+                color: $secondary-text-color;
+                font-family: $font-main;
+                font-size: 1rem;
+                font-weight: 600;
             }
 
             .calendar-hint,
             .no-appointments-msg {
                 color: $secondary-text-color;
                 margin: 0;
+                font-family: $font-main;
+                font-style: italic;
             }
 
             .calendar-appointments-list {
@@ -148,9 +174,10 @@
 
                 li {
                     padding: 10px 0;
-                    border-bottom: 1px solid rgba($border-color, 0.6);
+                    border-bottom: 1px solid $border-color;
                     color: $text-color;
                     font-size: 0.95rem;
+                    font-family: $font-main;
 
                     &:last-child {
                         border-bottom: none;
@@ -172,8 +199,29 @@
                     cursor: pointer;
                     text-decoration: underline;
                     font-family: $font-main;
-                    font-size: 0.85rem;
+                    font-size: 0.9rem;
+                    padding: 0;
+
+                    &:hover {
+                        color: $primary-button-hover-color;
+                    }
                 }
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-md) {
+    .admin-appointments-calendar {
+        padding: 16px;
+
+        .upcoming-calendar-section {
+            padding: 16px;
+            margin: 16px 0;
+
+            .calendar-controls h5 {
+                min-width: 0;
+                flex: 1 1 100%;
             }
         }
     }

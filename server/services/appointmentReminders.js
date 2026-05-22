@@ -1,8 +1,6 @@
 const { DateTime } = require('luxon');
 const sgMail = require('@sendgrid/mail');
 const Booking = require('../models/Booking');
-const { buildBookingLocationContent } = require('../utils/sessionFormat');
-
 const TIMEZONE = 'America/Los_Angeles';
 
 // Reminder windows (minutes before appointment)
@@ -56,15 +54,51 @@ function getSessionTitle(booking) {
     return booking.title || booking.sessionType || 'Yoga Session';
 }
 
+function buildLocationLines(booking) {
+    const lines = [];
+
+    if (booking.location && booking.link) {
+        lines.push(`Location: ${booking.location}`);
+        lines.push(`Join online: ${booking.link}`);
+    } else if (booking.location) {
+        lines.push(`Location: ${booking.location}`);
+    } else if (booking.link) {
+        lines.push(`Join online: ${booking.link}`);
+    } else {
+        lines.push(
+            'Location: In-person sessions are at Yoga Refuge NW, 210 NW 17th Ave #101, Portland, OR 97209. We can also meet online.'
+        );
+    }
+
+    if (booking.length) {
+        lines.push(`Length: ${booking.length}`);
+    }
+
+    return lines;
+}
+
 function buildReminderEmail(booking, reminderType) {
     const { dateLabel, timeLabel, whenLabel } = formatAppointmentDateTime(booking);
     const sessionTitle = getSessionTitle(booking);
-    const { textLines: locationLines, html: locationBlockHtml } = buildBookingLocationContent(booking);
+    const locationLines = buildLocationLines(booking);
     const clientLoginUrl = `${process.env.FRONTEND_URL || 'https://www.yogaandchocolate.com'}/login`;
 
-    // Subject uses "on [date] at [time]" only (no em dashes or "in 2 hours" wording).
     const subject = `Reminder: Your session on ${dateLabel} at ${timeLabel}`;
     const intro = `This is a friendly reminder that your session with Zsuzsanna Mangu is ${whenLabel}.`;
+
+    let locationBlockHtml = '';
+    if (booking.location && booking.link) {
+        locationBlockHtml = `<p><strong>Location:</strong> ${booking.location}<br/><a href="${booking.link}">Join Meeting</a></p>`;
+    } else if (booking.location) {
+        locationBlockHtml = `<p><strong>Location:</strong> ${booking.location}</p>`;
+    } else if (booking.link) {
+        locationBlockHtml = `<p><a href="${booking.link}">Join Meeting</a></p>`;
+    } else {
+        locationBlockHtml = `<p><strong>Location:</strong> In-person sessions are at Yoga Refuge NW, 210 NW 17th Ave #101, Portland, OR 97209. We can also meet online.</p>`;
+    }
+    if (booking.length) {
+        locationBlockHtml += `<p><strong>Length:</strong> ${booking.length}</p>`;
+    }
 
     const text = [
         `Dear ${booking.firstName},`,

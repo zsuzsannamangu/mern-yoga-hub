@@ -79,7 +79,11 @@ app.get('/config/paypal', (req, res) => {
 });
 
 app.get("/api/health", (req, res) => {
-    res.json({ status: "Backend is working!" });
+    const dbReady = mongoose.connection.readyState === 1;
+    res.status(dbReady ? 200 : 503).json({
+        status: dbReady ? 'Backend is working!' : 'Backend up but database not connected',
+        database: dbReady ? 'connected' : 'disconnected',
+    });
 });
 
 // Add headers manually for extra safety
@@ -110,15 +114,6 @@ const PORT = process.env.PORT || 5001;
 
 const { startAppointmentReminderScheduler } = require('./services/appointmentReminders');
 
-// MongoDB connection
-mongoose
-    .connect(process.env.MONGODB_URI)
-    .then(() => {
-        console.log('MongoDB connected to successfully.');
-        startAppointmentReminderScheduler();
-    })
-    .catch((err) => console.log('Error connecting to MongoDB:', err));
-
 const path = require("path");
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
@@ -142,7 +137,31 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+async function connectDatabase() {
+    const uri = process.env.MONGODB_URI;
+    if (!uri || !String(uri).trim()) {
+        throw new Error('MONGODB_URI environment variable is missing or empty');
+    }
+
+    await mongoose.connect(String(uri).trim(), {
+        serverSelectionTimeoutMS: 15000,
+    });
+    console.log('MongoDB connected successfully.');
+}
+
+async function startServer() {
+    try {
+        await connectDatabase();
+        startAppointmentReminderScheduler();
+    } catch (err) {
+        console.error('FATAL: Could not connect to MongoDB:', err.message);
+        process.exit(1);
+    }
+
+    server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+startServer();
 
 // Graceful shutdown handlers
 process.on('SIGINT', () => {

@@ -82,10 +82,12 @@ const AdminAppointmentsCalendar = () => {
     return (
         <AdminLayout>
             <div className="admin-appointments-calendar">
-                <h3 className="section-title">Upcoming Appointments Calendar</h3>
+                <div className="appointments-calendar-header">
+                    <h3 className="section-title">Upcoming Appointments Calendar</h3>
+                </div>
 
                 {loading ? (
-                    <p>Loading appointments…</p>
+                    <p className="loading-message">Loading appointments…</p>
                 ) : (
                     <section className="upcoming-calendar-section">
                         <div className="calendar-controls">
@@ -146,7 +148,7 @@ const AdminAppointmentsCalendar = () => {
                             {selectedCalendarDate ? (
                                 <>
                                     <h5>
-                                        {formatDate(selectedCalendarDate)} — {selectedDayAppointments.length} appointment
+                                        {formatDate(selectedCalendarDate)}: {selectedDayAppointments.length} appointment
                                         {selectedDayAppointments.length !== 1 ? 's' : ''}
                                     </h5>
                                     {selectedDayAppointments.length > 0 ? (
@@ -154,9 +156,9 @@ const AdminAppointmentsCalendar = () => {
                                             {selectedDayAppointments.map((appt) => (
                                                 <li key={appt._id}>
                                                     <strong>{formatTimeWithZone(appt.date, appt.time)}</strong>
-                                                    {' — '}
+                                                    {' · '}
                                                     {appt.firstName} {appt.lastName}
-                                                    {' — '}
+                                                    {' · '}
                                                     {appt.title || appt.sessionType || 'Session'}
                                                     <span className="calendar-appt-actions">
                                                         {appt.userId && (
