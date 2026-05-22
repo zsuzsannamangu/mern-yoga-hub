@@ -35,9 +35,9 @@ const AdminNavbar = () => {
         { path: '/admin/dashboard', icon: FaCalendarAlt, label: 'Classes/Events' },
         { path: '/admin/bookings', icon: FaBookOpen, label: 'Bookings' },
         { path: '/admin/appointments', icon: FaCalendarCheck, label: 'Appointments' },
+        { path: '/admin/users', icon: FaUsers, label: 'Clients' },
         { path: '/admin/chocolates', icon: FaCookieBite, label: 'Chocolates' },
         { path: '/admin/signups', icon: FaChalkboardTeacher, label: 'Classes' },
-        { path: '/admin/users', icon: FaUsers, label: 'Clients' },
         { path: '/admin/subscribers', icon: FaEnvelope, label: 'Subscribers' },
         { path: '/admin/finances', icon: FaChartLine, label: 'Finances' },
         { path: '/admin/rhythm', icon: FaClipboardList, label: 'Rhythm' }

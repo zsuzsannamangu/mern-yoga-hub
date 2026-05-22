@@ -82,14 +82,15 @@ const AdminAppointmentsCalendar = () => {
     return (
         <AdminLayout>
             <div className="admin-appointments-calendar">
-                <h3 className="section-title">Upcoming Appointments Calendar</h3>
+                <div className="admin-appointments-calendar-container">
+                    <h3 className="section-title">Upcoming Appointments Calendar</h3>
 
-                {loading ? (
-                    <p className="loading-message">Loading appointments…</p>
-                ) : (
-                    <div className="appointments-calendar-panel">
-                        <div className="calendar-layout">
-                            <div className="calendar-main">
+                    {loading ? (
+                        <p className="loading-message">Loading appointments…</p>
+                    ) : (
+                        <>
+                            <div className="appointments-calendar-card">
+                                <h3>Calendar</h3>
                                 <div className="calendar-controls">
                                     <button type="button" className="calendar-nav-btn" onClick={() => changeCalendarMonth(-1)}>
                                         ←
@@ -145,47 +146,44 @@ const AdminAppointmentsCalendar = () => {
                                     })}
                                 </div>
                             </div>
-                            <div className="calendar-day-details">
-                                {selectedCalendarDate ? (
-                                    <>
-                                        <h3 className="calendar-details-title">
-                                            {formatDate(selectedCalendarDate)}: {selectedDayAppointments.length} appointment
-                                            {selectedDayAppointments.length !== 1 ? 's' : ''}
-                                        </h3>
-                                        {selectedDayAppointments.length > 0 ? (
-                                            <ul className="calendar-appointments-list">
-                                                {selectedDayAppointments.map((appt) => (
-                                                    <li key={appt._id}>
-                                                        <strong>{formatTimeWithZone(appt.date, appt.time)}</strong>
-                                                        {' · '}
-                                                        {appt.firstName} {appt.lastName}
-                                                        {' · '}
-                                                        {appt.title || appt.sessionType || 'Session'}
-                                                        <span className="calendar-appt-actions">
-                                                            {appt.userId && (
-                                                                <button
-                                                                    type="button"
-                                                                    className="view-client-btn"
-                                                                    onClick={() => viewClient(appt)}
-                                                                >
-                                                                    View client
-                                                                </button>
-                                                            )}
-                                                        </span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        ) : (
-                                            <p className="no-appointments-msg">No upcoming appointments on this day.</p>
-                                        )}
-                                    </>
-                                ) : (
-                                    <p className="calendar-hint">Click a date to see upcoming appointments for that day.</p>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                )}
+
+                            {selectedCalendarDate && (
+                                <div className="appointments-day-card">
+                                    <h3>
+                                        {formatDate(selectedCalendarDate)} ({selectedDayAppointments.length} appointment
+                                        {selectedDayAppointments.length !== 1 ? 's' : ''})
+                                    </h3>
+                                    {selectedDayAppointments.length > 0 ? (
+                                        <ul className="calendar-appointments-list">
+                                            {selectedDayAppointments.map((appt) => (
+                                                <li key={appt._id}>
+                                                    <strong>{formatTimeWithZone(appt.date, appt.time)}</strong>
+                                                    {' · '}
+                                                    {appt.firstName} {appt.lastName}
+                                                    {' · '}
+                                                    {appt.title || appt.sessionType || 'Session'}
+                                                    <span className="calendar-appt-actions">
+                                                        {appt.userId && (
+                                                            <button
+                                                                type="button"
+                                                                className="view-client-btn"
+                                                                onClick={() => viewClient(appt)}
+                                                            >
+                                                                View client
+                                                            </button>
+                                                        )}
+                                                    </span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <p className="no-appointments-msg">No upcoming appointments on this day.</p>
+                                    )}
+                                </div>
+                            )}
+                        </>
+                    )}
+                </div>
             </div>
         </AdminLayout>
     );
