@@ -1,6 +1,7 @@
 const { DateTime } = require('luxon');
 const sgMail = require('@sendgrid/mail');
 const Booking = require('../models/Booking');
+const { buildBookingLocationContent } = require('../utils/sessionFormat');
 
 const TIMEZONE = 'America/Los_Angeles';
 
@@ -32,11 +33,22 @@ function getAppointmentStart(booking) {
 
 function formatAppointmentDateTime(booking) {
     const start = getAppointmentStart(booking);
-    if (!start) return { dateLabel: booking.date, timeLabel: booking.time };
+    if (!start) {
+        return {
+            dateLabel: booking.date,
+            timeLabel: booking.time,
+            whenLabel: `on ${booking.date} at ${booking.time}`,
+        };
+    }
+
+    const datePart = start.toFormat('MM/dd/yyyy');
+    const timePart = start.toFormat('h:mm a');
+    const zone = start.offsetNameShort;
 
     return {
         dateLabel: start.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY),
-        timeLabel: `${start.toLocaleString(DateTime.TIME_SIMPLE)} ${start.offsetNameShort}`,
+        timeLabel: `${timePart} ${zone}`,
+        whenLabel: `on ${datePart} at ${timePart} ${zone}`,
     };
 }
 
@@ -44,57 +56,14 @@ function getSessionTitle(booking) {
     return booking.title || booking.sessionType || 'Yoga Session';
 }
 
-function buildLocationLines(booking) {
-    const lines = [];
-
-    if (booking.location && booking.link) {
-        lines.push(`Location: ${booking.location}`);
-        lines.push(`Join online: ${booking.link}`);
-    } else if (booking.location) {
-        lines.push(`Location: ${booking.location}`);
-    } else if (booking.link) {
-        lines.push(`Join online: ${booking.link}`);
-    } else {
-        lines.push(
-            'Location: In-person sessions are at Yoga Refuge NW, 210 NW 17th Ave #101, Portland, OR 97209. We can also meet online.'
-        );
-    }
-
-    if (booking.length) {
-        lines.push(`Length: ${booking.length}`);
-    }
-
-    return lines;
-}
-
 function buildReminderEmail(booking, reminderType) {
-    const { dateLabel, timeLabel } = formatAppointmentDateTime(booking);
+    const { dateLabel, timeLabel, whenLabel } = formatAppointmentDateTime(booking);
     const sessionTitle = getSessionTitle(booking);
-    const locationLines = buildLocationLines(booking);
+    const { textLines: locationLines, html: locationBlockHtml } = buildBookingLocationContent(booking);
     const clientLoginUrl = `${process.env.FRONTEND_URL || 'https://www.yogaandchocolate.com'}/login`;
 
-    const isThreeDay = reminderType === '3days';
-    const subject = isThreeDay
-        ? `Reminder: Your session is in 3 days — ${dateLabel}`
-        : `Reminder: Your session is in 2 hours — ${timeLabel}`;
-
-    const intro = isThreeDay
-        ? `This is a friendly reminder that your upcoming session with Zsuzsanna Mangu is in about 3 days.`
-        : `This is a friendly reminder that your session with Zsuzsanna Mangu starts in about 2 hours.`;
-
-    let locationBlockHtml = '';
-    if (booking.location && booking.link) {
-        locationBlockHtml = `<p><strong>Location:</strong> ${booking.location}<br/><a href="${booking.link}">Join Meeting</a></p>`;
-    } else if (booking.location) {
-        locationBlockHtml = `<p><strong>Location:</strong> ${booking.location}</p>`;
-    } else if (booking.link) {
-        locationBlockHtml = `<p><a href="${booking.link}">Join Meeting</a></p>`;
-    } else {
-        locationBlockHtml = `<p><strong>Location:</strong> In-person sessions are at Yoga Refuge NW, 210 NW 17th Ave #101, Portland, OR 97209. We can also meet online.</p>`;
-    }
-    if (booking.length) {
-        locationBlockHtml += `<p><strong>Length:</strong> ${booking.length}</p>`;
-    }
+    const subject = `Reminder: Your session ${whenLabel}`;
+    const intro = `This is a friendly reminder that your session with Zsuzsanna Mangu is ${whenLabel}.`;
 
     const text = [
         `Dear ${booking.firstName},`,

@@ -9,7 +9,8 @@ const { clearAppointmentReminders } = require('../services/appointmentReminders'
 const {
     VALID_FORMATS,
     normalizeSessionFormat,
-    getLocationForFormat,
+    applySessionLocationToBooking,
+    buildBookingLocationContent,
 } = require('../utils/sessionFormat');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -159,14 +160,14 @@ module.exports = (io) => {
 
         try {
             const normalizedSlots = slots.map((slot) => {
-                const sessionFormat = normalizeSessionFormat(slot.sessionFormat);
-                return {
+                const draft = {
                     ...slot,
-                    sessionFormat,
-                    location: getLocationForFormat(sessionFormat),
+                    sessionFormat: normalizeSessionFormat(slot.sessionFormat),
                     isBooked: false,
                     status: 'scheduled',
                 };
+                applySessionLocationToBooking(draft);
+                return draft;
             });
 
             const invalidFormat = normalizedSlots.find(
@@ -295,8 +296,7 @@ module.exports = (io) => {
             slot.paymentAmount = paymentAmount != null ? Number(paymentAmount) : undefined;
             slot.usedCoupon = !!usedCoupon;
             slot.status = 'scheduled';
-            slot.sessionFormat = normalizeSessionFormat(slot.sessionFormat);
-            slot.location = getLocationForFormat(slot.sessionFormat);
+            applySessionLocationToBooking(slot);
 
             const savedSlot = await slot.save();
             
@@ -338,6 +338,7 @@ module.exports = (io) => {
             };
             
             const formattedTime = formatTimeWithZone(slot.date, slot.time);
+            const { html: bookingLocationHtml } = buildBookingLocationContent(slot);
 
             // Send emails
             const userEmail = {
@@ -352,8 +353,8 @@ module.exports = (io) => {
                   <p><strong>Session Details:</strong><br/>
                   Date: ${slot.date}<br/>
                   Time: ${formattedTime}<br/>
-                  Session Type: ${slot.sessionType}<br/>
-                  Location: In-person sessions are at Yoga Refuge NW, 210 NW 17th Ave #101, Portland, OR 97209. We can also meet online.</p>
+                  Session Type: ${slot.sessionType}</p>
+                  ${bookingLocationHtml}
               
                   <p>Before your first session, please fill out this form:<br/>
                   <a href="https://docs.google.com/forms/d/e/1FAIpQLScvgtnQnBdWWTJqwQbqo98X_vNYpjuH9x-YpsAlced_xKjbSA/viewform?usp=header" target="_blank">New Client Form</a></p>
