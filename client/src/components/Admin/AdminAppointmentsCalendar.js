@@ -82,107 +82,109 @@ const AdminAppointmentsCalendar = () => {
     return (
         <AdminLayout>
             <div className="admin-appointments-calendar">
-                <div className="appointments-calendar-header">
-                    <h3 className="section-title">Upcoming Appointments Calendar</h3>
-                </div>
+                <h3 className="section-title">Upcoming Appointments Calendar</h3>
 
                 {loading ? (
                     <p className="loading-message">Loading appointments…</p>
                 ) : (
-                    <section className="upcoming-calendar-section">
-                        <div className="calendar-controls">
-                            <button type="button" className="calendar-nav-btn" onClick={() => changeCalendarMonth(-1)}>
-                                ←
-                            </button>
-                            <h5>
-                                {calendarMonth.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
-                            </h5>
-                            <button type="button" className="calendar-nav-btn" onClick={() => changeCalendarMonth(1)}>
-                                →
-                            </button>
-                            <button
-                                type="button"
-                                className="calendar-today-btn"
-                                onClick={() => {
-                                    setCalendarMonth(new Date());
-                                    const today = new Date();
-                                    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-                                    setSelectedCalendarDate(todayStr);
-                                }}
-                            >
-                                Today
-                            </button>
-                        </div>
-                        <div className="calendar-weekdays">
-                            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                                <span key={day}>{day}</span>
-                            ))}
-                        </div>
-                        <div className="calendar-grid">
-                            {getCalendarDays().map((dateStr, index) => {
-                                if (!dateStr) {
-                                    return <div key={`empty-${index}`} className="calendar-day empty" />;
-                                }
-                                const dayAppointments = getAppointmentsForDate(dateStr);
-                                const isSelected = selectedCalendarDate === dateStr;
-                                const today = new Date();
-                                const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-                                const isToday = dateStr === todayStr;
-
-                                return (
-                                    <button
-                                        key={dateStr}
-                                        type="button"
-                                        className={`calendar-day ${isSelected ? 'selected' : ''} ${isToday ? 'today' : ''} ${dayAppointments.length > 0 ? 'has-appointments' : ''}`}
-                                        onClick={() => setSelectedCalendarDate(dateStr)}
-                                    >
-                                        <span className="day-number">{Number(dateStr.split('-')[2])}</span>
-                                        {dayAppointments.length > 0 && (
-                                            <span className="appointment-dot">{dayAppointments.length}</span>
-                                        )}
+                    <div className="appointments-calendar-panel">
+                        <div className="calendar-layout">
+                            <div className="calendar-main">
+                                <div className="calendar-controls">
+                                    <button type="button" className="calendar-nav-btn" onClick={() => changeCalendarMonth(-1)}>
+                                        ←
                                     </button>
-                                );
-                            })}
+                                    <p className="calendar-month-title">
+                                        {calendarMonth.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
+                                    </p>
+                                    <button type="button" className="calendar-nav-btn" onClick={() => changeCalendarMonth(1)}>
+                                        →
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="calendar-today-btn"
+                                        onClick={() => {
+                                            setCalendarMonth(new Date());
+                                            const today = new Date();
+                                            const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+                                            setSelectedCalendarDate(todayStr);
+                                        }}
+                                    >
+                                        Today
+                                    </button>
+                                </div>
+                                <div className="calendar-weekdays">
+                                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+                                        <span key={day}>{day}</span>
+                                    ))}
+                                </div>
+                                <div className="calendar-grid">
+                                    {getCalendarDays().map((dateStr, index) => {
+                                        if (!dateStr) {
+                                            return <div key={`empty-${index}`} className="calendar-day empty" />;
+                                        }
+                                        const dayAppointments = getAppointmentsForDate(dateStr);
+                                        const isSelected = selectedCalendarDate === dateStr;
+                                        const today = new Date();
+                                        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+                                        const isToday = dateStr === todayStr;
+
+                                        return (
+                                            <button
+                                                key={dateStr}
+                                                type="button"
+                                                className={`calendar-day ${isSelected ? 'selected' : ''} ${isToday ? 'today' : ''} ${dayAppointments.length > 0 ? 'has-appointments' : ''}`}
+                                                onClick={() => setSelectedCalendarDate(dateStr)}
+                                            >
+                                                <span className="day-number">{Number(dateStr.split('-')[2])}</span>
+                                                {dayAppointments.length > 0 && (
+                                                    <span className="appointment-dot">{dayAppointments.length}</span>
+                                                )}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                            <div className="calendar-day-details">
+                                {selectedCalendarDate ? (
+                                    <>
+                                        <h3 className="calendar-details-title">
+                                            {formatDate(selectedCalendarDate)}: {selectedDayAppointments.length} appointment
+                                            {selectedDayAppointments.length !== 1 ? 's' : ''}
+                                        </h3>
+                                        {selectedDayAppointments.length > 0 ? (
+                                            <ul className="calendar-appointments-list">
+                                                {selectedDayAppointments.map((appt) => (
+                                                    <li key={appt._id}>
+                                                        <strong>{formatTimeWithZone(appt.date, appt.time)}</strong>
+                                                        {' · '}
+                                                        {appt.firstName} {appt.lastName}
+                                                        {' · '}
+                                                        {appt.title || appt.sessionType || 'Session'}
+                                                        <span className="calendar-appt-actions">
+                                                            {appt.userId && (
+                                                                <button
+                                                                    type="button"
+                                                                    className="view-client-btn"
+                                                                    onClick={() => viewClient(appt)}
+                                                                >
+                                                                    View client
+                                                                </button>
+                                                            )}
+                                                        </span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        ) : (
+                                            <p className="no-appointments-msg">No upcoming appointments on this day.</p>
+                                        )}
+                                    </>
+                                ) : (
+                                    <p className="calendar-hint">Click a date to see upcoming appointments for that day.</p>
+                                )}
+                            </div>
                         </div>
-                        <div className="calendar-day-details">
-                            {selectedCalendarDate ? (
-                                <>
-                                    <h5>
-                                        {formatDate(selectedCalendarDate)}: {selectedDayAppointments.length} appointment
-                                        {selectedDayAppointments.length !== 1 ? 's' : ''}
-                                    </h5>
-                                    {selectedDayAppointments.length > 0 ? (
-                                        <ul className="calendar-appointments-list">
-                                            {selectedDayAppointments.map((appt) => (
-                                                <li key={appt._id}>
-                                                    <strong>{formatTimeWithZone(appt.date, appt.time)}</strong>
-                                                    {' · '}
-                                                    {appt.firstName} {appt.lastName}
-                                                    {' · '}
-                                                    {appt.title || appt.sessionType || 'Session'}
-                                                    <span className="calendar-appt-actions">
-                                                        {appt.userId && (
-                                                            <button
-                                                                type="button"
-                                                                className="view-client-btn"
-                                                                onClick={() => viewClient(appt)}
-                                                            >
-                                                                View client
-                                                            </button>
-                                                        )}
-                                                    </span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    ) : (
-                                        <p className="no-appointments-msg">No upcoming appointments on this day.</p>
-                                    )}
-                                </>
-                            ) : (
-                                <p className="calendar-hint">Click a date to see upcoming appointments for that day.</p>
-                            )}
-                        </div>
-                    </section>
+                    </div>
                 )}
             </div>
         </AdminLayout>
