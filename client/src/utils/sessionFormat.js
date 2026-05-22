@@ -20,3 +20,8 @@ export function getFormatDescription(format) {
         ? `In person at Yoga Refuge NW (${YOGA_REFUGE_ADDRESS})`
         : 'Virtual (online)';
 }
+
+/** Short label for booking slot buttons, e.g. "1pm in-person" */
+export function getFormatSlotLabel(format) {
+    return normalizeSessionFormat(format) === 'in-person' ? 'in-person' : 'virtual';
+}

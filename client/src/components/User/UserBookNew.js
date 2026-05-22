@@ -6,12 +6,7 @@ import '../../App.scss';
 import io from 'socket.io-client';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import {
-    SESSION_FORMAT_OPTIONS,
-    normalizeSessionFormat,
-    getFormatLabel,
-    getFormatDescription,
-} from '../../utils/sessionFormat';
+import { getFormatSlotLabel } from '../../utils/sessionFormat';
 
 function UserBookNew() {
     const { userId } = useParams(); // Get user ID from URL parameters
@@ -29,17 +24,9 @@ function UserBookNew() {
     const [paypalError, setPaypalError] = useState(false); // Track PayPal errors
     const [paymentSuccess, setPaymentSuccess] = useState(false); // Track if payment was successful
     const [couponCode, setCouponCode] = useState('');
-    const [sessionFormatFilter, setSessionFormatFilter] = useState('');
     const navigate = useNavigate();
 
-    const slotMatchesFormatFilter = (slot) => {
-        if (!sessionFormatFilter) return false;
-        return normalizeSessionFormat(slot.sessionFormat) === sessionFormatFilter;
-    };
-
-    const filteredAvailableSlots = availableSlots.filter(slotMatchesFormatFilter);
-
-    const datesWithFilteredSlots = filteredAvailableSlots.map((slot) => slot.date);
+    const datesWithAvailableSlots = [...new Set(availableSlots.map((slot) => slot.date))];
 
     const clearPayPalButtons = () => {
         const container = document.getElementById('paypal-button-container');
@@ -127,18 +114,6 @@ function UserBookNew() {
             setPaymentSuccess(false);
         }
     }, [couponCode]);
-
-    useEffect(() => {
-        setSelectedDate(null);
-        setSelectedSlot(null);
-        setSessionType('');
-        setMessage('');
-        setCouponCode('');
-        setPaymentAmount(null);
-        setShowPayPal(false);
-        setPaymentSuccess(false);
-        clearPayPalButtons();
-    }, [sessionFormatFilter]);
 
     useEffect(() => {
         if (selectedDate) {
@@ -537,21 +512,6 @@ function UserBookNew() {
         <div className="user-page">
             <div className="user-content">
                 <h3 className="section-title">Book a Session</h3>
-                <div className="session-format-filter">
-                    <p className="format-filter-label">Choose session format:</p>
-                    <div className="format-filter-buttons">
-                        {SESSION_FORMAT_OPTIONS.map((option) => (
-                            <button
-                                key={option.value}
-                                type="button"
-                                className={`format-filter-btn ${sessionFormatFilter === option.value ? 'selected' : ''}`}
-                                onClick={() => setSessionFormatFilter(option.value)}
-                            >
-                                {option.label}
-                            </button>
-                        ))}
-                    </div>
-                </div>
                 <div className="userbooknew-container">
                     <div className="userbooknew">
                         <header className="userbooknew-header">
@@ -580,23 +540,19 @@ function UserBookNew() {
                                 const dateString = `${day.year}-${(day.month + 1).toString().padStart(2, '0')}-${day.number.toString().padStart(2, '0')}`;
                                 setSelectedDate(dateString);
                             }}
-                            highlightedSlots={datesWithFilteredSlots}
+                            highlightedSlots={datesWithAvailableSlots}
                         />
                     </div>
 
-                    {!sessionFormatFilter && (
-                        <p className="format-filter-prompt">Select virtual or in person above to see available times.</p>
-                    )}
-
-                    {sessionFormatFilter && selectedDate && (
+                    {selectedDate && (
                         <div className="availability-section">
-                            <h4>Available Slots — {getFormatDescription(sessionFormatFilter)}</h4>
+                            <h4>Available Slots</h4>
                             <p>{selectedDate ? `${formatDate(selectedDate)}` : ''}</p>
                             <div className="availability-times">
-                                {filteredAvailableSlots.filter(
+                                {availableSlots.filter(
                                     (slot) => slot.date === selectedDate
                                 ).length > 0 ? (
-                                    filteredAvailableSlots
+                                    availableSlots
                                         .filter((slot) => slot.date === selectedDate)
                                         .sort((a, b) => a.time.localeCompare(b.time))
                                         .map((slot) => (
@@ -605,12 +561,11 @@ function UserBookNew() {
                                                 className={`availability-time ${selectedSlot?._id === slot._id ? 'selected' : ''}`}
                                                 onClick={() => setSelectedSlot(slot)}
                                             >
-                                                {formatTime(slot.date, slot.time)}
-                                                <span className="slot-format-tag">{getFormatLabel(slot.sessionFormat)}</span>
+                                                {formatTime(slot.date, slot.time)} {getFormatSlotLabel(slot.sessionFormat)}
                                             </button>
                                         ))
                                 ) : (
-                                    <p className="no-slots-message">No {getFormatLabel(sessionFormatFilter).toLowerCase()} slots this day. Try another date or format.</p>
+                                    <p className="no-slots-message">No available slots this day. Try another date.</p>
                                 )}
                             </div>
                             <div className="availability-inputs">
@@ -705,7 +660,7 @@ function UserBookNew() {
             {/* Pricing Information - Outside main booking container */}
             <div className="pricing-info">
                 <p>** Individual yoga sessions are $80-$110/hr sliding scale.</p> 
-                <p> Individualized yoga therapy sessions: Virtual sessions are $10-$80/hr sliding scale. In-person sessions at Yoga Refuge NW are $20-$100/hr sliding scale. Choose the format when booking to see matching open times.</p>
+                <p> Individualized yoga therapy sessions: Virtual sessions are $10-$80/hr sliding scale. In-person sessions at Yoga Refuge NW are $20-$100/hr sliding scale.</p>
                 <p> Your investment is a personal choice, aligning with your current financial circumstances.**</p>
                 <p><strong> Committing to at least 8 weeks of yoga therapy gives us time to build trust, personalize your practice, and support meaningful, lasting change in body, mind, and nervous system. </strong></p>
             </div>
