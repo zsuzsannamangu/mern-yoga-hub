@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useUserAuth } from './UserAuthContext';
 import axios from 'axios';
 import { FaClock, FaCalendarAlt, FaLocationArrow, FaEnvelope, FaEdit } from 'react-icons/fa';
@@ -356,19 +355,10 @@ function UserBookings() {
         setSelectedSlot(null);
     };
 
-    const bookNewPath = user?.id ? `/user/${user.id}/book` : '/login';
-
     return (
         <div className="user-bookings">
-            <div className="bookings-header">
-                <div className="bookings-header-text">
-                    <h3 className="section-title">Booked Sessions</h3>
-                    <div className="title-line"></div>
-                </div>
-                <Link to={bookNewPath} className="book-new-btn">
-                    Book New
-                </Link>
-            </div>
+            <h3 className="section-title">Booked Sessions</h3>
+            <div className="title-line"></div>
             {bookings.length > 0 ? (
                 bookings.map((booking) => (
                     <div

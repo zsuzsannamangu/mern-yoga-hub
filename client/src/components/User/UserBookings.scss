@@ -10,50 +10,6 @@
         margin: 5%;
     }
 
-    .bookings-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 16px;
-        width: 100%;
-        max-width: 400px;
-        margin-bottom: 8px;
-
-        .bookings-header-text {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .book-new-btn {
-            flex-shrink: 0;
-            display: inline-block;
-            background-color: $primary-button-color;
-            color: $button-text-color;
-            text-decoration: none;
-            padding: 10px 18px;
-            border-radius: 5px;
-            font-family: $font-main;
-            font-size: 0.95rem;
-            font-weight: bold;
-            white-space: nowrap;
-            transition: background-color 0.3s ease;
-
-            &:hover {
-                background-color: $primary-button-hover-color;
-                color: $button-text-color;
-            }
-        }
-
-        @media (max-width: 480px) {
-            flex-direction: column;
-            align-items: stretch;
-
-            .book-new-btn {
-                text-align: center;
-            }
-        }
-    }
-
     .booking-card {
         background: $background-color;
         border: 1px solid $border-color;

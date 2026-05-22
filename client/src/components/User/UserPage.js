@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Routes, Route, useLocation, useSearchParams } from 'react-router-dom';
+import { useParams, Routes, Route, useLocation, useSearchParams, Link } from 'react-router-dom';
 import UserBookings from './UserBookings';
 import UserBookNew from './UserBookNew';
 import UserAccount from './UserAccount';
@@ -66,12 +66,21 @@ function UserPage() {
         );
     }
 
+    const normalizedPath = location.pathname.replace(/\/$/, '');
+    const isBookingsPage = normalizedPath === `/user/${userId}`;
+    const bookNewPath = userId ? `/user/${userId}/book` : '/login';
+
     return (
         <div className="user-page">
             <div className="user-content">
                 {location.pathname !== `/user/${userId}/account` && (
                     <header className="user-header">
                         <h1>Hi, {userData?.firstName || user?.firstName || 'Loading...'}!</h1>
+                        {isBookingsPage && (
+                            <Link to={bookNewPath} className="book-new-btn">
+                                Book New
+                            </Link>
+                        )}
                     </header>
                 )}
                 <Routes>
