@@ -52,12 +52,12 @@ function SessionEmailCell({ email }) {
                 <button
                     type="button"
                     className="copy-email-btn"
+                    data-tooltip="Copy email"
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         copyTextToClipboard(email, 'Email copied');
                     }}
-                    title="Copy email"
                     aria-label={`Copy ${email}`}
                 >
                     <span aria-hidden="true">📋</span>

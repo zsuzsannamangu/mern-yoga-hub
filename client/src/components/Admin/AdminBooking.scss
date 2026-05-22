@@ -189,15 +189,17 @@
         }
 
         .session-email-wrap {
-            display: flex;
-            align-items: flex-start;
-            gap: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            width: fit-content;
             max-width: 100%;
         }
 
         .session-email-text {
-            flex: 1;
+            flex: 0 1 auto;
             min-width: 0;
+            max-width: 100%;
             color: $text-color;
             text-decoration: none;
             overflow: hidden;
@@ -225,12 +227,13 @@
             border: none;
             background: transparent;
             cursor: pointer;
-            padding: 2px 6px;
+            padding: 2px 4px;
             border-radius: $admin-action-icon-radius;
             font-size: 0.85rem;
             line-height: 1;
             color: $text-color;
-            opacity: 0.75;
+            opacity: 0.85;
+            position: relative;
 
             &:hover {
                 opacity: 1;
@@ -297,7 +300,8 @@
 
         /* Lightweight tooltips (same pattern as events table) */
         .notes-added[data-tooltip]::after,
-        .delete-slot-button[data-tooltip]::after {
+        .delete-slot-button[data-tooltip]::after,
+        .copy-email-btn[data-tooltip]::after {
             content: attr(data-tooltip);
             position: absolute;
             left: 50%;
@@ -317,7 +321,8 @@
         }
 
         .notes-added[data-tooltip]::before,
-        .delete-slot-button[data-tooltip]::before {
+        .delete-slot-button[data-tooltip]::before,
+        .copy-email-btn[data-tooltip]::before {
             content: '';
             position: absolute;
             left: 50%;
@@ -335,10 +340,14 @@
         .notes-added:focus-within::after,
         .delete-slot-button:hover::after,
         .delete-slot-button:focus-visible::after,
+        .copy-email-btn:hover::after,
+        .copy-email-btn:focus-visible::after,
         .notes-added:hover::before,
         .notes-added:focus-within::before,
         .delete-slot-button:hover::before,
-        .delete-slot-button:focus-visible::before {
+        .delete-slot-button:focus-visible::before,
+        .copy-email-btn:hover::before,
+        .copy-email-btn:focus-visible::before {
             opacity: 1;
         }
     }
