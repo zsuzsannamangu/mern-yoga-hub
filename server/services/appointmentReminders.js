@@ -62,7 +62,8 @@ function buildReminderEmail(booking, reminderType) {
     const { textLines: locationLines, html: locationBlockHtml } = buildBookingLocationContent(booking);
     const clientLoginUrl = `${process.env.FRONTEND_URL || 'https://www.yogaandchocolate.com'}/login`;
 
-    const subject = `Reminder: Your session ${whenLabel}`;
+    // Subject uses "on [date] at [time]" only (no em dashes or "in 2 hours" wording).
+    const subject = `Reminder: Your session on ${dateLabel} at ${timeLabel}`;
     const intro = `This is a friendly reminder that your session with Zsuzsanna Mangu is ${whenLabel}.`;
 
     const text = [
