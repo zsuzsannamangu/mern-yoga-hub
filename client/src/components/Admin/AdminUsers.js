@@ -7,6 +7,67 @@ import Swal from 'sweetalert2';
 import '@sweetalert2/theme-material-ui/material-ui.css';
 // Using emoji icons (matches AdminFinances)
 
+const getAppointmentDurationMinutes = (appointment) => {
+    const durationText = appointment?.length || appointment?.duration;
+    if (!durationText) return 60;
+
+    const match = String(durationText).match(/(\d+)\s*(min|mins|minutes|hour|hours|hr|hrs)?/i);
+    if (!match) return 60;
+
+    const value = Number(match[1]);
+    const unit = (match[2] || 'min').toLowerCase();
+    if (Number.isNaN(value) || value <= 0) return 60;
+
+    if (unit.startsWith('hour') || unit === 'hr' || unit === 'hrs') {
+        return value * 60;
+    }
+    return value;
+};
+
+const isAppointmentPast = (appointment) => {
+    const now = new Date();
+    const appointmentStart = new Date(`${appointment.date}T${appointment.time}`);
+    const durationMinutes = getAppointmentDurationMinutes(appointment);
+    const appointmentEnd = new Date(appointmentStart.getTime() + durationMinutes * 60 * 1000);
+    return appointmentEnd < now;
+};
+
+const dedupeBookings = (bookings) =>
+    bookings.filter((booking, index, self) =>
+        index === self.findIndex((b) => b._id === booking._id)
+    );
+
+const categorizeBookings = (bookings) => {
+    const uniqueBookings = dedupeBookings(bookings).filter(
+        (slot) => slot.status !== 'rescheduled'
+    );
+
+    const upcoming = [];
+    const past = [];
+
+    uniqueBookings.forEach((slot) => {
+        if (isAppointmentPast(slot)) {
+            past.push(slot);
+        } else {
+            upcoming.push(slot);
+        }
+    });
+
+    upcoming.sort((a, b) => {
+        const dateA = new Date(`${a.date}T${a.time}`);
+        const dateB = new Date(`${b.date}T${b.time}`);
+        return dateA - dateB;
+    });
+
+    past.sort((a, b) => {
+        const dateA = new Date(`${a.date}T${a.time}`);
+        const dateB = new Date(`${b.date}T${b.time}`);
+        return dateB - dateA;
+    });
+
+    return { upcoming, past };
+};
+
 const AdminUsers = () => {
     const [users, setUsers] = useState([]); // State to store users
     const [loading, setLoading] = useState(false); // State to track loading status
@@ -63,78 +124,6 @@ const AdminUsers = () => {
         link: ''
     });
 
-    const getAppointmentDurationMinutes = (appointment) => {
-        const durationText = appointment?.length || appointment?.duration;
-        if (!durationText) return 60;
-
-        const match = String(durationText).match(/(\d+)\s*(min|mins|minutes|hour|hours|hr|hrs)?/i);
-        if (!match) return 60;
-
-        const value = Number(match[1]);
-        const unit = (match[2] || 'min').toLowerCase();
-        if (Number.isNaN(value) || value <= 0) return 60;
-
-        if (unit.startsWith('hour') || unit === 'hr' || unit === 'hrs') {
-            return value * 60;
-        }
-        return value;
-    };
-
-    const isAppointmentPast = (appointment) => {
-        const now = new Date();
-        const appointmentStart = new Date(`${appointment.date}T${appointment.time}`);
-        const durationMinutes = getAppointmentDurationMinutes(appointment);
-        const appointmentEnd = new Date(appointmentStart.getTime() + durationMinutes * 60 * 1000);
-        return appointmentEnd < now;
-    };
-
-    const dedupeBookings = (bookings) =>
-        bookings.filter((booking, index, self) =>
-            index === self.findIndex((b) => b._id === booking._id)
-        );
-
-    const categorizeBookings = (bookings) => {
-        const uniqueBookings = dedupeBookings(bookings).filter(
-            (slot) => slot.status !== 'rescheduled'
-        );
-
-        const upcoming = [];
-        const past = [];
-
-        uniqueBookings.forEach((slot) => {
-            if (isAppointmentPast(slot)) {
-                past.push(slot);
-            } else {
-                upcoming.push(slot);
-            }
-        });
-
-        upcoming.sort((a, b) => {
-            const dateA = new Date(`${a.date}T${a.time}`);
-            const dateB = new Date(`${b.date}T${b.time}`);
-            return dateA - dateB;
-        });
-
-        past.sort((a, b) => {
-            const dateA = new Date(`${a.date}T${a.time}`);
-            const dateB = new Date(`${b.date}T${b.time}`);
-            return dateB - dateA;
-        });
-
-        return { upcoming, past };
-    };
-
-    const fetchAllUpcomingAppointments = async () => {
-        try {
-            const response = await adminAxiosInstance.get('/api/bookings');
-            const allBookings = response.data.bookedSlots || [];
-            const { upcoming } = categorizeBookings(allBookings);
-            setAllUpcomingAppointments(upcoming);
-        } catch (error) {
-            console.error('Error fetching upcoming appointments calendar:', error);
-        }
-    };
-
     // Sort users based on current sort settings
     const sortUsers = useCallback((userList) => {
         return [...userList].sort((a, b) => {
@@ -171,6 +160,17 @@ const AdminUsers = () => {
             setLoading(false);
         }
     }, [sortUsers]);
+
+    const fetchAllUpcomingAppointments = useCallback(async () => {
+        try {
+            const response = await adminAxiosInstance.get('/api/bookings');
+            const allBookings = response.data.bookedSlots || [];
+            const { upcoming } = categorizeBookings(allBookings);
+            setAllUpcomingAppointments(upcoming);
+        } catch (error) {
+            console.error('Error fetching upcoming appointments calendar:', error);
+        }
+    }, []);
 
     // Delete a user by ID
     const deleteUser = async (id) => {
@@ -703,7 +703,7 @@ const AdminUsers = () => {
     useEffect(() => {
         fetchUsers();
         fetchAllUpcomingAppointments();
-    }, [fetchUsers]);
+    }, [fetchUsers, fetchAllUpcomingAppointments]);
 
     const getCalendarDays = () => {
         const year = calendarMonth.getFullYear();
