@@ -108,10 +108,15 @@ app.use(express.json()); // Parse incoming JSON requests
 
 const PORT = process.env.PORT || 5001;
 
+const { startAppointmentReminderScheduler } = require('./services/appointmentReminders');
+
 // MongoDB connection
 mongoose
     .connect(process.env.MONGODB_URI)
-    .then(() => console.log('MongoDB connected to successfully.'))
+    .then(() => {
+        console.log('MongoDB connected to successfully.');
+        startAppointmentReminderScheduler();
+    })
     .catch((err) => console.log('Error connecting to MongoDB:', err));
 
 const path = require("path");

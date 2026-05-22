@@ -59,6 +59,7 @@ function fallbackFetch(url, options) {
 }
 const Subscriber = require('../models/Subscriber');
 const Booking = require('../models/Booking');
+const { clearAppointmentReminders } = require('../services/appointmentReminders');
 const sgMail = require('@sendgrid/mail');
 const { DateTime } = require('luxon');
 dotenv.config();
@@ -474,14 +475,14 @@ router.post('/appointments', authMiddleware, adminMiddleware, async (req, res) =
       to: user.email,
       from: process.env.EMAIL_USER,
       subject: 'New Appointment Scheduled with Zsuzsanna',
-      text: `Dear ${user.firstName}, \n\nYour "${title}" session with Zsuzsanna Mangu is scheduled at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedPacificTime} (${length}).\n\n${locationInfoText}\n\nPlease log in to your account (${clientLoginUrl}) or reply to this email to make changes.\n\nCurrently, online sessions are $10-$80 sliding scale and in-person sessions are $20-$100 sliding scale through June 2026. Payments are accepted via Venmo @Zsuzsanna-Mangu.\n\nI'm looking forward to working with you!\n\nWarm regards,\nZsuzsanna\n\nThis is an automated email. Please reply directly if you have any questions.`,
+      text: `Dear ${user.firstName}, \n\nYour "${title}" session with Zsuzsanna Mangu is scheduled at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedPacificTime} (${length}).\n\n${locationInfoText}\n\nPlease log in to your account (${clientLoginUrl}) or reply to this email to make changes.\n\nCurrently, online sessions are $10-$80 sliding scale and in-person sessions are $20-$100 sliding scale. Payments are accepted via Venmo @Zsuzsanna-Mangu.\n\nI'm looking forward to working with you!\n\nWarm regards,\nZsuzsanna\n\nThis is an automated email. Please reply directly if you have any questions.`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <p>Dear ${user.firstName},</p>
           <p>Your "${title}" session with Zsuzsanna Mangu is scheduled at ${new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })} ${formattedPacificTime} (${length}).</p>
           <p><strong>${locationInfoHtml}</strong></p>
           <p>Please <a href="${clientLoginUrl}" style="color: #007BFF; text-decoration: none; font-weight: bold;">log in</a> to your account or reply to this email to make changes.</p>
-          <p>Currently, online sessions are $10-$80 sliding scale and in-person sessions are $20-$100 sliding scale through June 2026. Payments are accepted via Venmo @Zsuzsanna-Mangu.</p>
+          <p>Currently, online sessions are $10-$80 sliding scale and in-person sessions are $20-$100 sliding scale. Payments are accepted via Venmo @Zsuzsanna-Mangu.</p>
           <p>I'm looking forward to working with you!</p>
           <p>Warm regards,<br>Zsuzsanna</p>
           <p style="font-size: 12px; color: #666;">This is an automated email. Please reply directly if you have any questions.</p>
@@ -633,7 +634,8 @@ router.put('/appointments/:id/reschedule', authMiddleware, adminMiddleware, asyn
     appointment.date = date || appointment.date;
     appointment.time = time || appointment.time;
     appointment.location = location !== undefined ? location : appointment.location;
-    appointment.status = 'rescheduled';
+    appointment.status = 'scheduled';
+    clearAppointmentReminders(appointment);
 
     await appointment.save();
 
@@ -669,7 +671,8 @@ router.put('/appointments/:id', authMiddleware, adminMiddleware, async (req, res
     appointment.duration = length; // Also update duration for user-created appointments
     appointment.location = location || '';
     appointment.link = link || '';
-    appointment.status = 'rescheduled'; // Mark as rescheduled when edited
+    appointment.status = 'scheduled';
+    clearAppointmentReminders(appointment);
 
     await appointment.save();
 

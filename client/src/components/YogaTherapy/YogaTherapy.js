@@ -64,7 +64,7 @@ const FAQ_DATA = [
         {
             id: 7,
             question: "How much are yoga therapy sessions?",
-            answer: "Yoga therapy sessions are offered on a sliding scale through June 2026, while I'm in training. Online sessions are $10-$80/hr, and in-person sessions in NW Portland are $20-$100/hr. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked."
+            answer: "Yoga therapy sessions are offered on a sliding scale. Online sessions are $10-$80/hr, and in-person sessions in NW Portland are $20-$100/hr. Your investment is a personal choice, aligning with your current financial circumstances. No questions asked."
         }
 ];
 
@@ -290,7 +290,7 @@ function YogaTherapy() {
                 <div className="info-category">
                     <motion.div className="info-item" variants={fadeInUp}>
                         <p>
-                            <strong>Yoga Therapy Sessions:</strong> Sliding scale pricing (offered until June 2026, while I'm in training).
+                            <strong>Yoga Therapy Sessions:</strong> Sliding scale pricing.
                         </p>
                         <ul className="custom-bullet-list">
                             <li><strong>Online sessions:</strong> $10-$80/hr sliding scale</li>

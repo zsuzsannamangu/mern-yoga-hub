@@ -19,7 +19,9 @@ const bookingSchema = new mongoose.Schema({
     link: { type: String }, // Online meeting link
     isAdminCreated: { type: Boolean, default: false }, // Flag for admin-created appointments
     status: { type: String, enum: ['scheduled', 'rescheduled', 'cancelled'], default: 'scheduled' },
-    notesAdded: { type: Boolean, default: false }
+    notesAdded: { type: Boolean, default: false },
+    reminder3DaysSentAt: { type: Date, default: null },
+    reminder2HoursSentAt: { type: Date, default: null },
 });
 
 module.exports = mongoose.model('Booking', bookingSchema);

@@ -5,6 +5,7 @@ const Booking = require('../models/Booking');
 const { authMiddleware, adminMiddleware } = require('../middlewares/auth');
 const sgMail = require('@sendgrid/mail');
 const { DateTime } = require('luxon');
+const { clearAppointmentReminders } = require('../services/appointmentReminders');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -476,6 +477,7 @@ module.exports = (io) => {
             newSlot.message = currentBooking.message;
             newSlot.isAdminCreated = currentBooking.isAdminCreated;
             newSlot.status = 'scheduled';
+            clearAppointmentReminders(newSlot);
             await newSlot.save();
 
             // Format time for email using Luxon to avoid timezone issues
