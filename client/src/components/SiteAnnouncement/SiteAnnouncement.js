@@ -1,24 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './SiteAnnouncement.scss';
 
-const HYPERMOBILITY_SECTION_PATH = '/yoga?section=hypermobility';
+const BHAKTI_CLASSES_URL = 'https://www.thebymc.com/classes';
 
 function SiteAnnouncement() {
   return (
     <div className="workshop-announcement newyear-announcement">
       <div className="announcement-content">
         <span className="announcement-text">
-          ✨ <strong>Yoga with Hypermobility and EDS Series</strong> - every other Saturday,
-          6:30-7:45pm at Heart Spring Health Clinic
+          ✨ <strong>Postnatal Yoga</strong> — every Thursday, 10:30am at Bhakti Yoga and Movement Center.
+          Babies welcome.
         </span>
-        <Link to={HYPERMOBILITY_SECTION_PATH} className="announcement-link">
+        <a
+          href={BHAKTI_CLASSES_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="announcement-link"
+        >
           Details &amp; sign up
-        </Link>
+        </a>
       </div>
     </div>
   );
 }
 
 export default SiteAnnouncement;
-export { HYPERMOBILITY_SECTION_PATH };
