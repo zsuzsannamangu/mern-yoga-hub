@@ -1,9 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const sgMail = require('@sendgrid/mail');
-const fetch = require('node-fetch');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY); // Set your SendGrid API key here
+
+async function verifyRecaptcha(captchaToken) {
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+    if (!secretKey) {
+        throw new Error('RECAPTCHA_SECRET_KEY is not configured');
+    }
+
+    const response = await fetch(
+        'https://www.google.com/recaptcha/api/siteverify',
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                secret: secretKey,
+                response: captchaToken,
+            }),
+        }
+    );
+
+    return response.json();
+}
 
 // POST: Handle public booking requests
 router.post('/request', async (req, res) => {
@@ -15,12 +35,8 @@ router.post('/request', async (req, res) => {
     }
 
     // Verify the reCAPTCHA token with Google's API
-    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
-    const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captchaToken}`;
-
     try {
-        const captchaResponse = await fetch(verificationUrl, { method: 'POST' });
-        const captchaData = await captchaResponse.json();
+        const captchaData = await verifyRecaptcha(captchaToken);
 
         // Check if reCAPTCHA was successful
         if (!captchaData.success) {
