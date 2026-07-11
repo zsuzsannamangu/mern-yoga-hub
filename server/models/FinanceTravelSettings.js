@@ -14,7 +14,7 @@ const financeTravelSettingsSchema = new mongoose.Schema(
         },
         /** Hyundai Tucson Hybrid EPA combined (FWD 38 / AWD 37); default is midpoint. */
         mpg: { type: Number, default: 37.5 },
-        gasPricePerGallon: { type: Number, default: 3.65 },
+        gasPricePerGallon: { type: Number, default: 4.70 },
     },
     { collection: 'financetravelsettings' }
 );

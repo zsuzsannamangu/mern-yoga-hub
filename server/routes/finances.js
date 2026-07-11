@@ -6,7 +6,7 @@ const { authMiddleware, adminMiddleware } = require('../middlewares/auth');
 
 const TRAVEL_SINGLETON_ID = 'singleton';
 const DEFAULT_TRAVEL_MPG = 37.5;
-const DEFAULT_TRAVEL_GAS = 3.65;
+const DEFAULT_TRAVEL_GAS = 4.70;
 
 function sanitizeLocationMilesForSave(raw) {
     const out = {};
@@ -22,7 +22,7 @@ function sanitizeLocationMilesForSave(raw) {
 // GET /api/finances/travel-settings — must be before /:id routes
 router.get('/travel-settings', authMiddleware, adminMiddleware, async (req, res) => {
     try {
-        const doc = await FinanceTravelSettings.findById(TRAVEL_SINGLETON_ID).lean();
+        let doc = await FinanceTravelSettings.findById(TRAVEL_SINGLETON_ID);
         if (!doc) {
             return res.status(200).json({
                 success: true,
@@ -33,17 +33,25 @@ router.get('/travel-settings', authMiddleware, adminMiddleware, async (req, res)
                 },
             });
         }
-        const lm = doc.locationMiles && typeof doc.locationMiles === 'object' && !Array.isArray(doc.locationMiles)
-            ? sanitizeLocationMilesForSave(doc.locationMiles)
+
+        // One-time bump from the old $3.65 default to current pump-ish default
+        if (doc.gasPricePerGallon === 3.65) {
+            doc.gasPricePerGallon = DEFAULT_TRAVEL_GAS;
+            await doc.save();
+        }
+
+        const lean = doc.toObject();
+        const lm = lean.locationMiles && typeof lean.locationMiles === 'object' && !Array.isArray(lean.locationMiles)
+            ? sanitizeLocationMilesForSave(lean.locationMiles)
             : {};
         return res.status(200).json({
             success: true,
             settings: {
                 locationMiles: lm,
-                mpg: typeof doc.mpg === 'number' && doc.mpg > 0 ? doc.mpg : DEFAULT_TRAVEL_MPG,
+                mpg: typeof lean.mpg === 'number' && lean.mpg > 0 ? lean.mpg : DEFAULT_TRAVEL_MPG,
                 gasPricePerGallon:
-                    typeof doc.gasPricePerGallon === 'number' && doc.gasPricePerGallon >= 0
-                        ? doc.gasPricePerGallon
+                    typeof lean.gasPricePerGallon === 'number' && lean.gasPricePerGallon >= 0
+                        ? lean.gasPricePerGallon
                         : DEFAULT_TRAVEL_GAS,
             },
         });

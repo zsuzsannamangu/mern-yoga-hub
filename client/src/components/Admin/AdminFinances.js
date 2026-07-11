@@ -1150,8 +1150,8 @@ const AdminFinances = () => {
                 {driveByLocationOpen && (
                     <>
                         <p className="finances-drive-by-location__hint">
-                            {driveStatsYear} through today: round-trip miles and estimated gas per normalized location
-                            (row date on or before today). Same trip math as the table below.
+                            {driveStatsYear} through today: round-trip miles and estimated gas per location.
+                            Click a location (or <strong>Set miles</strong>) to enter one-way miles home → studio.
                         </p>
                         {driveByLocationForYear.length === 0 ? (
                             <p className="finances-drive-by-location__empty">
@@ -1165,14 +1165,37 @@ const AdminFinances = () => {
                                             <th scope="col">Location</th>
                                             <th scope="col">Drive miles (RT)</th>
                                             <th scope="col">Est. gas</th>
+                                            <th scope="col">Miles</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {driveByLocationForYear.map(([loc, agg]) => (
                                             <tr key={loc}>
-                                                <td>{loc}</td>
+                                                <td>
+                                                    <button
+                                                        type="button"
+                                                        className="location-cell--clickable"
+                                                        onClick={() => setLocationStatsCanonical(loc)}
+                                                        title={`Open stats & set one-way miles for ${loc}`}
+                                                    >
+                                                        {loc}
+                                                    </button>
+                                                </td>
                                                 <td>{formatTripMiles(agg.miles)}</td>
                                                 <td>{formatCurrency(agg.gas)}</td>
+                                                <td>
+                                                    {isOnlineCanonicalLocation(loc) ? (
+                                                        '—'
+                                                    ) : (
+                                                        <button
+                                                            type="button"
+                                                            className="finances-drive-by-location__set-miles"
+                                                            onClick={() => setLocationStatsCanonical(loc)}
+                                                        >
+                                                            Set miles
+                                                        </button>
+                                                    )}
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -1181,6 +1204,7 @@ const AdminFinances = () => {
                                             <th scope="row">Total</th>
                                             <td>{formatTripMiles(totalDriveMilesForYear)}</td>
                                             <td>{formatCurrency(totalGasDriveForYear)}</td>
+                                            <td />
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -2041,11 +2065,11 @@ const AdminFinances = () => {
                         </div>
 
                         <div className="location-stats-section location-stats-section--travel">
-                            <h4>Driving &amp; gas (Hyundai Tucson Hybrid)</h4>
+                            <h4>Set one-way miles &amp; gas</h4>
                             <p className="location-stats-tucson-note">
-                                EPA combined mpg: <strong>38</strong> (FWD) / <strong>37</strong> (AWD). Default below is{' '}
-                                <strong>{DEFAULT_TUCSON_HYBRID_MPG}</strong> (midpoint). Change if your trim matches one side or
-                                your real-world mileage differs.
+                                Enter miles from home to this studio (one way). Gas uses your Tucson Hybrid MPG and $/gal below.
+                                EPA combined mpg: <strong>38</strong> (FWD) / <strong>37</strong> (AWD). Default is{' '}
+                                <strong>{DEFAULT_TUCSON_HYBRID_MPG}</strong> (midpoint).
                             </p>
                             {!isOnlineCanonicalLocation(locationStatsCanonical) ? (
                                 <>

@@ -21,7 +21,7 @@ const LS_MILES = 'yogasavor_finance_location_miles';
 export const DEFAULT_TUCSON_HYBRID_MPG = 37.5;
 
 /** Placeholder $/gal when none stored yet (update in Finances → location stats). */
-export const DEFAULT_GAS_PRICE_PER_GALLON = 3.65;
+export const DEFAULT_GAS_PRICE_PER_GALLON = 4.70;
 
 export function isOnlineCanonicalLocation(canonical) {
     return (canonical || '').trim().toLowerCase() === 'online';
