@@ -801,12 +801,13 @@ $class-table-grid-cols-sm:
                 }
 
                 &.status-yes {
-                    color: $green-color;
-                    font-weight: 500;
+                    color: $secondary-text-color;
+                    font-weight: 400;
+                    opacity: 0.72;
                 }
 
                 &.status-no {
-                    color: $delete-button;
+                    color: $text-color;
                     font-weight: 500;
                 }
 
