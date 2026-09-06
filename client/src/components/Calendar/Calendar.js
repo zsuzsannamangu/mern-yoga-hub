@@ -209,7 +209,7 @@ export default class Calendar extends Component {
             <div className="availability-section">
               <div className="availability-header">
                 <h3>
-                  Classes &amp; events on {this.months[selectedDate.getMonth()]}{' '}
+                  {this.months[selectedDate.getMonth()]}{' '}
                   {selectedDate.getDate()},{' '}
                   {selectedDate.getFullYear()}
                 </h3>

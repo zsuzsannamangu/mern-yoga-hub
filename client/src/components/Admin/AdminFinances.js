@@ -1636,7 +1636,12 @@ const AdminFinances = () => {
                                             travelSettings
                                         );
                                         return (
-                                        <div key={entry.id} className={`table-row ${selectedEntries.has(entry.id) ? 'selected' : ''}`}>
+                                        <div
+                                            key={entry.id}
+                                            className={`table-row ${selectedEntries.has(entry.id) ? 'selected' : ''} ${
+                                                entry.paid === 'yes' ? 'table-row--paid' : ''
+                                            }`}
+                                        >
                                             <div className="table-cell checkbox-cell">
                                                 <input
                                                     type="checkbox"
