@@ -706,7 +706,7 @@ const AdminUsers = () => {
                             <th>Length</th>
                             <th>Location/Link</th>
                             <th>Status</th>
-                            {!isPast && <th>Actions</th>}
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -746,41 +746,62 @@ const AdminUsers = () => {
                                         <span className="active-status">Active</span>
                                     )}
                                 </td>
-                                {!isPast && (
-                                    <td className="appointment-actions">
-                                        {appointment.status === 'cancelled' ? (
-                                            <button
-                                                className="delete-btn"
-                                                onClick={() => handleDeleteAppointment(appointment._id)}
-                                                title="Delete Appointment"
-                                            >
-                                                <span aria-hidden="true">🗑️</span>
-                                            </button>
-                                        ) : (
-                                            <div className="appointment-actions-group">
-                                                <div className="appointment-icon-actions">
-                                                    <button
-                                                        type="button"
-                                                        className="reschedule-btn"
-                                                        onClick={() => handleEditAppointment(appointment)}
-                                                        title="Edit Appointment"
-                                                    >
-                                                        <span aria-hidden="true">✏️</span>
-                                                    </button>
+                                <td className="appointment-actions">
+                                    {isPast ? (
+                                        <div className="appointment-actions-group">
+                                            <div className="appointment-icon-actions">
+                                                {appointment.status !== 'cancelled' && (
                                                     <button
                                                         type="button"
                                                         className="cancel-btn"
                                                         onClick={() => handleCancelAppointment(appointment._id)}
-                                                        title="Cancel"
+                                                        title="Mark as cancelled"
                                                     >
                                                         <span aria-hidden="true">✕</span>
                                                     </button>
-                                                </div>
-                                                {renderReminderButtons(appointment)}
+                                                )}
+                                                <button
+                                                    type="button"
+                                                    className="delete-btn"
+                                                    onClick={() => handleDeleteAppointment(appointment._id)}
+                                                    title="Delete Appointment"
+                                                >
+                                                    <span aria-hidden="true">🗑️</span>
+                                                </button>
                                             </div>
-                                        )}
-                                    </td>
-                                )}
+                                        </div>
+                                    ) : appointment.status === 'cancelled' ? (
+                                        <button
+                                            className="delete-btn"
+                                            onClick={() => handleDeleteAppointment(appointment._id)}
+                                            title="Delete Appointment"
+                                        >
+                                            <span aria-hidden="true">🗑️</span>
+                                        </button>
+                                    ) : (
+                                        <div className="appointment-actions-group">
+                                            <div className="appointment-icon-actions">
+                                                <button
+                                                    type="button"
+                                                    className="reschedule-btn"
+                                                    onClick={() => handleEditAppointment(appointment)}
+                                                    title="Edit Appointment"
+                                                >
+                                                    <span aria-hidden="true">✏️</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="cancel-btn"
+                                                    onClick={() => handleCancelAppointment(appointment._id)}
+                                                    title="Cancel"
+                                                >
+                                                    <span aria-hidden="true">✕</span>
+                                                </button>
+                                            </div>
+                                            {renderReminderButtons(appointment)}
+                                        </div>
+                                    )}
+                                </td>
                             </tr>
                         ))}
                     </tbody>
