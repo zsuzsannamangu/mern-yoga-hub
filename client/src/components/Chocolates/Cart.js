@@ -60,7 +60,7 @@ function Cart() {
     return total + itemTotal;
   }, 0);
 
-  const shipping = isLocalPickup ? 0 : 5.0;
+  const shipping = isLocalPickup ? 0 : 10.0;
   const discountedSubtotal = subtotal * (1 - discount);
   const totalNumber = discountedSubtotal + shipping;
   const total = totalNumber.toFixed(2); // for display only

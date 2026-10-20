@@ -146,17 +146,8 @@ function Products({ showAlert }) {
       {/* Etsy CTA */}
       <div className="etsy-cta" role="complementary" aria-label="Support and alternate store link">
         <p>
-          Please support me by ordering here when you can — Etsy charges sellers high fees.
-          If this website has any issues, you can also{' '}
-          <a
-            className="etsy-inline-link"
-            href={ETSY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            shop on Etsy
-          </a>
-          .
+          Please support me by ordering here (Etsy charges sellers high fees). But if this website has any
+          issues, here is a link to my Etsy site.
         </p>
         <a
           className="etsy-button"

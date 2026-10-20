@@ -261,17 +261,6 @@ button:disabled:hover {
     max-width: 36rem;
   }
 
-  .etsy-inline-link {
-    color: $primary-button-color;
-    font-weight: 600;
-    text-decoration: underline;
-    text-underline-offset: 2px;
-
-    &:hover {
-      color: $primary-button-hover-color;
-    }
-  }
-
   .etsy-button {
     display: inline-block;
     padding: 0.65rem 1rem;

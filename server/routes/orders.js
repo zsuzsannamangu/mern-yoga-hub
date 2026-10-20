@@ -71,7 +71,7 @@ router.post("/orders", async (req, res) => {
         };
 
         // Email to admin
-        const deliveryMethod = isLocalPickup ? "Local Pickup (no shipping fee)" : "Shipping ($5.00)";
+        const deliveryMethod = isLocalPickup ? "Local Pickup (no shipping fee)" : "Shipping ($10.00)";
         const shippingSection = shippingAddress
             ? `<p><b>Shipping address:</b></p><pre style="margin:0;white-space:pre-wrap;font-family:inherit;">${shippingAddress}</pre>`
             : "";
