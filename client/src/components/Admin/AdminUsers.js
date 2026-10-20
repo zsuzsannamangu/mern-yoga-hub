@@ -748,30 +748,17 @@ const AdminUsers = () => {
                                 </td>
                                 <td className="appointment-actions">
                                     {isPast ? (
-                                        <div className="appointment-actions-group">
-                                            <div className="appointment-icon-actions">
-                                                {appointment.status !== 'cancelled' && (
-                                                    <button
-                                                        type="button"
-                                                        className="cancel-btn"
-                                                        onClick={() => handleCancelAppointment(appointment._id)}
-                                                        title="Mark as cancelled"
-                                                    >
-                                                        <span aria-hidden="true">✕</span>
-                                                    </button>
-                                                )}
-                                                <button
-                                                    type="button"
-                                                    className="delete-btn"
-                                                    onClick={() => handleDeleteAppointment(appointment._id)}
-                                                    title="Delete Appointment"
-                                                >
-                                                    <span aria-hidden="true">🗑️</span>
-                                                </button>
-                                            </div>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            className="delete-btn"
+                                            onClick={() => handleDeleteAppointment(appointment._id)}
+                                            title="Delete Appointment"
+                                        >
+                                            <span aria-hidden="true">🗑️</span>
+                                        </button>
                                     ) : appointment.status === 'cancelled' ? (
                                         <button
+                                            type="button"
                                             className="delete-btn"
                                             onClick={() => handleDeleteAppointment(appointment._id)}
                                             title="Delete Appointment"
