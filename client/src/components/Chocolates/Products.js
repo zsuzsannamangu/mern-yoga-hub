@@ -113,8 +113,6 @@ function Products({ showAlert }) {
             key={product._id}
             className="product-card"
             variants={itemVariants}
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: 'spring', stiffness: 300 }}
           >
             <img
               src={product.image}
@@ -146,8 +144,20 @@ function Products({ showAlert }) {
       </motion.div>
 
       {/* Etsy CTA */}
-      <div className="etsy-cta" role="complementary" aria-label="Alternate store link">
-        <p>Prefer using Etsy?</p>
+      <div className="etsy-cta" role="complementary" aria-label="Support and alternate store link">
+        <p>
+          Please support me by ordering here when you can — Etsy charges sellers high fees.
+          If this website has any issues, you can also{' '}
+          <a
+            className="etsy-inline-link"
+            href={ETSY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            shop on Etsy
+          </a>
+          .
+        </p>
         <a
           className="etsy-button"
           href={ETSY_URL}
