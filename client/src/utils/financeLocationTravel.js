@@ -16,9 +16,10 @@ const LS_TRAVEL = 'yogasavor_finance_travel';
 const LS_MILES = 'yogasavor_finance_location_miles';
 
 /**
- * Hyundai Tucson Hybrid (2024–25): EPA combined 38 mpg (FWD) / 37 mpg (AWD). Midpoint for a reasonable default.
+ * Hyundai Tucson Hybrid real-world teaching-drive estimate (~400 mi per ~$67 fill ≈ 28 mpg at ~$4.70/gal).
+ * EPA combined is higher (37–38); short urban trips usually land lower.
  */
-export const DEFAULT_TUCSON_HYBRID_MPG = 37.5;
+export const DEFAULT_TUCSON_HYBRID_MPG = 28;
 
 /** Placeholder $/gal when none stored yet (update in Finances → location stats). */
 export const DEFAULT_GAS_PRICE_PER_GALLON = 4.70;

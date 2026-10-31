@@ -488,6 +488,12 @@ const AdminFinances = () => {
         return dates;
     };
 
+    const financeSlotKey = (date, time, location) => {
+        const loc = normalizeFinanceLocation(location || '');
+        const t = String(time || '').trim();
+        return `${String(date || '').trim()}|${t}|${loc.toLowerCase()}`;
+    };
+
     const handleAddEntry = async (e) => {
         e.preventDefault();
         
@@ -553,9 +559,34 @@ const AdminFinances = () => {
                 });
             }
 
-            // Create all entries
-            const createdEntries = [];
+            const existingKeys = new Set(
+                classData.map((row) => financeSlotKey(row.date, row.time, row.location))
+            );
+            const uniqueToCreate = [];
+            let skippedDuplicates = 0;
             for (const entryData of entriesToCreate) {
+                const key = financeSlotKey(entryData.date, entryData.time, entryData.location);
+                if (existingKeys.has(key)) {
+                    skippedDuplicates += 1;
+                    continue;
+                }
+                existingKeys.add(key);
+                uniqueToCreate.push(entryData);
+            }
+
+            if (uniqueToCreate.length === 0) {
+                Swal.fire({
+                    title: 'Already exists',
+                    text: 'An entry with this date, time, and location is already in Class & Financial Tracking. Nothing was added.',
+                    icon: 'info',
+                    confirmButtonText: 'OK',
+                });
+                return;
+            }
+
+            // Create all non-duplicate entries
+            const createdEntries = [];
+            for (const entryData of uniqueToCreate) {
                 const response = await adminAxiosInstance.post('/api/finances', entryData, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
@@ -597,19 +628,24 @@ const AdminFinances = () => {
             setShowAddForm(false);
 
             const entryCount = createdEntries.length;
+            const skipNote =
+                skippedDuplicates > 0
+                    ? ` Skipped ${skippedDuplicates} duplicate ${skippedDuplicates === 1 ? 'date' : 'dates'} (same time & location).`
+                    : '';
             Swal.fire({
                 title: 'Success!',
-                text: `${entryCount} finance ${entryCount === 1 ? 'entry' : 'entries'} added successfully`,
+                text: `${entryCount} finance ${entryCount === 1 ? 'entry' : 'entries'} added successfully.${skipNote}`,
                 icon: 'success',
                 confirmButtonText: 'OK'
             });
 
         } catch (error) {
             console.error('Error adding finance entry:', error);
+            const status = error.response?.status;
             Swal.fire({
-                title: 'Error',
+                title: status === 409 ? 'Already exists' : 'Error',
                 text: error.response?.data?.message || 'Failed to add finance entry',
-                icon: 'error',
+                icon: status === 409 ? 'info' : 'error',
                 confirmButtonText: 'OK'
             });
         }
@@ -946,7 +982,7 @@ const AdminFinances = () => {
         if (Number.isNaN(mpgParsed) || mpgParsed <= 0) {
             Swal.fire({
                 title: 'Invalid MPG',
-                text: `Use a positive number. Hyundai Tucson Hybrid EPA combined is 38 (FWD) or 37 (AWD); default here is ${DEFAULT_TUCSON_HYBRID_MPG}.`,
+                text: `Use a positive number. Default is ${DEFAULT_TUCSON_HYBRID_MPG} mpg based on real teaching drives (~400 mi per ~$67 fill), not the higher EPA sticker.`,
                 icon: 'warning',
             });
             return;
@@ -2073,8 +2109,8 @@ const AdminFinances = () => {
                             <h4>Set one-way miles &amp; gas</h4>
                             <p className="location-stats-tucson-note">
                                 Enter miles from home to this studio (one way). Gas uses your Tucson Hybrid MPG and $/gal below.
-                                EPA combined mpg: <strong>38</strong> (FWD) / <strong>37</strong> (AWD). Default is{' '}
-                                <strong>{DEFAULT_TUCSON_HYBRID_MPG}</strong> (midpoint).
+                                Default is <strong>{DEFAULT_TUCSON_HYBRID_MPG} mpg</strong> from real fill-ups (~400 mi for
+                                ~$67), not the EPA 37–38 sticker (city teaching trips usually get less).
                             </p>
                             {!isOnlineCanonicalLocation(locationStatsCanonical) ? (
                                 <>

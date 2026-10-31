@@ -5,7 +5,7 @@ const FinanceTravelSettings = require('../models/FinanceTravelSettings');
 const { authMiddleware, adminMiddleware } = require('../middlewares/auth');
 
 const TRAVEL_SINGLETON_ID = 'singleton';
-const DEFAULT_TRAVEL_MPG = 37.5;
+const DEFAULT_TRAVEL_MPG = 28;
 const DEFAULT_TRAVEL_GAS = 4.70;
 
 function sanitizeLocationMilesForSave(raw) {
@@ -17,6 +17,41 @@ function sanitizeLocationMilesForSave(raw) {
         if (!Number.isNaN(n) && n >= 0) out[k] = n;
     }
     return out;
+}
+
+function escapeRegex(str) {
+    return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function normalizeFinanceTime(time) {
+    const raw = String(time || '').trim();
+    const m = raw.match(/^(\d{1,2}):(\d{2})$/);
+    if (!m) return raw;
+    return `${String(Number(m[1])).padStart(2, '0')}:${m[2]}`;
+}
+
+/**
+ * Same calendar day + time + location already exists (class name does not matter).
+ * @param {{ date: string, time: string, location: string, excludeId?: string }} opts
+ */
+async function findDuplicateFinanceEntry({ date, time, location, excludeId }) {
+    const normalizedTime = normalizeFinanceTime(time);
+    const locationPattern = new RegExp(
+        `^${escapeRegex(String(location || '').trim().replace(/\s+/g, ' '))}$`,
+        'i'
+    );
+
+    const candidates = await Finance.find({
+        date: String(date || '').trim(),
+        location: locationPattern,
+        ...(excludeId ? { _id: { $ne: excludeId } } : {}),
+    })
+        .select('_id date time location class')
+        .lean();
+
+    return (
+        candidates.find((row) => normalizeFinanceTime(row.time) === normalizedTime) || null
+    );
 }
 
 // GET /api/finances/travel-settings — must be before /:id routes
@@ -34,9 +69,17 @@ router.get('/travel-settings', authMiddleware, adminMiddleware, async (req, res)
             });
         }
 
-        // One-time bump from the old $3.65 default to current pump-ish default
+        let travelDefaultsDirty = false;
+        // One-time bumps from older optimistic defaults
         if (doc.gasPricePerGallon === 3.65) {
             doc.gasPricePerGallon = DEFAULT_TRAVEL_GAS;
+            travelDefaultsDirty = true;
+        }
+        if (doc.mpg === 37.5) {
+            doc.mpg = DEFAULT_TRAVEL_MPG;
+            travelDefaultsDirty = true;
+        }
+        if (travelDefaultsDirty) {
             await doc.save();
         }
 
@@ -208,14 +251,30 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
             return res.status(400).json({ success: false, message: tripParsed.error });
         }
 
+        const normalizedTime = normalizeFinanceTime(time);
+        const normalizedLocation = String(location).trim().replace(/\s+/g, ' ');
+        const duplicate = await findDuplicateFinanceEntry({
+            date,
+            time: normalizedTime,
+            location: normalizedLocation,
+        });
+        if (duplicate) {
+            return res.status(409).json({
+                success: false,
+                message:
+                    'An entry already exists for this date, time, and location. It was not added again.',
+                duplicateId: duplicate._id,
+            });
+        }
+
         const role =
             teachingRole === 'sub' || teachingRole === 'regular' ? teachingRole : 'regular';
 
         const newFinanceEntry = new Finance({
             date,
-            time,
+            time: normalizedTime,
             class: className,
-            location,
+            location: normalizedLocation,
             category: category || 'other',
             rate: rateNum, // Keep for backward compatibility
             grossRate: grossRateNum,
@@ -309,6 +368,23 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
             return res.status(400).json({ success: false, message: tripParsedPut.error });
         }
 
+        const normalizedTimePut = normalizeFinanceTime(time);
+        const normalizedLocationPut = String(location).trim().replace(/\s+/g, ' ');
+        const duplicatePut = await findDuplicateFinanceEntry({
+            date,
+            time: normalizedTimePut,
+            location: normalizedLocationPut,
+            excludeId: id,
+        });
+        if (duplicatePut) {
+            return res.status(409).json({
+                success: false,
+                message:
+                    'Another entry already exists for this date, time, and location. Changes were not saved.',
+                duplicateId: duplicatePut._id,
+            });
+        }
+
         const rolePut =
             teachingRole === 'sub' || teachingRole === 'regular' ? teachingRole : 'regular';
 
@@ -316,9 +392,9 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
             id,
             {
                 date,
-                time,
+                time: normalizedTimePut,
                 class: className,
-                location,
+                location: normalizedLocationPut,
                 category: category || 'other',
                 rate: rateNum, // Keep for backward compatibility
                 grossRate: grossRateNum,
