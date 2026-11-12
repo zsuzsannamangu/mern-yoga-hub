@@ -53,12 +53,17 @@ const financeSchema = new mongoose.Schema({
     // Round-trip miles for this row (tax deduction help); from home → studio × 2 when saved
     tripMiles: { type: Number, required: false, default: null },
     // Estimated gas $ for this trip (personal tracking); MPG + $/gal from client when saved
-    tripGasCost: { type: Number, required: false, default: null }
+    tripGasCost: { type: Number, required: false, default: null },
+    /** Groups auto-generated regular class sessions (e.g. 30 weekly adds) */
+    seriesId: { type: String, required: false, default: null },
+    /** Set when admin renew reminder email was sent for this series */
+    seriesRenewReminderSentAt: { type: Date, required: false, default: null },
 }, {
     timestamps: true // Adds createdAt and updatedAt fields
 });
 
 // Index for efficient querying by date
 financeSchema.index({ date: 1, time: 1 });
+financeSchema.index({ seriesId: 1, date: 1 });
 
 module.exports = mongoose.model('Finance', financeSchema);

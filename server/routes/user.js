@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 const passport = require('passport');
 const path = require('path');
 const crypto = require('crypto');
+const { notifyAdminNewUser } = require('../utils/notifyAdminNewUser');
 dotenv.config();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY); // Configure SendGrid API key
@@ -55,6 +56,14 @@ router.post('/register', async (req, res) => {
                 <p>Warm regards,<br>Zsuzsanna</p>
             `,
         };
+
+        // Notify admin of new registration (do not block customer flow)
+        await notifyAdminNewUser({
+            firstName,
+            lastName,
+            email,
+            method: 'email',
+        });
 
         // Send the email using SendGrid
         try {

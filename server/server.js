@@ -109,6 +109,7 @@ app.use(express.json()); // Parse incoming JSON requests
 const PORT = process.env.PORT || 5001;
 
 const { startAppointmentReminderScheduler } = require('./services/appointmentReminders');
+const { startFinanceClassRenewReminderScheduler } = require('./services/financeClassRenewReminders');
 
 // MongoDB connection (non-blocking — server starts even if DB is slow/unreachable)
 mongoose
@@ -116,6 +117,7 @@ mongoose
     .then(() => {
         console.log('MongoDB connected to successfully.');
         startAppointmentReminderScheduler();
+        startFinanceClassRenewReminderScheduler();
     })
     .catch((err) => console.log('Error connecting to MongoDB:', err));
 

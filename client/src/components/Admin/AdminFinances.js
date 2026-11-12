@@ -494,6 +494,29 @@ const AdminFinances = () => {
         return `${String(date || '').trim()}|${t}|${loc.toLowerCase()}`;
     };
 
+    const resetNewEntryForm = () => {
+        setNewEntry({
+            date: '',
+            time: '',
+            class: '',
+            location: '',
+            locationPreset: '',
+            category: 'other',
+            grossRate: '',
+            receivedRate: '',
+            paymentFrequency: 'per-class',
+            paymentMethod: 'cash',
+            paymentRequestSent: 'no',
+            paid: 'no',
+            taxed: 'no',
+            repeat: 'no',
+            repeatCount: 1,
+            repeatFrequency: 'weekly',
+            teachingRole: 'regular',
+        });
+        setShowAddForm(false);
+    };
+
     const handleAddEntry = async (e) => {
         e.preventDefault();
         
@@ -502,44 +525,35 @@ const AdminFinances = () => {
             
             // Prepare entries to create
             const entriesToCreate = [];
-            
-            if (newEntry.repeat === 'yes') {
-                // Generate multiple dates
-                const dates = generateRepeatDates(
-                    newEntry.date, 
-                    newEntry.repeatFrequency, 
-                    parseInt(newEntry.repeatCount)
+            const teachingRole = isYogaTeachingCategory(newEntry.category)
+                ? normalizeTeachingRole(newEntry.teachingRole)
+                : 'regular';
+            // Regular yoga teaching: auto-add 30 weekly sessions + renew reminder near the end
+            const autoRegularSeries =
+                isYogaTeachingCategory(newEntry.category) && teachingRole === 'regular';
+            const seriesId =
+                autoRegularSeries && typeof crypto !== 'undefined' && crypto.randomUUID
+                    ? crypto.randomUUID()
+                    : autoRegularSeries
+                      ? `series-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
+                      : null;
+
+            let datesToAdd = [newEntry.date];
+            if (autoRegularSeries) {
+                datesToAdd = generateRepeatDates(newEntry.date, 'weekly', 30);
+            } else if (newEntry.repeat === 'yes') {
+                datesToAdd = generateRepeatDates(
+                    newEntry.date,
+                    newEntry.repeatFrequency,
+                    parseInt(newEntry.repeatCount, 10)
                 );
-                
-                // Create entry for each date
-                dates.forEach(date => {
-                    const loc = normalizeFinanceLocation(newEntry.location);
-                    const trip = computeTripMilesAndGasForRow(loc, milesOverrides, travelSettings);
-                    entriesToCreate.push({
-                        date,
-                        time: newEntry.time,
-                        class: newEntry.class,
-                        location: loc,
-                        category: newEntry.category,
-                        grossRate: newEntry.grossRate,
-                        receivedRate: newEntry.receivedRate,
-                        paymentFrequency: newEntry.paymentFrequency,
-                        paymentMethod: newEntry.paymentMethod,
-                        paymentRequestSent: newEntry.paymentRequestSent,
-                        paid: newEntry.paid,
-                        taxed: newEntry.taxed,
-                        teachingRole: isYogaTeachingCategory(newEntry.category)
-                            ? normalizeTeachingRole(newEntry.teachingRole)
-                            : 'regular',
-                        tripMiles: trip.tripMiles,
-                        tripGasCost: trip.tripGasCost,
-                    });
-                });
-            } else {
+            }
+
+            datesToAdd.forEach((date) => {
                 const loc = normalizeFinanceLocation(newEntry.location);
                 const trip = computeTripMilesAndGasForRow(loc, milesOverrides, travelSettings);
                 entriesToCreate.push({
-                    date: newEntry.date,
+                    date,
                     time: newEntry.time,
                     class: newEntry.class,
                     location: loc,
@@ -551,13 +565,12 @@ const AdminFinances = () => {
                     paymentRequestSent: newEntry.paymentRequestSent,
                     paid: newEntry.paid,
                     taxed: newEntry.taxed,
-                    teachingRole: isYogaTeachingCategory(newEntry.category)
-                        ? normalizeTeachingRole(newEntry.teachingRole)
-                        : 'regular',
+                    teachingRole,
                     tripMiles: trip.tripMiles,
                     tripGasCost: trip.tripGasCost,
+                    ...(seriesId ? { seriesId } : {}),
                 });
-            }
+            });
 
             const existingKeys = new Set(
                 classData.map((row) => financeSlotKey(row.date, row.time, row.location))
@@ -575,9 +588,10 @@ const AdminFinances = () => {
             }
 
             if (uniqueToCreate.length === 0) {
+                resetNewEntryForm();
                 Swal.fire({
                     title: 'Already exists',
-                    text: 'An entry with this date, time, and location is already in Class & Financial Tracking. Nothing was added.',
+                    text: 'An entry with this date, time, and location already exists. Nothing was added.',
                     icon: 'info',
                     confirmButtonText: 'OK',
                 });
@@ -604,37 +618,20 @@ const AdminFinances = () => {
             // Update local state with all new entries
             const updatedData = [...classData, ...createdEntries];
             setClassData(sortClassData(updatedData));
-            
-            // Reset form
-            setNewEntry({
-                date: '',
-                time: '',
-                class: '',
-                location: '',
-                locationPreset: '',
-                category: 'other',
-                grossRate: '',
-                receivedRate: '',
-                paymentFrequency: 'per-class',
-                paymentMethod: 'cash',
-                paymentRequestSent: 'no',
-                paid: 'no',
-                taxed: 'no',
-                repeat: 'no',
-                repeatCount: 1,
-                repeatFrequency: 'weekly',
-                teachingRole: 'regular',
-            });
-            setShowAddForm(false);
+            resetNewEntryForm();
 
             const entryCount = createdEntries.length;
             const skipNote =
                 skippedDuplicates > 0
                     ? ` Skipped ${skippedDuplicates} duplicate ${skippedDuplicates === 1 ? 'date' : 'dates'} (same time & location).`
                     : '';
+            const seriesNote =
+                seriesId && entryCount > 1
+                    ? ' You’ll get an email reminder 2 days before the last class to renew this series.'
+                    : '';
             Swal.fire({
                 title: 'Success!',
-                text: `${entryCount} finance ${entryCount === 1 ? 'entry' : 'entries'} added successfully.${skipNote}`,
+                text: `${entryCount} finance ${entryCount === 1 ? 'entry' : 'entries'} added successfully.${skipNote}${seriesNote}`,
                 icon: 'success',
                 confirmButtonText: 'OK'
             });
@@ -642,6 +639,9 @@ const AdminFinances = () => {
         } catch (error) {
             console.error('Error adding finance entry:', error);
             const status = error.response?.status;
+            if (status === 409) {
+                resetNewEntryForm();
+            }
             Swal.fire({
                 title: status === 409 ? 'Already exists' : 'Error',
                 text: error.response?.data?.message || 'Failed to add finance entry',
@@ -1443,48 +1443,59 @@ const AdminFinances = () => {
                             </div>
                         </div>
 
-                        <div className="form-row repeat-section">
-                            <div className="form-group">
-                                <label>Repeat Class</label>
-                                <select
-                                    name="repeat"
-                                    value={newEntry.repeat}
-                                    onChange={handleInputChange}
-                                >
-                                    <option value="no">No</option>
-                                    <option value="yes">Yes</option>
-                                </select>
+                        {isYogaTeachingCategory(newEntry.category) &&
+                        normalizeTeachingRole(newEntry.teachingRole) === 'regular' ? (
+                            <div className="form-row repeat-section">
+                                <p className="repeat-auto-note">
+                                    Regular yoga teaching classes are added automatically for{' '}
+                                    <strong>30 weeks</strong> from the start date. You’ll get an email
+                                    reminder 2 days before the last class to renew the series.
+                                </p>
                             </div>
-                            {newEntry.repeat === 'yes' && (
-                                <>
-                                    <div className="form-group">
-                                        <label>How Many Times</label>
-                                        <input
-                                            type="number"
-                                            name="repeatCount"
-                                            value={newEntry.repeatCount}
-                                            onChange={handleInputChange}
-                                            min="1"
-                                            max="52"
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Repeat Every</label>
-                                        <select
-                                            name="repeatFrequency"
-                                            value={newEntry.repeatFrequency}
-                                            onChange={handleInputChange}
-                                        >
-                                            <option value="daily">Daily</option>
-                                            <option value="weekly">Weekly</option>
-                                            <option value="biweekly">Biweekly</option>
-                                            <option value="monthly">Monthly</option>
-                                        </select>
-                                    </div>
-                                </>
-                            )}
-                        </div>
+                        ) : (
+                            <div className="form-row repeat-section">
+                                <div className="form-group">
+                                    <label>Repeat Class</label>
+                                    <select
+                                        name="repeat"
+                                        value={newEntry.repeat}
+                                        onChange={handleInputChange}
+                                    >
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>
+                                    </select>
+                                </div>
+                                {newEntry.repeat === 'yes' && (
+                                    <>
+                                        <div className="form-group">
+                                            <label>How Many Times</label>
+                                            <input
+                                                type="number"
+                                                name="repeatCount"
+                                                value={newEntry.repeatCount}
+                                                onChange={handleInputChange}
+                                                min="1"
+                                                max="52"
+                                                required
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Repeat Every</label>
+                                            <select
+                                                name="repeatFrequency"
+                                                value={newEntry.repeatFrequency}
+                                                onChange={handleInputChange}
+                                            >
+                                                <option value="daily">Daily</option>
+                                                <option value="weekly">Weekly</option>
+                                                <option value="biweekly">Biweekly</option>
+                                                <option value="monthly">Monthly</option>
+                                            </select>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        )}
 
                         <div className="form-actions">
                             <button type="submit" className="submit-btn">Add Entry</button>

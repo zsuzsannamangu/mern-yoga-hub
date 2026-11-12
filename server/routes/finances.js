@@ -217,6 +217,7 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
             paid,
             taxed,
             teachingRole,
+            seriesId,
         } = req.body;
 
         // Validate required fields
@@ -262,13 +263,15 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
             return res.status(409).json({
                 success: false,
                 message:
-                    'An entry already exists for this date, time, and location. It was not added again.',
+                    'An entry with this date, time, and location already exists. Nothing was added.',
                 duplicateId: duplicate._id,
             });
         }
 
         const role =
             teachingRole === 'sub' || teachingRole === 'regular' ? teachingRole : 'regular';
+        const seriesIdValue =
+            typeof seriesId === 'string' && seriesId.trim() ? seriesId.trim() : null;
 
         const newFinanceEntry = new Finance({
             date,
@@ -286,7 +289,8 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
             taxed: taxed || 'no',
             teachingRole: role,
             tripMiles: tripParsed.tripMiles,
-            tripGasCost: tripParsed.tripGasCost
+            tripGasCost: tripParsed.tripGasCost,
+            seriesId: seriesIdValue,
         });
 
         const savedEntry = await newFinanceEntry.save();

@@ -2,6 +2,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { notifyAdminNewUser } = require('../utils/notifyAdminNewUser');
 
 // Google Strategy
 passport.use(new GoogleStrategy({
@@ -24,6 +25,12 @@ passport.use(new GoogleStrategy({
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
         email: profile.emails[0].value,
+      });
+      await notifyAdminNewUser({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        method: 'google',
       });
     }
     return done(null, user);
