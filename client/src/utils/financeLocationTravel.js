@@ -24,8 +24,10 @@ export const DEFAULT_TUCSON_HYBRID_MPG = 28;
 /** Placeholder $/gal when none stored yet (update in Finances → location stats). */
 export const DEFAULT_GAS_PRICE_PER_GALLON = 4.70;
 
+/** Locations that should not count toward drive-miles (virtual / no commute). */
 export function isOnlineCanonicalLocation(canonical) {
-    return (canonical || '').trim().toLowerCase() === 'online';
+    const lower = (canonical || '').trim().toLowerCase();
+    return lower === 'online' || lower === 'website';
 }
 
 function safeParseJson(raw, fallback) {
@@ -71,6 +73,16 @@ const MILES_KEY_ALIASES = {
     [YOGA_REFUGE_SE]: ['Yoga Refuge, SE location'],
     [THE_PRACTICE_SPACE]: ['Practice Space'],
     [YOGA_RIOT]: ['yogaRIOT', 'YogaRiot', 'YOGA RIOT', 'yoga riot'],
+    'Danner Boots': ['Danner', 'danner', 'Danner boots'],
+    'ME Fitness': ['Me fitness', 'ME fitness', 'me fitness', 'Me Fitness'],
+    "Anya's Home": [
+        "Anya's home",
+        'Anyas home',
+        'Anya home',
+        '6442 NE 33rd Ave, Portland, OR 97211',
+        '6442 NE 33rd Ave',
+        '6442 NE 33rd Avenue, Portland, OR 97211',
+    ],
 };
 
 function readMilesValue(overrides, key) {

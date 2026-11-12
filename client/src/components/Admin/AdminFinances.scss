@@ -26,7 +26,10 @@
     }
 
     .class-table button.location-cell--clickable:hover {
-        color: $primary-button-color !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        color: $secondary-text-color !important;
+        text-decoration: underline;
     }
 }
 
@@ -1025,18 +1028,28 @@ $class-table-grid-cols-sm:
     margin: 0;
     padding: 0;
     border: none;
-    background: none;
+    background: none !important;
+    background-color: transparent !important;
     font: inherit;
     font-family: $admin-table-font-family;
     font-size: $admin-table-font-size;
-    color: $primary-button-color;
+    color: $text-color;
     text-align: left;
-    text-decoration: underline;
+    text-decoration: none;
     text-underline-offset: 2px;
     cursor: pointer;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    transition: color 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+        background: none !important;
+        background-color: transparent !important;
+        color: $secondary-text-color;
+        text-decoration: underline;
+    }
 }
 
 .table-cell--location-edit {

@@ -111,9 +111,14 @@ export function normalizeFinanceLocation(raw) {
     if (lettersOnly === 'yr') return YOGA_REFUGE_NW;
     if (lettersOnly === 'blhc') return 'BLHC';
     if (lettersOnly === 'bhakti' || lettersOnly === 'bymc') return BHAKTI_CANONICAL;
-    if (lettersOnly === 'db') return 'Danner Boots';
+    if (lettersOnly === 'db' || lettersOnly === 'danner' || lettersOnly === 'dannerboots') {
+        return 'Danner Boots';
+    }
     if (lettersOnly === 'tps') return THE_PRACTICE_SPACE;
     if (lettersOnly === 'yogariot') return YOGA_RIOT;
+    if (lettersOnly === 'mefitness') return 'ME Fitness';
+    if (lettersOnly === 'online' || lettersOnly === 'website') return 'Online';
+    if (lettersOnly === 'anyashome' || lettersOnly === 'anyahome') return "Anya's Home";
 
     // Firelight Yoga
     if (lower === 'fly' || /\bf\.?\s*l\.?\s*y\.?\b/i.test(s)) return 'Firelight Yoga';
@@ -140,7 +145,23 @@ export function normalizeFinanceLocation(raw) {
 
     if (lower === 'blhc' || /\bb\.?\s*l\.?\s*h\.?\s*c\.?\b/i.test(s)) return 'BLHC';
 
-    if (lower.includes('danner') && lower.includes('boot')) return 'Danner Boots';
+    // Danner / Danner Boots
+    if (lower.includes('danner')) return 'Danner Boots';
+
+    // ME Fitness (any casing)
+    if (lower.includes('me fitness') || lower === 'me fitness') return 'ME Fitness';
+
+    // Anya's home (name or street address)
+    if (
+        (lower.includes('anya') && lower.includes('home')) ||
+        (lower.includes('6442') && lower.includes('33rd')) ||
+        /^6442\s+ne\s+33rd/i.test(s)
+    ) {
+        return "Anya's Home";
+    }
+
+    // Virtual / non-drive
+    if (lower === 'online' || lower === 'website' || lower.includes('website')) return 'Online';
 
     if (lower.includes('practice space')) return THE_PRACTICE_SPACE;
 
@@ -215,7 +236,19 @@ export function financeLocationAggregationKey(raw) {
     if (preset) return preset;
     const lettersOnly = n.toLowerCase().replace(/[^a-z]/g, '');
     if (lettersOnly === 'yogariot') return YOGA_RIOT;
-    return n;
+    if (lettersOnly === 'mefitness') return 'ME Fitness';
+    if (lettersOnly === 'anyashome' || lettersOnly === 'anyahome') return "Anya's Home";
+    if (lettersOnly === 'danner' || lettersOnly === 'dannerboots') return 'Danner Boots';
+    if (lettersOnly === 'online' || lettersOnly === 'website') return 'Online';
+    // Merge free-text duplicates that only differ by casing
+    return n
+        .split(' ')
+        .map((w) => {
+            if (!w) return w;
+            if (w === w.toUpperCase() && w.length <= 3) return w; // keep short acronyms
+            return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+        })
+        .join(' ');
 }
 
 export default normalizeFinanceLocation;

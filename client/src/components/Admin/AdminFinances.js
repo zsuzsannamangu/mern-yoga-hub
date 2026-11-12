@@ -344,6 +344,7 @@ const AdminFinances = () => {
             const year = Number((entry.date || '').split('-')[0]);
             if (year !== summaryYear || Number.isNaN(year)) return;
             const loc = financeLocationAggregationKey(entry.location);
+            if (!loc || isOnlineCanonicalLocation(loc)) return;
             const trip = computeTripMilesAndGasForRow(loc, milesOverrides, travelSettings);
             let m = 0;
             let g = 0;
