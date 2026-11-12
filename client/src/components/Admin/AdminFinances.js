@@ -133,6 +133,8 @@ const AdminFinances = () => {
     expandedYearsRef.current = expandedYears;
     const financesYearExpansionInitRef = useRef(false);
     const [showAddForm, setShowAddForm] = useState(false);
+    const [isAddingEntry, setIsAddingEntry] = useState(false);
+    const isAddingEntryRef = useRef(false);
     const [loading, setLoading] = useState(true);
     const [editingId, setEditingId] = useState(null);
     const [editingData, setEditingData] = useState({});
@@ -520,12 +522,13 @@ const AdminFinances = () => {
 
     const handleAddEntry = async (e) => {
         e.preventDefault();
-        
+        if (isAddingEntryRef.current) return;
+        isAddingEntryRef.current = true;
+        setIsAddingEntry(true);
+
         try {
             const token = localStorage.getItem('adminToken');
-            
-            // Prepare entries to create
-            const entriesToCreate = [];
+            const loc = normalizeFinanceLocation(newEntry.location);
             const teachingRole = isYogaTeachingCategory(newEntry.category)
                 ? normalizeTeachingRole(newEntry.teachingRole)
                 : 'regular';
@@ -539,6 +542,25 @@ const AdminFinances = () => {
                       ? `series-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
                       : null;
 
+            const existingKeys = new Set(
+                classData.map((row) => financeSlotKey(row.date, row.time, row.location))
+            );
+
+            // If this regular series start slot already exists, do not add any of the 30 weeks
+            if (autoRegularSeries) {
+                const startKey = financeSlotKey(newEntry.date, newEntry.time, loc);
+                if (existingKeys.has(startKey)) {
+                    resetNewEntryForm();
+                    await Swal.fire({
+                        title: 'Already exists',
+                        text: 'An entry with this date, time, and location already exists. Nothing was added.',
+                        icon: 'info',
+                        confirmButtonText: 'OK',
+                    });
+                    return;
+                }
+            }
+
             let datesToAdd = [newEntry.date];
             if (autoRegularSeries) {
                 datesToAdd = generateRepeatDates(newEntry.date, 'weekly', 30);
@@ -550,9 +572,16 @@ const AdminFinances = () => {
                 );
             }
 
-            datesToAdd.forEach((date) => {
-                const loc = normalizeFinanceLocation(newEntry.location);
-                const trip = computeTripMilesAndGasForRow(loc, milesOverrides, travelSettings);
+            const trip = computeTripMilesAndGasForRow(loc, milesOverrides, travelSettings);
+            const entriesToCreate = [];
+            let skippedDuplicates = 0;
+            for (const date of datesToAdd) {
+                const key = financeSlotKey(date, newEntry.time, loc);
+                if (existingKeys.has(key)) {
+                    skippedDuplicates += 1;
+                    continue;
+                }
+                existingKeys.add(key);
                 entriesToCreate.push({
                     date,
                     time: newEntry.time,
@@ -571,26 +600,11 @@ const AdminFinances = () => {
                     tripGasCost: trip.tripGasCost,
                     ...(seriesId ? { seriesId } : {}),
                 });
-            });
-
-            const existingKeys = new Set(
-                classData.map((row) => financeSlotKey(row.date, row.time, row.location))
-            );
-            const uniqueToCreate = [];
-            let skippedDuplicates = 0;
-            for (const entryData of entriesToCreate) {
-                const key = financeSlotKey(entryData.date, entryData.time, entryData.location);
-                if (existingKeys.has(key)) {
-                    skippedDuplicates += 1;
-                    continue;
-                }
-                existingKeys.add(key);
-                uniqueToCreate.push(entryData);
             }
 
-            if (uniqueToCreate.length === 0) {
+            if (entriesToCreate.length === 0) {
                 resetNewEntryForm();
-                Swal.fire({
+                await Swal.fire({
                     title: 'Already exists',
                     text: 'An entry with this date, time, and location already exists. Nothing was added.',
                     icon: 'info',
@@ -599,26 +613,43 @@ const AdminFinances = () => {
                 return;
             }
 
-            // Create all non-duplicate entries
+            // Create entries; treat server 409 as a skipped duplicate (no abort / no second popup)
             const createdEntries = [];
-            for (const entryData of uniqueToCreate) {
-                const response = await adminAxiosInstance.post('/api/finances', entryData, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-
-                if (response.data.success) {
-                    createdEntries.push({
-                        ...response.data.finance,
-                        id: response.data.finance._id
+            for (const entryData of entriesToCreate) {
+                try {
+                    const response = await adminAxiosInstance.post('/api/finances', entryData, {
+                        headers: { Authorization: `Bearer ${token}` },
                     });
-                } else {
-                    throw new Error(response.data.message);
+
+                    if (response.data.success) {
+                        createdEntries.push({
+                            ...response.data.finance,
+                            id: response.data.finance._id,
+                        });
+                    } else {
+                        throw new Error(response.data.message);
+                    }
+                } catch (postError) {
+                    if (postError.response?.status === 409) {
+                        skippedDuplicates += 1;
+                        continue;
+                    }
+                    throw postError;
                 }
             }
 
-            // Update local state with all new entries
-            const updatedData = [...classData, ...createdEntries];
-            setClassData(sortClassData(updatedData));
+            if (createdEntries.length === 0) {
+                resetNewEntryForm();
+                await Swal.fire({
+                    title: 'Already exists',
+                    text: 'An entry with this date, time, and location already exists. Nothing was added.',
+                    icon: 'info',
+                    confirmButtonText: 'OK',
+                });
+                return;
+            }
+
+            setClassData(sortClassData([...classData, ...createdEntries]));
             resetNewEntryForm();
 
             const entryCount = createdEntries.length;
@@ -630,25 +661,36 @@ const AdminFinances = () => {
                 seriesId && entryCount > 1
                     ? ' You’ll get an email reminder 2 days before the last class to renew this series.'
                     : '';
-            Swal.fire({
+            await Swal.fire({
                 title: 'Success!',
                 text: `${entryCount} finance ${entryCount === 1 ? 'entry' : 'entries'} added successfully.${skipNote}${seriesNote}`,
                 icon: 'success',
-                confirmButtonText: 'OK'
+                confirmButtonText: 'OK',
             });
-
         } catch (error) {
             console.error('Error adding finance entry:', error);
             const status = error.response?.status;
             if (status === 409) {
                 resetNewEntryForm();
+                await Swal.fire({
+                    title: 'Already exists',
+                    text:
+                        error.response?.data?.message ||
+                        'An entry with this date, time, and location already exists. Nothing was added.',
+                    icon: 'info',
+                    confirmButtonText: 'OK',
+                });
+            } else {
+                await Swal.fire({
+                    title: 'Error',
+                    text: error.response?.data?.message || 'Failed to add finance entry',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
             }
-            Swal.fire({
-                title: status === 409 ? 'Already exists' : 'Error',
-                text: error.response?.data?.message || 'Failed to add finance entry',
-                icon: status === 409 ? 'info' : 'error',
-                confirmButtonText: 'OK'
-            });
+        } finally {
+            isAddingEntryRef.current = false;
+            setIsAddingEntry(false);
         }
     };
 
@@ -1499,8 +1541,15 @@ const AdminFinances = () => {
                         )}
 
                         <div className="form-actions">
-                            <button type="submit" className="submit-btn">Add Entry</button>
-                            <button type="button" className="cancel-btn" onClick={() => setShowAddForm(false)}>
+                            <button type="submit" className="submit-btn" disabled={isAddingEntry}>
+                                {isAddingEntry ? 'Adding…' : 'Add Entry'}
+                            </button>
+                            <button
+                                type="button"
+                                className="cancel-btn"
+                                onClick={() => setShowAddForm(false)}
+                                disabled={isAddingEntry}
+                            >
                                 Cancel
                             </button>
                         </div>
