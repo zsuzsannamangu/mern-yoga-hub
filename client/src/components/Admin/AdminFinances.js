@@ -31,6 +31,10 @@ import {
     clearLegacyFinanceTravelLocalStorage,
 } from '../../utils/financeLocationTravel';
 import { computeTripMilesAndGasForRow } from '../../utils/financeTripCompute';
+import {
+    calculateTaxedNetRate,
+    taxDeductionHintLabel,
+} from '../../utils/financeTaxNetRate';
 
 function sortClassData(data) {
     return [...data].sort((a, b) => {
@@ -190,12 +194,20 @@ const AdminFinances = () => {
         const learned = learnedFinanceDefaultsByPreset[presetId];
         const financeDefaults = learned ? { ...staticDefaults, ...learned } : staticDefaults;
 
-        setNewEntry((prev) => ({
-            ...prev,
-            locationPreset: presetId,
-            location: presetId === 'other' ? '' : preset.location,
-            ...financeDefaults,
-        }));
+        setNewEntry((prev) => {
+            const next = {
+                ...prev,
+                locationPreset: presetId,
+                location: presetId === 'other' ? '' : preset.location,
+                ...financeDefaults,
+            };
+            // Taxed rows: net follows studio average deduction from gross (editable after)
+            if (next.taxed === 'yes') {
+                const net = calculateTaxedNetRate(next.grossRate, next.location);
+                if (net !== '') next.receivedRate = net;
+            }
+            return next;
+        });
     };
 
     const fetchClassData = useCallback(async () => {
@@ -452,6 +464,15 @@ const AdminFinances = () => {
             const next = { ...prev, [name]: value };
             if (name === 'category' && !isYogaTeachingCategory(value)) {
                 next.teachingRole = 'regular';
+            }
+            // When taxed: auto-fill net from gross; user can still edit Received afterward
+            const shouldAutoNet =
+                name !== 'receivedRate' &&
+                (name === 'taxed' || name === 'grossRate' || name === 'location') &&
+                (name === 'taxed' ? value === 'yes' : next.taxed === 'yes');
+            if (shouldAutoNet) {
+                const net = calculateTaxedNetRate(next.grossRate, next.location);
+                if (net !== '') next.receivedRate = net;
             }
             return next;
         });
@@ -868,19 +889,27 @@ const AdminFinances = () => {
                     teachingRoleForRow = normalizeTeachingRole(entry.teachingRole);
                 }
 
+                const taxedValue = updates.taxed || entry.taxed || 'no';
+                const grossValue = entry.grossRate || entry.rate || 0;
+                let receivedValue = entry.receivedRate || entry.rate || 0;
+                if (updates.taxed === 'yes') {
+                    const autoNet = calculateTaxedNetRate(grossValue, loc);
+                    if (autoNet !== '') receivedValue = parseFloat(autoNet);
+                }
+
                 const updatedEntry = {
                     date: entry.date,
                     time: entry.time,
                     class: entry.class || entry.className, // Handle both field names
                     location: loc,
                     category: finalCategory,
-                    grossRate: entry.grossRate || entry.rate || 0,
-                    receivedRate: entry.receivedRate || entry.rate || 0,
+                    grossRate: grossValue,
+                    receivedRate: receivedValue,
                     paymentFrequency: entry.paymentFrequency || 'per-class',
                     paymentMethod: updates.paymentMethod || entry.paymentMethod || 'cash',
                     paymentRequestSent: entry.paymentRequestSent || 'no',
                     paid: updates.paid || entry.paid || 'no',
-                    taxed: updates.taxed || entry.taxed || 'no',
+                    taxed: taxedValue,
                     teachingRole: teachingRoleForRow,
                     tripMiles: trip.tripMiles,
                     tripGasCost: trip.tripGasCost,
@@ -967,6 +996,14 @@ const AdminFinances = () => {
             const next = { ...prev, [name]: value };
             if (name === 'category' && !isYogaTeachingCategory(value)) {
                 next.teachingRole = 'regular';
+            }
+            const shouldAutoNet =
+                name !== 'receivedRate' &&
+                (name === 'taxed' || name === 'grossRate' || name === 'location') &&
+                (name === 'taxed' ? value === 'yes' : next.taxed === 'yes');
+            if (shouldAutoNet) {
+                const net = calculateTaxedNetRate(next.grossRate, next.location);
+                if (net !== '') next.receivedRate = net;
             }
             return next;
         });
@@ -1410,17 +1447,25 @@ const AdminFinances = () => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Received ($)</label>
+                                <label>
+                                    {newEntry.taxed === 'yes' ? 'Net / Received ($)' : 'Received ($)'}
+                                </label>
                                 <input
                                     type="number"
                                     name="receivedRate"
                                     value={newEntry.receivedRate}
                                     onChange={handleInputChange}
-                                    placeholder="75.00"
+                                    placeholder={newEntry.taxed === 'yes' ? 'auto from gross' : '75.00'}
                                     step="0.01"
                                     min="0"
                                     required
                                 />
+                                {newEntry.taxed === 'yes' && (
+                                    <p className="field-hint">
+                                        Auto from gross − {taxDeductionHintLabel(newEntry.location)}. You can
+                                        edit.
+                                    </p>
+                                )}
                             </div>
                         </div>
 
@@ -1855,6 +1900,11 @@ const AdminFinances = () => {
                                                             className="edit-input"
                                                             step="0.01"
                                                             min="0"
+                                                            title={
+                                                                editingData.taxed === 'yes'
+                                                                    ? `Auto from gross − ${taxDeductionHintLabel(editingData.location)}; editable`
+                                                                    : undefined
+                                                            }
                                                         />
                                                     </div>
                                                     <div
@@ -2303,6 +2353,11 @@ const AdminFinances = () => {
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
                                 </select>
+                                {bulkEditData.taxed === 'yes' && (
+                                    <p className="field-hint">
+                                        Sets net from each row’s gross (Refuge 10.84%, Bhakti 8.39%, else 9.50%).
+                                    </p>
+                                )}
                             </div>
                             <div className="form-group">
                                 <label>Payment Method</label>
