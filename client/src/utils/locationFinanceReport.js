@@ -18,17 +18,25 @@ function formatMonthHeading(yyyyMm) {
     return new Date(y, m - 1, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 }
 
+function financeTodayKeyLocal() {
+    const t = new Date();
+    return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+}
+
 /**
- * All finance rows at this location (every category — staff meetings, workshops, etc.),
- * grouped by calendar month (most recent month first).
+ * Finance rows grouped by calendar month.
+ * @param {object[]} filteredEntries
+ * @param {{ newestFirst?: boolean }} [opts] newestFirst: past sessions (default true); false = upcoming chronological
  */
-function buildClassesByMonth(filteredEntries) {
+function buildClassesByMonth(filteredEntries, opts = {}) {
+    const newestFirst = opts.newestFirst !== false;
     const rows = (filteredEntries || [])
         .filter((e) => e != null)
         .sort((a, b) => {
             const d = (a.date || '').localeCompare(b.date || '');
-            if (d !== 0) return d;
-            return (a.time || '').localeCompare(b.time || '');
+            if (d !== 0) return newestFirst ? -d : d;
+            const t = (a.time || '').localeCompare(b.time || '');
+            return newestFirst ? -t : t;
         });
 
     /** @type {Map<string, Array<{ id: string, date: string, time: string, className: string, category: string, teachingRole: string }>>} */
@@ -51,7 +59,7 @@ function buildClassesByMonth(filteredEntries) {
     }
 
     return Array.from(byMonth.entries())
-        .sort((a, b) => b[0].localeCompare(a[0]))
+        .sort((a, b) => (newestFirst ? b[0].localeCompare(a[0]) : a[0].localeCompare(b[0])))
         .map(([monthKey, classes]) => ({
             monthKey,
             monthLabel: formatMonthHeading(monthKey),
@@ -179,7 +187,11 @@ export function buildLocationFinanceReport(entries, canonicalLocation, opts) {
         }
     }
 
-    const classesByMonth = buildClassesByMonth(filtered);
+    const asOf = financeTodayKeyLocal();
+    const pastEntries = filtered.filter((e) => String(e.date || '') <= asOf);
+    const upcomingEntries = filtered.filter((e) => String(e.date || '') > asOf);
+    const pastClassesByMonth = buildClassesByMonth(pastEntries, { newestFirst: true });
+    const upcomingClassesByMonth = buildClassesByMonth(upcomingEntries, { newestFirst: false });
 
     return {
         canonicalLocation,
@@ -187,7 +199,10 @@ export function buildLocationFinanceReport(entries, canonicalLocation, opts) {
         oneWayMilesConfigured: oneWay,
         roundTripMilesPerSession,
         years,
-        classesByMonth,
+        /** @deprecated use pastClassesByMonth — kept as alias for past taught sessions */
+        classesByMonth: pastClassesByMonth,
+        pastClassesByMonth,
+        upcomingClassesByMonth,
         allTime: {
             ...allTime,
             roundTripMilesTotal: allTimeMiles,

@@ -1020,6 +1020,44 @@ const AdminFinances = () => {
 
     const closeLocationStats = () => setLocationStatsCanonical(null);
 
+    const renderLocationSessionBlocks = (blocks) => (
+        <div className="location-stats-classes-by-month">
+            {blocks.map((block) => (
+                <div key={block.monthKey} className="location-stats-month-block">
+                    <h5 className="location-stats-month-heading">{block.monthLabel}</h5>
+                    <ul className="location-stats-class-list">
+                        {block.classes.map((row) => (
+                            <li key={row.id}>
+                                <span className="location-stats-class-date">{formatDate(row.date)}</span>
+                                <span className="location-stats-class-time">{formatTime(row.time)}</span>
+                                <span className="location-stats-class-name">{row.className}</span>
+                                <span
+                                    className="location-stats-class-role"
+                                    title={
+                                        isYogaTeachingCategory(row.category)
+                                            ? row.teachingRole === 'sub'
+                                                ? 'Substitute'
+                                                : 'Regular'
+                                            : undefined
+                                    }
+                                >
+                                    {isYogaTeachingCategory(row.category)
+                                        ? row.teachingRole === 'sub'
+                                            ? 'Sub'
+                                            : 'Reg'
+                                        : '—'}
+                                </span>
+                                <span className="location-stats-class-category" title="Category">
+                                    {row.category}
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+        </div>
+    );
+
     const toastTravelSaved = (title) => {
         Swal.fire({
             toast: true,
@@ -2144,57 +2182,31 @@ const AdminFinances = () => {
                         </div>
 
                         <div className="location-stats-section">
-                            <h4>All sessions (by month)</h4>
+                            <h4>Past sessions (by month)</h4>
                             <p className="location-stats-classes-intro">
-                                Every finance row at this location (yoga teaching, staff meetings, workshops, etc.),
-                                newest month first.
+                                Already taught at this location (through today), newest first.
                             </p>
-                            {locationReport.classesByMonth && locationReport.classesByMonth.length > 0 ? (
-                                <div className="location-stats-classes-by-month">
-                                    {locationReport.classesByMonth.map((block) => (
-                                        <div key={block.monthKey} className="location-stats-month-block">
-                                            <h5 className="location-stats-month-heading">{block.monthLabel}</h5>
-                                            <ul className="location-stats-class-list">
-                                                {block.classes.map((row) => (
-                                                    <li key={row.id}>
-                                                        <span className="location-stats-class-date">
-                                                            {formatDate(row.date)}
-                                                        </span>
-                                                        <span className="location-stats-class-time">
-                                                            {formatTime(row.time)}
-                                                        </span>
-                                                        <span className="location-stats-class-name">{row.className}</span>
-                                                        <span
-                                                            className="location-stats-class-role"
-                                                            title={
-                                                                isYogaTeachingCategory(row.category)
-                                                                    ? row.teachingRole === 'sub'
-                                                                        ? 'Substitute'
-                                                                        : 'Regular'
-                                                                    : undefined
-                                                            }
-                                                        >
-                                                            {isYogaTeachingCategory(row.category)
-                                                                ? row.teachingRole === 'sub'
-                                                                    ? 'Sub'
-                                                                    : 'Reg'
-                                                                : '—'}
-                                                        </span>
-                                                        <span
-                                                            className="location-stats-class-category"
-                                                            title="Category"
-                                                        >
-                                                            {row.category}
-                                                        </span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    ))}
-                                </div>
+                            {locationReport.pastClassesByMonth &&
+                            locationReport.pastClassesByMonth.length > 0 ? (
+                                renderLocationSessionBlocks(locationReport.pastClassesByMonth)
                             ) : (
                                 <p className="location-stats-empty location-stats-empty--inline">
-                                    No rows for this location yet.
+                                    No past sessions at this location yet.
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="location-stats-section">
+                            <h4>Upcoming sessions</h4>
+                            <p className="location-stats-classes-intro">
+                                Scheduled after today, soonest first.
+                            </p>
+                            {locationReport.upcomingClassesByMonth &&
+                            locationReport.upcomingClassesByMonth.length > 0 ? (
+                                renderLocationSessionBlocks(locationReport.upcomingClassesByMonth)
+                            ) : (
+                                <p className="location-stats-empty location-stats-empty--inline">
+                                    No upcoming sessions at this location.
                                 </p>
                             )}
                         </div>
