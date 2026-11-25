@@ -491,9 +491,16 @@ const AdminFinances = () => {
         return dates;
     };
 
+    const normalizeFinanceTime = (time) => {
+        const raw = String(time || '').trim();
+        const m = raw.match(/^(\d{1,2}):(\d{2})$/);
+        if (!m) return raw;
+        return `${String(Number(m[1])).padStart(2, '0')}:${m[2]}`;
+    };
+
     const financeSlotKey = (date, time, location) => {
         const loc = normalizeFinanceLocation(location || '');
-        const t = String(time || '').trim();
+        const t = normalizeFinanceTime(time);
         return `${String(date || '').trim()}|${t}|${loc.toLowerCase()}`;
     };
 

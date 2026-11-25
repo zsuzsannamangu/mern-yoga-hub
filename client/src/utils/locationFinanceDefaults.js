@@ -24,6 +24,9 @@ const YOGA_VENUE_AUTOFILL = {
  */
 const PRESET_RATE_OVERRIDES = {
     fullbodied: { grossRate: '55', receivedRate: '55' },
+    bhakti: { grossRate: '35', receivedRate: '32' },
+    'yoga-refuge-nw': { grossRate: '45.50', receivedRate: '41' },
+    'yoga-refuge-se': { grossRate: '45.50', receivedRate: '41' },
 };
 
 /** Every finances location preset except `other` gets yoga-venue autofill. */
