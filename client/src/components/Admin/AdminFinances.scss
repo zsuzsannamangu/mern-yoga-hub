@@ -91,9 +91,9 @@
         align-items: stretch;
     }
 
-    // Row 1: four revenue cards, equal width
+    // Row 1: revenue cards (all-time, years, avg monthly, selected month)
     .finances-summary__row--top {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(5, minmax(0, 1fr));
     }
 
     // Row 2: four cards (classes + current-year drive stats) — same 4-column track as top

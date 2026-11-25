@@ -1170,6 +1170,14 @@ const AdminFinances = () => {
         return year === 2026 ? sum + (entry.receivedRate || entry.rate || 0) : sum;
     }, 0);
 
+    // Average monthly = 2026 YTD revenue ÷ months elapsed in 2026 through today
+    const asOfForAvg = financeTodayKeyLocal();
+    const [asOfYear, asOfMonth] = asOfForAvg.split('-').map(Number);
+    const monthsFor2026Avg =
+        asOfYear < 2026 ? 0 : asOfYear > 2026 ? 12 : Math.max(1, asOfMonth || 1);
+    const avgMonthlyIncome2026 =
+        monthsFor2026Avg > 0 ? totalRevenue2026 / monthsFor2026Avg : 0;
+
     const monthlyTotals = calculateMonthlyTotals(groupedData, expandedMonths);
 
     return (
@@ -1217,6 +1225,16 @@ const AdminFinances = () => {
                     >
                         <h3>Total Revenue (2026)</h3>
                         <p className="revenue-amount">{formatCurrency(totalRevenue2026)}</p>
+                    </div>
+                    <div
+                        className="summary-card yearly"
+                        title={`2026 total revenue ÷ ${monthsFor2026Avg} month${monthsFor2026Avg === 1 ? '' : 's'} (Jan through current month, or full year if past 2026). Same YTD basis as Total Revenue (2026).`}
+                    >
+                        <h3>Avg Monthly Income (2026)</h3>
+                        <p className="revenue-amount">{formatCurrency(avgMonthlyIncome2026)}</p>
+                        <p className="month-list">
+                            {formatCurrency(totalRevenue2026)} ÷ {monthsFor2026Avg} mo
+                        </p>
                     </div>
                     <div className="summary-card monthly">
                         <h3>
