@@ -94,6 +94,26 @@
     // Row 1: revenue cards (all-time, years, avg monthly, selected month)
     .finances-summary__row--top {
         grid-template-columns: repeat(5, minmax(0, 1fr));
+        column-gap: 18px;
+        row-gap: 18px;
+
+        .summary-card {
+            padding: 14px 12px;
+
+            h3 {
+                font-size: 0.82rem;
+                margin: 0 0 8px 0;
+            }
+
+            .revenue-amount {
+                font-size: 1.35rem;
+            }
+
+            .month-list {
+                font-size: 0.72rem;
+                margin: 6px 0 0 0;
+            }
+        }
     }
 
     // Row 2: four cards (classes + current-year drive stats) — same 4-column track as top

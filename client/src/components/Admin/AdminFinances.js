@@ -1230,11 +1230,9 @@ const AdminFinances = () => {
                         className="summary-card yearly"
                         title={`2026 total revenue ÷ ${monthsFor2026Avg} month${monthsFor2026Avg === 1 ? '' : 's'} (Jan through current month, or full year if past 2026). Same YTD basis as Total Revenue (2026).`}
                     >
-                        <h3>Avg Monthly Income (2026)</h3>
+                        <h3>Avg Monthly (2026)</h3>
                         <p className="revenue-amount">{formatCurrency(avgMonthlyIncome2026)}</p>
-                        <p className="month-list">
-                            {formatCurrency(totalRevenue2026)} ÷ {monthsFor2026Avg} mo
-                        </p>
+                        <p className="month-list">÷ {monthsFor2026Avg} mo</p>
                     </div>
                     <div className="summary-card monthly">
                         <h3>
