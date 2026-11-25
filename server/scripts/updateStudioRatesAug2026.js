@@ -2,8 +2,9 @@
  * Update Class & Financial Tracking rates from August 2026 onward via the live API
  * (EC2 Mongo is IP-restricted; Render backend can write).
  *
- * - Bhakti: gross $35 / net $32
- * - Yoga Refuge (all variants): gross $45.50 / net $41
+ * - Bhakti yoga teaching: gross $35 / net $32
+ * - Yoga Refuge yoga teaching (all variants): gross $45.50 / net $41
+ * Only category "yoga teaching". Does not modify chocolate, workshops, therapy, etc.
  * Does not modify any row with date before 2026-08-01.
  *
  * Usage: node server/scripts/updateStudioRatesAug2026.js
@@ -72,6 +73,7 @@ async function main() {
 
     const candidates = finances.filter((row) => {
         if (String(row.date || '') < CUTOFF) return false;
+        if ((row.category || '') !== 'yoga teaching') return false;
         const rates = targetRates(row.location);
         return rates && needsUpdate(row, rates);
     });
