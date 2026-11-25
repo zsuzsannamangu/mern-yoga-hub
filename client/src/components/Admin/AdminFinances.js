@@ -1232,7 +1232,6 @@ const AdminFinances = () => {
                     >
                         <h3>Avg Monthly (2026)</h3>
                         <p className="revenue-amount">{formatCurrency(avgMonthlyIncome2026)}</p>
-                        <p className="month-list">÷ {monthsFor2026Avg} mo</p>
                     </div>
                     <div className="summary-card monthly">
                         <h3>
