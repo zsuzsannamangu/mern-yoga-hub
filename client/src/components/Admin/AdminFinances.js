@@ -2131,6 +2131,17 @@ const AdminFinances = () => {
                             </button>
                         </div>
 
+                        <p className="location-stats-meta">
+                            Taught so far (yoga teaching):{' '}
+                            <strong>
+                                {formatYogaTeachingSummary(
+                                    locationReport.pastTeaching?.total || 0,
+                                    locationReport.pastTeaching?.regular || 0,
+                                    locationReport.pastTeaching?.sub || 0
+                                )}
+                            </strong>
+                        </p>
+
                         <div className="location-stats-section">
                             <div className="location-stats-table-wrap">
                                 <table className="location-stats-table">
@@ -2155,7 +2166,15 @@ const AdminFinances = () => {
                                             locationReport.years.map((y) => (
                                                 <tr key={y.year}>
                                                     <td>{y.year}</td>
-                                                    <td>{y.teachingCount}</td>
+                                                    <td
+                                                        title={`${y.teachingRegularCount || 0} regular, ${y.teachingSubCount || 0} substitute`}
+                                                    >
+                                                        {formatYogaTeachingSummary(
+                                                            y.teachingCount,
+                                                            y.teachingRegularCount || 0,
+                                                            y.teachingSubCount || 0
+                                                        )}
+                                                    </td>
                                                     <td>{formatCurrency(y.grossTotal)}</td>
                                                     <td>{formatCurrency(y.receivedTotal)}</td>
                                                     <td>
@@ -2174,7 +2193,15 @@ const AdminFinances = () => {
                                         <tfoot>
                                             <tr>
                                                 <td>All years</td>
-                                                <td>{locationReport.allTime.teachingCount}</td>
+                                                <td
+                                                    title={`${locationReport.allTime.teachingRegularCount || 0} regular, ${locationReport.allTime.teachingSubCount || 0} substitute`}
+                                                >
+                                                    {formatYogaTeachingSummary(
+                                                        locationReport.allTime.teachingCount,
+                                                        locationReport.allTime.teachingRegularCount || 0,
+                                                        locationReport.allTime.teachingSubCount || 0
+                                                    )}
+                                                </td>
                                                 <td>{formatCurrency(locationReport.allTime.grossTotal)}</td>
                                                 <td>{formatCurrency(locationReport.allTime.receivedTotal)}</td>
                                                 <td>

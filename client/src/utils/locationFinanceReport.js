@@ -105,6 +105,8 @@ export function buildLocationFinanceReport(entries, canonicalLocation, opts) {
             byYear[year] = {
                 year,
                 teachingCount: 0,
+                teachingRegularCount: 0,
+                teachingSubCount: 0,
                 /** Rows at this location (all categories); each row = one round trip for mileage. */
                 sessionsForMileage: 0,
                 grossTotal: 0,
@@ -117,6 +119,8 @@ export function buildLocationFinanceReport(entries, canonicalLocation, opts) {
         bucket.receivedTotal += numericReceived(e);
         if (e.category === 'yoga teaching') {
             bucket.teachingCount += 1;
+            if (e.teachingRole === 'sub') bucket.teachingSubCount += 1;
+            else bucket.teachingRegularCount += 1;
             bucket.grossTeachingValues.push(numericGross(e));
         }
         if (!online) bucket.sessionsForMileage += 1;
@@ -144,6 +148,8 @@ export function buildLocationFinanceReport(entries, canonicalLocation, opts) {
             return {
                 year: y.year,
                 teachingCount: y.teachingCount,
+                teachingRegularCount: y.teachingRegularCount,
+                teachingSubCount: y.teachingSubCount,
                 sessionsForMileage: y.sessionsForMileage,
                 grossTotal: y.grossTotal,
                 receivedTotal: y.receivedTotal,
@@ -156,12 +162,15 @@ export function buildLocationFinanceReport(entries, canonicalLocation, opts) {
         })
         .sort((a, b) => b.year - a.year);
 
-    const allTeachingGross = filtered
-        .filter((e) => e.category === 'yoga teaching')
-        .map((e) => numericGross(e));
+    const allTeaching = filtered.filter((e) => e.category === 'yoga teaching');
+    const allTeachingGross = allTeaching.map((e) => numericGross(e));
+    const allTeachingRegularCount = allTeaching.filter((e) => e.teachingRole !== 'sub').length;
+    const allTeachingSubCount = allTeaching.filter((e) => e.teachingRole === 'sub').length;
 
     const allTime = {
         teachingCount: allTeachingGross.length,
+        teachingRegularCount: allTeachingRegularCount,
+        teachingSubCount: allTeachingSubCount,
         sessionsForMileage: online ? 0 : filtered.length,
         grossTotal: filtered.reduce((s, e) => s + numericGross(e), 0),
         receivedTotal: filtered.reduce((s, e) => s + numericReceived(e), 0),
@@ -193,6 +202,10 @@ export function buildLocationFinanceReport(entries, canonicalLocation, opts) {
     const pastClassesByMonth = buildClassesByMonth(pastEntries, { newestFirst: true });
     const upcomingClassesByMonth = buildClassesByMonth(upcomingEntries, { newestFirst: false });
 
+    const pastTeaching = pastEntries.filter((e) => e.category === 'yoga teaching');
+    const pastTeachingRegularCount = pastTeaching.filter((e) => e.teachingRole !== 'sub').length;
+    const pastTeachingSubCount = pastTeaching.filter((e) => e.teachingRole === 'sub').length;
+
     return {
         canonicalLocation,
         entryCount: filtered.length,
@@ -203,6 +216,12 @@ export function buildLocationFinanceReport(entries, canonicalLocation, opts) {
         classesByMonth: pastClassesByMonth,
         pastClassesByMonth,
         upcomingClassesByMonth,
+        /** Yoga teaching already taught at this location (through today) */
+        pastTeaching: {
+            total: pastTeaching.length,
+            regular: pastTeachingRegularCount,
+            sub: pastTeachingSubCount,
+        },
         allTime: {
             ...allTime,
             roundTripMilesTotal: allTimeMiles,
